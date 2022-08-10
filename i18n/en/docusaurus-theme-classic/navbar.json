@@ -1,0 +1,26 @@
+{
+  "title": {
+    "message": "OpenPix Developers",
+    "description": "The title in the navbar"
+  },
+  "item.label.Documents": {
+    "message": "Documents",
+    "description": "Navbar item with label Documents"
+  },
+  "item.label.API": {
+    "message": "API",
+    "description": "Navbar item with label API"
+  },
+  "item.label.Plugin": {
+    "message": "Plugin",
+    "description": "Navbar item with label Plugin"
+  },
+  "item.label.Bacen Pix API": {
+    "message": "Bacen Pix API",
+    "description": "Navbar item with label Bacen Pix API"
+  },
+  "item.label.OpenPix": {
+    "message": "OpenPix",
+    "description": "Navbar item with label OpenPix"
+  }
+}

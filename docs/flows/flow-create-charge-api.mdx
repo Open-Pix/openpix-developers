@@ -1,0 +1,82 @@
+---
+id: flow-create-charge-api
+title: Criando uma Cobrança usando API
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+Você pode gerar novas Cobranças Pix usando a API OpenPix em seu backend ou frontend
+
+<Tabs
+defaultValue="curl"
+    values={[
+    { label: 'cURL', value: 'curl', },
+    { label: 'JavaScript', value: 'js', }, 
+    ]
+}>
+<TabItem value="curl">
+
+```jsx
+curl --location --request POST 'http://api.openpix.com.br/api/openpix/v1/charge' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <appID>' \
+--data-raw '{
+    "correlationID": "8a4a4168-a877-4494-9d8d-eba2d4435e97",
+    "value": "1",
+    "comment": "my first pix charge",
+    "customer": {
+        "name": "Bob",
+        "email": "bob@openpix.com.br",
+        "phone": "5511940468888",
+        "taxID": "471.737.080-52"
+    }
+}'
+```
+
+</TabItem>
+<TabItem value="js">
+
+```jsx
+const createCharge = async () => {
+  const payload = {
+    correlationID: '8a4a4168-a877-4494-9d8d-eba2d4435e97', // our system id
+    value: 1, // 1 cent
+    comment: 'my first pix',
+    customer: {
+      name: 'Bob',
+      email: 'bob@openpix.com.br',
+      taxID: '471.737.080-52',
+      phone: '5511940468888'
+    }
+  }
+
+  const response = await fetch('http://api.openpix.com.br/api/openpix/v1/charge', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'appID',
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await response.json();
+  console.log({
+    data,
+  });
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Descrição do Paylod
+
+- **correlationID**: seu ID para controlar a cobrança
+- **value**: valor da cobrança em centavos
+- **comment**: comentário a ser mostrado no QRCode enquanto o cliente está pagando a cobrança
+- **customer**: o cliente dessa cobrança
+- **customer.name**: nome do cliente
+- **customer.email**: email do cliente
+- **customer.taxID**: CPF/CNPJ do cliente
+- **customer.phone**: telefone do cliente

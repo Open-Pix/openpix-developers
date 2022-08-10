@@ -1,0 +1,30 @@
+name: OpenPix Developers
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: yarn
+      - run: yarn build
+      - name: Upload to S3 bucket
+        uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --acl public-read --recursive
+        env:
+          FILE: ./build/
+          AWS_REGION: 'us-east-1'
+          S3_BUCKET: developers.openpix.com.br
+          S3_KEY: ''
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

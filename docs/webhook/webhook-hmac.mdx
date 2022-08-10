@@ -1,0 +1,97 @@
+---
+id: webhook-hmac
+title: Validando Webhook payload usando HMAC-SHA1
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Como consultar o Secret Key do HMAC?
+
+Vá até o Menu Administrador e procure por `API/Plugins` e clique no Webhook que você gostaria de consultar o Secret Key do HMAC
+
+![WebhookDetail](/img/webhook/webhook-hmac.png)
+
+# Como validar o HMAC Signature?
+
+Toda request do Webhook possui o header 'X-OpenPix-Signature' que é a signature gerada com a secret key do Webhook e o payload do Webhook.
+Ao receber o header você pode validar se o HMAC é válido e dar continuidade no fluxo do Webhook.
+
+Exemplo: `'X-OpenPix-Signature': 'jgR2XF0PKDiAwHP1s+TryvxMySQ='`
+
+## Exemplo de validação
+
+<Tabs
+defaultValue="PHP"
+    values={[
+      { label: 'PHP'      , value: 'PHP', },
+      { label: 'JavaScript', value: 'JavaScript', }, 
+      { label: 'cURL', value: 'cURL', }, 
+    ]
+}>
+<TabItem value="PHP" >
+
+```php
+  <?php 
+    $headers['X-OpenPix-Signature'] = 'jgR2XF0PKDiAwHP1s+TryvxMySQ='; // vira da chamada do webhook
+    $body = '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook"}'; // vira da chamada do webhook
+
+    $secretKeyOnOpenpixPlatform = 'hmac-secret-key'; // secret key da chave de acesso do OpenPix
+
+    $algorithm = 'sha1'; // algoritmo de hash
+
+    $hmac = base64_encode(hash_hmac($algorithm, $body, $secretKeyOnOpenpixPlatform, true));
+
+    if($hmac === $headers['X-OpenPix-Signature']) {
+        echo 'Valid HMAC';
+    } else {
+        echo 'Invalid HMAC';
+    }
+  ?>
+
+```
+
+</TabItem>
+<TabItem value="JavaScript">
+
+```jsx
+
+  const createHmac = require('crypto').createHmac;
+
+  const hmacCalculateSignature = (
+    key,
+    body,
+    encoding,
+  ) => createHmac('sha1', key).update(body).digest(encoding);
+
+  const hmacVerifySignature = () => {
+
+    const openpixSignatureHeader = 'jgR2XF0PKDiAwHP1s+TryvxMySQ='; // vem da chamada do webhook
+
+    const body = '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook"}'; // vem da chamada do webhook
+
+    const key = 'hmac-secret-key'; // secret key da chave de acesso do OpenPix
+
+    const signature = hmacCalculateSignature(key, body, 'base64');
+
+    if(signature === openpixSignatureHeader) {
+      console.log('valid HMAC');
+    }
+  };
+
+  hmacVerifySignature();
+  
+```
+
+</TabItem>
+<TabItem value="cURL">
+
+  ```bash
+
+  echo -n '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook"}' | openssl dgst -sha1 -hmac "hmac-secret-key" -binary | base64
+  
+  ```
+</TabItem>
+</Tabs>
+
+Nesse link temos um exemplo de validação do HMAC usando JavaScript
+[WebhookPost](https://github.com/Open-Pix/node-backend-integration/blob/master/src/webhook/webhookPost.ts)

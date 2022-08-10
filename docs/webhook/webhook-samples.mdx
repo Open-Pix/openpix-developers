@@ -1,0 +1,214 @@
+---
+id: webhook-samples
+title: Exemplos de retorno do Webhook
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Toda vez que um pix for realizado a API irá enviar um payload para sua API do Webhook. De acordo com o tipo do Pix será enviado um payload para tal.
+
+Os três tipos são: Pix Avulso, Pix Cobrança e Pix QrCode.
+
+- **Pix Avulso**: um Pix que não possui uma cobrança registrada a ele na plataforma OpenPix
+- **Pix Cobrança**: Pix com uma cobrança registrada na plataforma OpenPix
+- **Pix QrCode**: Pix estático gerado a partir de um Qr Code estático
+
+<Tabs
+    defaultValue="payload-pix"
+    values={[
+    { label: 'Pix Cobrança', value: 'payload-pix', },
+    { label: 'Pix Avulso', value: 'payload-detached', },
+    { label: 'Pix QrCode', value: 'payload-qrcode-static', },
+    ]
+    }>
+
+<TabItem value='payload-detached'>
+
+```json
+{
+  "pixQrCode": null,
+  "charge": null,
+  "pix": {
+    "pixQrCode": null,
+    "charge": null,
+    "time": "2021-03-12T12:44:09.269Z",
+    "value": 1,
+    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
+    "infoPagador": "OpenPix testing",
+    "customer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    },
+    "payer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    }
+  },
+  "company": {
+    "id": "624f46f9e93f9f521c8308d7",
+    "name": "Pizzaria do José",
+    "taxID": "4722767300014"
+  },
+  "account": {
+    "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
+  }
+}
+```
+
+</TabItem>
+<TabItem value='payload-pix'>
+
+```json
+{
+  "pixQrCode": null,
+  "charge": {
+    "status": "COMPLETED",
+    "customer": {
+      "name": "Antonio Victor",
+      "taxID": { "taxID": "12345678976", "type": "BR:CPF" },
+      "email": "antoniocliente@example.com",
+      "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4"
+    },
+    "value": 1000,
+    "comment": "Pagamento OpenPix",
+    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
+    "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
+    "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
+    "createdAt": "2021-03-12T12:43:54.528Z",
+    "updatedAt": "2021-03-12T12:44:09.360Z",
+    "brCode": "http://localhost:5001/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29"
+  },
+  "pix": {
+    "charge": {
+      "status": "COMPLETED",
+      "customer": {
+        "name": "Antonio Victor",
+        "taxID": { "taxID": "12345678976", "type": "BR:CPF" },
+        "email": "antoniocliente@example.com",
+        "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4"
+      },
+      "value": 1000,
+      "comment": "Pagamento OpenPix",
+      "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
+      "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
+      "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
+      "createdAt": "2021-03-12T12:43:54.528Z",
+      "updatedAt": "2021-03-12T12:44:09.360Z"
+    },
+    "customer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    },
+    "payer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    },
+    "time": "2021-03-12T12:44:09.269Z",
+    "value": 1,
+    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
+    "infoPagador": "OpenPix testing"
+  },
+  "company": {
+    "id": "624f46f9e93f9f521c8308d7",
+    "name": "Pizzaria do José",
+    "taxID": "4722767300014"
+  },
+  "account": {
+    "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
+  }
+}
+```
+
+</TabItem>
+<TabItem value='payload-qrcode-static'>
+
+```json
+{
+  "pixQrCode": {
+    "name": "Pix QrCode",
+    "value": 1000,
+    "comment": "Pagamento OpenPix",
+    "identifier": "ea83401ed4834b3ea6f1f283b389af29",
+    "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
+    "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
+    "createdAt": "2021-03-12T12:43:54.528Z",
+    "updatedAt": "2021-03-12T12:44:09.360Z",
+    "brCode": "http://localhost:5001/openpix/testing?idenfifier=ea83401ed4834b3ea6f1f283b389af29"
+  },
+  "charge": null,
+  "pix": {
+    "charge": null,
+    "pixQrCode": {
+        "name": "Pix QrCode",
+        "value": 1000,
+        "comment": "Pagamento OpenPix",
+        "identifier": "ea83401ed4834b3ea6f1f283b389af29",
+        "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
+        "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
+        "createdAt": "2021-03-12T12:43:54.528Z",
+        "updatedAt": "2021-03-12T12:44:09.360Z",
+        "brCode": "http://localhost:5001/openpix/testing?idenfifier=ea83401ed4834b3ea6f1f283b389af29"
+    },
+    "customer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    },
+    "payer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    },
+    "time": "2021-03-12T12:44:09.269Z",
+    "value": 1,
+    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
+    "infoPagador": "OpenPix testing"
+  },
+  "company": {
+    "id": "624f46f9e93f9f521c8308d7",
+    "name": "Pizzaria do José",
+    "taxID": "4722767300014"
+  },
+  "account": {
+    "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
+  }
+}
+```
+
+</TabItem>
+</Tabs>

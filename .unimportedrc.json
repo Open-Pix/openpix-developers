@@ -1,0 +1,21 @@
+{
+  "entry": [ 
+    "packages/**/src/pages/*.{js,ts,tsx}"
+  ],
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/*.tests.{js,jsx,ts,tsx}",
+    "**/*.test.{js,jsx,ts,tsx}",
+    "**/*.spec.{js,jsx,ts,tsx}",
+    "**/tests/**",
+    "**/__tests__/**",
+    "**/__generated__/*",
+    "**/build/**",
+    "**/*.d.ts",
+    "**/*.stories.tsx",
+    "**/*.story.tsx"
+  ],
+  "ignoreUnimported": [],
+  "ignoreUnused": [],
+  "ignoreUnresolved": []
+}

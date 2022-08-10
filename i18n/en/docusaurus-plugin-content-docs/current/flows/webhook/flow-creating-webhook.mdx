@@ -1,0 +1,191 @@
+---
+id: flow-create-webhook
+title: Creating a webhook to intercept a Pix
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Through Openpix it is possible to create webhooks to intercept when a pix is made. Today, there are two ways to create it: via platform or API.
+
+Below are examples of how to create them:
+
+<Tabs
+defaultValue="platform"
+    values={[
+    { label: 'Platform', value: 'platform', },
+    { label: 'API', value: 'api', },
+    ]
+}>
+
+<TabItem value='platform'>
+To create a webhook via platform just follow the steps below:
+
+### Step 1 - Settings
+
+Go to APIs found within the settings on the `home / settings / tabs / applications / list` route. Click on 'Create Webhook'.
+
+After the click, the creation screen will open for a new trigger:
+
+![CreateWebhook](/img/webhook/create-webhook-platform.png)
+
+Fields:
+
+- **Name** - Webhook name.
+- **Active** - whether the webhook is active or inactive.
+- **Event** - event to be heard (example: pix transaction received).
+- **Action** There are two types of action: call api and send email. Depending on which one you decide on, the mandatory parameter fields will be made available.
+
+#### Action
+
+When choosing a type of action, according to the chosen one, it will be mandatory to inform the necessary parameters for this.
+
+<Tabs
+defaultValue="action-email"
+    values={[
+    { label: 'Email', value: 'action-email', },
+    { label: 'API', value: 'action-api', },
+    ]
+}>
+<TabItem value='action-email'>
+
+![CreateWebhookEmail](/img/webhook/create-webhook-platform-email.png)
+
+Fields:
+
+- email: required
+
+</TabItem>
+
+<TabItem value='action-api'>
+
+![CreateWebhookApi](/img/webhook/create-webhook-platform-api.png)
+
+Fields:
+
+- url: mandatory, it must be a valid url and available for a call test when saving.
+- authorization: optional
+
+###### payload API
+
+Each time a pix is performed and retrieved by the application, the API will send the following payload to your API:
+
+```js
+payload {
+  charge: {
+    status: 'COMPLETED',
+    customer: {
+      name: 'Antonio Victor',
+      taxID: { taxID: '12345678976', type: 'BR:CPF' },
+      email: 'antoniocliente@example.com',
+      correlationID: '4979ceba-2132-4292-bd90-bee7fb2125e4'
+    },
+    value: 1000,
+    comment: 'Pagamento OpenPix',
+    transactionID: 'ea83401ed4834b3ea6f1f283b389af29',
+    correlationID: '417bae21-3d08-4cdb-9c2d-fee63c89e9e4',
+    paymentLinkID: '34697ed2-3790-4b60-8512-e7465b142d84',
+    createdAt: '2021-03-12T12:43:54.528Z',
+    updatedAt: '2021-03-12T12:44:09.360Z',
+    brCode: 'http://localhost:5001/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29'
+  },
+  pix: {
+    charge: {
+      status: 'COMPLETED',
+      customer: {
+        name: 'Antonio Victor',
+        taxID: { taxID: '12345678976', type: 'BR:CPF' },
+        email: 'antoniocliente@example.com',
+        correlationID: '4979ceba-2132-4292-bd90-bee7fb2125e4'
+      },
+      value: 1000,
+      comment: 'Pagamento OpenPix',
+      transactionID: 'ea83401ed4834b3ea6f1f283b389af29',
+      correlationID: '417bae21-3d08-4cdb-9c2d-fee63c89e9e4',
+      paymentLinkID: '34697ed2-3790-4b60-8512-e7465b142d84',
+      createdAt: '2021-03-12T12:43:54.528Z',
+      updatedAt: '2021-03-12T12:44:09.360Z'
+    },
+    time: '2021-03-12T12:44:09.269Z',
+    value: 1,
+    transactionID: 'ea83401ed4834b3ea6f1f283b389af29',
+    infoPagador: 'OpenPix testing'
+  }
+}
+```
+
+**obs**: the `value` field is in cents.
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value='api'>
+
+To register the webhook via API just follow our specification to perform a POST at [Webhook api] (https://developers.openpix.com.br/api#tag/webhook/paths/~1api~1openpix~1v1~1webhook/post).
+
+<Tabs
+defaultValue="curl"
+    values={[
+    { label: 'cURL', value: 'curl', },
+    { label: 'JavaScript', value: 'js', },
+    ]
+}>
+<TabItem value="curl">
+
+```jsx
+curl --location --request POST 'http://localhost:5001/api/openpix/v1/webhook' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <appID>' \
+--data-raw '{
+    "webhook": {
+        "name": "webhook via api",
+        "url": "https://minhaurl.test/webhook",
+        "authorization": "auth_key",
+        "isActive": true
+    }
+}'
+```
+
+</TabItem>
+<TabItem value="js">
+
+```jsx
+const createWebhook = async () => {
+  const payload = {
+    "name": "webhook via api",
+    "url": "https://minhaurl.test/webhook",
+    "authorization": "auth_key",
+    "isActive": true
+  }
+
+  const response = await fetch('http://api.openpix.com.br/api/openpix/v1/webhook', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'appID',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+  console.log({
+    data,
+  });
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Payload
+
+- name: name of the webhook
+- url: valid url where the webhook will be called
+- authorization (optional): auth key for validation in OpenPix in its API. Optional field, however we indicate that it exists.
+- isActive: active or inactive
+
+</TabItem>
+</Tabs>

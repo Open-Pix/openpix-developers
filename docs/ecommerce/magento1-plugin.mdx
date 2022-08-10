@@ -1,0 +1,209 @@
+---
+id: magento1-plugin
+title: Integrando a OpenPix com Magento1
+sidebar_label: Magento1 OpenPix Plugin
+---
+
+### Plugin Pix para Magento1
+
+## Resumo
+
+Este documento detalha passos necessários para conectar a sua plataforma de e-Commerce, baseada no Magento1, na OpenPix. A plataforma OpenPix efetua em tempo real a conciliação entre seu Banco e seu e-Commerce.
+Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real com QrCodes Pix, enviar Links de Pagamento, gerenciar cobranças incluindo extornos.
+
+> _Nota: Este documento espera que você já tenha um ambiente Magento1 ativo._
+
+## 1. Instale o Plugin OpenPix na sua instância Magento1
+
+Faça o download da versão .zip do plugin pelo link abaixo:
+
+![Banner](/img/ecommerce/woocommerce-banner.png)
+[Download OpenPix Magento1 Plugin - versão 1.2.8](pathname:///magento1/openpix_pix.1.2.8.zip) - Versão Atual
+
+<details>
+  <summary>Change Log</summary>
+
+#### 1.2.8 - 28/06/2021
+
+- Improves on QRCode for email and checkout success
+
+#### 1.2.7 - 25/06/2021
+
+- Improves on QRCode size on emails
+
+#### 1.2.6 - 17/06/2021
+
+- Improves on order detail and order email
+
+#### 1.2.0 - 21/02/2021
+
+- Implements the new UI for checkout success when generating a new order
+- Real-time inside of checkout success when paying the Order.
+  - When pay, the UI will update and will show that the order was paid.
+  - ![success-payment.png](/img/ecommerce/magento1/successPayment.png)
+
+#### 1.1.5 - 12/11/2021
+
+- OrderId added on Charge comment. Now will have "Store Name#123456"
+
+#### 1.1.4 - 08/11/2021
+
+- OrderId added on OpenPix Charge additional info
+
+#### 1.1.3 - 19/10/2021
+
+- Improves for Webhook Auth to avoid Apache blocking authorization header
+
+#### 1.1.2 - 17/09/2021
+
+- Fix Typo on Success page for the line "Confirme as informações e finalize o pagamento."
+- Fix Email to send the Qr Code Image and the Pix Br Code
+- Improve for logs when generating a new order
+
+#### 1.1.1 - 16/09/2021
+
+- Improves for Payment Title
+- Improves for Webhook Validation. If webhook accuses an invalid header authorization, it will log on `~/var/log/openpix_webhooks.log` a message with information.
+- Improves for Webhook Validation. If webhook accuses an invalid header authorization, it will return a json like:
+
+```json
+{
+  "error": "Invalid Request",
+  "description": "Invalid authorization header: magent",
+  "field": "authorization header"
+}
+```
+
+#### 1.1.0 - 06/09/2021
+
+- New Button to select which status the order must be created
+
+#### 1.0.8 - 02/09/2021
+
+- Improves for customer CPF/CNPJ
+
+#### 1.0.7 - 02/09/2021
+
+- Sending platform plugin info on request header: magento plugin version, platform name
+- Validation for customer CPF/CNPJ
+
+#### 1.0.6 - 02/09/2021
+
+- Improves Customer Order Email: sending safe info
+- Minor updates
+
+#### 1.0.5 - 16/08/2021
+
+- Improves Invoice Email
+- Minor updates
+
+#### 1.0.4 - 28/07/2021
+
+- Add validation for Customer phone
+- Minor updates
+
+#### 1.0.3 - 26/07/2021
+
+- Customer improves: saving more fields on OpenPix platform
+- Minor updates for customer
+
+#### 1.0.2 - 26/07/2021
+
+- Improve for comment characters length
+- Minor updates
+
+#### 1.0.1 - 01/07/2021
+
+- Minor updates
+
+#### 1.0.0 - 01/06/2021
+
+- Initial Version
+
+</details>
+
+Extraia o conteúdo do arquivo .zip e cole dentro da pasta root da sua loja Magento1. Geralmente a loja root é nomeada como `src` que faz referência à source. Caso sua loja seja diferente, procure pela pasta que contenha outras pastas como:
+
+- app
+- js
+- lib
+- skin
+- var
+
+Assim como no exemplo abaixo:
+
+![magento1-src-folder](/img/ecommerce/magento1/magento1-src-folder.png)
+
+Encontrando a pasta que contenha essas citadas basta realizar o seguinte:
+
+- Copiar os arquivos extraídos do .zip;
+- Colar dentro dessa pasta
+
+## 2. Configurando o Plugin Magento1
+
+Entre em Magento1 Admin -> System > Configuration > Sales (side menu) > Payment Methods
+
+![sales_pay_method.png](/img/ecommerce/magento1/sales_pay_method.png)
+
+Ao acessar `Payment Methods` você irá notar o Collapsible `OpenPix - Pix`
+
+![openpix_pay_tab.png](/img/ecommerce/magento1/openpix_pay_tab.png)
+
+- **App ID** Insira o AppID ou Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../apis/api-getting-started.md)
+- **Webhook Authorization** Crie uma senha para a integração do Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
+  - Lembre-se: A URL a ser utilizada no webhook deverá ser: `https://yourstore/openpix/webhook` no momento em que cadastrá-lo na plataforma OpenPix
+  - Lembre-se: A chave que você utilizar aqui deverá ser a mesma no momento em que cadastrá-la na plataforma OpenPix.
+  - Crie um Webhook [aqui](#3-crie-o-webhook-dentro-da-plataforma-openpix).
+- **Enabled** Ativar/Desativar o plugin como método de pagamento
+- **Title** Título do método de pagamento em sua loja Magento1
+
+### 2.2 Configurando CPF/CNPJ para o Customer (opcional)
+
+Para salvar o cpf/cnpj do customer da order na sua cobrança OpenPix é necessário que seja ativado o campo `TaxVat` em sua loja Magento.
+
+Entre em Magento1 Admin -> System > Configuration > Customers (side menu) > Customer Configuration
+
+![magento1-customer-sidemenu](/img/ecommerce/magento1/magento1-customer-sidemenu.png)
+
+Em `Show Tax/VAT Number` selecione o valor required:
+
+![magento1-customer-taxvat](/img/ecommerce/magento1/magento1-customer-taxvat.png)
+
+A partir de agora os clientes terão que preencher esse campo com o CPF ou CNPJ e o mesmo será usado para salvar o cliente na plataforma OpenPix.
+
+### 2.3 Giftback
+
+Importante lembrete sobre a feature de Giftback para magento 1. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
+
+> A versão minima do plugin Magento1 para consumir a feature giftback é a 1.2.5
+
+## 3. Crie o Webhook dentro da Plataforma OpenPix
+
+Registre o Webhook que será responsável para atualizar sua loja Magento1 quando uma cobrança Pix for paga.
+
+Para realizar o registro de um novo Webhook siga os passos abaixo:
+
+- Va até a plataforma OpenPix e acesse: Admin -> API/Plugins -> Novo Webhook
+- Utilize a mesma senha cadastrada em sua loja Magento1. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
+- A URL de Callback que deve ser utilizada no cadastro se encontra logo abaixo ao campo em que se registra a senha do webhook dentro da sua loja Magento1. O padrão é: `https://yourstore/openpix/webhook`
+
+![Webhook](/img/ecommerce/magento1/magento1-openpix-webhook.png)
+
+## 4. Realizar Pedido com Pix
+
+Escolha a opção de pagar o pedido usando Pix
+
+![Pay Pix](/img/ecommerce/magento1/magento1-checkout-cart.png)
+
+Pague o Pix usando o app do seu banco.
+
+![Checkout Success](/img/ecommerce/magento1/successPayment.png)
+
+Valide que o status do Pedido mudou após o pagamento
+
+## Debug
+
+Para debugar o plugin OpenPix temos dois arquivos e você encontra ambos dentro de `var/log`:
+
+- `openpix_exception.log`: arquivo que concentra logs referentes ao processo de criação de um novo pedido Magento e consequentemente a charge no lado da OpenPix
+- `openpix_webhooks.log`: arquivo que concentra logs referentes ao processo de pagamento de um pedido. O webhook é chamado quando identificamos um novo Pix em sua conta e o mesmo trata de atualizar o status da order em sua loja Magento.

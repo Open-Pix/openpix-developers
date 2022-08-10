@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.OpenPix": {
+    "message": "OpenPix",
+    "description": "The label for category OpenPix in sidebar docs"
+  },
+  "sidebar.docs.category.Single Sign On": {
+    "message": "Single Sign On",
+    "description": "The label for category Single Sign On in sidebar docs"
+  },
+  "sidebar.docs.category.Integrations": {
+    "message": "Integrations",
+    "description": "The label for category Integrations in sidebar docs"
+  },
+  "sidebar.docs.category.API": {
+    "message": "API",
+    "description": "The label for category API in sidebar docs"
+  },
+  "sidebar.docs.category.Flows": {
+    "message": "Flows",
+    "description": "The label for category Flows in sidebar docs"
+  },
+  "sidebar.docs.category.Webhook": {
+    "message": "Webhook",
+    "description": "The label for category Webhook in sidebar docs"
+  },
+  "sidebar.docs.category.Policies": {
+    "message": "Policies",
+    "description": "The label for category Policies in sidebar docs"
+  },
+  "sidebar.docs.category.E-commerce": {
+    "message": "E-commerce",
+    "description": "The label for category E-commerce in sidebar docs"
+  },
+  "sidebar.docs.category.Plataform": {
+    "message": "Plataform",
+    "description": "The label for category Plataform in sidebar docs"
+  },
+  "sidebar.docs.category.Modo Teste": {
+    "message": "Modo Teste",
+    "description": "The label for category Modo Teste in sidebar docs"
+  },
+  "sidebar.docs.category.Políticas": {
+    "message": "Políticas",
+    "description": "The label for category Políticas in sidebar docs"
+  },
+  "sidebar.docs.category.FAQ": {
+    "message": "FAQ",
+    "description": "The label for category FAQ in sidebar docs"
+  }
+}

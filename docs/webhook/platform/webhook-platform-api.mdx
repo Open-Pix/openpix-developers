@@ -1,0 +1,47 @@
+---
+id: webhook-platform-api
+title: Criando um webhook para interceptar um Pix e chamar uma API
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Pela Openpix é possível criar webhooks para interceptar quando um pix for realizado. Hoje, há duas maneiras de realizar a criação do mesmo: via plataforma ou API.
+
+Neste tutorial iremos descrever como criar um webhook para informar o recebimento de um novo Pix e devolvê-lo em uma API registrada.
+
+Para criar um webhook via plataforma basta seguir os passos abaixo:
+
+### Step 1 - Ajustes
+
+Vá até o Menu Administrador e procure por `API/Plugins`.
+
+![AdminPanel](/img/apis/admin-panel.png)
+
+Clique em `Novo Webhook`.
+
+![NewWebhook](/img/webhook/new-webhook.png)
+
+Após o clique será aberta a tela de crição para um novo webhook:
+
+![CreateWebhook](/img/webhook/create-new-webhook.png)
+
+Campos:
+
+- **Nome** - nome do webhook.
+- **Ativo** - se o webhook esta ativo ou inativo.
+- **Evento** - evento a ser ouvido (exemplo: transação pix recebida).
+- **Ação** existem dois tipos de ação: chamar api e enviar email. Dependendo de qual decidir será disponibilizado os campos paramêtros obrigatórios.
+
+#### Ação
+
+Ao escolher um tipo de ação, de acordo com a escolhida será obrigatório informar os paramêtros necessários para tal. Vamos escolher a ação API.
+
+![CreateWebhook](/img/webhook/create-new-webhook-api.png)
+
+Campos:
+
+- url: obrigatório, necessário ser uma url válida e disponível para um teste de chamada no momento de salvar.
+- authorization: opcional
+
+[Exemplos de payload do Webhook](../webhook-samples.mdx)
