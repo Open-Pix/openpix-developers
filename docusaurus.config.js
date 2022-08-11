@@ -44,6 +44,11 @@ module.exports = {
           showLastUpdateTime: false,
           path: './docs',
           sidebarPath: './sidebars.js',
+          remarkPlugins: [require('mdx-mermaid')],
+          editUrl: ({ locale, versionDocsDirPath, docPath }) => {
+            return `https://github.com/Open-Pix/developers/edit/main/${versionDocsDirPath}/${docPath}`;
+          },
+          editCurrentVersion: true,
         },
         // "blog": {
         //   "path": "blog"
