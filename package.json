@@ -26,8 +26,8 @@
   },
   "scripts": {
     "build": "docusaurus build",
-    "build:ptbr": "docusaurus build --locale pt-BR",
     "build:en": "docusaurus build --locale en",
+    "build:ptbr": "docusaurus build --locale pt-BR",
     "deploy": "docusaurus deploy",
     "docusaurus": "docusaurus",
     "i18n": "yarn write-translations --locale en",
@@ -35,8 +35,8 @@
     "rename-version": "docusaurus-rename-version",
     "serve": "docusaurus serve",
     "start": "docusaurus start",
-    "start:ptbr": "docusaurus start --locale pt-BR",
     "start:en": "docusaurus start --locale en",
+    "start:ptbr": "docusaurus start --locale pt-BR",
     "swizzle": "docusaurus swizzle",
     "version": "docusaurus-version",
     "write-translations": "docusaurus write-translations"
