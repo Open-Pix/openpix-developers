@@ -11,6 +11,6 @@ Click no sidemenu `Giftbacks` no menu lateral esquerdo, e é necessário que voc
 - Preencher o site do seu ecommerce, e a porcentagem de giftback que pretende oferecer aos clientes.
 - Após isso clicar em `Ativar Giftback`, e o giftback estará ativo.
 
-![Install Brazilian Market](/img/giftback/active-tutorial.png)
+![giftback active tutorial](/img/giftback/enable-giftback.png)
 
 A partir de agora todas as cobranças criadas pela sua empresa irão gerar Giftback.
