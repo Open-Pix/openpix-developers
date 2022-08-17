@@ -20,7 +20,10 @@ paths:
       parameters:
         - name: id
           in: path
-          description: charge ID or correlation ID
+          description:
+            charge ID or correlation ID. You will need URI encoding if your
+            correlation ID has characters outside the ASCII set or reserved
+            characters (%, \#, /).
           required: true
           schema:
             type: string
@@ -3026,5 +3029,5 @@ tags:
       These endpoint are only available for Beta users, ask to be in the waiting list in our support chat
   - name: partner (request access)
     description: |
-      Partners integrates affiliated companies.<br/>
+      Partners integrate affiliated companies.<br/>
       They can register new companies, manage them, and earn money from them.
