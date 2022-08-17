@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "https-browserify": "^1.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "process": "0.11.10",
@@ -39,6 +41,16 @@
     "start:ptbr": "docusaurus start --locale pt-BR",
     "swizzle": "docusaurus swizzle",
     "version": "docusaurus-version",
-    "write-translations": "docusaurus write-translations"
+    "write-translations": "docusaurus write-translations",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "yarn prettier",
+      "eslint --fix"
+    ],
+    "*.yml": [
+      "prettier --write"
+    ]
   }
 }
