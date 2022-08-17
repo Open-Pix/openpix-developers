@@ -27,7 +27,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "charge ID or correlation ID",
+            "description": "charge ID or correlation ID. You will need URI encoding if your correlation ID has characters outside the ASCII set or reserved characters (%, \\#, /).",
             "required": true,
             "schema": {
               "type": "string"
@@ -4363,7 +4363,7 @@
     },
     {
       "name": "partner (request access)",
-      "description": "Partners integrates affiliated companies.<br/>\nThey can register new companies, manage them, and earn money from them.\n"
+      "description": "Partners integrate affiliated companies.<br/>\nThey can register new companies, manage them, and earn money from them.\n"
     }
   ]
 }
