@@ -69,6 +69,7 @@ paths:
                       - key: Order
                         value: "302"
                     expiresIn: 2592000
+                    removedAt: 2021-03-03T14:10:13.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
         "400":
