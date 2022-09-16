@@ -10,9 +10,14 @@ Toda vez que um pix for realizado a API irá enviar um payload para sua API do W
 
 Os tipos são: Pix Avulso, Pix Cobrança, Pix QrCode, Pix Totalmente Reembolsado, Pix Parcialmente Reembolsado.
 
+Os webhooks do tipo `Transação pix recebida` enviam estes payloads.
+
 - **Pix Avulso**: um Pix que não possui uma cobrança registrada a ele na plataforma OpenPix
 - **Pix Cobrança**: Pix com uma cobrança registrada na plataforma OpenPix
 - **Pix QrCode**: Pix estático gerado a partir de um Qr Code estático
+
+Os webhooks do tipo `Reembolso recebido` enviam estes payloads.
+
 - **Pix Totalmente Reembolsado**: Um pix que foi reembolsado totalmente, identificado pela flag `partial` no payload pix
 - **Pix Parcialmente Reembolsado**: Um pix que foi reembolsado parcialmente, ou seja, uma parte do valor,  identificado pela flag `partial` no payload pix
 
