@@ -8,11 +8,13 @@ import TabItem from '@theme/TabItem';
 
 Toda vez que um pix for realizado a API irá enviar um payload para sua API do Webhook. De acordo com o tipo do Pix será enviado um payload para tal.
 
-Os três tipos são: Pix Avulso, Pix Cobrança e Pix QrCode.
+Os tipos são: Pix Avulso, Pix Cobrança, Pix QrCode, Pix Totalmente Reembolsado, Pix Parcialmente Reembolsado.
 
 - **Pix Avulso**: um Pix que não possui uma cobrança registrada a ele na plataforma OpenPix
 - **Pix Cobrança**: Pix com uma cobrança registrada na plataforma OpenPix
 - **Pix QrCode**: Pix estático gerado a partir de um Qr Code estático
+- **Pix Totalmente Reembolsado**: Um pix que foi reembolsado totalmente, identificado pela flag `partial` no payload pix
+- **Pix Parcialmente Reembolsado**: Um pix que foi reembolsado parcialmente, ou seja, uma parte do valor,  identificado pela flag `partial` no payload pix
 
 <Tabs
     defaultValue="payload-pix"
@@ -20,6 +22,8 @@ Os três tipos são: Pix Avulso, Pix Cobrança e Pix QrCode.
     { label: 'Pix Cobrança', value: 'payload-pix', },
     { label: 'Pix Avulso', value: 'payload-detached', },
     { label: 'Pix QrCode', value: 'payload-qrcode-static', },
+    { label: 'Pix Totalmente Reembolsado', value: 'payload-total-refund-pix', },
+    { label: 'Pix Parcialmente Reembolsado', value: 'payload-partial-refund-pix', },
     ]
     }>
 
@@ -69,6 +73,7 @@ Os três tipos são: Pix Avulso, Pix Cobrança e Pix QrCode.
 ```
 
 </TabItem>
+
 <TabItem value='payload-pix'>
 
 ```json
@@ -145,6 +150,7 @@ Os três tipos são: Pix Avulso, Pix Cobrança e Pix QrCode.
 ```
 
 </TabItem>
+
 <TabItem value='payload-qrcode-static'>
 
 ```json
@@ -207,6 +213,152 @@ Os três tipos são: Pix Avulso, Pix Cobrança e Pix QrCode.
   "account": {
     "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
   }
+}
+```
+
+</TabItem>
+
+<TabItem value='payload-total-refund-pix'>
+
+```json
+```json
+{
+  "event": "OPENPIX:TRANSACTION_REFUND_RECEIVED",
+  "charge": {
+    "customer": null,
+    "value": 151,
+    "comment": "",
+    "identifier": "c37368e176894eea9b35fe0ea8ef2b7d",
+    "transactionID": "c37368e176894eea9b35fe0ea8ef2b7d",
+    "status": "COMPLETED",
+    "additionalInfo": [],
+    "giftbackAppliedValue": 0,
+    "discount": 0,
+    "valueWithDiscount": 151,
+    "createdAt": "2022-09-16T13:57:26.300Z",
+    "correlationID": "5e1f0740-4a18-4030-a5a7-686d3d8ec419",
+    "paymentLinkID": "47478762-f0fb-4996-a972-519edae95681",
+    "updatedAt": "2022-09-16T14:02:59.159Z",
+    "expiresIn": 2591999,
+    "pixKey": "c4249323-b4ca-43f2-8139-874baab09b93",
+    "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/01jAVrYybMRhanrjbpgCDIxFrHxa7zdBSdcIinjmXbp52040000530398654041.515802BR5912Your_Company6009Sao_Paulo62290525c37368e176894eea9b35fe0ea63047E32",
+    "paymentLinkUrl": "http://localhost:8777/pay/47478762-f0fb-4996-a972-519edae95681",
+    "qrCodeImage": "http://localhost:5001/openpix/charge/brcode/image/47478762-f0fb-4996-a972-519edae95681.png",
+    "globalID": "Q2hhcmdlOjYzMjQ4MGM4MDIxM2I4YTA2Y2FlYjAxZg=="
+  },
+  "pixQrCode": null,
+  "pix": {
+    "customer": null,
+    "charge": {
+      "customer": null,
+      "value": 151,
+      "comment": "",
+      "identifier": "c37368e176894eea9b35fe0ea8ef2b7d",
+      "transactionID": "c37368e176894eea9b35fe0ea8ef2b7d",
+      "status": "COMPLETED",
+      "additionalInfo": [],
+      "giftbackAppliedValue": 0,
+      "discount": 0,
+      "valueWithDiscount": 151,
+      "createdAt": "2022-09-16T13:57:26.300Z",
+      "correlationID": "5e1f0740-4a18-4030-a5a7-686d3d8ec419",
+      "paymentLinkID": "47478762-f0fb-4996-a972-519edae95681",
+      "updatedAt": "2022-09-16T14:02:59.159Z",
+      "expiresIn": 2591999,
+      "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/01jAVrYybMRhanrjbpgCDIxFrHxa7zdBSdcIinjmXbp52040000530398654041.515802BR5912Your_Company6009Sao_Paulo62290525c37368e176894eea9b35fe0ea63047E32",
+      "paymentLinkUrl": "http://localhost:8777/pay/47478762-f0fb-4996-a972-519edae95681",
+      "qrCodeImage": "http://localhost:5001/openpix/charge/brcode/image/47478762-f0fb-4996-a972-519edae95681.png",
+      "globalID": "Q2hhcmdlOjYzMjQ4MGM4MDIxM2I4YTA2Y2FlYjAxZg=="
+    },
+    "value": 151,
+    "time": "2022-09-16T14:15:39.597Z",
+    "endToEndId": "D23114447202209161415HPf0GiKMeR4",
+    "createdAt": "2022-09-16T14:15:41.909Z",
+    "pixKey": "c4249323-b4ca-43f2-8139-874baab09b93",
+    "partial": false,
+    "globalID": "UGl4VHJhbnNhY3Rpb246NjMyNDg1MGQ3OTE4NTgxZDczOGNkZjg0"
+  },
+  "company": {
+    "id": "61240394529a1b71ee70d855",
+    "name": "CASAS AMERICANAS",
+    "taxID": "05460236000124"
+  },
+  "account": {
+    "clientId": "71034651-61E0-1FAD-4688-D967F095CFBF"
+  },
+  "refunds": []
+}
+```
+
+</TabItem>
+<TabItem value='payload-partial-refund-pix'>
+
+```json
+{
+  "event": "OPENPIX:TRANSACTION_REFUND_RECEIVED",
+  "charge": {
+    "customer": null,
+    "value": 151,
+    "comment": "",
+    "identifier": "c37368e176894eea9b35fe0ea8ef2b7d",
+    "transactionID": "c37368e176894eea9b35fe0ea8ef2b7d",
+    "status": "COMPLETED",
+    "additionalInfo": [],
+    "giftbackAppliedValue": 0,
+    "discount": 0,
+    "valueWithDiscount": 151,
+    "createdAt": "2022-09-16T13:57:26.300Z",
+    "correlationID": "5e1f0740-4a18-4030-a5a7-686d3d8ec419",
+    "paymentLinkID": "47478762-f0fb-4996-a972-519edae95681",
+    "updatedAt": "2022-09-16T14:02:59.159Z",
+    "expiresIn": 2591999,
+    "pixKey": "c4249323-b4ca-43f2-8139-874baab09b93",
+    "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/01jAVrYybMRhanrjbpgCDIxFrHxa7zdBSdcIinjmXbp52040000530398654041.515802BR5912Your_Company6009Sao_Paulo62290525c37368e176894eea9b35fe0ea63047E32",
+    "paymentLinkUrl": "http://localhost:8777/pay/47478762-f0fb-4996-a972-519edae95681",
+    "qrCodeImage": "http://localhost:5001/openpix/charge/brcode/image/47478762-f0fb-4996-a972-519edae95681.png",
+    "globalID": "Q2hhcmdlOjYzMjQ4MGM4MDIxM2I4YTA2Y2FlYjAxZg=="
+  },
+  "pixQrCode": null,
+  "pix": {
+    "customer": null,
+    "charge": {
+      "customer": null,
+      "value": 151,
+      "comment": "",
+      "identifier": "c37368e176894eea9b35fe0ea8ef2b7d",
+      "transactionID": "c37368e176894eea9b35fe0ea8ef2b7d",
+      "status": "COMPLETED",
+      "additionalInfo": [],
+      "giftbackAppliedValue": 0,
+      "discount": 0,
+      "valueWithDiscount": 151,
+      "createdAt": "2022-09-16T13:57:26.300Z",
+      "correlationID": "5e1f0740-4a18-4030-a5a7-686d3d8ec419",
+      "paymentLinkID": "47478762-f0fb-4996-a972-519edae95681",
+      "updatedAt": "2022-09-16T14:02:59.159Z",
+      "expiresIn": 2591999,
+      "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/01jAVrYybMRhanrjbpgCDIxFrHxa7zdBSdcIinjmXbp52040000530398654041.515802BR5912Your_Company6009Sao_Paulo62290525c37368e176894eea9b35fe0ea63047E32",
+      "paymentLinkUrl": "http://localhost:8777/pay/47478762-f0fb-4996-a972-519edae95681",
+      "qrCodeImage": "http://localhost:5001/openpix/charge/brcode/image/47478762-f0fb-4996-a972-519edae95681.png",
+      "globalID": "Q2hhcmdlOjYzMjQ4MGM4MDIxM2I4YTA2Y2FlYjAxZg=="
+    },
+    "value": 1,
+    "time": "2022-09-16T14:15:39.597Z",
+    "endToEndId": "D23114447202209161415HPf0GiKMeR4",
+    "createdAt": "2022-09-16T14:15:41.909Z",
+    "pixKey": "c4249323-b4ca-43f2-8139-874baab09b93",
+    "partial": true,
+    "globalID": "UGl4VHJhbnNhY3Rpb246NjMyNDg1MGQ3OTE4NTgxZDczOGNkZjg0"
+  },
+  "company": {
+    "id": "61240394529a1b71ee70d855",
+    "name": "CASAS AMERICANAS",
+    "taxID": "05460236000124"
+  },
+  "account": {
+    "clientId": "71034651-61E0-1FAD-4688-D967F095CFBF"
+  },
+  "refunds": []
 }
 ```
 
