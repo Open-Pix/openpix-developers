@@ -71,7 +71,7 @@ module.exports = {
           },
           {
             route: '/api/',
-            spec: './src/swaggers/openpix.json',
+            spec: './src/swaggers/openpix.yml',
           },
         ],
       },
