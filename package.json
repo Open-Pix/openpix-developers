@@ -15,6 +15,7 @@
     "react-dom": "18.2.0",
     "redoc": "2.0.0",
     "redocusaurus": "1.4.0",
+    "snippet-enricher-cli": "^0.0.8",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
@@ -52,6 +53,7 @@
     "rename-version": "docusaurus-rename-version",
     "serve": "docusaurus serve",
     "start": "docusaurus start",
+    "generate-examples": "snippet-enricher-cli --targets='node_native,shell_curl,php_curl,python_python3' --input=src/swaggers/openpix.json > src/swaggers/openpix-with-examples.json",
     "start:en": "docusaurus start --locale en",
     "start:ptbr": "docusaurus start --locale pt-BR",
     "swizzle": "docusaurus swizzle",
