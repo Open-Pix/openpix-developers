@@ -248,20 +248,6 @@ paths:
             return_existing:
               value: true
       description: Endpoint to create a new Charge for a customer
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/charge", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-                "value": 100,
-              }
-            });
       requestBody:
         description: Data to create a new charge
         required: true
@@ -454,21 +440,6 @@ paths:
         - refund
       summary: Create a new refund
       description: Endpoint to create a new refund for a customer
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/webhook", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "transactionEndToEndId": "9134e286-6f71-427a-bf00-241681624586",
-                "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-                "value": 100
-              }
-            });
       requestBody:
         description: Data to create a new refund
         required: true
@@ -515,13 +486,11 @@ paths:
       parameters:
         - name: id
           in: path
-          description: customer ID or correlation ID
+          description: correlation ID
           required: true
           schema:
             type: string
           examples:
-            customerId:
-              value: Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==
             correlationID:
               value: fe7834b4060c488a9b0f89811be5f5cf
       responses:
@@ -626,22 +595,6 @@ paths:
         - customer
       summary: Create a new Customer
       description: Endpoint to create a new Customer
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/customer", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "name": "OpenPix User",
-                "email": "email@example.com",
-                "phone": "5511999999999",
-                "correlationID": "9134e286-6f71-427a-bf00-241681624586"
-              }
-            });
       requestBody:
         description: Data to create a new customer
         required: true
@@ -981,24 +934,6 @@ paths:
         - webhook
       summary: Create a new Webhook
       description: Endpoint to create a new Webhook
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/webhook", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "webhook": {
-                  "name": "webhookName",
-                  "url": "https://mycompany.com.br/webhook",
-                  "authorization": "openpix",
-                  "isActive": true
-                }
-              }
-            });
       requestBody:
         description: Data to create a new webhook
         required: true
@@ -1481,22 +1416,6 @@ paths:
         - pixQrCode
       summary: Create a new Pix QrCode Static
       description: Endpoint to create a new Pix QrCode Static
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/qrcode-static", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-                "value": 100,
-                "comment": "good",
-                "identifier": "zr7833b4060c488a9b0f89811"
-              }
-            });
       requestBody:
         description: Data to create a new Pix QrCode Static
         required: true
@@ -1555,19 +1474,6 @@ paths:
         - payment (Beta - waiting list)
       summary: Confirm a Payment
       description: Endpoint to confirm a payment
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/pay/confirm", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "correlationID": "pay1",
-              }
-            });
       requestBody:
         description: Data to confirm a pending payment
         required: true
@@ -1624,22 +1530,6 @@ paths:
         - payment (Beta - waiting list)
       summary: Init a payment using a Pix Key
       description: Endpoint to init a payment using a Pix Key
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/pay/pix-key", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "pixKey": "c4249323-b4ca-43f2-8139-784baab09b93",
-                "pixKeyType": "RANDOM",
-                "value": 1,
-                "correlationID": "pay1"
-              }
-            });
       requestBody:
         description: Data to create new payment
         required: true
@@ -1699,20 +1589,6 @@ paths:
         - payment (Beta - waiting list)
       summary: Init a payment using a QRCode
       description: Endpoint to init a payment using a QRCode
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/pay/qrcode", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "qrcode": "00020126580014br.gov.bcb.pix01365fd0bae1-ccf3-4675-a189-c9eaee189bc65204000053039865406100.005802BR5909LOCALHOST6009Sao Paulo62100506doe10063042F24",
-                "correlationID": "pay1"
-              }
-            });
       requestBody:
         description: Data to create new payment
         required: true
@@ -1818,20 +1694,6 @@ paths:
         - giftback
       summary: Give Giftback to a Customer
       description: Endpoint to give Giftback to a Customer
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/giftback", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "taxID": "31324227036",
-                "value": 100
-              }
-            });
       requestBody:
         description: Data to give Giftback to a Customer
         required: true
@@ -2021,41 +1883,6 @@ paths:
         - users
       summary: Create or Update multiple users
       description: Endpoint to create or update multiple users
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/update-or-create", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "users": [
-                  {
-                    "id": "string",
-                    "emails": [
-                      "string"
-                    ],
-                    "taxID": "string",
-                    "name": "string",
-                    "nick": "string",
-                    "gender": "string",
-                    "tags": "string",
-                    "correlationID": "string",
-                    "manager": "string",
-                    "area": "string",
-                    "phoneNumbers": [
-                      "string"
-                    ],
-                    "birthDate": "2019-08-24",
-                    "admissionDate": "2019-08-24",
-                    "demissionDate": "2019-08-24",
-                    "password": "string"
-                  }
-                ]
-              }
-            });
       requestBody:
         description: Data to create or update users
         required: true
@@ -2116,26 +1943,6 @@ paths:
         The application should give access to our API to this companies, so they can use
 
         it too.
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/partner/application", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "application": {
-                  "name": "MyAPIAccess",
-                  "type": "API"
-                },
-                "taxID": {
-                  "taxID": "65914571000187",
-                  "type": "BR:CNPJ"
-                }
-              }
-            });
       requestBody:
         description: The request body to create a pre registration.
         required: true
@@ -2332,33 +2139,6 @@ paths:
         your
 
         company as a partner.
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch("https://api.openpix.com.br/api/openpix/v1/partner/company", {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "preRegistration": {
-                  "name": "Example LLC",
-                  "taxID": {
-                    "taxID": "11111111111111",
-                    "type": "BR:CNPJ"
-                  },
-                  "website": "examplellc.com"
-
-                },
-                "user": {
-                  "firstName": "John",
-                  "lastName": "Doe",
-                  "email": "johndoe@examplellc.com",
-                  "phone": "+5511912345678"
-                }
-              }
-            });
       requestBody:
         description: The request body to create a pre registration.
         required: true
@@ -2505,19 +2285,6 @@ paths:
         An additional fee may be charged depending on the minimum free
         withdrawal amount. See more about at
         https://developers.openpix.com.br/docs/FAQ/faq-virtual-account/#onde-posso-consultar-as-taxas-da-minha-conta-virtual
-      x-codeSamples:
-        - lang: 'JavaScript'
-          source: |
-            const response = await fetch(`https://api.openpix.com.br/api/openpix/v1/${accountId}/withdraw`, {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: {
-                "value": 7000
-              }
-            });
       parameters:
         - name: accountId
           in: path

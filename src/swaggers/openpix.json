@@ -719,15 +719,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "customer ID or correlation ID",
+            "description": "correlation ID",
             "required": true,
             "schema": {
               "type": "string"
             },
             "examples": {
-              "customerId": {
-                "value": "Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA=="
-              },
               "correlationID": {
                 "value": "fe7834b4060c488a9b0f89811be5f5cf"
               }
