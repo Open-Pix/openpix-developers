@@ -53,7 +53,6 @@
     "rename-version": "docusaurus-rename-version",
     "serve": "docusaurus serve",
     "start": "docusaurus start",
-    "generate-examples": "snippet-enricher-cli --targets='node_native,shell_curl,php_curl,python_python3' --input=src/swaggers/openpix.json > src/swaggers/openpix-with-examples.json",
     "start:en": "docusaurus start --locale en",
     "start:ptbr": "docusaurus start --locale pt-BR",
     "swizzle": "docusaurus swizzle",
