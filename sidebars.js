@@ -34,6 +34,7 @@ module.exports = {
       },
       'webhook/webhook-samples',
       'webhook/webhook-hmac',
+      'webhook/webhook-headers',
     ],
     Giftback: [
       'giftback/giftback-what-is',
