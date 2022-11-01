@@ -112,8 +112,9 @@ Para usar, precisamos ter três pontos configurados corretamente:
 
 ### Configurando o webhook
 
-Para criarmos o webhook, acesse a rota de [API/Plugins](https://app.openpix.com.br/home/api/list)
-dentro da nossa plataforma e clique no botão: `Novo webhook`. Você irá cair neste formulário:
+Para criarmos o webhook, acesse a [documentação](../webhook/platform/webhook-platform-api.mdx)
+para criar o webhook dentro da nossa plataforma e clique no botão: `Novo webhook`.
+Você irá cair neste formulário:
 
 ![Webhook](/img/integrations/new-webhook-form.png)
 
