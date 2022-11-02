@@ -7,6 +7,7 @@ module.exports = {
     ],
     Integrations: [
       'integrations/integration-overview',
+      'integrations/integration-aws-lambda',
       'integrations/integration-itau-bank',
       'integrations/integration-bradesco-bank',
       'integrations/integration-banco-do-brasil-bank',
@@ -34,6 +35,7 @@ module.exports = {
       },
       'webhook/webhook-samples',
       'webhook/webhook-hmac',
+      'webhook/webhook-headers',
     ],
     Giftback: [
       'giftback/giftback-what-is',

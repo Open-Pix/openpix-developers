@@ -9,7 +9,7 @@ Você pode usar [@openpix/react](https://www.npmjs.com/package/@openpix/react) p
 ## Como instalar
 
 ```jsx
-yarn install @openpix/react
+yarn add @openpix/react
 ```
 
 ## Configurar Polyfills
@@ -18,7 +18,7 @@ Este plugin usa o core-js para polyfill Promises
 Instale core-js
 
 ```jsx
-yarn install core-js
+yarn add core-js
 ```
 
 Adicione seu entrypoint do seu App
