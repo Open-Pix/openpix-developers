@@ -9,7 +9,7 @@
     "clsx": "^1.2.1",
     "core-js": "^3.26.0",
     "mdx-mermaid": "^1.3.2",
-    "mermaid": "^9.1.7",
+    "mermaid": "^9.2.0",
     "mobx": "^6.6.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
