@@ -7,6 +7,7 @@ module.exports = {
     ],
     'Integrações bancárias': [
       'bank-integrations/integration-overview',
+      'bank-integrations/integration-supported-banks',
       'bank-integrations/integration-itau-bank',
       'bank-integrations/integration-bradesco-bank',
       'bank-integrations/integration-banco-do-brasil-bank',
