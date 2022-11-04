@@ -112,6 +112,7 @@ paths:
                       - key: Order
                         value: "302"
                     expiresIn: 2592000
+                    expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
         "400":
@@ -216,6 +217,7 @@ paths:
                       - key: Order
                         value: "302"
                     expiresIn: 2592000
+                    expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
         "400":
@@ -299,6 +301,7 @@ paths:
                     paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
                     qrCodeImage: https://api.openpix.dev/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     expiresIn: 2592000
+                    expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
                     brCode: 000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
@@ -479,13 +482,11 @@ paths:
       parameters:
         - name: id
           in: path
-          description: customer ID or correlation ID
+          description: correlation ID
           required: true
           schema:
             type: string
           examples:
-            customerId:
-              value: Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==
             correlationID:
               value: fe7834b4060c488a9b0f89811be5f5cf
       responses:
@@ -1443,179 +1444,6 @@ paths:
                     updatedAt: 2021-03-02T17:28:51.882Z
                     brCode: 000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-        "400":
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/pay/confirm:
-    post:
-      tags:
-        - payment (Beta - waiting list)
-      summary: Confirm a Payment
-      description: Endpoint to confirm a payment
-      requestBody:
-        description: Data to confirm a pending payment
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: "#/components/schemas/PayConfirmPayload"
-            example:
-              correlationID: pay1
-      responses:
-        "200":
-          description: Payment destination account information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payment:
-                    $ref: "#/components/schemas/PayConfirmPayment"
-                example:
-                  payment:
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    destination:
-                      value: 100
-                      status: CONFIRMED
-                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                      pixKeyType: RANDOM
-                      account:
-                        branch: "1234"
-                        account: "12345"
-                        accountType: ContaCorrente
-                      psp:
-                        id: "1234"
-                        name: Banco de Exemplo
-                        code: "555"
-                      holder:
-                        name: Pessoa Juridica
-                        taxID:
-                          taxID: "1234567890"
-                          type: CNPJ
-        "400":
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/pay/pix-key:
-    post:
-      tags:
-        - payment (Beta - waiting list)
-      summary: Init a payment using a Pix Key
-      description: Endpoint to init a payment using a Pix Key
-      requestBody:
-        description: Data to create new payment
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: "#/components/schemas/PayPixKeyPayload"
-            example:
-              pixKey: c4249323-b4ca-43f2-8139-784baab09b93
-              pixKeyType: RANDOM
-              value: 1
-              correlationID: pay1
-      responses:
-        "200":
-          description: Payment destination account information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payment:
-                    $ref: "#/components/schemas/PaymentPixKey"
-                example:
-                  payment:
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    value: 100
-                    status: PENDING
-                    destination:
-                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                      pixKeyType: RANDOM
-                      account:
-                        branch: "1234"
-                        account: "12345"
-                        accountType: ContaCorrente
-                      psp:
-                        id: "1234"
-                        name: Banco de Exemplo
-                        code: "555"
-                      holder:
-                        name: Pessoa Juridica
-                        taxID:
-                          taxID: "1234567890"
-                          type: CNPJ
-        "400":
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/pay/qrcode:
-    post:
-      tags:
-        - payment (Beta - waiting list)
-      summary: Init a payment using a QRCode
-      description: Endpoint to init a payment using a QRCode
-      requestBody:
-        description: Data to create new payment
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: "#/components/schemas/PayQRCodeload"
-            example:
-              qrcode: 00020126580014br.gov.bcb.pix01365fd0bae1-ccf3-4675-a189-c9eaee189bc65204000053039865406100.005802BR5909LOCALHOST6009Sao
-                Paulo62100506doe10063042F24
-              correlationID: pay1
-      responses:
-        "200":
-          description: Payment destination account information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payment:
-                    $ref: "#/components/schemas/PaymentPixKey"
-                example:
-                  payment:
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    destination:
-                      value: 100
-                      status: PENDING
-                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                      pixKeyType: RANDOM
-                      account:
-                        branch: "1234"
-                        account: "12345"
-                        accountType: ContaCorrente
-                      psp:
-                        id: "1234"
-                        name: Banco de Exemplo
-                        code: "555"
-                      holder:
-                        name: Pessoa Juridica
-                        taxID:
-                          taxID: "1234567890"
-                          type: CNPJ
         "400":
           description: An error message
           content:
@@ -2651,140 +2479,6 @@ components:
       required:
         - name
         - identifier
-    PayPixKeyPayload:
-      type: object
-      properties:
-        correlationID:
-          type: string
-          description: Your correlation ID to keep track of this payment
-        pixKey:
-          type: string
-          description: Pix Key of destination account
-        pixKeyType:
-          description: Pix Key type of destination account
-          type: string
-          enum:
-            - CPF
-            - CNPJ
-            - EMAIL
-            - PHONE
-            - RANDOM
-        value:
-          description: Value of this payment in cents
-          type: number
-    PayQRCodeload:
-      type: object
-      properties:
-        correlationID:
-          type: string
-          description: Your correlation ID to keep track of this payment
-        qrcode:
-          type: string
-          description: QRCode text content EMV
-        value:
-          description: Value of this payment in cents, it won't be used if QRCode has a
-            predefined value
-          type: number
-    PayConfirmPayload:
-      type: object
-      properties:
-        correlationID:
-          type: string
-          description: Your correlation ID to keep track of this payment
-    DestinationAccount:
-      type: object
-      properties:
-        pixKey:
-          type: string
-          description: Pix Key of this destination account
-        pixKeyType:
-          type: string
-          description: Pix Key type of this destination account
-          enum:
-            - CPF
-            - CNPJ
-            - EMAIL
-            - PHONE
-            - RANDOM
-        account:
-          type: object
-          properties:
-            branch:
-              type: string
-              description: Branch of destination account
-            account:
-              type: string
-              description: Account number of destination account
-            accountType:
-              type: string
-              description: Account type of destination account
-        psp:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Payment Service Provider id
-            name:
-              type: string
-              description: Payment Service Provider name
-            code:
-              type: string
-              description: Payment Service Provider code
-        holder:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Account holder name
-            nameFriendly:
-              type: string
-              description: Account holder name friendly (Nome Fantasia)
-            taxID:
-              type: object
-              properties:
-                taxID:
-                  type: string
-                  description: Tax Identifier (CPF/CNPJ) of account holder
-                type:
-                  type: string
-                  description: Tax Identifier type
-                  enum:
-                    - CPF
-                    - CNPJ
-    PaymentPixKey:
-      type: object
-      properties:
-        correlationID:
-          type: string
-          description: your correlation ID to keep track of this payment
-        value:
-          description: Value of this payment in cents
-          type: number
-        status:
-          type: string
-          description: Payment status
-          enum:
-            - PENDING
-            - CONFIRMED
-        destination:
-          type: object
-          description: account destination info of this pix key
-          $ref: "#/components/schemas/DestinationAccount"
-    PayConfirmPayment:
-      type: object
-      properties:
-        correlationID:
-          type: string
-          description: your correlation ID to keep track of this payment
-        value:
-          description: Value of this payment in cents
-          type: number
-        status:
-          type: string
-          description: Payment status
-          enum:
-            - PENDING
-            - CONFIRMED
     User:
       type: object
       properties:
@@ -3038,11 +2732,6 @@ tags:
   - name: customer
     description: |
       Endpoint to manage Customer
-  - name: payment (Beta - waiting list)
-    description: >
-      Endpoint to init a payment using a Pix Key or QRCode.<br />
-
-      These endpoint are only available for Beta users, ask to be in the waiting list in our support chat
   - name: partner (request access)
     description: |
       Partners integrate affiliated companies.<br/>
