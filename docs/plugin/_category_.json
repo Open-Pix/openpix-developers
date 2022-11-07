@@ -1,0 +1,13 @@
+{
+  "label": "Plugin",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Plugin visão geral"
+  },
+  "customProps": {
+    "description": "Plugin documentação"
+  }
+}

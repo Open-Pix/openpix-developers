@@ -1,0 +1,13 @@
+{
+  "label": "Integrações",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Integrações visão geral"
+  },
+  "customProps": {
+    "description": "Integrações documentação"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "label": "Giftback",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Giftback visão geral"
+  },
+  "customProps": {
+    "description": "Giftback documentação"
+  }
+}
