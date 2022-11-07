@@ -42,17 +42,17 @@ module.exports = {
       },
       items: [
         {
-          to: 'docs/getting-started',
-          label: 'Documents',
+          to: 'docs/intro/getting-started',
+          label: 'Documentação',
           position: 'left',
         },
         {
-          to: 'apis',
+          to: 'docs/category/apis',
           label: 'API',
           position: 'left',
         },
         {
-          to: 'docs/plugin/',
+          to: 'docs/plugin',
           label: 'Plugin',
           position: 'left',
         },
