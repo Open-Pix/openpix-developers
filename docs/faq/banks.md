@@ -2,6 +2,9 @@
 id: faq-banks
 title: Bancos
 sidebar_label: Bancos
+tags:
+- faq
+- bank
 ---
 
 ### Meu banco não consegue ler o QR Code

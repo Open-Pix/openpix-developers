@@ -2,6 +2,10 @@
 id: occ-getting-started
 title: ""
 sidebar_label: Oracle Commerce Cloud
+tags:
+- ecommerce
+- oracle
+- occ
 ---
 
 ![Banner](/img/ecommerce/woocommerce-banner.png)

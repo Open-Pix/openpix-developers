@@ -2,6 +2,9 @@
 id: faq-charge
 title: Cobranças
 sidebar_label: Cobranças
+tags:
+- faq
+- charge
 ---
 
 ### O que é uma cobrança?

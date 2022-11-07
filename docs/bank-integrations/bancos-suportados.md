@@ -1,6 +1,8 @@
 ---
 id: integration-supported-banks
 title: OpenPix suportam quais bancos?
+tags:
+- bank
 ---
 
 | Banco                                                                            | Suportamos? |

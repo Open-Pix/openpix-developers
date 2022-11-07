@@ -1,6 +1,10 @@
 ---
 id: webhook-platform-role
 title: Adicionando um usuário para ter acesso as funcionalidades de API e Webhook
+tags:
+- webhook
+- role
+- permission
 ---
 
 Pela Openpix é possível criar webhooks para interceptar quando um pix for realizado. Hoje, há duas maneiras de realizar a criação do mesmo: via plataforma ou API.

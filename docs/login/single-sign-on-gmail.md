@@ -2,6 +2,10 @@
 id: single-sign-on-gmail
 title: Configurar Single Sign On usando GSuite
 sidebar_label: Google GSuite & Gmail
+tags:
+- login
+- sso
+- gmail
 ---
 
 *Usar o Single-Sign-On é extremamente recomendado, pois fornece uma melhor experiência do usuário e aumenta a segurança.*

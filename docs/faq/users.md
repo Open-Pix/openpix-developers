@@ -2,6 +2,9 @@
 id: faq-users
 title: Usuários
 sidebar_label: Usuários
+tags:
+- faq
+- user
 ---
 A OpenPix possui todas as ferramentas necessárias para gerenciar os usuários dentro da sua plataforma. Aqui você pode encontrar as principais dúvidas referente ao assunto.
 

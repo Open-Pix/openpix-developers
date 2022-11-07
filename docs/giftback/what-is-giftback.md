@@ -1,6 +1,9 @@
 ---
 id: giftback-what-is
 title: O que é Giftback ?
+tags:
+- giftback
+- concept
 ---
 
 São pontos ou moedas que você adquire recebendo de volta parte (%) do valor gasto em uma determinada compra ou bonificação.

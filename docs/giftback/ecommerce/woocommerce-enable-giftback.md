@@ -1,6 +1,9 @@
 ---
 id: woocommerce-enable-giftback
-title: Habilitar Giftback no WooCommerce 
+title: Habilitar Giftback no WooCommerce
+tags:
+- giftback
+- woocommerce
 ---
 
 ## Resumo

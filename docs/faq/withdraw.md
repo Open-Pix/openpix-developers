@@ -2,6 +2,9 @@
 id: faq-withdraw
 title: Saques
 sidebar_label: Saques
+tags:
+- faq
+- withdraw
 ---
 
 ### O que é um saque?

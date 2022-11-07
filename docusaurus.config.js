@@ -1,3 +1,6 @@
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+
 const locales = ['pt-BR', 'en'];
 
 const localeConfigs = {
@@ -23,18 +26,76 @@ module.exports = {
   projectName: 'developer-portal',
   scripts: [],
   favicon: 'img/icons/OpenPixIcon.svg',
-  // customFields: {
-  //   users: [
-  //     {
-  //       caption: 'User1',
-  //       image: '/img/undraw_open_source.svg',
-  //       infoLink: 'https://www.facebook.com',
-  //       pinned: true,
-  //     },
-  //   ],
-  //   repoUrl: 'https://github.com/entria/feedback-front',
-  // },
   onBrokenLinks: 'log',
+  trailingSlash: false,
+  onBrokenMarkdownLinks: 'warn',
+  plugins: [
+    require.resolve('./sitePlugin'),
+    require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
+  ],
+  themeConfig: {
+    navbar: {
+      title: 'OpenPix Developers',
+      logo: {
+        alt: 'OpenPix Developers',
+        src: 'img/icons/OpenPixIcon.svg',
+      },
+      items: [
+        {
+          to: 'docs/getting-started',
+          label: 'Documents',
+          position: 'left',
+        },
+        {
+          to: 'apis',
+          label: 'API',
+          position: 'left',
+        },
+        {
+          to: 'docs/plugin/',
+          label: 'Plugin',
+          position: 'left',
+        },
+        {
+          to: 'docs/tags',
+          position: 'left',
+          label: 'Tags',
+        },
+        {
+          href: 'https://openpix.com.br/',
+          label: 'OpenPix',
+          position: 'right',
+        },
+        // {
+        //   to: 'docs/help',
+        //   label: 'Help',
+        //   position: 'right',
+        // },
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
+      ],
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+      additionalLanguages: ['php'],
+    },
+    footer: {
+      links: [
+        {
+          label: 'Woovi',
+          href: 'https://woovi.com',
+        },
+        {
+          label: 'OpenPix',
+          href: 'https://openpix.com.br',
+        },
+      ],
+      copyright: 'Copyright © Woovi / OpenPix',
+    },
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -44,11 +105,11 @@ module.exports = {
           showLastUpdateTime: false,
           path: './docs',
           sidebarPath: './sidebars.js',
-          remarkPlugins: [require('mdx-mermaid')],
           editUrl: ({ locale, versionDocsDirPath, docPath }) => {
             return `https://github.com/Open-Pix/developers/edit/main/${versionDocsDirPath}/${docPath}`;
           },
           editCurrentVersion: true,
+          remarkPlugins: [require('mdx-mermaid')],
         },
         // "blog": {
         //   "path": "blog"
@@ -77,54 +138,4 @@ module.exports = {
       },
     ],
   ],
-  plugins: [
-    require.resolve('./sitePlugin'),
-    require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
-  ],
-  themeConfig: {
-    navbar: {
-      title: 'OpenPix Developers',
-      // logo: {
-      //   src: 'img/icons/OpenPixIcon.svg',
-      // },
-      items: [
-        {
-          to: 'docs/getting-started',
-          label: 'Documents',
-          position: 'left',
-        },
-        {
-          to: 'api',
-          label: 'API',
-          position: 'left',
-        },
-        {
-          to: 'docs/plugin/',
-          label: 'Plugin',
-          position: 'left',
-        },
-        {
-          href: 'https://openpix.com.br/',
-          label: 'OpenPix',
-          position: 'right',
-        },
-        // {
-        //   to: 'docs/help',
-        //   label: 'Help',
-        //   position: 'right',
-        // },
-        {
-          type: 'localeDropdown',
-          position: 'right',
-        },
-      ],
-    },
-    prism: {
-      additionalLanguages: ['php'],
-    },
-    footer: {
-      links: [],
-      copyright: 'Copyright © OpenPix / Entria',
-    },
-  },
 };

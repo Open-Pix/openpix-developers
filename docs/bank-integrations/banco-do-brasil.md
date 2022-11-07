@@ -2,6 +2,9 @@
 id: integration-banco-do-brasil-bank
 title: Cobrar Pix usando conta corrente do Banco do Brasil
 sidebar_label: Banco do Brasil
+tags:
+  - api
+  - banco do brasil
 ---
 
 ### Integrando sua corrente do Banco Brasil na OpenPix

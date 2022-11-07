@@ -2,6 +2,8 @@
 id: integration-original-bank
 title: Cobrar Pix usando conta corrente do Banco Original
 sidebar_label: Banco Original
+tags:
+   - bank
 ---
 
 ### Integrando sua conta corrente do Banco Original

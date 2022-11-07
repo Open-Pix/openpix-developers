@@ -2,6 +2,9 @@
 id: faq-general-policies
 title: Políticas gerais
 sidebar_label: Políticas gerais
+tags:
+- faq
+- policy
 ---
 
 ### Por que não posso abrir uma conta?

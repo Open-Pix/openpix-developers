@@ -2,6 +2,10 @@
 id: faq-pixQRCode-static
 title: Pix QRCode Estático
 sidebar_label: Pix QRCode Estático
+tags:
+- faq
+- qrcode-static
+- pix
 ---
 
 ### O que é um Pix QRCode estático?

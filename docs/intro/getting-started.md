@@ -2,6 +2,10 @@
 id: getting-started
 title: Configure a plataforma OpenPix
 sidebar_label: Começando
+tags:
+- flow
+- getting-started
+- comecando
 ---
 
 A plataforma OpenPix foi criada para facilitar a experiência do programador, garantindo ao mesmo tempo o mais alto nível de segurança. Esta documentação ajuda os programadores ou administradores dos sistemas a configurar corretamente a plataforma.

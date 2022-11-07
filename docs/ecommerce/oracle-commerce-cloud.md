@@ -2,6 +2,10 @@
 id: oracle-commerce-cloud
 title: Integrating Oracle Commerce Cloud and OpenPix
 sidebar_label: Oracle Commerce Cloud
+tags:
+- ecommerce
+- occ
+- oracle
 ---
 
 ### Plugin OpenPix Pix for OCC - Oracle Commerce Cloud

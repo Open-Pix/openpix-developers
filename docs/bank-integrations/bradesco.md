@@ -2,6 +2,8 @@
 id: integration-bradesco-bank
 title: Cobrar Pix usando conta corrente do Bradesco
 sidebar_label: Bradesco
+tags:
+- bank
 ---
 
 ### Integrando sua corrente do Bradesco na OpenPix

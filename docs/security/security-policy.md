@@ -1,6 +1,9 @@
 ---
 id: security-policy
 title: Política de Segurança
+tags:
+- security
+- policy
 ---
 
 *Versão: Abril de 2021*

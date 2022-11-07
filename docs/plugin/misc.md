@@ -1,6 +1,9 @@
 ---
 id: misc
 title: Misc
+tags:
+- misc
+- plugin
 ---
 
 ## Gerando uma Cobrança Pix Estática

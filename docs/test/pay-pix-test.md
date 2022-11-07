@@ -1,6 +1,8 @@
 ---
 id: test-pay-pix
 title: Pagando uma Cobrança Pix de Teste
+tags:
+- test
 ---
 
 Pagar uma cobrança Pix no modo teste permite testar se o Webhook cadastrado está funcionando.

@@ -1,6 +1,9 @@
 ---
 id: plugin-react
 title: Integração React
+tags:
+- plugin
+- react
 ---
 
 Se você deseja ter um controle melhor da IU do seu aplicativo

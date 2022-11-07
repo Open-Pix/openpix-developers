@@ -2,6 +2,8 @@
 id: integration-sicoob
 title: Cobrar Pix usando conta corrente do Sicoob
 sidebar_label: Sicoob
+tags:
+- bank
 ---
 
 ### Integrando sua conta corrente do Sicoob
