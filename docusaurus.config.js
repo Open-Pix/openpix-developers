@@ -101,8 +101,8 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          showLastUpdateAuthor: false,
-          showLastUpdateTime: false,
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
           path: './docs',
           sidebarPath: './sidebars.js',
           editUrl: ({ locale, versionDocsDirPath, docPath }) => {
