@@ -1,6 +1,11 @@
 ---
 id: giftback-charge-states
-title: Estados de uma Cobrança com Giftback 
+title: Estados de uma Cobrança com Giftback
+tags:
+- flow
+- giftback
+- charge
+- state-machine
 ---
 
 ## Cobrança Pendente

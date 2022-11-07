@@ -1,6 +1,8 @@
 ---
 id: test-pay-pix-qrcode
 title: Pagando um Pix QRCode de teste
+tags:
+- test
 ---
 
 Pagar um Pix QRCode com uma conta bancaria de teste permite testar se o Webhook cadastrado está funcionando.

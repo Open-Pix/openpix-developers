@@ -2,6 +2,9 @@
 id: faq-transactions
 title: Transações
 sidebar_label: Transações
+tags:
+- faq
+- transaction
 ---
 
 ### O que é uma transação?

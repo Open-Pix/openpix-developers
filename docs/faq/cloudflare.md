@@ -1,6 +1,9 @@
 ---
 id: faq-cloudflare
 title: CloudFlare
+tags:
+- faq
+- cloudflare
 ---
 
 ### Não estou conseguindo cadastrar meu Webhook ?

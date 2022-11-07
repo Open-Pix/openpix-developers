@@ -2,6 +2,8 @@
 id: integration-gerencianet-bank
 title: Cobrar Pix usando conta corrente da Gerencia Net
 sidebar_label: Gerencia Net
+tags:
+- bank
 ---
 
 ### Integrando conta corrente da sua empresa da Gerencia Net na plataforma OpenPix

@@ -2,6 +2,8 @@
 id: integration-flagship
 title: Cobrar Pix usando conta corrente do Flagship
 sidebar_label: Flagship
+tags:
+- bank
 ---
 
 ### Integrando sua corrente do Flagship

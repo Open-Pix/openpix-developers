@@ -1,6 +1,8 @@
 ---
 id: security-self-assessment
 title: Security Self Assessment
+tags:
+- security
 ---
 
 *Versão: Março de 2021*

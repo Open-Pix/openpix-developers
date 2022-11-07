@@ -1,6 +1,9 @@
 ---
 id: charge-flow-state-machine
 title: Máquina de estado de uma Cobrança
+tags:
+- flow
+- state-machine
 ---
 
 ## Diagrama de estados da cobrança

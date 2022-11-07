@@ -2,6 +2,9 @@
 id: faq-virtual-account
 title: Conta Virtual
 sidebar_label: Conta Virtual
+tags:
+- faq
+- account
 ---
 
 ### O que é a conta virtual?

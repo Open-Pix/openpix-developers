@@ -1,6 +1,9 @@
 ---
 id: security-guidelines
 title: Diretrizes de Segurança
+tags:
+- security
+- guideline
 ---
 
 *Versão: Março de 2021*

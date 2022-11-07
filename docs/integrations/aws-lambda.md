@@ -2,6 +2,9 @@
 id: integration-aws-lambda
 title: Integrando Pix com AWS Lambda (serverless)
 sidebar_label: AWS Lambda
+tags:
+- integration
+- lambda
 ---
 
 ### Configurando a AWS CLI

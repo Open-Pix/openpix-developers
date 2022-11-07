@@ -2,6 +2,10 @@
 id: woocommerce-plugin
 title: Integrando a OpenPix com WooCommerce
 sidebar_label: WooCommerce OpenPix Plugin
+tags:
+- ecommerce
+- woocommerce
+- plugin
 ---
 
 ### Plugin Pix para WooCommerce

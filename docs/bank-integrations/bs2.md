@@ -2,6 +2,8 @@
 id: integration-bs2
 title: Cobrar Pix usando conta corrente do BS2
 sidebar_label: BS2
+tags:
+- bank
 ---
 
 ### Integrando sua conta corrente do BS2

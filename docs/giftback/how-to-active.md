@@ -1,6 +1,8 @@
 ---
 id: giftback-enable
 title: Habilitar Giftback
+tags:
+- giftback
 ---
 
 ## Como começar a utilizar o giftback ?

@@ -1,6 +1,9 @@
 ---
 id: backup-policy
 title: Política de Backup
+tags:
+- security
+- backup
 ---
 
 *Versão: Março de 2021*

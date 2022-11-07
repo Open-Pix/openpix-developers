@@ -2,6 +2,9 @@
 id: single-sign-on-getting-started
 title: Configuração do Single Sign On
 sidebar_label: Começando
+tags:
+- login
+- sso
 ---
 
 *Usar o Single-Sign-On é extremamente recomendado, pois fornece uma melhor experiência do usuário e aumenta a segurança.*

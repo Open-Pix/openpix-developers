@@ -2,6 +2,8 @@
 id: integration-itau-bank
 title: Cobrar Pix usando conta corrente do Itaú
 sidebar_label: Itaú
+tags:
+- bank
 ---
 
 ### Integrando conta corrente da sua empresa do Itaú na plataforma OpenPix

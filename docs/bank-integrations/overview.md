@@ -1,6 +1,8 @@
 ---
 id: integration-overview
 title: Visão Geral
+tags:
+- bank
 ---
 
 ## Integrando com o seu Banco

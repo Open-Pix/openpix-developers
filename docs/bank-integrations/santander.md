@@ -2,6 +2,8 @@
 id: integration-santander
 title: Cobrar Pix usando conta corrente do Santander
 sidebar_label: Santander
+tags:
+- bank
 ---
 
 ### Integrando sua conta corrente do Santander

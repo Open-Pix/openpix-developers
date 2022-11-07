@@ -2,6 +2,11 @@
 id: faq-not-display-QRCode-checkout
 title: QrCode-Magento1
 sidebar_label: QrCode Checkout Magento1
+tags:
+- faq
+- magento1
+- qrcode
+- checkout
 ---
 
 ### O QR Code não aparece no checkout Magento1

@@ -1,6 +1,9 @@
 ---
 id: help
 title: Precisa de ajuda?
+tags:
+- help
+- support
 ---
 
 Este projeto é mantido por uma equipe de apoio dedicada. Estamos aqui para ajudar!

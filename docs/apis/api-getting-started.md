@@ -1,6 +1,10 @@
 ---
 id: api-getting-started
 title: Começando
+tags:
+  - api
+  - comecando
+  - getting-started
 ---
 
 Este documento irá ajudá-lo a começar a utilizar as APIs e Plugins da OpenPix.

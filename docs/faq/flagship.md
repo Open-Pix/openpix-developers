@@ -2,6 +2,9 @@
 id: faq-flagship
 title: Flagship
 sidebar_label: Flagship
+tags:
+- faq
+- flagship
 ---
 
 ### O que é a Flagship?

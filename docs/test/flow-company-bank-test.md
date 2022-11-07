@@ -1,6 +1,8 @@
 ---
 id: flow-company-bank-test
 title: Testando Pix sem dinheiro real
+tags:
+- test
 ---
 
 Para gerar novas cobranças na OpenPix, você precisa criar uma conta bancária que represente o provedor do seu banco Pix.

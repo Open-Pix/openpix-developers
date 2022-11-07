@@ -1,6 +1,8 @@
 ---
 id: plugin
 title: Plugin
+tags:
+- plugin
 ---
 A OpenPix possui 2 plugins para ser utilizados em seu negócio, o Plugin de `Order` e o Plugin de `Widget`.
 
