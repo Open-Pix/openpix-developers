@@ -1,0 +1,13 @@
+{
+  "label": "Bancos",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Bancos visão geral"
+  },
+  "customProps": {
+    "description": "Bancos documentação"
+  }
+}

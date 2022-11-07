@@ -1,0 +1,13 @@
+{
+  "label": "FAQ",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "FAQ visão geral"
+  },
+  "customProps": {
+    "description": "FAQ documentação"
+  }
+}

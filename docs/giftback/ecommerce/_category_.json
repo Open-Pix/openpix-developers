@@ -1,0 +1,13 @@
+{
+  "label": "E-commerce",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "E-commerce visão geral"
+  },
+  "customProps": {
+    "description": "E-commerce documentação"
+  }
+}

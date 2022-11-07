@@ -1,0 +1,13 @@
+{
+  "label": "Login",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Login visão geral"
+  },
+  "customProps": {
+    "description": "Login documentação"
+  }
+}
