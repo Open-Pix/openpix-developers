@@ -12,7 +12,8 @@ tags:
 Os webhooks do tipo `Reembolso Recebido` enviam objetos com os seguintes campos no seu payload:
 
 - `event`: O tipo de Evento realizado
-- `charge`: A cobrança a que esse Pix pertence
+- `charge`: A cobrança, se existir, que a transação original desse reembolso pertence
+- `pixQrCode`: O QR Code, se existir, que a transação original desse reembolso pertence
 - `pix`: Objeto com detalhes do reembolso Pix
 - `company`: Empresa a que a Transação pertence
 - `account`: Detalhes da conta que a Transação pertence
