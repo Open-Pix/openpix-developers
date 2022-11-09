@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-crefisa
 title: OpenPix suporta o Banco Crefisa ?
 tags:
   - bank

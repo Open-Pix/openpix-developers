@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-china-construction-bank-(brasil)-banco-múltiplo
 title: OpenPix suporta o China Construction Bank (Brasil) Banco Múltiplo ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-semear
 title: OpenPix suporta o Banco Semear ?
 tags:
   - bank

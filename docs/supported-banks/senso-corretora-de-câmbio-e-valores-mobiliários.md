@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-senso-corretora-de-câmbio-e-valores-mobiliários
 title: OpenPix suporta o Senso Corretora de Câmbio e Valores Mobiliários ?
 tags:
   - bank

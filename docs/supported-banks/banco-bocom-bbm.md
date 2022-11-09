@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bocom-bbm
 title: OpenPix suporta o Banco Bocom BBM ?
 tags:
   - bank

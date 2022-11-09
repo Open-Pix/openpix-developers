@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bnp-paribas-brasil
 title: OpenPix suporta o Banco BNP Paribas Brasil ?
 tags:
   - bank

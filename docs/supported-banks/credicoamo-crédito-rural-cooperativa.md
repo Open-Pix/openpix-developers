@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-credicoamo-crédito-rural-cooperativa
 title: OpenPix suporta o Credicoamo Crédito Rural Cooperativa ?
 tags:
   - bank

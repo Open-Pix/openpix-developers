@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-bbn-banco-brasileiro-de-negocios
 title: OpenPix suporta o BBN Banco Brasileiro de Negocios ?
 tags:
   - bank

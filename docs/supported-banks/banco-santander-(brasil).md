@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-santander-(brasil)
 title: OpenPix suporta o Banco Santander (Brasil) ?
 tags:
   - bank

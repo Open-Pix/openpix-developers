@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-inbursa
 title: OpenPix suporta o Banco Inbursa ?
 tags:
   - bank

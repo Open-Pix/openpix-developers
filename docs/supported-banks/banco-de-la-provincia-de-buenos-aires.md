@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-de-la-provincia-de-buenos-aires
 title: OpenPix suporta o Banco de La Provincia de Buenos Aires ?
 tags:
   - bank

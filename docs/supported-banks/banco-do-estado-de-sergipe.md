@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-do-estado-de-sergipe
 title: OpenPix suporta o Banco do Estado de Sergipe ?
 tags:
   - bank

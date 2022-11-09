@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-br-partners-banco-de-investimento
 title: OpenPix suporta o BR Partners Banco de Investimento ?
 tags:
   - bank

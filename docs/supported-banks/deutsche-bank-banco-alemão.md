@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-deutsche-bank-banco-alemão
 title: OpenPix suporta o Deutsche Bank  - Banco Alemão ?
 tags:
   - bank

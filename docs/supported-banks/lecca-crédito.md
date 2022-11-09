@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-lecca-crédito
 title: OpenPix suporta o Lecca Crédito ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cooperativa-de-crédito-rural-coopavel
 title: OpenPix suporta o Cooperativa de Crédito Rural Coopavel ?
 tags:
   - bank

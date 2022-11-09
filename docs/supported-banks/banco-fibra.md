@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-fibra
 title: OpenPix suporta o Banco Fibra ?
 tags:
   - bank

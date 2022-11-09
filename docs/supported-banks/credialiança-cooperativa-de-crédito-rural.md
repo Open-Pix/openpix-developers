@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-credialiança-cooperativa-de-crédito-rural
 title: OpenPix suporta o Credialiança Cooperativa de Crédito Rural ?
 tags:
   - bank

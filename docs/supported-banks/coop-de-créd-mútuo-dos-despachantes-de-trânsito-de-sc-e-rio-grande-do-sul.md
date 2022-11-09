@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-coop-de-créd-mútuo-dos-despachantes-de-trânsito-de-sc-e-rio-grande-do-sul
 title: OpenPix suporta o Coop de Créd. Mútuo dos Despachantes de Trânsito de SC e Rio Grande do Sul ?
 tags:
   - bank

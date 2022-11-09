@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-andbank-(brasil)
 title: OpenPix suporta o Banco AndBank (Brasil) ?
 tags:
   - bank

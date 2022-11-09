@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-oliveira-trust-distribuidora-de-títulos-e-valores-mobiliários
 title: OpenPix suporta o Oliveira Trust Distribuidora de Títulos e Valores Mobiliários ?
 tags:
   - bank

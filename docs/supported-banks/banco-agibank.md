@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-agibank
 title: OpenPix suporta o Banco Agibank ?
 tags:
   - bank

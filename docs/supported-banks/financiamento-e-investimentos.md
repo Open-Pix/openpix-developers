@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-financiamento-e-investimentos
 title: OpenPix suporta o Financiamento e Investimentos ?
 tags:
   - bank

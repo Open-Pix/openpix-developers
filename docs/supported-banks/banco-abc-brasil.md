@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-abc-brasil
 title: OpenPix suporta o Banco ABC Brasil ?
 tags:
   - bank

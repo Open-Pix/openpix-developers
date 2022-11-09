@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-itaú-unibanco-holding
 title: OpenPix suporta o Itaú Unibanco Holding ?
 tags:
   - bank

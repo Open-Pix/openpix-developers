@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-brl-trust-distribuidora-de-títulos-e-valores-mobiliários
 title: OpenPix suporta o BRL Trust Distribuidora de Títulos e Valores Mobiliários ?
 tags:
   - bank

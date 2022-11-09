@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-guide-investimentos-corretora-de-valores
 title: OpenPix suporta o Guide Investimentos  Corretora de Valores ?
 tags:
   - bank

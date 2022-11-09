@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-votorantim
 title: OpenPix suporta o Banco Votorantim ?
 tags:
   - bank

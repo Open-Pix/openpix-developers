@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-rendimento
 title: OpenPix suporta o Banco Rendimento ?
 tags:
   - bank

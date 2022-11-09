@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-mercantil-do-brasil
 title: OpenPix suporta o Banco Mercantil do Brasil ?
 tags:
   - bank

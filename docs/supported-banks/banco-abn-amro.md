@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-abn-amro
 title: OpenPix suporta o Banco ABN Amro ?
 tags:
   - bank

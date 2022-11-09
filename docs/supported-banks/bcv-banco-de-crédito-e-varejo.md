@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-bcv-banco-de-crédito-e-varejo
 title: OpenPix suporta o BCV - Banco de Crédito e Varejo ?
 tags:
   - bank

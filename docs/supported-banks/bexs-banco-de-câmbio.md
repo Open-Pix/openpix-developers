@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-bexs-banco-de-câmbio
 title: OpenPix suporta o Bexs Banco de Câmbio ?
 tags:
   - bank

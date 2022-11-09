@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-da-amazônia
 title: OpenPix suporta o Banco da Amazônia ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bradesco-cartões
 title: OpenPix suporta o Banco Bradesco Cartões ?
 tags:
   - bank

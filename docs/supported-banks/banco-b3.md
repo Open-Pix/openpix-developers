@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-b3
 title: OpenPix suporta o Banco B3 ?
 tags:
   - bank

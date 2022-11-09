@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-modal
 title: OpenPix suporta o Banco Modal ?
 tags:
   - bank

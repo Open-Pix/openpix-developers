@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-fator
 title: OpenPix suporta o Banco Fator ?
 tags:
   - bank

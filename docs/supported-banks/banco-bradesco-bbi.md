@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bradesco-bbi
 title: OpenPix suporta o Banco Bradesco BBI ?
 tags:
   - bank

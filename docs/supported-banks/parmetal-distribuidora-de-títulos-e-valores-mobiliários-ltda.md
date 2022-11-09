@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-parmetal-distribuidora-de-títulos-e-valores-mobiliários-ltda
 title: OpenPix suporta o Parmetal Distribuidora de Títulos e Valores Mobiliários Ltda. ?
 tags:
   - bank

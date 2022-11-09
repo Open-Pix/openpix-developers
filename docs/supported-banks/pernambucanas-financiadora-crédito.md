@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-pernambucanas-financiadora-crédito
 title: OpenPix suporta o Pernambucanas Financiadora  Crédito ?
 tags:
   - bank

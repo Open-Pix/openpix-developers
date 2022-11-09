@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-a-j-renner
 title: OpenPix suporta o Banco A. J. Renner ?
 tags:
   - bank

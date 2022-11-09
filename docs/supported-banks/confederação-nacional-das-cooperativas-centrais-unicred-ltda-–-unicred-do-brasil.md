@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-confederação-nacional-das-cooperativas-centrais-unicred-ltda-–-unicred-do-brasil
 title: OpenPix suporta o Confederação Nacional das Cooperativas Centrais Unicred Ltda – Unicred do Brasil ?
 tags:
   - bank

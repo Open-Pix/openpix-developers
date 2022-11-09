@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-caixa-geral-brasil
 title: OpenPix suporta o Banco Caixa Geral - Brasil ?
 tags:
   - bank

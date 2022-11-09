@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-commerzbank-brasil-banco-múltiplo
 title: OpenPix suporta o Commerzbank Brasil  - Banco Múltiplo ?
 tags:
   - bank

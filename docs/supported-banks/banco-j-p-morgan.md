@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-j-p-morgan
 title: OpenPix suporta o Banco J. P. Morgan ?
 tags:
   - bank

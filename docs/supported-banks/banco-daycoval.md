@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-daycoval
 title: OpenPix suporta o Banco Daycoval ?
 tags:
   - bank

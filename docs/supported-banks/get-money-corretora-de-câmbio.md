@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-get-money-corretora-de-câmbio
 title: OpenPix suporta o Get Money Corretora de Câmbio ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-hipercard-banco-múltiplo
 title: OpenPix suporta o Hipercard Banco Múltiplo ?
 tags:
   - bank

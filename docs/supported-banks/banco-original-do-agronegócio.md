@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-original-do-agronegócio
 title: OpenPix suporta o Banco Original do Agronegócio ?
 tags:
   - bank

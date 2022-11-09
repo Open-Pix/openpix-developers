@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-kirton-bank-banco-múltiplo
 title: OpenPix suporta o Kirton Bank  - Banco Múltiplo ?
 tags:
   - bank

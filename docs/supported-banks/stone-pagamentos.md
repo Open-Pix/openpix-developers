@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-stone-pagamentos
 title: OpenPix suporta o Stone Pagamentos ?
 tags:
   - bank

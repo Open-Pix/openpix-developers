@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-valuepe-corretora-de-valores-e-câmbio
 title: OpenPix suporta o valuepe Corretora de Valores e Câmbio ?
 tags:
   - bank

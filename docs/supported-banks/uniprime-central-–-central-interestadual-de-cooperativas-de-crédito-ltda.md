@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-uniprime-central-–-central-interestadual-de-cooperativas-de-crédito-ltda
 title: OpenPix suporta o Uniprime Central – Central Interestadual de Cooperativas de Crédito Ltda. ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banestes-banco-do-estado-do-espírito-santo
 title: OpenPix suporta o Banestes  Banco do Estado do Espírito Santo ?
 tags:
   - bank

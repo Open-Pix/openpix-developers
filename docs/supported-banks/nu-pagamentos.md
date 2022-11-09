@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-nu-pagamentos
 title: OpenPix suporta o Nu Pagamentos ?
 tags:
   - bank

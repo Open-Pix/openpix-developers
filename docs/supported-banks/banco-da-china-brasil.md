@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-da-china-brasil
 title: OpenPix suporta o Banco da China Brasil ?
 tags:
   - bank

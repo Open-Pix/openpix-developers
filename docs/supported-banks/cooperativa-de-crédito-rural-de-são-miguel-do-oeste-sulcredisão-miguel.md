@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cooperativa-de-crédito-rural-de-são-miguel-do-oeste-sulcredisão-miguel
 title: OpenPix suporta o Cooperativa de Crédito Rural de São Miguel do Oeste - Sulcredi/São Miguel ?
 tags:
   - bank

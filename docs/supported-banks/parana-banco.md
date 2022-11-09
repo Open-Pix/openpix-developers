@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-parana-banco
 title: OpenPix suporta o Parana Banco ?
 tags:
   - bank

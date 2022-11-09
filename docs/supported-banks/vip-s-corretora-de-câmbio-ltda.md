@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-vip-s-corretora-de-câmbio-ltda
 title: OpenPix suporta o Vip s Corretora de Câmbio Ltda. ?
 tags:
   - bank

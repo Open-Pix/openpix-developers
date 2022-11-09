@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-itaú-bba
 title: OpenPix suporta o Banco Itaú BBA ?
 tags:
   - bank

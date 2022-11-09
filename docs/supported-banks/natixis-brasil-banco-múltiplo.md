@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-natixis-brasil-banco-múltiplo
 title: OpenPix suporta o Natixis Brasil  Banco Múltiplo ?
 tags:
   - bank

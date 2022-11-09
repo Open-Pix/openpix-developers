@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-credit-agrícole-brasil
 title: OpenPix suporta o Banco Credit Agrícole Brasil ?
 tags:
   - bank

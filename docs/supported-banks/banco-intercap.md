@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-intercap
 title: OpenPix suporta o Banco Intercap ?
 tags:
   - bank

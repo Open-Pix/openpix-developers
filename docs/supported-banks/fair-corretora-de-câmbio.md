@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-fair-corretora-de-câmbio
 title: OpenPix suporta o Fair Corretora de Câmbio ?
 tags:
   - bank

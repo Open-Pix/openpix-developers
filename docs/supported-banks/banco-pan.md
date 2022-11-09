@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-pan
 title: OpenPix suporta o Banco Pan ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-ms-bank-banco-de-câmbio
 title: OpenPix suporta o MS Bank  Banco de Câmbio ?
 tags:
   - bank

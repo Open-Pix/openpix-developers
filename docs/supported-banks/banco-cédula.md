@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-cédula
 title: OpenPix suporta o Banco Cédula ?
 tags:
   - bank

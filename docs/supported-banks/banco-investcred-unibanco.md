@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-investcred-unibanco
 title: OpenPix suporta o Banco Investcred Unibanco ?
 tags:
   - bank

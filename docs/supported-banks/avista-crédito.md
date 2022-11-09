@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-avista-crédito
 title: OpenPix suporta o Avista  Crédito ?
 tags:
   - bank

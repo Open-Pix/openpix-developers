@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-ubs-brasil-corretora-de-câmbio
 title: OpenPix suporta o UBS Brasil Corretora de Câmbio ?
 tags:
   - bank

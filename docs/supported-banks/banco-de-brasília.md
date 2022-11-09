@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-de-brasília
 title: OpenPix suporta o Banco de Brasília ?
 tags:
   - bank

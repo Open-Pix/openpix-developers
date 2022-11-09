@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cooperativa-de-economia-e-crédito-mútuo-dos-servidores-públicos-estaduais-do-rio
 title: OpenPix suporta o Cooperativa de Economia e Crédito Mútuo dos Servidores Públicos Estaduais do Rio ?
 tags:
   - bank

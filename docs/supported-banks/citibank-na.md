@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-citibank-na
 title: OpenPix suporta o Citibank N.A. ?
 tags:
   - bank

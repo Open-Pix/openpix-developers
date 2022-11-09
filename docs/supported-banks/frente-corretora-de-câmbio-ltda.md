@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-frente-corretora-de-câmbio-ltda
 title: OpenPix suporta o Frente Corretora de Câmbio Ltda. ?
 tags:
   - bank

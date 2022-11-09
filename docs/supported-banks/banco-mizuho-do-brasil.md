@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-mizuho-do-brasil
 title: OpenPix suporta o Banco Mizuho do Brasil ?
 tags:
   - bank

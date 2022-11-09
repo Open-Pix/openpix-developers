@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-credit-suisse-(brasil)
 title: OpenPix suporta o Banco Credit Suisse (Brasil) ?
 tags:
   - bank

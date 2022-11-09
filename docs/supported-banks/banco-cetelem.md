@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-cetelem
 title: OpenPix suporta o Banco Cetelem ?
 tags:
   - bank

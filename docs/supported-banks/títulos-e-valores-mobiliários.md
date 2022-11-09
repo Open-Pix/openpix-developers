@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-títulos-e-valores-mobiliários
 title: OpenPix suporta o Títulos e Valores Mobiliários ?
 tags:
   - bank

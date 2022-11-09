@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-rabobank-international-brasil
 title: OpenPix suporta o Banco Rabobank International Brasil ?
 tags:
   - bank

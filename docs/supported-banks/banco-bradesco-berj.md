@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bradesco-berj
 title: OpenPix suporta o Banco Bradesco BERJ ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cooperativa-de-crédito-rural-da-região-da-mogiana
 title: OpenPix suporta o Cooperativa de Crédito Rural da Região da Mogiana ?
 tags:
   - bank

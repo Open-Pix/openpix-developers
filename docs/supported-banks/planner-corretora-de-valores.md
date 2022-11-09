@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-planner-corretora-de-valores
 title: OpenPix suporta o Planner Corretora de Valores ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-safra
 title: OpenPix suporta o Banco Safra ?
 tags:
   - bank

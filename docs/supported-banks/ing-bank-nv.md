@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-ing-bank-nv
 title: OpenPix suporta o ING Bank N.V. ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cooperativa-central-de-crédito-ailos
 title: OpenPix suporta o Cooperativa Central de Crédito - Ailos ?
 tags:
   - bank

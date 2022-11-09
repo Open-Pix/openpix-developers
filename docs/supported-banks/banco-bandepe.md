@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bandepe
 title: OpenPix suporta o Banco Bandepe ?
 tags:
   - bank

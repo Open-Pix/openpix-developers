@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-ficsa
 title: OpenPix suporta o Banco Ficsa ?
 tags:
   - bank

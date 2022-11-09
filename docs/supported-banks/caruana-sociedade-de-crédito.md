@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-caruana-sociedade-de-crédito
 title: OpenPix suporta o Caruana  Sociedade de Crédito ?
 tags:
   - bank

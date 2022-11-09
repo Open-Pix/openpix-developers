@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-casa-do-crédito-sociedade-de-crédito-ao-microempreendedor
 title: OpenPix suporta o Casa do Crédito  Sociedade de Crédito ao Microempreendedor ?
 tags:
   - bank

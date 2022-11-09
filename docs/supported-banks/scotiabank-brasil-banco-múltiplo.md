@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-scotiabank-brasil-banco-múltiplo
 title: OpenPix suporta o Scotiabank Brasil  Banco Múltiplo ?
 tags:
   - bank

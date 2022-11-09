@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-btg-pactual
 title: OpenPix suporta o Banco BTG Pactual ?
 tags:
   - bank

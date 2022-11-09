@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-intesa-sanpaolo-brasil-banco-múltiplo
 title: OpenPix suporta o Intesa Sanpaolo Brasil  - Banco Múltiplo ?
 tags:
   - bank

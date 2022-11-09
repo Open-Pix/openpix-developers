@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-société-générale-brasil
 title: OpenPix suporta o Banco Société Générale Brasil ?
 tags:
   - bank

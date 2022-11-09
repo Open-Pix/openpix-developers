@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-bt-corretora-de-câmbio-ltda
 title: OpenPix suporta o BT Corretora de Câmbio Ltda. ?
 tags:
   - bank

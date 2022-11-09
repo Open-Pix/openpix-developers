@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-alfa
 title: OpenPix suporta o Banco Alfa ?
 tags:
   - bank

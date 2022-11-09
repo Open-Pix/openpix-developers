@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cooperativa-de-crédito-rural-de-primavera-do-leste
 title: OpenPix suporta o Cooperativa de Crédito Rural de Primavera do Leste ?
 tags:
   - bank

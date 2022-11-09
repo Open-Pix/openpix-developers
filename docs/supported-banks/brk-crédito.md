@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-brk-crédito
 title: OpenPix suporta o BRK  Crédito ?
 tags:
   - bank

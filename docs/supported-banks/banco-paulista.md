@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-paulista
 title: OpenPix suporta o Banco Paulista ?
 tags:
   - bank

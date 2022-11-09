@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-vr
 title: OpenPix suporta o Banco VR ?
 tags:
   - bank

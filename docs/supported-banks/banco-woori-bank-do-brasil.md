@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-woori-bank-do-brasil
 title: OpenPix suporta o Banco Woori Bank do Brasil ?
 tags:
   - bank

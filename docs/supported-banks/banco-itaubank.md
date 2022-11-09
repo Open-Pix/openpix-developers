@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-itaubank
 title: OpenPix suporta o Banco ItauBank ?
 tags:
   - bank

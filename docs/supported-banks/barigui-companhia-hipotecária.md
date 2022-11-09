@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-barigui-companhia-hipotecária
 title: OpenPix suporta o Barigui Companhia Hipotecária ?
 tags:
   - bank

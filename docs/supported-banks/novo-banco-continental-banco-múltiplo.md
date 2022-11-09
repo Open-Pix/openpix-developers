@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-novo-banco-continental-banco-múltiplo
 title: OpenPix suporta o Novo Banco Continental  - Banco Múltiplo ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-confidence-corretora-de-câmbio
 title: OpenPix suporta o Confidence Corretora de Câmbio ?
 tags:
   - bank

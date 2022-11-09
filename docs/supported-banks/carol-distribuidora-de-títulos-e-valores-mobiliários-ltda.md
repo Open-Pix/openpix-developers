@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-carol-distribuidora-de-títulos-e-valores-mobiliários-ltda
 title: OpenPix suporta o Carol Distribuidora de Títulos e Valores Mobiliários Ltda. ?
 tags:
   - bank

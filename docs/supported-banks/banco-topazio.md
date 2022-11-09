@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-topazio
 title: OpenPix suporta o Banco Topazio ?
 tags:
   - bank

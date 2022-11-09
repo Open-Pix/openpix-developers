@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-cooperativo-do-brasil-bancoob
 title: OpenPix suporta o Banco Cooperativo do Brasil  - Bancoob ?
 tags:
   - bank

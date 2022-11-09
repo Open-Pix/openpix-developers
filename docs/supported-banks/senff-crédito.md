@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-senff-crédito
 title: OpenPix suporta o Senff  - Crédito ?
 tags:
   - bank

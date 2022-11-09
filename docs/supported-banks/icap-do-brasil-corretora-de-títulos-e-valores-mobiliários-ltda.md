@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-icap-do-brasil-corretora-de-títulos-e-valores-mobiliários-ltda
 title: OpenPix suporta o ICAP do Brasil Corretora de Títulos e Valores Mobiliários Ltda. ?
 tags:
   - bank

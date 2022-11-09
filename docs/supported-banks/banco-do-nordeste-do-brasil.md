@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-do-nordeste-do-brasil
 title: OpenPix suporta o Banco do Nordeste do Brasil ?
 tags:
   - bank

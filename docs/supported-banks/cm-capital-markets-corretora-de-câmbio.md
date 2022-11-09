@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-cm-capital-markets-corretora-de-câmbio
 title: OpenPix suporta o CM Capital Markets Corretora de Câmbio ?
 tags:
   - bank

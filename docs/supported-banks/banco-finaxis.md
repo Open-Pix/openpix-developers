@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-finaxis
 title: OpenPix suporta o Banco Finaxis ?
 tags:
   - bank

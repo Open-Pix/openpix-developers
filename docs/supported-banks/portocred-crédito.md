@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-portocred-crédito
 title: OpenPix suporta o PortoCred  Crédito ?
 tags:
   - bank

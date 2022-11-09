@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-rb-capital-investimentos-distribuidora-de-títulos-e-valores-mobiliários-ltda
 title: OpenPix suporta o RB Capital Investimentos Distribuidora de Títulos e Valores Mobiliários Ltda. ?
 tags:
   - bank

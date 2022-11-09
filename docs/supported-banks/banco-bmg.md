@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-bmg
 title: OpenPix suporta o Banco BMG ?
 tags:
   - bank

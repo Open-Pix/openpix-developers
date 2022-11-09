@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-ib-corretora-de-câmbio
 title: OpenPix suporta o IB Corretora de Câmbio ?
 tags:
   - bank

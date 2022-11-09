@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-cooperativo-sicredi
 title: OpenPix suporta o Banco Cooperativo Sicredi ?
 tags:
   - bank

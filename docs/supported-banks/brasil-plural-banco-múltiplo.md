@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-brasil-plural-banco-múltiplo
 title: OpenPix suporta o Brasil Plural  Banco Múltiplo ?
 tags:
   - bank

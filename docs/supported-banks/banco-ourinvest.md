@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-ourinvest
 title: OpenPix suporta o Banco Ourinvest ?
 tags:
   - bank

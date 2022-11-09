@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-tricury
 title: OpenPix suporta o Banco Tricury ?
 tags:
   - bank

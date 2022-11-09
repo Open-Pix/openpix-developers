@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-guitta-corretora-de-câmbio-ltda
 title: OpenPix suporta o Guitta Corretora de Câmbio Ltda. ?
 tags:
   - bank

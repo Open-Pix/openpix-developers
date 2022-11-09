@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-multimoney-corretora-de-câmbio-ltda
 title: OpenPix suporta o Multimoney Corretora de Câmbio Ltda ?
 tags:
   - bank

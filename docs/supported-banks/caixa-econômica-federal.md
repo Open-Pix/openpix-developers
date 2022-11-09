@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-caixa-econômica-federal
 title: OpenPix suporta o Caixa Econômica Federal ?
 tags:
   - bank

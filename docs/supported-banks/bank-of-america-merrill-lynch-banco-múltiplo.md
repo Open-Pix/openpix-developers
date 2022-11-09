@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-bank-of-america-merrill-lynch-banco-múltiplo
 title: OpenPix suporta o Bank of America Merrill Lynch Banco Múltiplo ?
 tags:
   - bank

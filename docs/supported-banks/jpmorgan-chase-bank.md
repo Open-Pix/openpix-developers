@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-jpmorgan-chase-bank
 title: OpenPix suporta o JPMorgan Chase Bank ?
 tags:
   - bank

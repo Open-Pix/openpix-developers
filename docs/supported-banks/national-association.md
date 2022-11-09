@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-national-association
 title: OpenPix suporta o National Association ?
 tags:
   - bank

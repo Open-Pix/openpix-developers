@@ -1,0 +1,13 @@
+{
+  "label": "Bancos Suportados",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Banco Suportados Visão Geral"
+  },
+  "customProps": {
+    "description": "Bancos Suportados documentação"
+  }
+}

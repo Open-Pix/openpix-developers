@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-clássico
 title: OpenPix suporta o Banco Clássico ?
 tags:
   - bank

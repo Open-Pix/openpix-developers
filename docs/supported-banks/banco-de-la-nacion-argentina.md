@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-de-la-nacion-argentina
 title: OpenPix suporta o Banco de la Nacion Argentina ?
 tags:
   - bank

@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-mufg-brasil
 title: OpenPix suporta o Banco MUFG Brasil ?
 tags:
   - bank

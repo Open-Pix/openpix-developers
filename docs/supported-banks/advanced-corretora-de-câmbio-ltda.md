@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-advanced-corretora-de-câmbio-ltda
 title: OpenPix suporta o Advanced Corretora de Câmbio Ltda. ?
 tags:
   - bank

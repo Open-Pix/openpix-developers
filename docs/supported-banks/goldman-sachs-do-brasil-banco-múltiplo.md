@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-goldman-sachs-do-brasil-banco-múltiplo
 title: OpenPix suporta o Goldman Sachs do Brasil Banco Múltiplo ?
 tags:
   - bank

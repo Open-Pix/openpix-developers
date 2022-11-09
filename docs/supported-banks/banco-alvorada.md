@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-banco-alvorada
 title: OpenPix suporta o Banco Alvorada ?
 tags:
   - bank

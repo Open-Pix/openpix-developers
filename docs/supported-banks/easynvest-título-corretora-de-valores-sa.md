@@ -1,5 +1,5 @@
 ---
-id: integration-supported-banks
+id: integration-supported-banks-easynvest-título-corretora-de-valores-sa
 title: OpenPix suporta o Easynvest - Título Corretora de Valores SA ?
 tags:
   - bank
