@@ -3,8 +3,8 @@ id: faq-virtual-account
 title: Conta Virtual
 sidebar_label: Conta Virtual
 tags:
-- faq
-- account
+  - faq
+  - account
 ---
 
 ### O que é a conta virtual?
@@ -44,9 +44,9 @@ Em até 48h iremos verificar a os seus dados e realizar a abertura da conta virt
 #### Plano Integrado:
 
 | Item              | Valor                                                                  |
-|-------------------|------------------------------------------------------------------------|
+| ----------------- | ---------------------------------------------------------------------- |
 | Pix Comum         | 0,8% - Por Pix recebido (tarifa mínima de R$ 0,50 e máxima de R$ 5,00) |
-| Saque             | R$ 1,00 - Por Saque (Saques a partir de R$ 1.000,00 são gratuitos.)    |
+| Saque             | R$ 1,00 - Por Saque (Saques a partir de R$ 500,00 são gratuitos.)      |
 | Mensalidade       | Grátis                                                                 |
 | Reembolso         | Grátis                                                                 |
 | Reembolso Parcial | Grátis                                                                 |
