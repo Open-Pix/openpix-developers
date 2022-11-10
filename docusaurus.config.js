@@ -66,6 +66,11 @@ module.exports = {
           label: 'OpenPix',
           position: 'right',
         },
+        {
+          href: 'https://github.com/Open-Pix/developers',
+          label: 'Github',
+          position: 'right',
+        },
         // {
         //   to: 'docs/help',
         //   label: 'Help',
