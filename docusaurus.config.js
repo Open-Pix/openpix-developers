@@ -47,7 +47,7 @@ module.exports = {
           position: 'left',
         },
         {
-          to: 'docs/category/apis',
+          to: '/api',
           label: 'API',
           position: 'left',
         },
