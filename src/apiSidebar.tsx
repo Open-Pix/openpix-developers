@@ -1,7 +1,7 @@
 export const apiSidebar = [
   {
     type: 'link',
-    href: 'docs/getting-started',
+    href: 'docs/intro/getting-started',
     label: 'Getting Started',
   },
   {
