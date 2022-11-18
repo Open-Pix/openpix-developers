@@ -120,7 +120,7 @@ module.exports = {
         //   "path": "blog"
         // },
         theme: {
-          customCss: [require.resolve('./src/theme/customTheme.css')],
+          customCss: require.resolve('./src/css/custom.css'),
         },
         googleAnalytics: {
           trackingID: 'G-DFFLN19210',
