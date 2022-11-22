@@ -1,0 +1,13 @@
+{
+  "label": "QRCode Estático",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "QRCode Estático visão geral"
+  },
+  "customProps": {
+    "description": "QRCode Estático documentação"
+  }
+}
