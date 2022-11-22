@@ -12,4 +12,4 @@ Ofereça Cobrança Pix, Cashback, Pix Crédito e muito mais aos seus clientes.
 
 - Software House que querem oferecer integrações de pagamentos para seus clientes
 - Plataformas de E-commerce que querem oferecer integrações de pagamentos para seus clientes
-- Plataformas de Resturantes/Deliveryes que querem oferecer integrações de pagamentos para seus clientes
+- Plataformas de Resturantes/Deliveries que querem oferecer integrações de pagamentos para seus clientes
