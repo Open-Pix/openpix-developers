@@ -1,0 +1,13 @@
+{
+  "label": "Parcerias",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Parcerias visão geral"
+  },
+  "customProps": {
+    "description": "Parcerias documentação"
+  }
+}
