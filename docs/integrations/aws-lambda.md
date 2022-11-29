@@ -1,7 +1,6 @@
 ---
 id: integration-aws-lambda
-title: Integrando Pix com AWS Lambda (serverless)
-sidebar_label: AWS Lambda
+title: Integrando OpenPix com AWS Lambda
 tags:
 - integration
 - lambda
