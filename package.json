@@ -13,6 +13,7 @@
     "mobx": "^6.7.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-embed": "^3.6.0",
     "redoc": "2.0.0",
     "redocusaurus": "1.4.0",
     "snippet-enricher-cli": "^0.0.8",
