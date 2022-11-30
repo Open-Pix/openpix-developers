@@ -87,6 +87,11 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['php'],
     },
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
     footer: {
       links: [
         {
