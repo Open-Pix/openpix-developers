@@ -16,4 +16,4 @@ Uma vez configurado o cashback siga os passos abaixo para configurar o cashback 
 |--------------------------|-------------------------------------------------------------------|
 | ativar/desativar         | ativa a feature                                                   |
 | porcentagem              | valor da porcentagem a ser gerada em cima do valor pago da charge |
-| valor mínimo da cobrança | valor mínimo de uma cobrança para gerar cashback em cima da mesma |
+| valor mínimo da cobrança | valor mínimo de uma cobrança para gerar cashback em cima da mesma. O valor mínimo da plataforma é de R$ 50,00 |
