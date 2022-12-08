@@ -39,7 +39,7 @@
     "lint-staged": "^13.1.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
-    "prettier": "^2.8.0",
+    "prettier": "^2.8.1",
     "process": "0.11.10",
     "stream-http": "^3.2.0",
     "tty-browserify": "^0.0.1",
