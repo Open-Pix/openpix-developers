@@ -1,0 +1,13 @@
+{
+  "label": "Cashback Fidelidade",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Cashback Fidelidade visão geral"
+  },
+  "customProps": {
+    "description": "Cashback Fidelidade documentação"
+  }
+}
