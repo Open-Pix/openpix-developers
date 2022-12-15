@@ -1,9 +1,155 @@
 ---
-id: getting-started
-title: Configure a plataforma OpenPix
-sidebar_label: Começando
+id: openpix-doc
+title: Documentação do página e sugestôes de atualizações
+sidebar_label: Docs
 tags:
-- flow
+- Introdução
 - getting-started
 - comecando
 ---
+
+## Introdução:
+
+ Esse arquivo está dividido em duas partes: Referência e Sugestões. A referência terá o propósito de auxiliar a equipe
+ quando for necessário fazer atualizações, como também guiar novos desenvolvedores quando estiverem no processo de familiarização
+ do projeto; as sugestões terão o propósito de ao analisar a página, apontar meios de melhorá-la tendo em vista o usuário final,
+ será avaliado assim,  o design, a tipografia, marketing de conteúdo, como também funcionalidade e responsividade da página. 
+ 
+ obs: A refência será divivida seção por seção onde a equipe poderá retirar e adicionar elementos; essa servirá apenas como a estrutura.
+ 
+ ## REFERÊNCIA:
+ 
+ 1. Página Principal:
+ 
+  a. Header:
+     - Conteúdo =>
+       . Propósito: // A preencher 
+       . Qualidade: // A preencher 
+     - Design => 
+       . logo: // A preencher 
+       . color: white
+       . background-color: // A preencher 
+       . media-queries: // A preencher
+       . Tamanho do elementos: // A preencher
+    - Tipografia
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+       . text-decoration: // A preencher 
+   
+   a.1. Menu Mobile:
+     - Design => 
+       . color: white
+       . background-color: // A preencher 
+       . Tipo:
+  
+  b. Main:
+  
+   b.1. Seção Plataforma:
+      - Conteúdo =>
+       . Propósito: // A preencher 
+       . Qualidade: // A preencher 
+      - Conteúdo =>
+       . Propósito:
+       . Qualidade:
+      - Design => 
+       . color: white
+       . background-color: // A preencher 
+       . backgroun-image: // A preencher 
+       . media-queries: // A preencher 
+       . Tamanho do elementos: // A preencher
+    - Tipografia =>
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+   
+   b.2. Seção Plugins:
+      - Conteúdo =>
+       . Propósito:
+       . Qualidade:
+      - Design => 
+       . color: white
+       . background-color: // A preencher 
+       . backgroun-image: // A preencher 
+       . imagem: // A preencher 
+       . media-queries: // A preencher 
+       . Tamanho do elementos: // A preencher
+      - Tipografia =>
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+       . text-decoration:  // A preencher 
+       
+   b.3. Seção Conta-Cliente:
+      - Conteúdo =>
+       . Propósito:
+       . Qualidade:
+      - Design => 
+       . color: white
+       . background-color: // A preencher 
+       . backgroun-image: // A preencher 
+       . imagem: // A preencher 
+       . media-queries: // A preencher
+       . Tamanho do elementos: // A preencher
+      - Tipografia =>
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+       
+       
+   b.4. Seção módulos, Integrações e diferenciais:
+      - Conteúdo =>
+       . Propósito:
+       . Qualidade:
+      - Design => 
+       . logos: // A preencher   
+       . color: white
+       . background-color: // A preencher 
+       . backgroun-image: // A preencher 
+       . bordas: // A preencher
+       . Tamanho do elementos: // A preencher
+       . media-queries: // A preencher 
+      - Tipografia =>
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+       
+   b.4. Seção de oferta:
+      - Conteúdo =>
+       . Propósito:
+       . Qualidade:
+      - Design =>
+       . color: white
+       . background-color: // A preencher 
+       . bordas: // A preencher
+       . Tamanho do elementos: // A preencher
+       . media-queries: // A preencher 
+      - Tipografia =>
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+       
+  b. Footer:
+      - Conteúdo =>
+       . Propósito:
+       . Qualidade:
+      - Design =>
+       . logo: / A preencher 
+       . color: white
+       . background-color: // A preencher 
+       . Tamanho do elementos: // A preencher
+       . media-queries: // A preencher 
+      - Tipografia =>
+       . font-style: // A preencher 
+       . font-family: // A preencher 
+       . font-size: // A preencher 
+       . font-weight: // A preencher 
+       
+   
+  
