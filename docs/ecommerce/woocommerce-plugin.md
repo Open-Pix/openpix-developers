@@ -30,18 +30,18 @@ Entre em WooCommerce -> Settings > Payments.
 
 ![Payments](/img/ecommerce/woocommerce-payments.png)
 
-Clique em `Manage` no Plugin OpenPix.
+### Clique em `Manage` no Plugin OpenPix.
 
 - [ ] Cadastre um AppID do tipo API. Crie um appID [aqui](../apis/api-getting-started.md)
 - [ ] Customize o Título, Descrição e Texto de Botão de Pedido
 
 ![Setup](/img/ecommerce/woocommerce-setup.png)
 
-Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook.
+### Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook.
 
 - [ ] Ao clicar os campos, `Webhook Authorization` e `Webhook HMAC Secret Key` irão atualizar automaticamente e mostrar o status em `Webhook Status`.
 
-Caso não configure você pode acessar a plataforma, criar um webhook manualmente. Para isso:
+### Caso não configure você pode acessar a plataforma, criar um webhook manualmente. Para isso:
 
 - [ ] Crie uma senha para a integração do Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 - [ ] Cadastre a URL de Callback do WooCommerce na OpenPix. Exemplo: <https://meusite.com.br/wc-api/WC_OpenPix_Pix_Gateway>
@@ -49,7 +49,7 @@ Caso não configure você pode acessar a plataforma, criar um webhook manualment
 
 ![Webhook](/img/ecommerce/woocommerce-gatilho.png)
 
-### 2.1 Customer
+### 2.2 Customer
 
 Para salvar o customer da order na sua cobrança OpenPix é necessário que seja ativado um plugin que possibilite que o cliente informe o CPF/CNPJ no momento da compra.
 
