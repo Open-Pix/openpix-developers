@@ -8,7 +8,7 @@ tags:
   - api
 ---
 
-## Criando o webhook via API?
+## Criando o webhook via API
 
 Para criar um webhook é **obrigatório** que você tenha criado um `AppID` previamente
 para a empresa afiliada. Caso não tenha feito ainda, você pode seguir o tutorial a seguir: 
@@ -37,7 +37,7 @@ No `body` da requisição, nós esperamos os seguintes valores:
 - **`event`**: O evento que será o _gatilho_ do webhook. Atualmente, temos 6 possíveis gatilhos:
   - `OPENPIX:CHARGE_CREATED`: quando uma cobrança nova é criada;
   - `OPENPIX:CHARGE_COMPLETED`: quando uma cobrança foi paga;
-  - `OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER`: quando uam cobrança é paga e o pagador é diferente do cliente associado a cobrança;
+  - `OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER`: quando uma cobrança é paga e o pagador é diferente do cliente associado a cobrança;
   - `OPENPIX:CHARGE_EXPIRED `: quando uma cobrança foi expirada;
   - `OPENPIX:TRANSACTION_RECEIVED`: quando recebe uma nova transação Pix;
   - `OPENPIX:TRANSACTION_REFUND_RECEIVED`: quando é efetuado o reembolso de uma transação Pix;
