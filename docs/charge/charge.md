@@ -18,5 +18,5 @@ A cobrança é ideal para conciliar os seus pagamentos.
 - Aceitar pagamentos em lojas físicas
 - Aceitar pagamentos em ecommerce
 - Aceitar pagamentos únicos
-- Aceitar pagamentos com júros e multas
+- Aceitar pagamentos com juros e multas
 - Aceitar pagamentos recorrentes
