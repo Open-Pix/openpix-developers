@@ -688,10 +688,17 @@ paths:
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     createdAt: 2021-03-03T12:33:00.546Z
                     updatedAt: 2021-03-03T12:33:00.546Z
+                  withdraw:
+                    value: 100
+                    time: 2021-03-03T12:33:00.536Z
+                    infoPagador: payer info 1
+                    endToEndId: E18236120202012032010s01345689XBY
+                    createdAt: 2021-03-03T12:33:00.546Z
                   infoPagador: payer info 0
                   value: 100
                   time: 2021-03-03T12:33:00.536Z
                   transactionID: transactionID
+                  type: PAYMENT
                   endToEndId: E18236120202012032010s0133872GZA
                   globalID: UGl4VHJhbnNhY3Rpb246NzE5MWYxYjAyMDQ2YmY1ZjUzZGNmYTBi
         '400':
@@ -805,6 +812,12 @@ paths:
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     createdAt: 2021-03-03T12:33:00.546Z
                     updatedAt: 2021-03-03T12:33:00.546Z
+                  withdraw:
+                    value: 100
+                    time: 2021-03-03T12:33:00.536Z
+                    infoPagador: payer info 1
+                    endToEndId: E18236120202012032010s01345689XBY
+                  type: PAYMENT
                   infoPagador: payer info 0
                   value: 100
                   time: 2021-03-03T12:33:00.536Z
@@ -951,6 +964,7 @@ paths:
               example:
                 webhook:
                   name: webhookName
+                  event: OPENPIX:CHARGE_CREATED
                   url: https://mycompany.com.br/webhook
                   authorization: openpix
                   isActive: true
@@ -2544,9 +2558,18 @@ components:
         customer:
           type: object
           $ref: '#/components/schemas/Customer'
+        withdraw:
+          type: object
+          $ref: '#/components/schemas/PixTransaction'
         payer:
           type: object
           $ref: '#/components/schemas/Customer'
+        type:
+          type: string
+          description: Pix Transaction type
+          enum:
+            - PAYMENT
+            - WITHDRAW
         globalID:
           description: External ID of this transaction
         pixQrCode:
@@ -2600,6 +2623,8 @@ components:
         * **OPENPIX:CHARGE_CREATED** - New charge created
 
         * **OPENPIX:CHARGE_COMPLETED** - Charge completed is when a charge is fully paid
+
+        * **OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER** - Charge completed if a different payer
 
         * **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not fully paid and expired
 
