@@ -45,7 +45,7 @@ const products = [
 const Home = () => {
   return (
     <Layout>
-      <main className={clsx(styles['home-section'])}>
+      <main className={clsx(styles['home-section'], styles['dark-mode--override'])}>
         <section className={clsx(styles['section-box'])}>
           {links.map((link, i) => (
             <Link href={link.href} key={`link-${i}`} className={clsx(styles['section-box--item'])}>
