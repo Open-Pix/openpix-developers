@@ -1,0 +1,63 @@
+.home-section {
+  padding: 2vh 5vw;
+}
+
+@media screen and (min-width: 720px) {
+  .home-section {
+    padding: 5vh 20vw;
+  }
+}
+
+/* reset margin */
+.home-section h3,
+.home-section p {
+  margin: 0;
+  color: black;
+}
+
+.section-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.section-box--item {
+  flex-grow: 1;
+  flex-basis: 300px;
+  background-color: rgba(198, 198, 198, 0.35);
+  border-radius: 20px;
+  padding: 26px;
+}
+
+.section-box--item > h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.section-box--item > p {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.products-section {
+  margin-top: 46px;
+}
+
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.products--item {
+  color: black;
+}
+
+/* just to reset hover state */
+.products--item:hover {
+  color: black;
+}
+
+.products--item > h3 {
+  font-size: 16px;
+}
