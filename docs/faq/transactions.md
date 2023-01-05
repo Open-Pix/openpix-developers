@@ -88,4 +88,10 @@ Clicando em cima de uma linha da tabela de webhooks você pode ver os logs do es
 
 ![Webhooks transactions log](/img/FAQ/transaction_webhooks_log.png)
 
+### O que é o `type` de uma transação?
 
+O valor do `type` serve para indicar qual é o tipo daquela transação. Assim
+sendo, atualmente ela pode conter um dos respectivos tipos:
+
+- `PAYMENT`: Indica que a transação é um pagamento.
+- `WITHDRAW`: Indica que a transação é um saque.
