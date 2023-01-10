@@ -139,7 +139,7 @@ module.exports = {
         specs: [
           {
             route: '/pix/',
-            spec: './src/swaggers/bacen-pix.json',
+            spec: './src/swaggers/bacen-pix.yml',
           },
           {
             route: '/api/',
