@@ -1,10 +1,14 @@
 openapi: 3.0.3
 info:
   title: OpenPix
-  description: A OpenPix é uma Plataforma de Gestão de Pagamentos. Para utilizar
-    nossa API você deve
+  description: >-
+    A OpenPix é uma Plataforma de Gestão de Pagamentos. Para utilizar nossa API
+    você deve
     acessar  __[https://api.openpix.com.br/](https://api.openpix.com.br/)__ e
     somente o mesmo. A OpenPix não aceita subdominios para a API.
+
+
+    Veja como configurar seu acesso a nossa API [aqui](https://developers.openpix.com.br/docs/apis/api-getting-started).
   version: 1.0.0
 servers:
   - url: https://api.openpix.com.br
@@ -2560,7 +2564,7 @@ components:
           $ref: '#/components/schemas/Customer'
         withdraw:
           type: object
-          $ref: '#/components/schemas/PixTransaction'
+          $ref: '#/components/schemas/PixWithdrawTransaction'
         payer:
           type: object
           $ref: '#/components/schemas/Customer'
@@ -2575,6 +2579,26 @@ components:
         pixQrCode:
           type: object
           $ref: '#/components/schemas/PixQrCode'
+    PixWithdrawTransaction:
+      type: object
+      properties:
+        value:
+          type: number
+        time:
+          type: string
+        endToEndID:
+          type: string
+        transactionID:
+          type: string
+        infoPagador:
+          type: string
+        endToEndId:
+          type: string
+        payer:
+          type: object
+          $ref: '#/components/schemas/Customer'
+        type:
+          type: string
     WebhookPayload:
       type: object
       properties:
@@ -2623,8 +2647,6 @@ components:
         * **OPENPIX:CHARGE_CREATED** - New charge created
 
         * **OPENPIX:CHARGE_COMPLETED** - Charge completed is when a charge is fully paid
-
-        * **OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER** - Charge completed if a different payer
 
         * **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not fully paid and expired
 
