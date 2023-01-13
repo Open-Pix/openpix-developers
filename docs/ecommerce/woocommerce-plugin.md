@@ -104,3 +104,10 @@ Por padrão quando a cobrança da Openpix é paga, o status do pedido é alterad
 Basta clicar e selecionar qual status você quer que seja colocado no pedido quando a transação Pix for paga.
 
 Após esta alteração os novos pedidos quando forem pagos irão receber o valor desse campo em seu status.
+
+## 7. Como ver meus logs OpenPix em minha loja WooCommerce/Wordpress
+Você pode visualizar os logs OpenPix em sua loja através dos seguintes passos:
+
+- 1. Tenha acesso aos arquivos da loja
+- 2. Acesse o seguinte path: `/wp-content/ploads/wc_logs`
+- 3. Dentro de `wc_logs` você irá encontrar os arquivos de logs da openpix com o seguinte padrão de nome `woocommerce_openpix-2023-01-13-7d609d821235742dd8162bbb0ef84862`
