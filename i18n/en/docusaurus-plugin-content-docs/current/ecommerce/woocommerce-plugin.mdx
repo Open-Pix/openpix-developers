@@ -1,0 +1,113 @@
+---
+id: woocommerce-plugin
+title: Integrating OpenPix with WooCommerce
+sidebar_label: WooCommerce OpenPix Plugin
+Tag:
+- e-commerce
+- woocommerce
+- plugin
+---
+
+### Pix plugin for WooCommerce
+
+## Summary
+
+This document details the steps needed to connect your WooCommerce-based eCommerce platform to OpenPix. The OpenPix platform generates real-time reconciliation between your Bank and your e-Commerce.
+After connecting your OpenPix account, you can charge customers in real time with QrCodes Pix, send Payment Links, manage charges including extortions.
+
+> _Note: This document expects you to already have an active WooCommerce environment._
+
+## 1. Install the OpenPix Plugin on your WooCommerce instance
+
+[OpenPix for WooCommerce](https://wordpress.org/plugins/openpix-for-woocommerce/)
+
+![Banner](/img/ecommerce/woocommerce-banner.png)
+![Install](/img/ecommerce/woocommerce-plugin-install.png)
+
+## 2. Setting up the WooCommerce Plugin
+
+Go to WooCommerce -> Settings > Payments.
+
+![Payments](/img/ecommerce/woocommerce-payments.png)
+
+### Click on `Manage` in the OpenPix Plugin.
+
+- [ ] Register an AppID of type API. Create an appID [here](../apis/api-getting-started.md)
+- [ ] Customize Title, Description and Order Button Text
+
+![Setup](/img/ecommerce/woocommerce-setup.png)
+
+### After adding your appID, click `Configure now with one click` to configure or create your Webhook.
+
+- [ ] When clicking on the fields, `Webhook Authorization` and `Webhook HMAC Secret Key` will automatically update and show the status in `Webhook Status`.
+
+### If you don't configure it, you can access a platform, create a webhook manually. For that:
+
+- [ ] Create a password for the Webhook integration. The Webhook is required to update the status of the Orders in real time when the Pix charge is paid.
+- [ ] Register a WooCommerce Callback URL on OpenPix. Example: <https://meusite.com.br/wc-api/WC_OpenPix_Pix_Gateway>
+- [ ] Click on `Configure now with one click` again, to configure the Webhook with this new data created.
+
+![Webhook](/img/ecommerce/woocommerce-gatilho.png)
+
+### 2.2 Client
+
+To save the customer from the order in their OpenPix billing, a plugin must be activated that allows the customer to inform the CPF/CNPJ at the time of purchase.
+
+We recommend using the [woocommerce-extra-checkout-fields-for-brazil](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/) plugin for this case. Once the plug-in is activated, you will save customers who will inform the CPF/CNPJ at the time of purchase.
+
+**Note: Use is not mandatory. If you proceed without configuring it, your charges will be saved without the same client.**
+
+## 3. Place Order with Pix
+
+Choose the option to pay for the order using Pix
+
+![Pay Pix](/img/ecommerce/woocommerce-pay-pix.png)
+
+Pay Pix using your bank app.
+
+![Order](/img/ecommerce/woocommerce-order.png)
+
+Validate that the Order status has changed after payment
+
+## 4. How to configure Woocommerce order expiration
+
+Openpix billing has a default expiry value of 1 day, while Woocommerce default expiry setting is 60 minutes
+
+To learn more about configuring the OpenPix Charge expiration time [Click here](/docs/flows/flow-edit-default-expiration).
+
+![Woocommerce Order](/img/ecommerce/woo-order.png)
+
+To change and match this expiry time for OpenPix and Woocommerce, you must look in the admin menu:
+
+`Woocommerce` > `Settings` > `Products` > `Inventory`
+
+Lastly, change the Hold stock value to 1440 minutes equivalent to 1 day
+
+![Woocommerce Expiration](/img/ecommerce/woo-expiration.png)
+
+## 5. How to select what the status should be when a new order is generated
+
+By default when the Openpix charge is created, the status of the order is changed to `Pending payment`, however you can set it to any status you want.
+
+![Woocommerce Order Status Created](/img/ecommerce/woocommerce-status-when-create-default.png)
+
+Just click and select which status you want to be placed on the order when the Openpix charge is created.
+
+After this change, when new orders were created, they will receive the value of this field in their status.
+
+## 6. How to select what the status should be when a payment request
+
+By default when the Openpix charge is paid, the status of the order is changed to `Processing`, however you can set it to any status you want.
+
+![Woocommerce Paid Order Status](/img/ecommerce/woocommerce-status-when-paid-default.png)
+
+Just click and select which status you want to be placed on the order when the Pix transaction is paid.
+
+After this change, new orders for payment will receive the value of this field in their status.
+
+## 7. How to see my OpenPix logs in my WooCommerce/Wordpress store
+You can view OpenPix logs on your store by following these steps:
+
+- 1. Get access to store archives
+- 2. Access the following path: `/wp-content/ploads/wc_logs`
+- 3. Inside `wc_logs` you will find the openpix log files with the following name pattern `woocommerce_openpix-2023-01-13-7d609d821235742dd8162bbb0ef84862`
