@@ -1,7 +1,7 @@
 ---
-id: occ
+id: occ-integrating
 title: Integrando Oracle Commerce Cloud na OpenPix
-sidebar_label: Oracle Commerce Cloud
+sidebar_position: 0
 tags:
 - ecommerce
 - occ
