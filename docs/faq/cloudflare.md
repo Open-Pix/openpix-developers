@@ -16,3 +16,11 @@ tags:
 Exemplo de regra de excessão de firewall:
 
 ![CloudFlare Regra de firewall](/img/cloudflare/cloudflare_regra_firewall.png)
+
+## Desabilitar Cloudflare Bot
+
+A solução de antibot da Cloudflare pode bloquear os requests de Webhooks. 
+
+Para desabilitar a proteção antibot, clique no seu dominio, depois Security e Bots
+
+[https://www.cloudflare.com/products/bot-management/](https://www.cloudflare.com/products/bot-management/)
