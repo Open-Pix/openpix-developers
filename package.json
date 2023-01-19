@@ -9,7 +9,7 @@
     "@docusaurus/preset-classic": "2.2.0",
     "chalk": "^5.2.0",
     "clsx": "^1.2.1",
-    "core-js": "^3.27.1",
+    "core-js": "^3.27.2",
     "mdx-mermaid": "^1.3.2",
     "mermaid": "^9.3.0",
     "mobx": "^6.7.0",
