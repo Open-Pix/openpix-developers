@@ -116,7 +116,12 @@ Seu cliente poderá visualizar o pedido realizado via Pix dentro do detalhes do 
 ![Order](/img/ecommerce/magento2/m2-od-1.png)
 ![Order](/img/ecommerce/magento2/m2-od-2.png)
 
-## 6. Debug
+## Atualizando o plugin
+Indicamos aos clientes OpenPix estar sempre atualizados com a última versão do plugin. Você pode identificar a mesma no step de instalação.
+
+Caso seu plugin esteja desatualizado basta seguir os passos do mesmo step de instalação e atualizar os arquivos do plugin em seu ecommerce.
+
+## Debug
 
 Para debugar o plugin OpenPix temos o arquivo de log e você encontra dentro de `var/log`:
 
