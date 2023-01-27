@@ -32,13 +32,18 @@ const links = [
 const products = [
   {
     title: 'Cashback',
-    description: 'Receba uma % da compra quando pagar a cobrança.',
+    description: 'Receba uma % da compra quando pagar a cobrança',
     href: '/docs/category/cashback',
   },
   {
     title: 'Cashback fidelidade',
     description: 'Uma % da compra na próxima compra que ele fizer na sua plataforma',
     href: '/docs/category/cashback-fidelidade',
+  },
+  {
+    title: 'Cashback recorrente',
+    description: 'Imprima suas cobranças em um clique com a maquininha que você já tem',
+    href: '/docs/category/maquininha-pix',
   },
 ]
 
