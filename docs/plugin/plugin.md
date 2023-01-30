@@ -33,6 +33,7 @@ Veja o exemplo abaixo:
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
+    <meta charset="UTF-8" />
     <title>Demo OpenPix Plugin</title>
   </head>
   <body>
@@ -90,6 +91,7 @@ window.$openpix.push([
 <html lang="pt-BR">
 
   <head>
+    <meta charset="UTF-8" />
     <title>Demo OpenPix Plugin</title>
   </head>
 
@@ -250,6 +252,7 @@ if(!!window.$openpix?.addEventListener) {
 <html lang="pt-BR">
 
   <head>
+    <meta charset="UTF-8" />
     <title>Demo OpenPix Plugin</title>
   </head>
 
@@ -319,6 +322,7 @@ ex: `?appID=<APPIDVALIDO>&correlationID=<CORRELATION-ID-VALIDO>&node=<DIV-PARA-I
 <html lang="pt-BR">
 
 <head>
+  <meta charset="UTF-8" />
   <title>Demo OpenPix Plugin</title>
 </head>
 
