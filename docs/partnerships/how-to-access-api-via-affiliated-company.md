@@ -53,3 +53,14 @@ Num exemplo, essa será a resposta a nossa resposta:
   }
 }
 ```
+
+### Utilizando o appID
+Após criar sua nova `application`, você consegue obter seu `AppID` convertendo os valores de `clientId`
+e `clientSecret` para [Base64](https://en.wikipedia.org/wiki/Base64). Segue um exemplo em JavaScript de 
+como fazer isso:
+
+```js
+const appID = Buffer.from(`${clientId}:${clientSecret}`, 'utf8').toString('base64');
+```
+
+O `appID` será o valor que você usará no _header_ de `Authorization` para consumir as APIs OpenPix.
