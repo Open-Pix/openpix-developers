@@ -5,7 +5,7 @@
     "@cmfcmf/docusaurus-search-local": "0.11.0",
     "@docusaurus/core": "2.3.0",
     "@docusaurus/plugin-google-analytics": "^2.3.0",
-    "@docusaurus/plugin-google-gtag": "^2.3.0",
+    "@docusaurus/plugin-google-gtag": "^2.3.1",
     "@docusaurus/preset-classic": "2.3.0",
     "chalk": "^5.2.0",
     "clsx": "^1.2.1",
