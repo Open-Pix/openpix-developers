@@ -9,8 +9,7 @@ tags:
 ## O que é o N8N + Woovi?
 
 O N8N é uma ferramenta de automação de fluxo de trabalho que permite que você conecte vários aplicativos e serviços para criar fluxos de trabalho automatizados. O N8N é uma ferramenta de código aberto e gratuita que pode ser executada localmente ou em um servidor.
-
-A Woovi é uma plataforma integradora de pagamentos que permite que você crie cobranças, faça reembolsos e consulte transações de forma simples e rápida.
+A Woovi é uma plataforma de pagamentos e vendas que permite a você: criar cobranças automatizadas, realizar reembolsos e consultar transações e muito mais de forma simples e rápida.
 
 ## Como instalar o nó da Woovi no N8N?
 
@@ -26,11 +25,13 @@ Para encontrar o nó da Woovi no N8N, você deve:
 Com o nó da Woovi você consegue:
 
 - Criar cobranças
-- Buscar por cobranças [BETA]
-- Reembolsar cobranças [BETA]
-- Realizar saques [BETA]
+- Buscar por cobranças (Request Access)
+- Reembolsar cobranças (Request Access)
+- Realizar saques (Request Access)
 
-## Para configurar o nó da Woovi no N8N
+## Como configurar o nó da Woovi no N8N?
+
+Primeiro, dentro do N8N:
 
 1. Clique em “Credentials”
 2. Clique em Add Credential
