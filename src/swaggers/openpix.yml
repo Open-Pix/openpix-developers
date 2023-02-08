@@ -2364,6 +2364,50 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/openpix/v1/subscriptions/{id}':
+    get:
+      tags:
+        - subscription
+      summary: Get one subscription
+      parameters:
+        - name: id
+          in: path
+          description: The globalID of the subscription.
+          required: true
+          schema:
+            type: string
+          example: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+      responses:
+        '200':
+          description: The subscription retrieved using the given ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    type: object
+                    $ref: '#/components/schemas/Subscription'
+                example:
+                  subscription:
+                    globalID: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+                    customer:
+                      name: Dan
+                      email: email0@example.com
+                      phone: '5511999999999'
+                      taxID:
+                        taxID: '31324227036'
+                        type: BR:CPF
+                    value: 100
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 components:
   schemas:
     Charge:
@@ -3102,6 +3146,41 @@ components:
           description: ID of the Withdraw Transaction
         value:
           type: string
+    Subscription:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Value in cents of this subscription
+        customer:
+          type: object
+          description: Customer of this subscription
+          $ref: '#/components/schemas/Customer'
+    SubscriptionPayload:
+      type: object
+      properties:
+        customer:
+          type: object
+          description: Customer of this subscription
+          properties:
+            name:
+              type: string
+              description: Customer name
+            email:
+              type: string
+              description: Customer email
+            phone:
+              type: string
+              description: Customer phone
+            taxID:
+              type: string
+              description: Customer taxID (CPF or CNPJ)
+        value:
+          type: number
+          description: Value in cents of this subscription
+      required:
+        - customer
+        - value
   securitySchemes:
     AppID:
       type: apiKey
@@ -3121,3 +3200,6 @@ tags:
     description: |
       Partners integrate affiliated companies.<br/>
       They can register new companies, manage them, and earn money from them.
+  - name: subscription
+    description: |
+      Endpoint to manage Subscriptions
