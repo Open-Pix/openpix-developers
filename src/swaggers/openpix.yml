@@ -2408,7 +2408,7 @@ paths:
                 properties:
                   error:
                     type: string
-  /api/v1/subscription:
+  /api/v1/subscriptions:
     post:
       tags:
         - subscription
