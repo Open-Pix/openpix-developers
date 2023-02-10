@@ -1841,6 +1841,16 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
+"@redocly/ajv@^8.11.0":
+  version "8.11.0"
+  resolved "https://registry.yarnpkg.com/@redocly/ajv/-/ajv-8.11.0.tgz#2fad322888dc0113af026e08fceb3e71aae495ae"
+  integrity sha512-9GWx27t7xWhDIR02PA18nzBdLcKQRgc46xNQvjFkrYk4UOmvKhJ/dawwiX0cCOeetN5LcaaiqQbVOWYK62SGHw==
+  dependencies:
+    fast-deep-equal "^3.1.1"
+    json-schema-traverse "^1.0.0"
+    require-from-string "^2.0.2"
+    uri-js "^4.2.2"
+
 "@redocly/ajv@^8.6.4":
   version "8.6.4"
   resolved "https://registry.yarnpkg.com/@redocly/ajv/-/ajv-8.6.4.tgz#94053e7a9d4146d1a4feacd3813892873f229a85"
@@ -1851,12 +1861,12 @@
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-"@redocly/openapi-core@1.0.0-beta.102":
-  version "1.0.0-beta.102"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.0.0-beta.102.tgz#e1cd049979f05812c594063fec71e618201319c4"
-  integrity sha512-3Fr3fg+9VEF4+4uoyvOOk+9ipmX2GYhlb18uZbpC4v3cUgGpkTRGZM2Qetfah7Tgx2LgqLuw8A1icDD6Zed2Gw==
+"@redocly/openapi-core@1.0.0-beta.123":
+  version "1.0.0-beta.123"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.0.0-beta.123.tgz#0c29ae9fabe5f143f571caf608a7d025f41125db"
+  integrity sha512-W6MbUWpb/VaV+Kf0c3jmMIJw3WwwF7iK5nAfcOS+ZwrlbxtIl37+1hEydFlJ209vCR9HL12PaMwdh2Vpihj6Jw==
   dependencies:
-    "@redocly/ajv" "^8.6.4"
+    "@redocly/ajv" "^8.11.0"
     "@types/node" "^14.11.8"
     colorette "^1.2.0"
     js-levenshtein "^1.1.6"
@@ -4167,26 +4177,25 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-docusaurus-plugin-redoc@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/docusaurus-plugin-redoc/-/docusaurus-plugin-redoc-1.4.0.tgz#182e2fbb1c74dea65d723e780dd4d1286becf670"
-  integrity sha512-J68xOGTgEVw1u8lWFimlNxLiNZ7NBKqvyxa0CTXQSgCmVujzHJ0MEw8n3Y6uJTzsfEdLAGKp7vCtUjqHsMIF2g==
+docusaurus-plugin-redoc@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/docusaurus-plugin-redoc/-/docusaurus-plugin-redoc-1.5.0.tgz#c9bdd1ce3be87fe8d38e50b8ea43897fbfed3c50"
+  integrity sha512-9iK8IQPErOaRNn7XxBmxY2HTEHlzoo+U/DeBSevTVh3xAvL5RrQcYiQAiT+EWuzoxRFCQcszqLsjZjS3qcMZmA==
   dependencies:
-    "@redocly/openapi-core" "1.0.0-beta.102"
-    joi "^17.5.0"
+    "@redocly/openapi-core" "1.0.0-beta.123"
     redoc "2.0.0"
 
-docusaurus-theme-redoc@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/docusaurus-theme-redoc/-/docusaurus-theme-redoc-1.4.0.tgz#d5fe9df72b3284dbc5b289169adc1bd17097da18"
-  integrity sha512-r6zxab5+/XieCcD2i3iLCiiBdvIwWHxMplQJuEWpc8S3u3CHfMgQSBPMZOmsml8CGY68MgAxr0WMmnisnPW2qA==
+docusaurus-theme-redoc@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/docusaurus-theme-redoc/-/docusaurus-theme-redoc-1.5.0.tgz#fe1a4c5ea22e9f5b3c5a46686e41ba62d98437ab"
+  integrity sha512-9FUIfVDrMMgTXCHszI6G7XN+VcC/p35KhiDb1E35xNW8ZmWFeqDvaowl26NmzYcokpeB/JxftJUFltuI5VBUWw==
   dependencies:
-    clsx "^1.1.1"
+    clsx "^1.2.1"
     copyfiles "^2.4.1"
     lodash "^4.17.21"
-    mobx "^6.5.0"
+    mobx "^6.8.0"
     redoc "2.0.0"
-    styled-components "^5.3.5"
+    styled-components "^5.3.6"
 
 dom-converter@^0.2.0:
   version "0.2.0"
@@ -6091,7 +6100,7 @@ jest-worker@^27.4.5, jest-worker@^27.5.1:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-joi@^17.5.0, joi@^17.6.0:
+joi@^17.6.0:
   version "17.6.0"
   resolved "https://registry.yarnpkg.com/joi/-/joi-17.6.0.tgz#0bb54f2f006c09a96e75ce687957bd04290054b2"
   integrity sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==
@@ -6683,7 +6692,7 @@ mobx-react@^7.2.0:
   dependencies:
     mobx-react-lite "^3.4.0"
 
-mobx@^6.5.0, mobx@^6.8.0:
+mobx@^6.8.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.8.0.tgz#59051755fdb5c8a9f3f2e0a9b6abaf86bab7f843"
   integrity sha512-+o/DrHa4zykFMSKfS8Z+CPSEg5LW9tSNGTuN8o6MF1GKxlfkSHSeJn5UtgxvPkGgaouplnrLXCF+duAsmm6FHQ==
@@ -8152,13 +8161,13 @@ redoc@2.0.0:
     swagger2openapi "^7.0.6"
     url-template "^2.0.8"
 
-redocusaurus@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/redocusaurus/-/redocusaurus-1.4.0.tgz#8737005959007806e8012f013cd712d5ca183a97"
-  integrity sha512-1ZT+v5aCBxyKgfvgbodu1zLOEYFfbu7hO7KVQQbkbHhVvkeWUZ5GnK4z7XoRNUcEfRCE7Xy7XmUPBq6gGsbv1g==
+redocusaurus@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/redocusaurus/-/redocusaurus-1.5.0.tgz#bdabd757864b7bacb3c02bd7dafa9ce899d9fee8"
+  integrity sha512-UeXDpbSzP53sYwJ8W6pIUGCv/r3dWd5YByvcDFDph//UYlCXYiOkSWFZAXxnGJCpLCW9DSyVS5DQNBqaEb6Ilg==
   dependencies:
-    docusaurus-plugin-redoc "1.4.0"
-    docusaurus-theme-redoc "1.4.0"
+    docusaurus-plugin-redoc "1.5.0"
+    docusaurus-theme-redoc "1.5.0"
 
 reftools@^1.1.9:
   version "1.1.9"
@@ -9174,7 +9183,7 @@ style-to-object@0.3.0, style-to-object@^0.3.0:
   dependencies:
     inline-style-parser "0.1.1"
 
-styled-components@^5.3.5, styled-components@^5.3.6:
+styled-components@^5.3.6:
   version "5.3.6"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.3.6.tgz#27753c8c27c650bee9358e343fc927966bfd00d1"
   integrity sha512-hGTZquGAaTqhGWldX7hhfzjnIYBZ0IXQXkCYdvF1Sq3DsUaLx6+NTHC5Jj1ooM2F68sBiVz3lvhfwQs/S3l6qg==
