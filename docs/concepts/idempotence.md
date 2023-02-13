@@ -1,5 +1,5 @@
 ---
-id: idempotencia
+id: idempotence
 title: Idempotência
 tags:
   - api
@@ -14,6 +14,20 @@ Idempotência, no contexto de desenvolvimento, significa que chamar uma determin
 Uma função ser idempotente não significa que o retorno é sempre igual, mas que essa função, caso ela tenha alterado o estado do sistema, não faça nenhuma nova alteração, caso ela seja chamada logo em seguida com os mesmos parâmetros.
 
 Então, por exemplo, uma função que retorna o saldo de uma conta é idempotente, mesmo que ela retorne valores diferentes (porque outras funções podem ter alterado o estado do sistema entre uma chamada e outra.)
+
+### Idempotência nas nossas APIs
+
+Ao utilizar nossas APIs, para garantir idempotência nas chamadas, nós usamos o padrão conhecido como Idempotence-Key, o que significa que ao fazer uma chamada para nossa API, é importante especificar um ID que o seu sistema entenda como correspondente à operação.
+
+Ex.:
+
+> Você quer usar nossa API para criar uma cobrança
+>
+> No seu sistema, você deve ter uma tabela/coleção que representa a criação da cobrança, criar um documento e pegar o ID dele
+>
+> Na chamada para a nossa API, adicione uma propriedade `correlationID` com esse ID.
+
+Ao utilizar nossos webhooks, é necessário garantir que a rota que lida com os webhooks seja idempotente, pois é prática comum reenviar webhooks para garantir que pelo menos um deles chegou e foi processado. No final desse documento, tem exemplos de como você pode fazer essa implementação.
 
 ### Por que idempotência é relevante?
 
@@ -55,9 +69,19 @@ Ex.: Uma rota que sirva para deletar uma cobrança.
 
 Uma vez chamada, a função vai apagar a conta bancária, chamadas subsequentes não devem apagar outras contas, mas retornar alguma mensagem dizendo que essa conta já foi deletada.
 
+##### Rotas POST públicas
+
+Nem toda rota POST precisa ser idempotente.
+
+É interessante considerar que se servidores externos vão chamar sua API (em oposição à servidores/aplicações que você controla), pois se for o caso, os mesmos problemas de conexão associados à webhooks surgirão, e essas rotas também devem ser idempotentes.
+
 #### WebHooks e sistemas orientados a eventos
 
-Rotas que lidam com webhooks ou outras formas de orientação a eventos, por causa da insegurança da comunicação, tem a necessidade de serem idempotentes.
+É normal que rotas que lidam com webhooks ou que lidam com eventos sejam invocadas várias vezes.
+
+Isso acontece para resolver problemas de insegurança na comunicação entre os servidor que originou o evento com o receptor da mensagem.
+
+Por conta disso, rotas que lidam com webhooks precisam ser idempotentes.
 
 ### Como implementar idempotência?
 
@@ -163,5 +187,54 @@ const createCustomerBankAccount = function(customer, params){
     db.customerBankAccount.create({ ...params, customer: customer.id })
 
     db.events.create({ hash: newRequestHash})
+}
+```
+
+#### Padrão Idempotence-Key
+
+A ideia desse padrão é usar uma chave para representar uma operação, e ao receber uma chave duplicada, não repetir a operação.
+
+Nós utliziamos um padrão semelhante a este em nossas APIs através da propriedade `correlationID`.
+
+Supondo essa função:
+
+```js
+const createCustomerBankAccount = function(customer, params){
+
+    // Validações do modelo
+    ...
+
+    // Criando a conta no banco de dados
+    db.customerBankAccount.create({ ...params, customer: customer.id });
+}
+```
+
+Aplicando este padrão, ela pode ser rescrita da seguinte forma:
+
+```js
+const createCustomerBankAccount = function(customer, params){
+
+    const { idempotenceKey } = params;
+
+    // Checamos se o usuário enviou uma chave de idempotência
+    if (idempotenceKey){
+
+        const existingBankAccount = db.customerBankAccount.get({
+            idempotenceKey
+        })
+
+        // Checamos se alguma conta já foi cadastrada por essa operação e retornamos caso já tenha acontecido
+        if (existingBankAccount){
+            return existingBankAccount;
+        }
+
+    }
+
+
+    // Validações do modelo
+    ...
+
+    // Criando a conta no banco de dados
+    db.customerBankAccount.create({ ...params, customer: customer.id });
 }
 ```
