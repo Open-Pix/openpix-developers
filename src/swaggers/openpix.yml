@@ -2459,6 +2459,109 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/v1/cashback-fidelity/balance/{taxID}':
+    get:
+      summary: Get the exclusive cashback amount an user still has to receive by taxID.
+      parameters:
+        - name: taxID
+          in: path
+          description: The raw tax ID from the customer you want to get the balance.
+          required: true
+          schema:
+            type: string
+          examples:
+            taxID:
+              value: '60151449000182'
+      responses:
+        '200':
+          description: Amount the user still has to receive.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: number
+                  status:
+                    type: string
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/v1/cashback-fidelity:
+    post:
+      summary: Get or create cashback for a customer.
+      description: Create a new cashback exclusive for the customer with a given
+        taxID. If the customer already has a pending excluisve cashback, this
+        endpoint will return it instead.
+      requestBody:
+        description: Customer's taxID and the cash
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxID:
+                  type: string
+                  description: Customer taxID (CPF or CNPJ)
+                value:
+                  type: number
+                  description: Cashback value in centavos
+            example:
+              value: 100
+              taxID: 11111111111
+      responses:
+        '200':
+          description:
+            Didn't create a new cashback, returning previously existing
+            cashback information instead.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cashback:
+                    description: Object representing the existing cashback
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        description: Cashback value in centavos
+                  message:
+                    type: string
+                    description: String explaining what happened
+        '201':
+          description: New cashback created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cashback:
+                    description: Object representing the new cashback
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        description: Cashback value in centavos
+                  message:
+                    type: string
+                    description: String explaining what happened
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 components:
   schemas:
     Charge:
@@ -3253,3 +3356,6 @@ tags:
   - name: subscription
     description: |
       Endpoint to manage Subscriptions
+  - name: cashback fidelity
+    description: |
+      Endpoint to manage exclusive cashbacks
