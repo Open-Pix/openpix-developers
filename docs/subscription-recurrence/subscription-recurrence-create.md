@@ -48,10 +48,10 @@ Para criar uma Assinatura é **obrigatório** um cliente, você pode adicionar u
 
 Neste passo você irá configurar como as cobrança da Assinatura serão geradas:
 
-| Campo                 | Descrição                                                   | Exemplo            |
-| --------------------- | ----------------------------------------------------------- | ------------------ |
-| Valor                 | Valor a ser cobrado                                         | **R$ 98,90**       |
-| Comentário (opcional) | Comentário que aparecerá no QR Code no momento do pagamento | Plano A - Academia |
+| Campo                 | Descrição                                                   | Exemplo                |
+| --------------------- | ----------------------------------------------------------- | ---------------------- |
+| Valor                 | Valor a ser cobrado                                         | **R$ 98,90**           |
+| Comentário (opcional) | Comentário que aparecerá no QR Code no momento do pagamento | **Plano A - Academia** |
 
 ![Dados das cobranças](./__assets__/subscription-recurrence-charge-data.png)
 
@@ -66,7 +66,7 @@ Uma Assinatura pode ou não ter uma data de fim.
 
 | Campo          | Padrão      | Descrição                    | Exemplo        |
 | -------------- | ----------- | ---------------------------- | -------------- |
-| Início         | _Dia atual_ | Data de inicio da Assinatura | **06/02/2023** |
+| Início         | _Dia atual_ | Data de início da Assinatura | **06/02/2023** |
 | Fim (opcional) |             | Data de fim da Assinatura    | **25/12/2024** |
 | Frequência     | Mensal      | Frequência da Assinatura     | **Mensal**     |
 
