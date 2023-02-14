@@ -16,6 +16,113 @@ servers:
 security:
   - AppID: []
 paths:
+  '/api/v1/cashback-fidelity/balance/{taxID}':
+    get:
+      tags:
+        - cashback-fidelity
+      summary: Get the exclusive cashback amount an user still has to receive by taxID.
+      parameters:
+        - name: taxID
+          in: path
+          description: The raw tax ID from the customer you want to get the balance.
+          required: true
+          schema:
+            type: string
+          examples:
+            taxID:
+              value: '60151449000182'
+      responses:
+        '200':
+          description: Amount the user still has to receive.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: number
+                  status:
+                    type: string
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/v1/cashback-fidelity:
+    post:
+      tags:
+        - cashback-fidelity
+      summary: Get or create cashback for a customer.
+      description: Create a new cashback exclusive for the customer with a given
+        taxID. If the customer already has a pending excluisve cashback, this
+        endpoint will return it instead.
+      requestBody:
+        description: Customer's taxID and the cash
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxID:
+                  type: string
+                  description: Customer taxID (CPF or CNPJ)
+                value:
+                  type: number
+                  description: Cashback value in centavos
+            example:
+              value: 100
+              taxID: 11111111111
+      responses:
+        '200':
+          description:
+            Didn't create a new cashback, returning previously existing
+            cashback information instead.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cashback:
+                    description: Object representing the existing cashback
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        description: Cashback value in centavos
+                  message:
+                    type: string
+                    description: String explaining what happened
+        '201':
+          description: New cashback created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cashback:
+                    description: Object representing the new cashback
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        description: Cashback value in centavos
+                  message:
+                    type: string
+                    description: String explaining what happened
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
   '/api/openpix/v1/charge/{id}':
     delete:
       tags:
@@ -333,40 +440,38 @@ paths:
                 properties:
                   error:
                     type: string
-  '/api/openpix/v1/refund/{id}':
+  '/api/openpix/v1/account/{accountId}':
     get:
       tags:
-        - refund
-      summary: Get one refund
+        - account
+      summary: Get an Account
       parameters:
-        - name: id
+        - name: accountId
           in: path
-          description: refund ID or correlation ID
+          description: ID of the Account
           required: true
           schema:
             type: string
-          examples:
-            id:
-              value: Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==
-            correlationID:
-              value: fe7834b4060c488a9b0f89811be5f5cf
+          example: 6290ccfd42831958a405debc
       responses:
         '200':
-          description: The refund retrieve using the given ID
+          description: The Account retrieve using the given Account ID
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  refund:
+                  account:
                     type: object
-                    $ref: '#/components/schemas/Refund'
-                example:
-                  refund:
-                    value: 100
-                    correlationID: 7777-6f71-427a-bf00-241681624586
-                    refundId: 11bf5b37e0b842e08dcfdc8c4aefc000
-                    returnIdentification: D09089356202108032000a543e325902
+                    $ref: '#/components/schemas/CompanyBankAccount'
+              example:
+                account:
+                  accountId: 6290ccfd42831958a405debc
+                  isDefault: true
+                  balance:
+                    total: 129430
+                    blocked: 0
+                    available: 129430
         '400':
           description: An error message
           content:
@@ -376,63 +481,37 @@ paths:
                 properties:
                   error:
                     type: string
-  /api/openpix/v1/refund:
+  /api/openpix/v1/account/:
     get:
       tags:
-        - refund
-      summary: Get a list of refunds
+        - account
+      summary: Get a list of Accounts
       responses:
         '200':
-          description: A list of refunds
+          description: A list of Accounts
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  refunds:
+                  accounts:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Refund'
-                  pageInfo:
-                    type: object
-                    properties:
-                      errors:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            message:
-                              type: string
-                            data:
-                              type: object
-                              properties:
-                                skip:
-                                  type: number
-                                limit:
-                                  type: number
-                      skip:
-                        type: number
-                      limit:
-                        type: number
-                      totalCount:
-                        type: number
-                      hasPreviousPage:
-                        type: boolean
-                      hasNextPage:
-                        type: boolean
-                example:
-                  pageInfo:
-                    skip: 0
-                    limit: 10
-                    totalCount: 20
-                    hasPreviousPage: false
-                    hasNextPage: true
-                  refunds:
-                    status: IN_PROCESSING
-                    value: 100
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    refundId: 9134e2866f71427abf00241681624586
-                    time: 2021-03-02T17:28:51.882Z
+                      $ref: '#/components/schemas/CompanyBankAccount'
+              example:
+                accounts:
+                  - accountId: 6290ccfd42831958a405debc
+                    isDefault: true
+                    balance:
+                      total: 129430
+                      blocked: 0
+                      available: 129430
+                  - accountId: 6286b467a7910113577e00ce
+                    isDefault: false
+                    balance:
+                      total: 130
+                      blocked: 100
+                      available: 30
         '400':
           description: An error message
           content:
@@ -442,40 +521,64 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/openpix/v1/account/{accountId}/withdraw':
     post:
       tags:
-        - refund
-      summary: Create a new refund
-      description: Endpoint to create a new refund for a customer
+        - account
+      summary: Withdraw from an Account
+      description:
+        An additional fee may be charged depending on the minimum free
+        withdrawal amount. See more about at
+        https://developers.openpix.com.br/docs/FAQ/faq-virtual-account/#onde-posso-consultar-as-taxas-da-minha-conta-virtual
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of the Account
+          required: true
+          schema:
+            type: string
+          example: 6290ccfd42831958a405debc
       requestBody:
-        description: Data to create a new refund
         required: true
         content:
           application/json:
             schema:
               type: object
-              $ref: '#/components/schemas/RefundPayload'
+              properties:
+                value:
+                  type: number
+                  description: Value in cents
             example:
-              transactionEndToEndId: 9134e286-6f71-427a-bf00-241681624586
-              correlationID: 9134e286-6f71-427a-bf00-241681624586
-              value: 100
+              value: 7000
       responses:
         '200':
-          description: The created Refund
+          description: Withdraw and Acccount information
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  refund:
-                    $ref: '#/components/schemas/Refund'
-                example:
-                  refund:
-                    status: IN_PROCESSING
-                    value: 100
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    refundId: 9134e2866f71427abf00241681624586
-                    time: 2021-03-02T17:28:51.882Z
+                  withdraw:
+                    type: object
+                    properties:
+                      account:
+                        type: object
+                        $ref: '#/components/schemas/CompanyBankAccount'
+                      transaction:
+                        type: object
+                        $ref: '#/components/schemas/WithdrawTransaction'
+              example:
+                withdraw:
+                  account:
+                    accountId: 6290ccfd42831958a405debc
+                    isDefault: true
+                    balance:
+                      total: 122430
+                      blocked: 0
+                      available: 122430
+                  transaction:
+                    endToEndId: E23114447202205191817cx6VMrbwtw6
+                    transaction: 7000
         '400':
           description: An error message
           content:
@@ -634,6 +737,876 @@ paths:
                     taxID:
                       taxID: '31324227036'
                       type: BR:CPF
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/partner/application:
+    post:
+      tags:
+        - partner (request access)
+      summary: Create a new application to some of your preregistration's company.
+      description: >
+        As a partner company, you can create a new application to some of your
+        companies.
+
+        The application should give access to our API to this companies, so they can use
+
+        it too.
+      requestBody:
+        description: The request body to create a pre registration.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                application:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name you want to give your application
+                    type:
+                      $ref: '#/components/schemas/ApplicationEnumTypePayload'
+                  required:
+                    - name
+                    - type
+                taxID:
+                  $ref: '#/components/schemas/TaxIDObjectPayload'
+                  required:
+                    - taxID
+                    - type
+            example:
+              application:
+                name: MyAPIAccess
+                type: API
+              taxID:
+                taxID: '65914571000187'
+                type: BR:CNPJ
+      responses:
+        '200':
+          description: >
+            Our "idempotence output", if you get this HTTP code, it's an
+            application
+
+            that already has been registered.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  application:
+                    $ref: '#/components/schemas/PartnerApplicationPayload'
+        '201':
+          description: >
+            A new application has been registered. It'll be identified by the
+            name that you give to it
+
+            and by the company that has been referenced.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  application:
+                    $ref: '#/components/schemas/PartnerApplicationPayload'
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '403':
+          description: You are unauthorized to use this endpoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  '/api/openpix/v1/partner/company/{taxID}':
+    get:
+      tags:
+        - partner (request access)
+      summary: Get an specific preregistration via taxID param.
+      parameters:
+        - name: taxID
+          in: path
+          description: The raw tax ID from the preregistration that you want to get.
+          required: true
+          schema:
+            type: string
+          examples:
+            taxID:
+              value: '60151449000182'
+      responses:
+        '200':
+          description: The preregistration retrieved by the tax ID.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  preRegistration:
+                    type: object
+                    properties:
+                      preRegistration:
+                        $ref: '#/components/schemas/PreRegistrationObjectPayload'
+                      user:
+                        $ref: '#/components/schemas/PreRegistrationUserObject'
+                      company:
+                        $ref: '#/components/schemas/CompanyObjectPayload'
+                      account:
+                        $ref: '#/components/schemas/AccountObjectPayload'
+                    required:
+                      - preRegistration
+                      - user
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/partner/company:
+    get:
+      tags:
+        - partner (request access)
+      summary: Get every preregistration that is managed by you.
+      responses:
+        '200':
+          description: A list with preregistrations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  preRegistrations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        preRegistration:
+                          $ref: '#/components/schemas/PreRegistrationObjectPayload'
+                        user:
+                          $ref: '#/components/schemas/PreRegistrationUserObject'
+                        company:
+                          $ref: '#/components/schemas/CompanyObjectPayload'
+                        account:
+                          $ref: '#/components/schemas/AccountObjectPayload'
+                      required:
+                        - preRegistration
+                        - user
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      tags:
+        - partner (request access)
+      summary: Create a pre registration with a partner reference (your company)
+      description: >
+        As a partner company, you can create a new pre registration referencing
+        your
+
+        company as a partner.
+      requestBody:
+        description: The request body to create a pre registration.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PreRegistrationPayloadObject'
+            example:
+              preRegistration:
+                name: Example LLC
+                taxID:
+                  taxID: '11111111111111'
+                  type: BR:CNPJ
+                website: examplellc.com
+              user:
+                firstName: John
+                lastName: Doe
+                email: johndoe@examplellc.com
+                phone: '+5511912345678'
+      responses:
+        '200':
+          description: >
+            Payload with a pre registration data.
+
+            Being the taxID our idempotence key, if you do the request with the same taxID multiple times,
+
+            every time you'll receive the same data from our endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreRegistrationPayloadObject'
+        '201':
+          description: A new preregistration that is related to you has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreRegistrationPayloadObject'
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '403':
+          description: You are unauthorized to use this endpoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/pay/confirm:
+    post:
+      tags:
+        - payment (request access)
+      summary: Confirm a Payment
+      description: Endpoint to confirm a payment
+      requestBody:
+        description: Data to confirm a pending payment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PayConfirmPayload'
+            example:
+              correlationID: pay1
+      responses:
+        '200':
+          description: Payment destination account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment:
+                    $ref: '#/components/schemas/PayConfirmPayment'
+                example:
+                  payment:
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    destination:
+                      value: 100
+                      status: CONFIRMED
+                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
+                      pixKeyType: RANDOM
+                      account:
+                        branch: '1234'
+                        account: '12345'
+                        accountType: ContaCorrente
+                      psp:
+                        id: '1234'
+                        name: Banco de Exemplo
+                        code: '555'
+                      holder:
+                        name: Pessoa Juridica
+                        taxID:
+                          taxID: '1234567890'
+                          type: CNPJ
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/pay/pix-key:
+    post:
+      tags:
+        - payment (request access)
+      summary: Init a payment using a Pix Key
+      description: Endpoint to init a payment using a Pix Key
+      requestBody:
+        description: Data to create new payment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PayPixKeyPayload'
+            example:
+              pixKey: c4249323-b4ca-43f2-8139-784baab09b93
+              pixKeyType: RANDOM
+              value: 1
+              correlationID: pay1
+      responses:
+        '200':
+          description: Payment destination account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment:
+                    $ref: '#/components/schemas/PaymentPixKey'
+                example:
+                  payment:
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    value: 100
+                    status: PENDING
+                    destination:
+                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
+                      pixKeyType: RANDOM
+                      account:
+                        branch: '1234'
+                        account: '12345'
+                        accountType: ContaCorrente
+                      psp:
+                        id: '1234'
+                        name: Banco de Exemplo
+                        code: '555'
+                      holder:
+                        name: Pessoa Juridica
+                        taxID:
+                          taxID: '1234567890'
+                          type: CNPJ
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/pay/qrcode:
+    post:
+      tags:
+        - payment (request access)
+      summary: Init a payment using a QRCode
+      description: Endpoint to init a payment using a QRCode
+      requestBody:
+        description: Data to create new payment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PayQRCodeload'
+            example:
+              qrcode:
+                00020126580014br.gov.bcb.pix01365fd0bae1-ccf3-4675-a189-c9eaee189bc65204000053039865406100.005802BR5909LOCALHOST6009Sao
+                Paulo62100506doe10063042F24
+              correlationID: pay1
+      responses:
+        '200':
+          description: Payment destination account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment:
+                    $ref: '#/components/schemas/PaymentPixKey'
+                example:
+                  payment:
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    destination:
+                      value: 100
+                      status: PENDING
+                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
+                      pixKeyType: RANDOM
+                      account:
+                        branch: '1234'
+                        account: '12345'
+                        accountType: ContaCorrente
+                      psp:
+                        id: '1234'
+                        name: Banco de Exemplo
+                        code: '555'
+                      holder:
+                        name: Pessoa Juridica
+                        taxID:
+                          taxID: '1234567890'
+                          type: CNPJ
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  '/api/openpix/v1/pixQrCode-static/{id}':
+    get:
+      tags:
+        - pixQrCode
+      summary: Get one Pix QrCode
+      parameters:
+        - name: id
+          in: path
+          description: pixQrCode ID, correlation ID or emv identifier
+          required: true
+          schema:
+            type: string
+          examples:
+            pixQrCodeId:
+              value: Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==
+            correlationID:
+              value: fe7834b4060c488a9b0f89811be5f5cf
+            identifier:
+              value: zr7833b4060c488a9b0f89811
+      responses:
+        '200':
+          description: The pixQrCode retrieve using the given ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pixQrCode:
+                    type: object
+                    $ref: '#/components/schemas/PixQrCode'
+                example:
+                  pixQrCode:
+                    name: pix qrcode static
+                    value: 100
+                    comment: pix qrcode static
+                    correlationID: fe7834b4060c488a9b0f89811be5f5cf
+                    identifier: zr7833b4060c488a9b0f89811
+                    paymentLinkID: 7777-6f71-427a-bf00-241681624586
+                    paymentLinkUrl: https://openpix.com.br/pay/fe7834b4060c488a9b0f89811be5f5cf
+                    qrCodeImage: https://api.openpix.dev/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png
+                    brCode:
+                      000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+                    createdAt: 2021-03-02T17:28:51.882Z
+                    updatedAt: 2021-03-02T17:28:51.882Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/qrcode-static:
+    get:
+      tags:
+        - pixQrCode
+      summary: Get a list of Pix QrCodes
+      responses:
+        '200':
+          description: A list of pixQrCodes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pixQrCodes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PixQrCode'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+                example:
+                  pageInfo:
+                    skip: 0
+                    limit: 10
+                    totalCount: 20
+                    hasPreviousPage: false
+                    hasNextPage: true
+                  pixQrCodes:
+                    name: pix qrcode
+                    value: 100
+                    comment: good
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    identifier: zr7833b4060c488a9b0f89811
+                    paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
+                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.openpix.dev/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    brCode:
+                      000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+                    createdAt: 2021-03-02T17:28:51.882Z
+                    updatedAt: 2021-03-02T17:28:51.882Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      tags:
+        - pixQrCode
+      summary: Create a new Pix QrCode Static
+      description: Endpoint to create a new Pix QrCode Static
+      requestBody:
+        description: Data to create a new Pix QrCode Static
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PixQrCodePayload'
+            example:
+              correlationID: 9134e286-6f71-427a-bf00-241681624586
+              value: 100
+              comment: good
+              identifier: zr7833b4060c488a9b0f89811
+      responses:
+        '200':
+          description:
+            PixQrCode ID and also the generated Dynamic BR Code to be rendered
+            as a QRCode
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pixQrCode:
+                    $ref: '#/components/schemas/PixQrCode'
+                  correlationID:
+                    type: string
+                  brCode:
+                    type: string
+                example:
+                  pixQrCode:
+                    value: 100
+                    comment: good
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    identifier: zr7833b4060c488a9b0f89811
+                    paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
+                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.openpix.dev/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    createdAt: 2021-03-02T17:28:51.882Z
+                    updatedAt: 2021-03-02T17:28:51.882Z
+                    brCode:
+                      000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  '/api/openpix/v1/refund/{id}':
+    get:
+      tags:
+        - refund
+      summary: Get one refund
+      parameters:
+        - name: id
+          in: path
+          description: refund ID or correlation ID
+          required: true
+          schema:
+            type: string
+          examples:
+            id:
+              value: Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==
+            correlationID:
+              value: fe7834b4060c488a9b0f89811be5f5cf
+      responses:
+        '200':
+          description: The refund retrieve using the given ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refund:
+                    type: object
+                    $ref: '#/components/schemas/Refund'
+                example:
+                  refund:
+                    value: 100
+                    correlationID: 7777-6f71-427a-bf00-241681624586
+                    refundId: 11bf5b37e0b842e08dcfdc8c4aefc000
+                    returnIdentification: D09089356202108032000a543e325902
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/openpix/v1/refund:
+    get:
+      tags:
+        - refund
+      summary: Get a list of refunds
+      responses:
+        '200':
+          description: A list of refunds
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refunds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Refund'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+                example:
+                  pageInfo:
+                    skip: 0
+                    limit: 10
+                    totalCount: 20
+                    hasPreviousPage: false
+                    hasNextPage: true
+                  refunds:
+                    status: IN_PROCESSING
+                    value: 100
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    refundId: 9134e2866f71427abf00241681624586
+                    time: 2021-03-02T17:28:51.882Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      tags:
+        - refund
+      summary: Create a new refund
+      description: Endpoint to create a new refund for a customer
+      requestBody:
+        description: Data to create a new refund
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/RefundPayload'
+            example:
+              transactionEndToEndId: 9134e286-6f71-427a-bf00-241681624586
+              correlationID: 9134e286-6f71-427a-bf00-241681624586
+              value: 100
+      responses:
+        '200':
+          description: The created Refund
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refund:
+                    $ref: '#/components/schemas/Refund'
+                example:
+                  refund:
+                    status: IN_PROCESSING
+                    value: 100
+                    correlationID: 9134e286-6f71-427a-bf00-241681624586
+                    refundId: 9134e2866f71427abf00241681624586
+                    time: 2021-03-02T17:28:51.882Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  '/api/v1/subscriptions/{id}':
+    get:
+      tags:
+        - subscription
+      summary: Get one subscription
+      parameters:
+        - name: id
+          in: path
+          description: The globalID of the subscription.
+          required: true
+          schema:
+            type: string
+          example: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+      responses:
+        '200':
+          description: The subscription retrieved using the given ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    type: object
+                    $ref: '#/components/schemas/Subscription'
+                example:
+                  subscription:
+                    globalID: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+                    customer:
+                      name: Dan
+                      email: email0@example.com
+                      phone: '5511999999999'
+                      taxID:
+                        taxID: '31324227036'
+                        type: BR:CPF
+                    value: 100
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/v1/subscriptions:
+    post:
+      tags:
+        - subscription
+      summary: Create a new Subscription
+      description: Endpoint to create a new Subcription
+      requestBody:
+        description: Data to create a new Subscription
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/SubscriptionPayload'
+            example:
+              value: 100
+              customer:
+                name: Dan
+                taxID: '31324227036'
+                email: email0@example.com
+                phone: '5511999999999'
+      responses:
+        '200':
+          description: The subscription created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    $ref: '#/components/schemas/Subscription'
+                example:
+                  subscription:
+                    globalID: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+                    customer:
+                      name: Dan
+                      email: email0@example.com
+                      phone: '5511999999999'
+                      taxID:
+                        taxID: '31324227036'
+                        type: BR:CPF
+                    value: 100
         '400':
           description: An error message
           content:
@@ -1304,469 +2277,6 @@ paths:
                 properties:
                   error:
                     type: string
-  '/api/openpix/v1/pixQrCode-static/{id}':
-    get:
-      tags:
-        - pixQrCode
-      summary: Get one Pix QrCode
-      parameters:
-        - name: id
-          in: path
-          description: pixQrCode ID, correlation ID or emv identifier
-          required: true
-          schema:
-            type: string
-          examples:
-            pixQrCodeId:
-              value: Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==
-            correlationID:
-              value: fe7834b4060c488a9b0f89811be5f5cf
-            identifier:
-              value: zr7833b4060c488a9b0f89811
-      responses:
-        '200':
-          description: The pixQrCode retrieve using the given ID
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pixQrCode:
-                    type: object
-                    $ref: '#/components/schemas/PixQrCode'
-                example:
-                  pixQrCode:
-                    name: pix qrcode static
-                    value: 100
-                    comment: pix qrcode static
-                    correlationID: fe7834b4060c488a9b0f89811be5f5cf
-                    identifier: zr7833b4060c488a9b0f89811
-                    paymentLinkID: 7777-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/fe7834b4060c488a9b0f89811be5f5cf
-                    qrCodeImage: https://api.openpix.dev/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png
-                    brCode:
-                      000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
-                      Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-                    createdAt: 2021-03-02T17:28:51.882Z
-                    updatedAt: 2021-03-02T17:28:51.882Z
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/qrcode-static:
-    get:
-      tags:
-        - pixQrCode
-      summary: Get a list of Pix QrCodes
-      responses:
-        '200':
-          description: A list of pixQrCodes
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pixQrCodes:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/PixQrCode'
-                  pageInfo:
-                    type: object
-                    properties:
-                      errors:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            message:
-                              type: string
-                            data:
-                              type: object
-                              properties:
-                                skip:
-                                  type: number
-                                limit:
-                                  type: number
-                      skip:
-                        type: number
-                      limit:
-                        type: number
-                      totalCount:
-                        type: number
-                      hasPreviousPage:
-                        type: boolean
-                      hasNextPage:
-                        type: boolean
-                example:
-                  pageInfo:
-                    skip: 0
-                    limit: 10
-                    totalCount: 20
-                    hasPreviousPage: false
-                    hasNextPage: true
-                  pixQrCodes:
-                    name: pix qrcode
-                    value: 100
-                    comment: good
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    identifier: zr7833b4060c488a9b0f89811
-                    paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.dev/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
-                    brCode:
-                      000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
-                      Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-                    createdAt: 2021-03-02T17:28:51.882Z
-                    updatedAt: 2021-03-02T17:28:51.882Z
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-    post:
-      tags:
-        - pixQrCode
-      summary: Create a new Pix QrCode Static
-      description: Endpoint to create a new Pix QrCode Static
-      requestBody:
-        description: Data to create a new Pix QrCode Static
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/PixQrCodePayload'
-            example:
-              correlationID: 9134e286-6f71-427a-bf00-241681624586
-              value: 100
-              comment: good
-              identifier: zr7833b4060c488a9b0f89811
-      responses:
-        '200':
-          description:
-            PixQrCode ID and also the generated Dynamic BR Code to be rendered
-            as a QRCode
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pixQrCode:
-                    $ref: '#/components/schemas/PixQrCode'
-                  correlationID:
-                    type: string
-                  brCode:
-                    type: string
-                example:
-                  pixQrCode:
-                    value: 100
-                    comment: good
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    identifier: zr7833b4060c488a9b0f89811
-                    paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.dev/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
-                    createdAt: 2021-03-02T17:28:51.882Z
-                    updatedAt: 2021-03-02T17:28:51.882Z
-                    brCode:
-                      000201010212261060014br.gov.bcb.pix2584http://localhost:5001/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
-                      Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/pay/confirm:
-    post:
-      tags:
-        - payment
-      summary: Confirm a Payment
-      description: Endpoint to confirm a payment
-      requestBody:
-        description: Data to confirm a pending payment
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/PayConfirmPayload'
-            example:
-              correlationID: pay1
-      responses:
-        '200':
-          description: Payment destination account information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payment:
-                    $ref: '#/components/schemas/PayConfirmPayment'
-                example:
-                  payment:
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    destination:
-                      value: 100
-                      status: CONFIRMED
-                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                      pixKeyType: RANDOM
-                      account:
-                        branch: '1234'
-                        account: '12345'
-                        accountType: ContaCorrente
-                      psp:
-                        id: '1234'
-                        name: Banco de Exemplo
-                        code: '555'
-                      holder:
-                        name: Pessoa Juridica
-                        taxID:
-                          taxID: '1234567890'
-                          type: CNPJ
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/pay/pix-key:
-    post:
-      tags:
-        - payment
-      summary: Init a payment using a Pix Key
-      description: Endpoint to init a payment using a Pix Key
-      requestBody:
-        description: Data to create new payment
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/PayPixKeyPayload'
-            example:
-              pixKey: c4249323-b4ca-43f2-8139-784baab09b93
-              pixKeyType: RANDOM
-              value: 1
-              correlationID: pay1
-      responses:
-        '200':
-          description: Payment destination account information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payment:
-                    $ref: '#/components/schemas/PaymentPixKey'
-                example:
-                  payment:
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    value: 100
-                    status: PENDING
-                    destination:
-                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                      pixKeyType: RANDOM
-                      account:
-                        branch: '1234'
-                        account: '12345'
-                        accountType: ContaCorrente
-                      psp:
-                        id: '1234'
-                        name: Banco de Exemplo
-                        code: '555'
-                      holder:
-                        name: Pessoa Juridica
-                        taxID:
-                          taxID: '1234567890'
-                          type: CNPJ
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/pay/qrcode:
-    post:
-      tags:
-        - payment
-      summary: Init a payment using a QRCode
-      description: Endpoint to init a payment using a QRCode
-      requestBody:
-        description: Data to create new payment
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/PayQRCodeload'
-            example:
-              qrcode:
-                00020126580014br.gov.bcb.pix01365fd0bae1-ccf3-4675-a189-c9eaee189bc65204000053039865406100.005802BR5909LOCALHOST6009Sao
-                Paulo62100506doe10063042F24
-              correlationID: pay1
-      responses:
-        '200':
-          description: Payment destination account information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  payment:
-                    $ref: '#/components/schemas/PaymentPixKey'
-                example:
-                  payment:
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    destination:
-                      value: 100
-                      status: PENDING
-                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                      pixKeyType: RANDOM
-                      account:
-                        branch: '1234'
-                        account: '12345'
-                        accountType: ContaCorrente
-                      psp:
-                        id: '1234'
-                        name: Banco de Exemplo
-                        code: '555'
-                      holder:
-                        name: Pessoa Juridica
-                        taxID:
-                          taxID: '1234567890'
-                          type: CNPJ
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  '/api/openpix/v1/giftback/balance/{taxID}':
-    get:
-      tags:
-        - giftback
-      summary: Get Giftback balance of a Customer
-      description: Endpoint to get Giftback balance of a Customer
-      parameters:
-        - name: taxID
-          in: path
-          description: CPF of the Customer
-          required: true
-          schema:
-            type: string
-          example: '3132422703'
-      responses:
-        '200':
-          description: Customer information and balance in cents
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  customer:
-                    type: object
-                    $ref: '#/components/schemas/Customer'
-                  balance:
-                    type: number
-                example:
-                  customer:
-                    name: Dan
-                    email: email0@example.com
-                    phone: '5511999999999'
-                    taxID:
-                      taxID: '31324227036'
-                      type: BR:CPF
-                    correlationID: fe7834b4060c488a9b0f89811be5f5cf
-                  balance: 3400
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/giftback:
-    post:
-      tags:
-        - giftback
-      summary: Give Giftback to a Customer
-      description: Endpoint to give Giftback to a Customer
-      requestBody:
-        description: Data to give Giftback to a Customer
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - taxID
-                - value
-              properties:
-                taxID:
-                  type: string
-                  description: CPF of the Customer
-                value:
-                  type: string
-                  description: Value in cents of this Giftback
-              example:
-                taxID: '31324227036'
-                value: 100
-      responses:
-        '200':
-          description: Customer information and balance in cents
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  customer:
-                    type: object
-                    $ref: '#/components/schemas/Customer'
-                  balance:
-                    type: number
-                example:
-                  customer:
-                    name: Dan
-                    email: email0@example.com
-                    phone: '5511999999999'
-                    taxID:
-                      taxID: '31324227036'
-                      type: BR:CPF
-                    correlationID: fe7834b4060c488a9b0f89811be5f5cf
-                  balance: 3400
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
   '/api/common/user/v1/users/{id}':
     delete:
       tags:
@@ -1952,513 +2462,6 @@ paths:
                     type: string
                   message:
                     type: string
-  /api/openpix/v1/partner/application:
-    post:
-      tags:
-        - partner (request access)
-      summary: Create a new application to some of your preregistration's company.
-      description: >
-        As a partner company, you can create a new application to some of your
-        companies.
-
-        The application should give access to our API to this companies, so they can use
-
-        it too.
-      requestBody:
-        description: The request body to create a pre registration.
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                application:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: The name you want to give your application
-                    type:
-                      $ref: '#/components/schemas/ApplicationEnumTypePayload'
-                  required:
-                    - name
-                    - type
-                taxID:
-                  $ref: '#/components/schemas/TaxIDObjectPayload'
-                  required:
-                    - taxID
-                    - type
-            example:
-              application:
-                name: MyAPIAccess
-                type: API
-              taxID:
-                taxID: '65914571000187'
-                type: BR:CNPJ
-      responses:
-        '200':
-          description: >
-            Our "idempotence output", if you get this HTTP code, it's an
-            application
-
-            that already has been registered.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  application:
-                    $ref: '#/components/schemas/PartnerApplicationPayload'
-        '201':
-          description: >
-            A new application has been registered. It'll be identified by the
-            name that you give to it
-
-            and by the company that has been referenced.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  application:
-                    $ref: '#/components/schemas/PartnerApplicationPayload'
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-        '403':
-          description: You are unauthorized to use this endpoint.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  '/api/openpix/v1/partner/company/{taxID}':
-    get:
-      tags:
-        - partner (request access)
-      summary: Get an specific preregistration via taxID param.
-      parameters:
-        - name: taxID
-          in: path
-          description: The raw tax ID from the preregistration that you want to get.
-          required: true
-          schema:
-            type: string
-          examples:
-            taxID:
-              value: '60151449000182'
-      responses:
-        '200':
-          description: The preregistration retrieved by the tax ID.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  preRegistration:
-                    type: object
-                    properties:
-                      preRegistration:
-                        $ref: '#/components/schemas/PreRegistrationObjectPayload'
-                      user:
-                        $ref: '#/components/schemas/PreRegistrationUserObject'
-                      company:
-                        $ref: '#/components/schemas/CompanyObjectPayload'
-                      account:
-                        $ref: '#/components/schemas/AccountObjectPayload'
-                    required:
-                      - preRegistration
-                      - user
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/partner/company:
-    get:
-      tags:
-        - partner (request access)
-      summary: Get every preregistration that is managed by you.
-      responses:
-        '200':
-          description: A list with preregistrations.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  preRegistrations:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        preRegistration:
-                          $ref: '#/components/schemas/PreRegistrationObjectPayload'
-                        user:
-                          $ref: '#/components/schemas/PreRegistrationUserObject'
-                        company:
-                          $ref: '#/components/schemas/CompanyObjectPayload'
-                        account:
-                          $ref: '#/components/schemas/AccountObjectPayload'
-                      required:
-                        - preRegistration
-                        - user
-                  pageInfo:
-                    type: object
-                    properties:
-                      errors:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            message:
-                              type: string
-                            data:
-                              type: object
-                              properties:
-                                skip:
-                                  type: number
-                                limit:
-                                  type: number
-                      skip:
-                        type: number
-                      limit:
-                        type: number
-                      totalCount:
-                        type: number
-                      hasPreviousPage:
-                        type: boolean
-                      hasNextPage:
-                        type: boolean
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-    post:
-      tags:
-        - partner (request access)
-      summary: Create a pre registration with a partner reference (your company)
-      description: >
-        As a partner company, you can create a new pre registration referencing
-        your
-
-        company as a partner.
-      requestBody:
-        description: The request body to create a pre registration.
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/PreRegistrationPayloadObject'
-            example:
-              preRegistration:
-                name: Example LLC
-                taxID:
-                  taxID: '11111111111111'
-                  type: BR:CNPJ
-                website: examplellc.com
-              user:
-                firstName: John
-                lastName: Doe
-                email: johndoe@examplellc.com
-                phone: '+5511912345678'
-      responses:
-        '200':
-          description: >
-            Payload with a pre registration data.
-
-            Being the taxID our idempotence key, if you do the request with the same taxID multiple times,
-
-            every time you'll receive the same data from our endpoint.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PreRegistrationPayloadObject'
-        '201':
-          description: A new preregistration that is related to you has been created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PreRegistrationPayloadObject'
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-        '403':
-          description: You are unauthorized to use this endpoint.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  '/api/openpix/v1/account/{accountId}':
-    get:
-      tags:
-        - account
-      summary: Get an Account
-      parameters:
-        - name: accountId
-          in: path
-          description: ID of the Account
-          required: true
-          schema:
-            type: string
-          example: 6290ccfd42831958a405debc
-      responses:
-        '200':
-          description: The Account retrieve using the given Account ID
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  account:
-                    type: object
-                    $ref: '#/components/schemas/CompanyBankAccount'
-              example:
-                account:
-                  accountId: 6290ccfd42831958a405debc
-                  isDefault: true
-                  balance:
-                    total: 129430
-                    blocked: 0
-                    available: 129430
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/openpix/v1/account/:
-    get:
-      tags:
-        - account
-      summary: Get a list of Accounts
-      responses:
-        '200':
-          description: A list of Accounts
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  accounts:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/CompanyBankAccount'
-              example:
-                accounts:
-                  - accountId: 6290ccfd42831958a405debc
-                    isDefault: true
-                    balance:
-                      total: 129430
-                      blocked: 0
-                      available: 129430
-                  - accountId: 6286b467a7910113577e00ce
-                    isDefault: false
-                    balance:
-                      total: 130
-                      blocked: 100
-                      available: 30
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  '/api/openpix/v1/account/{accountId}/withdraw':
-    post:
-      tags:
-        - account
-      summary: Withdraw from an Account
-      description:
-        An additional fee may be charged depending on the minimum free
-        withdrawal amount. See more about at
-        https://developers.openpix.com.br/docs/FAQ/faq-virtual-account/#onde-posso-consultar-as-taxas-da-minha-conta-virtual
-      parameters:
-        - name: accountId
-          in: path
-          description: ID of the Account
-          required: true
-          schema:
-            type: string
-          example: 6290ccfd42831958a405debc
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                value:
-                  type: number
-                  description: Value in cents
-            example:
-              value: 7000
-      responses:
-        '200':
-          description: Withdraw and Acccount information
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  withdraw:
-                    type: object
-                    properties:
-                      account:
-                        type: object
-                        $ref: '#/components/schemas/CompanyBankAccount'
-                      transaction:
-                        type: object
-                        $ref: '#/components/schemas/WithdrawTransaction'
-              example:
-                withdraw:
-                  account:
-                    accountId: 6290ccfd42831958a405debc
-                    isDefault: true
-                    balance:
-                      total: 122430
-                      blocked: 0
-                      available: 122430
-                  transaction:
-                    endToEndId: E23114447202205191817cx6VMrbwtw6
-                    transaction: 7000
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  '/api/v1/subscriptions/{id}':
-    get:
-      tags:
-        - subscription
-      summary: Get one subscription
-      parameters:
-        - name: id
-          in: path
-          description: The globalID of the subscription.
-          required: true
-          schema:
-            type: string
-          example: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
-      responses:
-        '200':
-          description: The subscription retrieved using the given ID
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  subscription:
-                    type: object
-                    $ref: '#/components/schemas/Subscription'
-                example:
-                  subscription:
-                    globalID: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
-                    customer:
-                      name: Dan
-                      email: email0@example.com
-                      phone: '5511999999999'
-                      taxID:
-                        taxID: '31324227036'
-                        type: BR:CPF
-                    value: 100
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-  /api/v1/subscriptions:
-    post:
-      tags:
-        - subscription
-      summary: Create a new Subscription
-      description: Endpoint to create a new Subcription
-      requestBody:
-        description: Data to create a new Subscription
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/SubscriptionPayload'
-            example:
-              value: 100
-              customer:
-                name: Dan
-                taxID: '31324227036'
-                email: email0@example.com
-                phone: '5511999999999'
-      responses:
-        '200':
-          description: The subscription created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  subscription:
-                    $ref: '#/components/schemas/Subscription'
-                example:
-                  subscription:
-                    globalID: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
-                    customer:
-                      name: Dan
-                      email: email0@example.com
-                      phone: '5511999999999'
-                      taxID:
-                        taxID: '31324227036'
-                        type: BR:CPF
-                    value: 100
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
 components:
   schemas:
     Charge:
@@ -2569,37 +2572,34 @@ components:
       required:
         - correlationID
         - value
-    Refund:
+    CompanyBankAccount:
       type: object
       properties:
-        value:
-          type: number
-        status:
+        accountId:
           type: string
-          enum:
-            - IN_PROCESSING
-            - REFUNDED
-            - NOT_ACCOMPLISHED
-        correlationID:
-          type: string
-          description: Your correlation ID to keep track of this refund
-        refundId:
-          type: string
-          description: Unique refund ID for this pix refund
-        time:
-          type: string
-          description: Time of this refund
-    RefundPayload:
+          description: ID of the Account
+        isDefault:
+          type: boolean
+        balance:
+          type: object
+          properties:
+            total:
+              type: number
+              description: Total amount in cents
+            blocked:
+              type: number
+              description: Blocked amount in cents
+            available:
+              type: number
+              description: Available amount in cents
+    WithdrawTransaction:
       type: object
       properties:
+        endToEndId:
+          type: string
+          description: ID of the Withdraw Transaction
         value:
-          type: number
-        transactionEndToEndId:
           type: string
-          description: Your transaction ID, or endToEnd ID, to keep track of this refund
-        correlationID:
-          type: string
-          description: Your correlation ID, unique identifier refund
     Customer:
       type: object
       properties:
@@ -2636,186 +2636,131 @@ components:
               type: string
           required:
             - name
-    Transaction:
+    ApplicationEnumTypePayload:
+      type: string
+      description:
+        Type of the application that you want to register. Each of this has
+        some kind of permissions.
+      enum:
+        - API
+        - PLUGIN
+        - ORACLE
+    TaxIDObjectPayload:
       type: object
       properties:
-        charge:
-          type: object
-          $ref: '#/components/schemas/Charge'
-        value:
-          type: number
-        time:
+        taxID:
           type: string
-        endToEndID:
-          type: string
-        transactionID:
-          type: string
-        infoPagador:
-          type: string
-        endToEndId:
-          type: string
-        customer:
-          type: object
-          $ref: '#/components/schemas/Customer'
-        withdraw:
-          type: object
-          $ref: '#/components/schemas/PixWithdrawTransaction'
-        payer:
-          type: object
-          $ref: '#/components/schemas/Customer'
+          description:
+            The tax identifier of your account holder. This should be a raw
+            string with only digits.
         type:
           type: string
-          description: Pix Transaction type
           enum:
-            - PAYMENT
-            - WITHDRAW
-        globalID:
-          description: External ID of this transaction
-        pixQrCode:
-          type: object
-          $ref: '#/components/schemas/PixQrCode'
-    PixWithdrawTransaction:
+            - BR:CNPJ
+    PreRegistrationUserObject:
       type: object
       properties:
-        value:
-          type: number
-        time:
+        firstName:
           type: string
-        endToEndID:
+          description: >
+            The user's first name.
+
+            If the pre registration has been approved, this will be turn the company's first user first name.
+        lastName:
           type: string
-        transactionID:
+          description: >
+            The user's last name.
+
+            If the pre registration has been approved, this will be turn the company's first user last name.
+        email:
           type: string
-        infoPagador:
+          description: >
+            The user's email.
+
+            It'll be the email that will entered in contact to validate that it's a real person (it's a step to approve the preregistration).
+
+            After approving the preregistration, it'll be the company's user email.
+        phone:
           type: string
-        endToEndId:
-          type: string
-        payer:
-          type: object
-          $ref: '#/components/schemas/Customer'
-        type:
-          type: string
-    WebhookPayload:
+          description: >
+            The user's phone number, need to be a validated phone number because
+            it'll receive a SMS confirming that is a real person.
+
+            We're accept only values that matches the E.164 standard, that follows this pattern: [+][country code][local phone number].
+      required:
+        - firstName
+        - lastName
+        - email
+        - phone
+    PreRegistrationObject:
       type: object
       properties:
         name:
-          type: number
-        event:
           type: string
           description:
-            The event to listen to. If omitted, the webhook will be registered
-            to listen the OPENPIX:TRANSACTION_RECEIVED. Event called when a new
-            pix transactions is received
-          $ref: '#/components/schemas/WebhookEventEnum'
-        url:
+            The name of this preregistration. It'll be related as your company
+            name too.
+        website:
           type: string
-        authorization:
+          description: A website that is related to this preregistration.
+        taxID:
+          $ref: '#/components/schemas/TaxIDObjectPayload'
+      required:
+        - name
+        - taxID
+    PreRegistrationPayloadObject:
+      type: object
+      properties:
+        preRegistration:
+          $ref: '#/components/schemas/PreRegistrationObject'
+        user:
+          $ref: '#/components/schemas/PreRegistrationUserObject'
+    AccountObjectPayload:
+      type: object
+      properties:
+        clientId:
           type: string
-        isActive:
-          type: boolean
-    Webhook:
+          description:
+            The client ID from the company bank account that is related to this
+            preregistration/company.
+    CompanyObjectPayload:
       type: object
       properties:
         id:
           type: string
+          description: The ID of the company that is related to this preregistration.
         name:
-          type: number
-        event:
           type: string
-          $ref: '#/components/schemas/WebhookEventEnum'
-        url:
+          description: The name of the company that is related to this preregistration.
+        taxID:
+          $ref: '#/components/schemas/TaxIDObjectPayload'
+    PreRegistrationObjectPayload:
+      type: object
+      properties:
+        name:
           type: string
-        authorization:
+          description:
+            When the preregistration will turn a company, this will be the name
+            of the company that this preregistration is related.
+        taxID:
+          $ref: '#/components/schemas/TaxIDObjectPayload'
+    PartnerApplicationPayload:
+      type: object
+      properties:
+        name:
           type: string
+          description: The name that identifies your application.
         isActive:
           type: boolean
-        createdAt:
+          description: Current status of your application.
+        type:
+          $ref: '#/components/schemas/ApplicationEnumTypePayload'
+        clientId:
           type: string
-        updatedAt:
+          description: The ID of this client application.
+        clientSecret:
           type: string
-    WebhookEventEnum:
-      type: string
-      description: >
-        Available events to register a webhook to listen to. If no one selected
-        anyone the default event will be OPENPIX:TRANSACTION_RECEIVED.
-
-
-        * **OPENPIX:CHARGE_CREATED** - New charge created
-
-        * **OPENPIX:CHARGE_COMPLETED** - Charge completed is when a charge is fully paid
-
-        * **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not fully paid and expired
-
-        * **OPENPIX:TRANSACTION_RECEIVED** - New PIX transaction received
-
-        * **OPENPIX:TRANSACTION_REFUND_RECEIVED** - New PIX transaction refund received or refunded
-      enum:
-        - OPENPIX:CHARGE_CREATED
-        - OPENPIX:CHARGE_COMPLETED
-        - OPENPIX:CHARGE_EXPIRED
-        - OPENPIX:TRANSACTION_RECEIVED
-        - OPENPIX:TRANSACTION_REFUND_RECEIVED
-    End:
-      type: string
-      format: date-time
-      title: End Date
-      description: End date used in the query. Complies with RFC 3339.
-      example: 2020-12-01T17:00:00Z
-    Start:
-      type: string
-      format: date-time
-      title: Start Date
-      description: Start date used in the query. Complies with RFC 3339.
-      example: 2020-01-01T00:00:00Z
-    PixQrCode:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        comment:
-          type: string
-        identifier:
-          type: string
-          description: Custom identifier for EMV
-        brCode:
-          type: string
-          description: EMV BRCode to be rendered as a Pix QRCode
-        correlationID:
-          type: string
-          description: Your correlation ID to keep track of this pix qrcode
-        paymentLinkID:
-          type: string
-          description: Payment Link ID, used on payment link and to retrieve qrcode image
-        paymentLinkUrl:
-          description: Payment Link URL to be shared with customers
-        qrCodeImage:
-          description: QRCode image link URL
-        createdAt:
-          type: string
-        updatedAt:
-          type: string
-    PixQrCodePayload:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of this pix qrcode
-        correlationID:
-          type: string
-          description: Your correlation ID to keep track of this qrcode
-        value:
-          type: number
-          description: Value in cents of this qrcode
-        comment:
-          type: string
-          description: Comment to be added in infoPagador
-        identifier:
-          type: string
-          description: Custom identifier for EMV
-      required:
-        - name
-        - identifier
+          description: The secret of this client application.
     PayPixKeyPayload:
       type: object
       properties:
@@ -2951,6 +2896,251 @@ components:
           enum:
             - PENDING
             - CONFIRMED
+    PixQrCode:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        comment:
+          type: string
+        identifier:
+          type: string
+          description: Custom identifier for EMV
+        brCode:
+          type: string
+          description: EMV BRCode to be rendered as a Pix QRCode
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this pix qrcode
+        paymentLinkID:
+          type: string
+          description: Payment Link ID, used on payment link and to retrieve qrcode image
+        paymentLinkUrl:
+          description: Payment Link URL to be shared with customers
+        qrCodeImage:
+          description: QRCode image link URL
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    PixQrCodePayload:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of this pix qrcode
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this qrcode
+        value:
+          type: number
+          description: Value in cents of this qrcode
+        comment:
+          type: string
+          description: Comment to be added in infoPagador
+        identifier:
+          type: string
+          description: Custom identifier for EMV
+      required:
+        - name
+        - identifier
+    Refund:
+      type: object
+      properties:
+        value:
+          type: number
+        status:
+          type: string
+          enum:
+            - IN_PROCESSING
+            - REFUNDED
+            - NOT_ACCOMPLISHED
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this refund
+        refundId:
+          type: string
+          description: Unique refund ID for this pix refund
+        time:
+          type: string
+          description: Time of this refund
+    RefundPayload:
+      type: object
+      properties:
+        value:
+          type: number
+        transactionEndToEndId:
+          type: string
+          description: Your transaction ID, or endToEnd ID, to keep track of this refund
+        correlationID:
+          type: string
+          description: Your correlation ID, unique identifier refund
+    Subscription:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Value in cents of the subscription
+        customer:
+          type: object
+          $ref: '#/components/schemas/Customer'
+    SubscriptionPayload:
+      type: object
+      properties:
+        customer:
+          type: object
+          description: Customer of this subscription
+          properties:
+            name:
+              type: string
+              description: Customer name
+            email:
+              type: string
+              description: Customer email
+            phone:
+              type: string
+              description: Customer phone
+            taxID:
+              type: string
+              description: Customer taxID (CPF or CNPJ)
+        value:
+          type: number
+          description: Value in cents of this subscription
+      required:
+        - customer
+        - value
+    Transaction:
+      type: object
+      properties:
+        charge:
+          type: object
+          $ref: '#/components/schemas/Charge'
+        value:
+          type: number
+        time:
+          type: string
+        endToEndID:
+          type: string
+        transactionID:
+          type: string
+        infoPagador:
+          type: string
+        endToEndId:
+          type: string
+        customer:
+          type: object
+          $ref: '#/components/schemas/Customer'
+        withdraw:
+          type: object
+          $ref: '#/components/schemas/PixWithdrawTransaction'
+        payer:
+          type: object
+          $ref: '#/components/schemas/Customer'
+        type:
+          type: string
+          description: Pix Transaction type
+          enum:
+            - PAYMENT
+            - WITHDRAW
+        globalID:
+          description: External ID of this transaction
+        pixQrCode:
+          type: object
+          $ref: '#/components/schemas/PixQrCode'
+    PixWithdrawTransaction:
+      type: object
+      properties:
+        value:
+          type: number
+        time:
+          type: string
+        endToEndID:
+          type: string
+        transactionID:
+          type: string
+        infoPagador:
+          type: string
+        endToEndId:
+          type: string
+        payer:
+          type: object
+          $ref: '#/components/schemas/Customer'
+        type:
+          type: string
+    WebhookPayload:
+      type: object
+      properties:
+        name:
+          type: number
+        event:
+          type: string
+          description:
+            The event to listen to. If omitted, the webhook will be registered
+            to listen the OPENPIX:TRANSACTION_RECEIVED. Event called when a new
+            pix transactions is received
+          $ref: '#/components/schemas/WebhookEventEnum'
+        url:
+          type: string
+        authorization:
+          type: string
+        isActive:
+          type: boolean
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: number
+        event:
+          type: string
+          $ref: '#/components/schemas/WebhookEventEnum'
+        url:
+          type: string
+        authorization:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    WebhookEventEnum:
+      type: string
+      description: >
+        Available events to register a webhook to listen to. If no one selected
+        anyone the default event will be OPENPIX:TRANSACTION_RECEIVED.
+
+
+        * **OPENPIX:CHARGE_CREATED** - New charge created
+
+        * **OPENPIX:CHARGE_COMPLETED** - Charge completed is when a charge is fully paid
+
+        * **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not fully paid and expired
+
+        * **OPENPIX:TRANSACTION_RECEIVED** - New PIX transaction received
+
+        * **OPENPIX:TRANSACTION_REFUND_RECEIVED** - New PIX transaction refund received or refunded
+      enum:
+        - OPENPIX:CHARGE_CREATED
+        - OPENPIX:CHARGE_COMPLETED
+        - OPENPIX:CHARGE_EXPIRED
+        - OPENPIX:TRANSACTION_RECEIVED
+        - OPENPIX:TRANSACTION_REFUND_RECEIVED
+    End:
+      type: string
+      format: date-time
+      title: End Date
+      description: End date used in the query. Complies with RFC 3339.
+      example: 2020-12-01T17:00:00Z
+    Start:
+      type: string
+      format: date-time
+      title: Start Date
+      description: Start date used in the query. Complies with RFC 3339.
+      example: 2020-01-01T00:00:00Z
     User:
       type: object
       properties:
@@ -3044,212 +3234,43 @@ components:
           format: date
         password:
           type: string
-    ApplicationEnumTypePayload:
-      type: string
-      description:
-        Type of the application that you want to register. Each of this has
-        some kind of permissions.
-      enum:
-        - API
-        - PLUGIN
-        - ORACLE
-    TaxIDObjectPayload:
-      type: object
-      properties:
-        taxID:
-          type: string
-          description:
-            The tax identifier of your account holder. This should be a raw
-            string with only digits.
-        type:
-          type: string
-          enum:
-            - BR:CNPJ
-    PreRegistrationUserObject:
-      type: object
-      properties:
-        firstName:
-          type: string
-          description: >
-            The user's first name.
-
-            If the pre registration has been approved, this will be turn the company's first user first name.
-        lastName:
-          type: string
-          description: >
-            The user's last name.
-
-            If the pre registration has been approved, this will be turn the company's first user last name.
-        email:
-          type: string
-          description: >
-            The user's email.
-
-            It'll be the email that will entered in contact to validate that it's a real person (it's a step to approve the preregistration).
-
-            After approving the preregistration, it'll be the company's user email.
-        phone:
-          type: string
-          description: >
-            The user's phone number, need to be a validated phone number because
-            it'll receive a SMS confirming that is a real person.
-
-            We're accept only values that matches the E.164 standard, that follows this pattern: [+][country code][local phone number].
-      required:
-        - firstName
-        - lastName
-        - email
-        - phone
-    PreRegistrationObject:
-      type: object
-      properties:
-        name:
-          type: string
-          description:
-            The name of this preregistration. It'll be related as your company
-            name too.
-        website:
-          type: string
-          description: A website that is related to this preregistration.
-        taxID:
-          $ref: '#/components/schemas/TaxIDObjectPayload'
-      required:
-        - name
-        - taxID
-    PreRegistrationPayloadObject:
-      type: object
-      properties:
-        preRegistration:
-          $ref: '#/components/schemas/PreRegistrationObject'
-        user:
-          $ref: '#/components/schemas/PreRegistrationUserObject'
-    AccountObjectPayload:
-      type: object
-      properties:
-        clientId:
-          type: string
-          description:
-            The client ID from the company bank account that is related to this
-            preregistration/company.
-    CompanyObjectPayload:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the company that is related to this preregistration.
-        name:
-          type: string
-          description: The name of the company that is related to this preregistration.
-        taxID:
-          $ref: '#/components/schemas/TaxIDObjectPayload'
-    PreRegistrationObjectPayload:
-      type: object
-      properties:
-        name:
-          type: string
-          description:
-            When the preregistration will turn a company, this will be the name
-            of the company that this preregistration is related.
-        taxID:
-          $ref: '#/components/schemas/TaxIDObjectPayload'
-    PartnerApplicationPayload:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name that identifies your application.
-        isActive:
-          type: boolean
-          description: Current status of your application.
-        type:
-          $ref: '#/components/schemas/ApplicationEnumTypePayload'
-        clientId:
-          type: string
-          description: The ID of this client application.
-        clientSecret:
-          type: string
-          description: The secret of this client application.
-    CompanyBankAccount:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: ID of the Account
-        isDefault:
-          type: boolean
-        balance:
-          type: object
-          properties:
-            total:
-              type: number
-              description: Total amount in cents
-            blocked:
-              type: number
-              description: Blocked amount in cents
-            available:
-              type: number
-              description: Available amount in cents
-    WithdrawTransaction:
-      type: object
-      properties:
-        endToEndId:
-          type: string
-          description: ID of the Withdraw Transaction
-        value:
-          type: string
-    Subscription:
-      type: object
-      properties:
-        value:
-          type: number
-          description: Value in cents of the subscription
-        customer:
-          type: object
-          $ref: '#/components/schemas/Customer'
-    SubscriptionPayload:
-      type: object
-      properties:
-        customer:
-          type: object
-          description: Customer of this subscription
-          properties:
-            name:
-              type: string
-              description: Customer name
-            email:
-              type: string
-              description: Customer email
-            phone:
-              type: string
-              description: Customer phone
-            taxID:
-              type: string
-              description: Customer taxID (CPF or CNPJ)
-        value:
-          type: number
-          description: Value in cents of this subscription
-      required:
-        - customer
-        - value
   securitySchemes:
     AppID:
       type: apiKey
       in: header
       name: Authorization
 tags:
+  - name: cashback-fidelity
+    description: |
+      Endpoint to manage exclusive cashbacks
   - name: charge
     description: |
       Endpoint to manage Charges
+  - name: account
+    description: |
+      Endpoint to manage Accounts
   - name: customer
     description: |
       Endpoint to manage Customer
-  - name: payment
-    description: |
-      Endpoint to init a payment using a Pix Key or QRCode.<br />
   - name: partner (request access)
     description: |
       Partners integrate affiliated companies.<br/>
       They can register new companies, manage them, and earn money from them.
+  - name: payment (request access)
+    description: |
+      Endpoint to init a payment using a Pix Key or QRCode.<br />
+  - name: pixQrCode
+    description: |
+      Endpoint to manage static QRCodes
+  - name: refund
+    description: |
+      Endpoint to manage Refunds
   - name: subscription
     description: |
       Endpoint to manage Subscriptions
+  - name: transactions
+    description: |
+      Endpoint to manage Transactions
+  - name: webhook
+    description: |
+      Endpoint to manage Webhooks
