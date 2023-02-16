@@ -15,4 +15,7 @@ tags:
 
 ![charge-account-drawer](/img/charge/charge-account-drawer.png)
 
-Agora quando essa cobrança for paga, o valor desta cobrança irá constar no extrato da conta selecionada.
+:::info
+- A seleção de conta só aparece para clientes que possuem mais de uma conta virtual.
+- Agora quando essa cobrança for paga, o valor desta cobrança irá constar no extrato da conta selecionada.
+:::
