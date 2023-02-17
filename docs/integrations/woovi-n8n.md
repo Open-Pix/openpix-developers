@@ -1,6 +1,6 @@
 ---
 id: n8n-with-woovi
-title: Integração N8N com Woovi
+title: Integração N8N com Openpix
 tags:
   - integration
   - n8n
