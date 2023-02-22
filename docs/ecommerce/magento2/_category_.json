@@ -1,0 +1,13 @@
+{
+  "label": "Magento2",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Magento2 visão geral"
+  },
+  "customProps": {
+    "description": "Magento2 documentação"
+  }
+}

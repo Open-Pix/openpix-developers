@@ -32,7 +32,7 @@ Entre em Magento2 Admin -> Stores > Configuration -> Sales -> Payment Method.
 
 Clicando em em `Credentials` no Plugin OpenPix.
 
-- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../apis/api-getting-started.md)
+- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/api-getting-started.md)
 
 Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 
@@ -80,7 +80,7 @@ A partir de agora os clientes terão que preencher esse campo com o CPF ou CNPJ 
 
 ### 2.3 Giftback
 
-Importante lembrete sobre a feature de [Giftback](../giftback/what-is-giftback.md) para magento2. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
+Importante lembrete sobre a feature de [Giftback](../../giftback/what-is-giftback.md) para magento2. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
 
 > **A versão minima do plugin Magento2 para consumir a feature giftback é  a 2.0.6**
 
