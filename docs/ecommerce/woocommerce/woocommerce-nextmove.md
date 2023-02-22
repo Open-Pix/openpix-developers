@@ -26,4 +26,4 @@ tags:
 
 ![NextMove-settings](/img/ecommerce/woocommerce/woocommerce-nextmove-html-settings.png)
 
-6. Crie uma cobrança utilizam a OpenPix, e confirme se o qrcode é exibido
+6. Crie uma cobrança utilizando a OpenPix, e confirme se o qrcode é exibido
