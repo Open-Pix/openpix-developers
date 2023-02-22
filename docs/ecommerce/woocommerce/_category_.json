@@ -1,0 +1,13 @@
+{
+  "label": "Woocommerce",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "WooCommerce visão geral"
+  },
+  "customProps": {
+    "description": "WooCommerce documentação"
+  }
+}
