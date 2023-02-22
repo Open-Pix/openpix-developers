@@ -1,12 +1,12 @@
 ---
-id: misc
-title: Misc
+id: plugin-qrcode-static
+title: Gerar QRCode Estático utilizando Plugin
 tags:
 - misc
 - plugin
 ---
 
-## Gerando uma Cobrança Pix Estática
+## Gerando um QRCode Estático
 
 ```jsx
 window.$openpix.push([

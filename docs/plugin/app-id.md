@@ -1,10 +1,12 @@
 ---
 id: app-id
-title: Criando um App ID
+title: Criando um App ID para o Plugin JS
 tags:
 - plugin
 - api
 ---
+
+## Criando uma aplicação para ser utilizado no Plugin JS
 
 O appID é criado dentro da plataforma OpenPix pelo administrador. Para criá-lo, acesse a documentação para criação de novas APIs clicando [aqui](/docs/apis/api-getting-started). Lembre de selecionar a API com o tipo **PLUGIN**.
 
