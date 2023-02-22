@@ -1027,6 +1027,7 @@ paths:
             example:
               value: 100
               destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+              correlationID: payment1
               comment: payment comment
       responses:
         '200':
@@ -1044,6 +1045,7 @@ paths:
                     status: CREATED
                     destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
                     comment: payment comment
+                    correlationID: payment1
         '400':
           description: An error message
           content:
@@ -2491,6 +2493,9 @@ components:
         destinationAlias:
           type: string
           description: the pix key the payment should be sent to
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this payment
         comment:
           type: string
           description: the comment that will be send alongisde your payment
