@@ -1010,6 +1010,49 @@ paths:
                 properties:
                   error:
                     type: string
+  /api/v1/payment:
+    post:
+      tags:
+        - payment (request access)
+      summary: Create a Payment Request
+      description: Endpoint to request a payment
+      requestBody:
+        description: Data to create a payment request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PaymentCreatePayload'
+            example:
+              value: 100
+              destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+              comment: payment comment
+      responses:
+        '200':
+          description: Payment destination account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  movement:
+                    $ref: '#/components/schemas/PaymentCreate'
+                example:
+                  movement:
+                    value: 100
+                    status: CREATED
+                    destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                    comment: payment comment
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
   '/api/v1/pixQrCode-static/{id}':
     get:
       tags:
@@ -2427,6 +2470,38 @@ components:
         clientSecret:
           type: string
           description: The secret of this client application.
+    PaymentCreatePayload:
+      type: object
+      properties:
+        value:
+          type: number
+          description: value of the requested payment in cents
+        destinationAlias:
+          type: string
+          description: the pix key the payment should be sent to
+        comment:
+          type: string
+          description: the comment that will be send alongisde your payment
+    PaymentCreate:
+      type: object
+      properties:
+        value:
+          type: number
+          description: value of the requested payment in cents
+        destinationAlias:
+          type: string
+          description: the pix key the payment should be sent to
+        comment:
+          type: string
+          description: the comment that will be send alongisde your payment
+        status:
+          type: string
+          description: movement status
+          enum:
+            - CREATED
+            - FAILED
+            - CONFIRMED
+            - DENIED
     PixQrCode:
       type: object
       properties:
@@ -2694,6 +2769,9 @@ tags:
     description: |
       Partners integrate affiliated companies.<br/>
       They can register new companies, manage them, and earn money from them.
+  - name: payment (request access)
+    description: |
+      Endpoint to init a payment using a Pix Key.
   - name: pixQrCode
     description: |
       Endpoint to manage static QRCodes
