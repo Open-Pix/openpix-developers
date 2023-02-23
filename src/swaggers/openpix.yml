@@ -1037,10 +1037,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  movement:
+                  payment:
                     $ref: '#/components/schemas/PaymentCreate'
                 example:
-                  movement:
+                  payment:
                     value: 100
                     status: CREATED
                     destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
@@ -2501,7 +2501,7 @@ components:
           description: the comment that will be send alongisde your payment
         status:
           type: string
-          description: movement status
+          description: payment status
           enum:
             - CREATED
             - FAILED
