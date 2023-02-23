@@ -1,0 +1,74 @@
+---
+id: subscription-recurrence-get-api
+sidebar_position: 1
+title: Como buscar uma Assinatura usando a API?
+tags:
+  - subscription
+  - recurrence
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para buscar uma assinatura usando a API, você deverá fazer uma chamada GET para o _endpoint_ `/api/v1/subscriptions/<globalID>` usando o `globalID` da assinatura.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions~1%7Bid%7D/get) a documentação referente a esse _endpoint_.
+
+## Exemplo
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos a assinatura.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "subscription": {
+    "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
+    "value": 100,
+    "customer": {
+      "name": "Dan",
+      "email": "email0@example.com",
+      "phone": "5511999999999",
+      "taxID": {
+        "taxID": "31324227036",
+        "type": "BR:CPF"
+      }
+    }
+  }
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+curl --request GET \
+  --url https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM= \
+  --header 'Authorization: <AUTHORIZATION>'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch(
+  'https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=',
+  {
+    headers: {
+      Authorization: '<AUTHORIZATION>',
+    },
+  },
+);
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
