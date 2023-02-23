@@ -4,7 +4,7 @@ sidebar_position: 1
 title: Como usar a API de Criar Pagamentos?
 tags:
   - payment
-  - concept
+  - api
 ---
 
 ## Criando Pagamentos com a API
