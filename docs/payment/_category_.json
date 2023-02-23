@@ -1,0 +1,13 @@
+{
+  "label": "Pagamento",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Pagamento visão geral"
+  },
+  "customProps": {
+    "description": "Pagamento documentação"
+  }
+}
