@@ -2186,6 +2186,14 @@ components:
         customer:
           type: object
           $ref: '#/components/schemas/Customer'
+        type:
+          type: string
+          enum:
+            - OVERDUE
+            - DYNAMIC
+          description:
+            Charge type is used to determine whether a charge will have a
+            deadline, fines and interests
         comment:
           type: string
         brCode:
@@ -2246,6 +2254,14 @@ components:
         value:
           type: number
           description: Value in cents of this charge
+        type:
+          type: string
+          enum:
+            - OVERDUE
+            - DYNAMIC
+          description:
+            Charge type is used to determine whether a charge will have a
+            deadline, fines and interests
         comment:
           type: string
           description: Comment to be added in infoPagador
@@ -2258,6 +2274,39 @@ components:
         customer:
           type: object
           $ref: '#/components/schemas/CustomerPayload'
+        daysForDueDate:
+          type: number
+          description:
+            Time in days until the charge hits the deadline so fines and
+            interests start applying. This property is only considered for
+            charges of type OVERDUE
+        daysAfterDueDate:
+          type: number
+          description:
+            Time in days that a charge is still payable after the deadline.
+            This property is only considered for charges of type OVERDUE
+        interests:
+          description:
+            Interests configuration. This property is only considered for
+            charges of type OVERDUE
+          type: object
+          properties:
+            value:
+              type: number
+              description:
+                Value in basis points of interests to be applied daily after the
+                charge hits the deadline
+        fines:
+          description:
+            Fines configuration. This property is only considered for charges
+            of type OVERDUE
+          type: object
+          properties:
+            value:
+              type: number
+              description:
+                Value in basis points of fines to be applied when the charge hits
+                the deadline
         additionalInfo:
           type: array
           description: Additional info of the charge
