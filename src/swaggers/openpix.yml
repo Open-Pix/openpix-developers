@@ -2591,6 +2591,9 @@ components:
     Subscription:
       type: object
       properties:
+        globalID:
+          type: string
+          description: The globalID of the subscription.
         value:
           type: number
           description: Value in cents of the subscription
