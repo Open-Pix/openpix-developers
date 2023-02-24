@@ -2254,6 +2254,14 @@ components:
         value:
           type: number
           description: Value in cents of this charge
+        type:
+          type: string
+          enum:
+            - OVERDUE
+            - DYNAMIC
+          description:
+            Charge type is used to determine whether a charge will have a
+            deadline, fines and interests
         comment:
           type: string
           description: Comment to be added in infoPagador
