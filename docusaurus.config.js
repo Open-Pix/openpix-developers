@@ -32,6 +32,25 @@ module.exports = {
   plugins: [
     require.resolve('./sitePlugin'),
     require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            from: '/docs/ecommerce/woocommerce-plugin',
+            to: '/docs/ecommerce/woocommerce/woocommerce-plugin',
+          },
+          {
+            from: '/docs/ecommerce/magento1-plugin',
+            to: '/docs/ecommerce/magento1/magento1-plugin',
+          },
+          {
+            from: '/docs/ecommerce/magento2-plugin',
+            to: '/docs/ecommerce/magento2/magento2-plugin',
+          },
+        ],
+      },
+    ],
   ],
   themeConfig: {
     navbar: {
