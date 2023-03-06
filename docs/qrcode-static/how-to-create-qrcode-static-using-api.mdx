@@ -1,0 +1,151 @@
+---
+id: how-to-create-qrcode-static-using-api
+title: Como usar a API para criar um QRCode Estático (cob)?
+tags:
+  - concept
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para criar uma QRCode estático Pix, você utiliza o _endpoint_ `/api/v1/pixQrCode` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/pixQrCode/paths/~1api~1v1~1qrcode-static/post)
+a documentação referente a esse _endpoint_.
+
+### Campos obrigatórios
+
+Os campos obrigatórios para criar um QRCode Estático Pix são os sequintes:
+
+- **`name`**: O nome de identificação desse QRCode na plataforma OpenPix.
+- **`identifier`**: Um identificador único para o QRCode Estático Pix.
+
+#### Identifier
+
+Este identificador deverá possuir:
+
+- tamanho máximo de 25 caracteres
+- apenas números e letras
+- sem caracteres especiais
+- sem espaços em branco
+
+Abaixo, temos um exemplo de como gerar esse identificar em javascript utilizando uuid:
+
+```ts
+import { v4 as uuidv4 } from 'uuid';
+
+export const getDefaultIdentifier = () =>
+  uuidv4().toString().replace(/-/g, '').slice(0, 25);
+```
+
+### Campos opcionais
+
+- **`correlationID`**: seu correlation ID relacionado ao ID do QRCode no seu banco de dados. Utilizado para trackear o dado. Esse campo é Único.
+- **`value`**: valor do QRCode em centavos. Quando vazio o cliente poderá inserir o valor do QRCode no momento do pagamento Pix para o mesmo.obrigatórios
+- **`comment`**: comentários relacionado ao QRCode que aparece para o cliente final no momento do pagamento pix.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+- QRCode com nome e identificador apenas:
+
+```json
+{
+  "name": "QRcode Teste",
+  "identificador": "c782e0ac833d4a899e739b60b"
+}
+```
+
+- QRCode com nome, identificador, valor de 10,00 reais:
+
+```json
+{
+  "name": "QRcode Teste",
+  "identifier": "c782e0ac833d4a899e739b60b",
+  "value": 1000,
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos o QRCode criado.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "pixQrCode": {
+    "name": "QRCode Teste",
+    "identifier": "c782e0ac833d4a899e739b60b",
+    "correlationID": "91a67996-cd4c-4104-b943-4076ad6319fa",
+    "paymentLinkID": "1efcc519-3056-4a6c-94cd-d686969d8a61",
+    "createdAt": "2023-03-06T13:54:57.899Z",
+    "updatedAt": "2023-03-06T13:54:57.899Z",
+    "brCode": "00020126580014br.gov.bcb.pix013600ad360c-92c7-45ab-adb3-188307a6e4d05204000053039865802BR5910Woovi_Demo6009Sao_Paulo62290525c782e0ac833d4a899e739b60b6304533D",
+    "paymentLinkUrl": "https://openpix.com.br/pay/1efcc519-3056-4a6c-94cd-d686969d8a61",
+    "qrCodeImage": "https://api.openpix.com.br/openpix/charge/brcode/image/1efcc519-3056-4a6c-94cd-d686969d8a61.png"
+  }
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+curl --request POST \
+  --url https://api.openpix.com.br/api/v1/qrcode-static \
+  --header 'Authorization: REPLACE_KEY_VALUE' \
+  --header 'content-type: application/json' \
+  --data '{"name":"string","correlationID":"string","value":0,"comment":"string","identifier":"string"}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="NodeJs + Fetch" default>
+```
+
+```js
+const http = require("https");
+
+const options = {
+  "method": "POST",
+  "hostname": "api.openpix.com.br",
+  "port": null,
+  "path": "/api/v1/qrcode-static",
+  "headers": {
+    "content-type": "application/json",
+    "Authorization": "REPLACE_KEY_VALUE"
+  }
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({
+  name: 'string',
+  correlationID: 'string',
+  value: 0,
+  comment: 'string',
+  identifier: 'string'
+}));
+req.end();
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
