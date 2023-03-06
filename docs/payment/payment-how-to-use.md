@@ -1,6 +1,6 @@
 ---
 id: payment-how-to-use
-sidebar_position: 1
+sidebar_position: 2
 title: Como realizar Pagamentos?
 tags:
   - payment
