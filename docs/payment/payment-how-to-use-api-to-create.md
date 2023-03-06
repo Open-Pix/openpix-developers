@@ -1,6 +1,6 @@
 ---
 id: payment-how-to-use-api-to-create
-sidebar_position: 2
+sidebar_position: 3
 title: Como usar a API de Criar Pagamentos?
 tags:
   - payment
