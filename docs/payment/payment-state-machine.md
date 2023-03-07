@@ -1,6 +1,6 @@
 ---
 id: payment-state-machine
-sidebar_position: 4
+sidebar_position: 5
 title: Máquina de Estados do Pagamento
 tags:
   - payment
