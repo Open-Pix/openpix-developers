@@ -14,7 +14,7 @@ Adicionar fundos na OpenPix é um processo simples e rápido.
 - Acesse `Contas` via sidemenu
 - Clique em `Detalhes da Conta` na conta em que deseja adicionar fundos
 - Na seção de `Detalhe da conta` procure pela Chave Pix de sua conta
-- Faça uma transferencia da quantia desejada para a Chave Pix
+- No App do seu banco, realize uma transfêrencia da quantia desejada para a Chave Pix da sua conta OpenPix
 
 ![account pix key](/img/payment/add-funds-payment.png)
 
