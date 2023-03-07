@@ -1,6 +1,6 @@
 ---
 id: payment-how-it-works
-sidebar_position: 1
+sidebar_position: 0
 title: Como Pagamentos funcionam?
 tags:
   - payment

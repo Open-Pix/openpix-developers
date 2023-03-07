@@ -16,6 +16,8 @@ Para realizar Pagamentos em sua empresa siga os passos abaixo:
 - Clique na aba de `Ajustes`
 - Na seção de `Pagamentos` habilite a opção de `Permitir que a conta possa realizar pagamentos`
 
+![payment permission](/img/payment/payment-permission.png)
+
 ## 2. Solicitar o Envio de um Pagamento
 
 - Acesse `Saques e Pagamentos` via sidemenu
