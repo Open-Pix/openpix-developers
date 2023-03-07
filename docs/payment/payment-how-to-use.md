@@ -31,6 +31,8 @@ Para realizar Pagamentos em sua empresa siga os passos abaixo:
 
 - Clique em `Solicitar`
 
+![new payment](/img/payment/new-payment.png)
+
 ## 3. Aprovar o Envio de um Pagamento
 
 - Acesse `Saques e Pagamentos` via sidemenu
@@ -39,3 +41,5 @@ Para realizar Pagamentos em sua empresa siga os passos abaixo:
 - Clique em `Aprovar Pagamento`
 - Confira os dados informados
 - Clique em `Aprovar`
+
+![approve payment](/img/payment/approve-payment.png)
