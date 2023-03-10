@@ -11,13 +11,17 @@ sidebar_label: Magento1 OpenPix Plugin
 This document details steps required to connect your Magento1 based e-Commerce platform to OpenPix. The OpenPix platform performs the reconciliation between your Bank and your e-Commerce in real time.
 After connecting your OpenPix account it is possible to charge customers in real time with QrCodes Pix, send Payment Links, manage charges including refunds.
 
-> *Note: This document expects you to already have an active Magento1 environment.*
+> _Note: This document expects you to already have an active Magento1 environment._
 
 ![Banner](/img/ecommerce/woocommerce-banner.png)
-[Download OpenPix Magento1 Plugin - versão 1.2.8](pathname:///magento1/openpix_pix.1.2.8.zip) - Versão Atual
+[Download OpenPix Magento1 Plugin - versão 1.2.9](pathname:///magento1/openpix_pix.1.2.9.zip) - Versão Atual
 
 <details>
   <summary>Change Log</summary>
+
+#### 1.2.9 - 07/03/2023
+
+- Update endpoints
 
 #### 1.2.8 - 28/06/2021
 
@@ -69,9 +73,9 @@ After connecting your OpenPix account it is possible to charge customers in real
 
 ```json
 {
-   "error":"Invalid Request",
-   "description":"Invalid authorization header: magent",
-   "field":"authorization header"
+  "error": "Invalid Request",
+  "description": "Invalid authorization header: magent",
+  "field": "authorization header"
 }
 ```
 
@@ -205,6 +209,7 @@ Pay Pix using your bank's app.
 Validate Order status changed after payment
 
 ## Updating the plugin
+
 We advise OpenPix customers to always be up to date with the latest version of the plugin. You can identify it in the installation step.
 
 If your plugin is out of date, just follow the steps of the same installation step and update the plugin files in your ecommerce.
