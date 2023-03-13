@@ -89,7 +89,7 @@ payload {
     paymentLinkID: '34697ed2-3790-4b60-8512-e7465b142d84',
     createdAt: '2021-03-12T12:43:54.528Z',
     updatedAt: '2021-03-12T12:44:09.360Z',
-    brCode: 'http://localhost:5001/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29'
+    brCode: 'https://api.openpix.com.br/openpix/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29'
   },
   pix: {
     charge: {
@@ -137,7 +137,7 @@ defaultValue="curl"
 <TabItem value="curl">
 
 ```jsx
-curl --location --request POST 'http://localhost:5001/api/openpix/v1/webhook' \
+curl --location --request POST 'https://api.openpix.com.br/openpix/api/openpix/v1/webhook' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: <appID>' \
 --data-raw '{
