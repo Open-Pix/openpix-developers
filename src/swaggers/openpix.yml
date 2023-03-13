@@ -2226,8 +2226,8 @@ components:
         type:
           type: string
           enum:
-            - OVERDUE
             - DYNAMIC
+            - OVERDUE
           description:
             Charge type is used to determine whether a charge will have a
             deadline, fines and interests
@@ -2294,8 +2294,8 @@ components:
         type:
           type: string
           enum:
-            - OVERDUE
             - DYNAMIC
+            - OVERDUE
           description:
             Charge type is used to determine whether a charge will have a
             deadline, fines and interests
@@ -2399,38 +2399,35 @@ components:
     CustomerPayload:
       type: object
       properties:
-        Customer:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        taxID:
+          type: string
+        correlationID:
+          type: string
+        address:
           type: object
           properties:
-            name:
+            zipcode:
               type: string
-            email:
+            street:
               type: string
-            phone:
+            number:
               type: string
-            taxID:
+            neighborhood:
               type: string
-            correlationID:
+            city:
               type: string
-            address:
-              type: object
-              properties:
-                zipcode:
-                  type: string
-                street:
-                  type: string
-                number:
-                  type: string
-                neighborhood:
-                  type: string
-                city:
-                  type: string
-                state:
-                  type: string
-                complement:
-                  type: string
-                country:
-                  type: string
+            state:
+              type: string
+            complement:
+              type: string
+            country:
+              type: string
           required:
             - name
     ApplicationEnumTypePayload:
