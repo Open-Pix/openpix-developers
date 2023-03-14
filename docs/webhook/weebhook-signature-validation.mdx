@@ -1,0 +1,104 @@
+---
+id: webhook-signature-validation
+title: Validando Webhook payload usando SHA 256
+tags:
+  - webhook
+  - security
+  - hmac
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Como validar o Webhook Signature?
+
+Toda request do Webhook possui o header 'x-webhook-signature' que é a signature gerada com a secret key da Woovi e o payload do Webhook.
+Ao receber o header você pode validar se o signature é válido e dar continuidade no fluxo do Webhook.
+
+Exemplo: `'x-webhook-signature': 'K6GVzzXzNjt7vpfzOlt/fgsZl0o88k4tR/ABuWd6u03YMYTchuUsXtLZCzzJOVBy6nkoj3SNLLFcMttno2/hgMHuVe+5rWNBDA4c6IaiXhAPnsIFA357xzLKWaEx9lRQJ66r8QA74MZczfLoaZsoyMROA/YC6PoBZERsRXxt/D0='`
+
+## Exemplo de validação
+
+<Tabs
+  defaultValue="PHP"
+    values={[
+      { label: 'PHP'      , value: 'PHP', },
+      { label: 'JavaScript', value: 'JavaScript' }
+    ]}>
+<TabItem value="PHP" >
+
+```php
+<?php
+
+function verifyPayload($payload, $signature) {
+  $publicKeyBase64 = 'LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEVDdWYStxb3pvT2NYUStjSHJWNk85RVE0TgpnZVhvY1ZwRFBBWkpTZVJsbEVlQVVha051MURqY3FweDFmb1l5aEZxRTM3TkNWYzRtK0hvTC9nN1k3VDMyZVJ4CjhpandxMjdoY0ZjL0RFc01ISWdVU0U4cGdPbi96a3ZadXdNb256MkVjdy85NzZzTlUzNnpKOXhMUE53dURnSysKb2dUb0RQTmNkaWtRdi9STHFRSURBUUFCCi0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo=';
+
+  $publicKey = base64_decode($publicKeyBase64);
+
+  $verify = openssl_verify($payload, base64_decode($signature), $publicKey, "sha256WithRSAEncryption");
+
+  return $verify;
+}
+// replace to the payload received
+$payload = '{ "pixQrCode": null, "charge": { "status": "COMPLETED", "customer": { "name": "Antonio Victor", "taxID": { "taxID": "12345678976", "type": "BR:CPF" }, "email": "antoniocliente@example.com", "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4" }, "value": 1000, "comment": "Pagamento OpenPix", "transactionID": "ea83401ed4834b3ea6f1f283b389af29", "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4", "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84", "createdAt": "2021-03-12T12:43:54.528Z", "updatedAt": "2021-03-12T12:44:09.360Z", "brCode": "https://api.openpix.com.br/openpix/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29" }, "pix": { "charge": { "status": "COMPLETED", "customer": { "name": "Antonio Victor", "taxID": { "taxID": "12345678976", "type": "BR:CPF" }, "email": "antoniocliente@example.com", "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4" }, "value": 1000, "comment": "Pagamento OpenPix", "transactionID": "ea83401ed4834b3ea6f1f283b389af29", "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4", "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84", "createdAt": "2021-03-12T12:43:54.528Z", "updatedAt": "2021-03-12T12:44:09.360Z" }, "customer": { "correlationID": "9134e286-6f71-427a-bf00-241681624586", "email": "email1@example.com", "name": "Loma", "phone": "+5511999999999", "taxID": { "taxID": "47043622050", "type": "BR:CPF" } }, "payer": { "correlationID": "9134e286-6f71-427a-bf00-241681624586", "email": "email1@example.com", "name": "Loma", "phone": "+5511999999999", "taxID": { "taxID": "47043622050", "type": "BR:CPF" } }, "time": "2021-03-12T12:44:09.269Z", "value": 1, "transactionID": "ea83401ed4834b3ea6f1f283b389af29", "infoPagador": "OpenPix testing" }, "company": { "id": "624f46f9e93f9f521c8308d7", "name": "Pizzaria do José", "taxID": "4722767300014" }, "account": { "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75" } }';
+
+// replace to the header signature received into x-webhook-signature
+$signature = 'C1jRlhEJxb7zsSSJ52bL2zFVYhSkHQ7R0dkIzIORiFuM0n420dwJyv+7N5dgbITimYk3iyvyrtDlUJYMYoXgrN6vfVhzYoyP3Sxv4hmonwZPor3ysXaR8YKClGJLGWFtUZ+17jbZXQNiq15tz+Y+gQ5xsyeLjH4qUl/YLhswsZc=';
+
+$isValid = verifyPayload($payload, $signature);
+
+if ($isValid) {
+  echo "Valid signature\n";
+} else {
+  echo "Invalid signature\n";
+}
+
+```
+
+</TabItem>
+<TabItem value="JavaScript">
+
+```jsx
+import crypto from 'crypto';
+
+type VerifyPayloadType = {
+  payload: string;
+  signature: string;
+};
+
+const algorithm = 'sha256';
+const signatureFormat = 'base64';
+
+export const verifyPayload = ({ payload, signature }: VerifyPayloadType) => {
+  const publicKeyBase64 =
+    'LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEVDdWYStxb3pvT2NYUStjSHJWNk85RVE0TgpnZVhvY1ZwRFBBWkpTZVJsbEVlQVVha051MURqY3FweDFmb1l5aEZxRTM3TkNWYzRtK0hvTC9nN1k3VDMyZVJ4CjhpandxMjdoY0ZjL0RFc01ISWdVU0U4cGdPbi96a3ZadXdNb256MkVjdy85NzZzTlUzNnpKOXhMUE53dURnSysKb2dUb0RQTmNkaWtRdi9STHFRSURBUUFCCi0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo=';
+
+  const publicKey = Buffer.from(publicKeyBase64, 'base64').toString('ascii');
+
+  const verify = crypto.createVerify(algorithm);
+
+  verify.write(Buffer.from(payload));
+  verify.end();
+
+  const isValid = verify.verify(publicKey, signature, signatureFormat);
+
+  return isValid;
+};
+// replace to the payload received into body
+const payload = '{ "pixQrCode": null, "charge": { "status": "COMPLETED", "customer": { "name": "Antonio Victor", "taxID": { "taxID": "12345678976", "type": "BR:CPF" }, "email": "antoniocliente@example.com", "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4" }, "value": 1000, "comment": "Pagamento OpenPix", "transactionID": "ea83401ed4834b3ea6f1f283b389af29", "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4", "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84", "createdAt": "2021-03-12T12:43:54.528Z", "updatedAt": "2021-03-12T12:44:09.360Z", "brCode": "https://api.openpix.com.br/openpix/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29" }, "pix": { "charge": { "status": "COMPLETED", "customer": { "name": "Antonio Victor", "taxID": { "taxID": "12345678976", "type": "BR:CPF" }, "email": "antoniocliente@example.com", "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4" }, "value": 1000, "comment": "Pagamento OpenPix", "transactionID": "ea83401ed4834b3ea6f1f283b389af29", "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4", "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84", "createdAt": "2021-03-12T12:43:54.528Z", "updatedAt": "2021-03-12T12:44:09.360Z" }, "customer": { "correlationID": "9134e286-6f71-427a-bf00-241681624586", "email": "email1@example.com", "name": "Loma", "phone": "+5511999999999", "taxID": { "taxID": "47043622050", "type": "BR:CPF" } }, "payer": { "correlationID": "9134e286-6f71-427a-bf00-241681624586", "email": "email1@example.com", "name": "Loma", "phone": "+5511999999999", "taxID": { "taxID": "47043622050", "type": "BR:CPF" } }, "time": "2021-03-12T12:44:09.269Z", "value": 1, "transactionID": "ea83401ed4834b3ea6f1f283b389af29", "infoPagador": "OpenPix testing" }, "company": { "id": "624f46f9e93f9f521c8308d7", "name": "Pizzaria do José", "taxID": "4722767300014" }, "account": { "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75" } }';
+
+// replace to the payload received into x-webhook-signature header
+const signature = 'C1jRlhEJxb7zsSSJ52bL2zFVYhSkHQ7R0dkIzIORiFuM0n420dwJyv+7N5dgbITimYk3iyvyrtDlUJYMYoXgrN6vfVhzYoyP3Sxv4hmonwZPor3ysXaR8YKClGJLGWFtUZ+17jbZXQNiq15tz+Y+gQ5xsyeLjH4qUl/YLhswsZc=';
+
+const isValid = verifyPayload({ payload, signature });
+
+if (isValid) {
+  console.log('Valid signature');
+} else {
+  console.log('Invalid signature');
+}
+
+```
+
+</TabItem>
+</Tabs>
