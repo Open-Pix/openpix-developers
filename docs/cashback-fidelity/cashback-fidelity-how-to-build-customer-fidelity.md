@@ -19,6 +19,10 @@ Para fidelizar o seu cliente pela plataforma siga os passos abaixo:
 
 ### 2. Clique em `Novo Cashback`
 
+:::info
+Importante lembrar que o usuário precisa possuir a permissão de admin na plataforma
+:::
+
 - ![](/img/cashback-fidelity/cashback-overview-with-new-cashback-button.png)
 
 ### 3. Gere o Cashback Fidelidade
