@@ -208,6 +208,22 @@ Pay Pix using your bank's app.
 
 Validate Order status changed after payment
 
+## Expiration
+OpenPix will handle Pix Charge expiration. However, it is necessary to configure the expiration of the order in your magento store, as it will take care of the entire process.
+
+However, magento1 does not have a native solution for it.
+
+We recommend that order expiration/cancellation in magento1 be done using a third-party lib for help.
+
+Once you have the third lib, we indicate that a similar configuration below is followed:
+- OpenPix billing expiration time: 15 minutes
+- put the same 15 minutes inside your Magento store.
+
+:::info
+In magento you can use the lib below or any of your preference:
+- <https://meetanshi.com/magento-auto-cancel-order.html>
+:::
+
 ## Updating the plugin
 
 We advise OpenPix customers to always be up to date with the latest version of the plugin. You can identify it in the installation step.

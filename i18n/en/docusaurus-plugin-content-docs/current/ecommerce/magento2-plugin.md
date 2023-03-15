@@ -100,7 +100,7 @@ Your customer will be able to view the order placed via Pix within the order det
 ![Order](/img/ecommerce/magento2/m2-od-1.png)
 ![Order](/img/ecommerce/magento2/m2-od-2.png)
 
-## 6. Expiration
+## Expiration
 
 OpenPix will handle Pix Charge expiration. However, it is necessary to configure the expiration of the order in your magento store, as it will take care of the entire process.
 
