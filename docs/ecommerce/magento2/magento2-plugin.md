@@ -116,6 +116,19 @@ Seu cliente poderá visualizar o pedido realizado via Pix dentro do detalhes do 
 ![Order](/img/ecommerce/magento2/m2-od-1.png)
 ![Order](/img/ecommerce/magento2/m2-od-2.png)
 
+## 6. Expiração
+
+A OpenPix ira cuidar da expiração da cobrança Pix. Entretanto, é preciso que seja configurado em sua loja magento a expiração da order pois o mesmo cuidará de todo o processo.
+
+Indicamos que a expiração/cancelamento da order no magento possua um tempo semelhante ao tempo configurado na OpenPix. Exemplo:
+- tempo de expiração da cobrança OpenPix: 15 minutos
+- coloque os mesmos 15 minutos dentro da sua loja Magento.
+
+:::info
+No magento cocê pode utilizar o lifetime order seguindo a doc abaixo:
+- <https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html>
+:::
+
 ## Atualizando o plugin
 Indicamos aos clientes OpenPix estar sempre atualizados com a última versão do plugin. Você pode identificar a mesma no step de instalação.
 
