@@ -1,0 +1,35 @@
+---
+id: webhook-payment-payload
+title: Payload de Pagamentos
+tags:
+  - webhook
+  - header
+  - api
+---
+
+## Pagamentos
+
+Os webhooks de `Pagamentos` enviam objetos com os seguintes campos no seu payload:
+
+- `payment`: Objeto com detalhes do Pagamento
+- `transaction`: Objeto com detalhes da Transação Pix
+
+## Exemplo
+
+```json
+{
+  "event": "OPENPIX:MOVEMENT_CONFIRMED",
+  "payment": {
+    "value": 30,
+    "status": "CONFIRMED",
+    "destinationAlias": "06882328684",
+    "comment": "",
+    "correlationID": "222a1750-de17-406c-bd0c-25af9a5a5d08"
+  },
+  "transaction": {
+    "value": 30,
+    "endToEndId": "E23114447202303161242u80lZNR7nQZ",
+    "time": "2023-03-16T12:42:47.526Z"
+  }
+}
+```
