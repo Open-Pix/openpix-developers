@@ -44,7 +44,7 @@
     "process": "0.11.10",
     "stream-http": "^3.2.0",
     "tty-browserify": "^0.0.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.0.2"
   },
   "scripts": {
     "build": "docusaurus build",
