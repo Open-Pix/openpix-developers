@@ -24,14 +24,18 @@ tags:
 > OpenPix is a instant payment provider
 
 **Primary Contact for Security**
+> Name: Infosec Team
+>
+> Email: security (at) openpix.com.br
+
+**Secondary Contact for Security**
 > Name: Sibelius Seraphini
 >
 > Job Title: CTO
 >
 > Email: sibelius (at) openpix.com.br
 
-
-**Secondary Contact for Security**
+**Tertiary Contact for Security**
 > Name: Rafael Turk
 > 
 > Job Title: CoFounder
