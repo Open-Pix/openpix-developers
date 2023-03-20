@@ -17,7 +17,7 @@ tags:
 ## Self Assessment - Security Questionnaire 
 
 
-> Name of Company: Entria
+> Name of Company: OpenPix / Woovi LLC
 >
 > Applications: In scope for this Security Questionnaire 
 >
@@ -28,7 +28,7 @@ tags:
 >
 > Job Title: CTO
 >
-> Email: sibelius@entria.com.br
+> Email: sibelius (at) openpix.com.br
 
 
 **Secondary Contact for Security**
@@ -36,7 +36,7 @@ tags:
 > 
 > Job Title: CoFounder
 > 
-> Email: rafael@entria.com.br
+> Email: rafael (at) openpix.com.br
 
 
 ## Company Information
@@ -44,13 +44,13 @@ tags:
 | Question | Comments | 
 | --  | -- | 
 | Geographic Country location of employees, including contractors with access to production infrastructure and applications | Brazil | 
-| Company Certifications and Accreditations e.g. ISO, SAS-70, PCI DSS or other | No. <br/>Please note this is a newco. Certification is in progress expected for 4Q |
+| Company Certifications and Accreditations e.g. ISO, SAS-70, PCI DSS or other | Certification is in progress expected for 4Q |
 | Regulatory compliance requirements and industry standards e.g. HIPAA or other | Brazil LGDP |
 | Data Center Information | AWS |
 | Data Center Country Location | GRU - AWS GRU - São Paulo Region |
 | Who is responsible for the data center facility? | Cloud based, AWS |
-| Who is responsible for system administration? Also, note any Third party companies for Data Center Hosting and Operations | Entria |
-| Any Third party companies have access to Data Center Hosting and Operations? | No. Restricted to Entria |
+| Who is responsible for system administration? Also, note any Third party companies for Data Center Hosting and Operations | OpenPix |
+| Any Third party companies have access to Data Center Hosting and Operations? | No. Restricted to OpenPix |
 | Give details of the facility’s data center security and business continuity resources e.g. closed room, physical access controls, card reader, video surveillance, power, cooling, etc. | AWS managed |
 | Security Practices In your solution do you test for OWASP and other vulnerabilities? | Yes. | 
 
