@@ -48,8 +48,8 @@ tags:
 | Question | Comments | 
 | --  | -- | 
 | Geographic Country location of employees, including contractors with access to production infrastructure and applications | Brazil | 
-| Company Certifications and Accreditations e.g. ISO, SAS-70, PCI DSS or other | Certification is in progress expected for 4Q |
-| Regulatory compliance requirements and industry standards e.g. HIPAA or other | Brazil LGDP |
+| Company Certifications and Accreditations e.g. ISO, SAS-70, PCI DSS, HIPAA or other | Certification is in progress expected for 4Q |
+| Regulatory compliance requirements and industry standards | Brazil LGDP |
 | Data Center Information | AWS |
 | Data Center Country Location | GRU - AWS GRU - São Paulo Region |
 | Who is responsible for the data center facility? | Cloud based, AWS |
