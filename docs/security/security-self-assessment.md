@@ -67,9 +67,9 @@ tags:
 | The platform may use Customer data originating from Cloud Services (Saas) to authorize payments transactions? | Yes. This is a core feature of the platform |
 | Does your solution store retrieve PII/Sensitive data in Cloud Services (SaaS, PaaS)? | Yes. <br/>Ecommerce plugins may pass Customer Name and TaxID to enrich payment information |
 | Gateway may use Customer data originating from  Cloud Services (Saas) to authorize payments transactions. | Yes. |
-| Does your solution retrieve PII/Sensitive data from  Cloud Services (SaaS, PaaS) or on-premise applications? | No. |
+| Does your solution retrieve PII/Sensitive data from  on-premise applications? | N/A <br/>Our platform don't have any onpremisse solutions. |
 | Gateway may use Customer data originating from  Cloud Services (Saas) to authorize payments transactions. | Yes. |
-| Do you have a mobile application that persists PII/Sensitive data on the device? | No. Solution don't use any kind of Mobile Apps |
+| Do you have a mobile application that persists PII/Sensitive data on the device? | N/A. <br/>Our platform don't use any kind of Mobile Apps. |
 
 
 ## Web App information
@@ -77,9 +77,12 @@ tags:
 | Question | Comments | 
 | -  | - | 
 | Does your solution implement CORS Support? | Yes. <br/>Across all apps, and all domain properties. |
+| Do you use a digital certificate to encrypt data communication? | Yes. <br/>Across all domain properties. | 
+| Do you use Application firewall (WAF)  to detect and block intrusion attempts? | Yes. <br/>Multiple layers across all domain properties. |
+| Do you use load balancers? | Yes. <br/>We use load balancers, plus multiple datacenter locations (Datacenter Zones) to support High availability. |
 | Do you have a process to discover and track security vulnerabilities and corrective measures in Open Source or 3rd party software your deliverables have a dependency on? | Yes. <br/>We have an internal Blue Team and Red Teams. Additional external third party security review, via independent partner every quarter |
 | Do you have a channel for external researchers to report security vulnerabilities to your directly? | Yes. <br/> via email at security@openpix.com.br or infosec@openpix.com.br |
-| Do you support Security.txt? | Yes.  https://openpix.com.br/.well-known/security.txt |
+| Do you support Security.txt? | Yes.  <br/>https://openpix.com.br/.well-known/security.txt |
 
 
 ## Customer Security
