@@ -15,10 +15,14 @@ Para criar uma nova assinatura usando a API, você deverá fazer uma chamada POS
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post) a documentação referente a esse _endpoint_.
 
-Como parte do `body` da requisição, esperamos o envio dos seguintes itens: `customer` e `value`:
+Como parte do `body` da requisição, esperamos o envio dos seguintes itens:
 
 - **`value`**: O valor em centavos da assinatura a ser criada.
 - **`customer`**: O cliente da assinatura a ser cobrado. Este campo é [idempotente](../concepts/idempotence.md), o que significa que se você enviar dados de um cliente que já exista, utilizaremos o existente ao invés de criar um novo.
+
+O body também aceita outros campos **opcionais**:
+
+- **`dayGenerateCharge`**: Dia do mês em que as cobranças serão geradas. Deve ser um valor de 0 a 27.
 
 ## Exemplo
 
@@ -53,7 +57,8 @@ Retornarmeros a seguinte resposta de exemplo:
         "taxID": "31324227036",
         "type": "BR:CPF"
       }
-    }
+    },
+    "dayGenerateCharge": 5
   }
 }
 ```
