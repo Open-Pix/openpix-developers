@@ -1,0 +1,13 @@
+{
+  "label": "Transação",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Transação visão geral"
+  },
+  "customProps": {
+    "description": "Transação documentação"
+  }
+}

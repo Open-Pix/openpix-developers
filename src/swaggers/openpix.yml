@@ -1098,6 +1098,86 @@ paths:
                   error:
                     type: string
   /api/v1/payment:
+    get:
+      tags:
+        - payment (request access)
+      summary: Get a list of payments
+      responses:
+        '200':
+          description: A list of payments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        payment:
+                          type: object
+                          $ref: '#/components/schemas/Payment'
+                        transaction:
+                          type: object
+                          $ref: '#/components/schemas/PaymentTransaction'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+              example:
+                pageInfo:
+                  skip: 0
+                  limit: 10
+                  totalCount: 20
+                  hasPreviousPage: false
+                  hasNextPage: true
+                payments:
+                  payment:
+                    value: 100
+                    status: CONFIRMED
+                    destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                    comment: payment comment
+                    correlationID: payment1
+                    sourceAccountId: my-source-account-id
+                  transaction:
+                    value: 100
+                    endToEndId: transaction-end-to-end-id
+                    time: 2023-03-20T13:14:17.000Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
     post:
       tags:
         - payment (request access)
@@ -1516,6 +1596,7 @@ paths:
                         taxID: '31324227036'
                         type: BR:CPF
                     value: 100
+                    dayGenerateCharge: 5
         '400':
           description: An error message
           content:
@@ -1546,6 +1627,7 @@ paths:
                 taxID: '31324227036'
                 email: email0@example.com
                 phone: '5511999999999'
+              dayGenerateCharge: 15
       responses:
         '200':
           description: The subscription created
@@ -1567,6 +1649,7 @@ paths:
                         taxID: '31324227036'
                         type: BR:CPF
                     value: 100
+                    dayGenerateCharge: 5
         '400':
           description: An error message
           content:
@@ -2766,6 +2849,9 @@ components:
         customer:
           type: object
           $ref: '#/components/schemas/Customer'
+        dayGenerateCharge:
+          type: number
+          description: Day of the month that the charges will be generated
     SubscriptionPayload:
       type: object
       properties:
@@ -2788,6 +2874,12 @@ components:
         value:
           type: number
           description: Value in cents of this subscription
+        dayGenerateCharge:
+          type: number
+          description: Day of the month that the charges will be generated. Maximun of 27.
+          minimum: 0
+          maximum: 27
+          default: 5
       required:
         - customer
         - value
