@@ -5,13 +5,14 @@ tags:
 - security
 ---
 
-*Versão: Março de 2021*
+*Versão: Março de 2023*
 
 *Histórico do documento*
 
 | Data  | Descrição | Autor | Revisores |
 | -  | - | - | - |
 | Março de 2021 | Inclusão novas questões | JHS | SIBS, RAT |
+| Março de 2023 | Inclusão novas questões | JHS | RAT |
 
 
 ## Self Assessment - Security Questionnaire 
@@ -93,4 +94,9 @@ tags:
 | -  | - | 
 | Do you have a process to validade your vendors? | Yes. |
 
+
+## Training and awareness 
+| Question | Comments | 
+| -  | - | 
+| Your business has regular information security awareness training for all staff, including temporary, locum or contracted employees, to ensure they are all aware of and fulfil their responsibilities. | Partially implemented. |
 
