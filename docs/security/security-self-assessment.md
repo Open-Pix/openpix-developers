@@ -95,7 +95,7 @@ tags:
 ## Vendor security 
 | Question | Comments | 
 | -  | - | 
-| Do you have a process to validade your vendors? | Yes. |
+| Do you have a process to validade your vendors? | Yes. <br/> [Vendor Policy](https://developers.openpix.com.br/docs/security/security-policy#pol%C3%ADtica-de-seguran%C3%A7a-de-fornecedores)|
 
 
 ## Training and awareness 
