@@ -99,7 +99,7 @@ tags:
 | --  | -- | 
 | Do you perform regular pentests? | Yes. <br/> We perform several automated pentests with software based external audit tools and multiple internal pentests with our on internal infosec team. |
 | Do you perform regular independet (third party)? | Yes. <br/> We perform several external via third party infosec companies. |
-| When was the last external independented pentest? | Last pentest was performed in January 2023. |
+| When was the last external (via independent partner) pentest? | Last pentest was performed in January 2023. |
 
 ## Training and awareness 
 | Question | Comments | 
