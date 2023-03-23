@@ -11,8 +11,9 @@ tags:
 
 | Data  | Descrição | Autor | Revisores |
 | -  | - | - | - |
+| Março de 2023 | Atulizar data ultimo Pentest | JHS | RAT |
+| Fevereiro de 2023 | Inclusão novas questões | JHS | RAT |
 | Março de 2021 | Inclusão novas questões | JHS | SIBS, RAT |
-| Março de 2023 | Inclusão novas questões | JHS | RAT |
 
 
 ## Self Assessment - Security Questionnaire 
