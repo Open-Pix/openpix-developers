@@ -45,7 +45,6 @@ tags:
 
 
 ## Company Information
-
 | Question | Comments | 
 | --  | -- | 
 | Geographic Country location of employees, including contractors with access to production infrastructure and applications | Brazil | 
@@ -60,7 +59,6 @@ tags:
 | Security Practices In your solution do you test for OWASP and other vulnerabilities? | Yes. | 
 
 ## Product information
-
 | Question | Comments | 
 | --  | -- | 
 | Does your solution involve PII/Sensitive data originating from Cloud Software as a Service (SaaS)? | Yes. | 
@@ -73,7 +71,6 @@ tags:
 
 
 ## Web App information
-
 | Question | Comments | 
 | -  | - | 
 | Does your solution implement CORS Support? | Yes. <br/>Across all apps, and all domain properties. |
@@ -97,6 +94,12 @@ tags:
 | -  | - | 
 | Do you have a process to validade your vendors? | Yes. <br/> [Vendor Policy](https://developers.openpix.com.br/docs/security/security-policy#pol%C3%ADtica-de-seguran%C3%A7a-de-fornecedores)|
 
+## Pentest
+| Question | Comments | 
+| --  | -- | 
+| Do you perform regular pentests? | Yes. <br/> We perform several automated pentests with software based external audit tools and multiple internal pentests with our on internal infosec team. |
+| Do you perform regular independet (third party)? | Yes. <br/> We perform several external via third party infosec companies. |
+| When was the last external independented pentest? | Last pentest was performed in January 2023. |
 
 ## Training and awareness 
 | Question | Comments | 
