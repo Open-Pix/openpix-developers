@@ -1,0 +1,218 @@
+---
+id: how-to-create-customer-using-api
+title: Como usar a API para criar um cliente?
+tags:
+  - concept
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para criar um cliente, você utiliza o _endpoint_ `/api/v1/customer` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/customer/paths/~1api~1v1~1customer/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar um cliente são os sequintes:
+
+- **`name`**: Nome do cliente.
+
+E além do nome é necessário enviar um desses três dados:
+
+- **`taxID`**: CPF ou CNPJ do cliente.
+- **`email`**: Email do cliente.
+- **`phone`**: Celular do cliente. (començando com 55 e código de área)
+
+### Exemplo
+
+O body da sua requisição será semelhante a um destes exemplos:
+
+#### Exemplo com taxID
+
+```json
+{
+  "name": "Dan",
+  "taxID": "360.***.***-72"
+}
+```
+
+#### Exemplo com email
+
+```json
+{
+  "name": "Dan",
+  "email": "dan@gmail.com"
+}
+```
+
+#### Exemplo com telefone
+
+```json
+{
+  "name": "Dan",
+  "phone": "554899..."
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos o cliente criado.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "customer": {
+    "name": "NOME DO CLIENTE",
+    "taxID": { "taxID": "360...", "type": "BR:CPF" },
+    "correlationID": "d1d46bbd-b010-4beb-b59e-cecf824efb43"
+  }
+}
+```
+
+#### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/customer' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{ "name": "Dan", "email": "dan@gmail.com" }'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/customer', {
+  method: 'POST',
+  body: JSON.stringify({ name: 'Dan', email: 'dan@gmail.com' }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+## Como usar a API para criar um cliente com endereço?
+
+Ao criar um cliente, é possível também adicionar um endereço.
+
+:::info
+
+Para criar cobranças que tenham vencimento, multa e juros, é necessário que o cliente sendo cobrado tenha um endereço cadastrado, assim como seu taxID (CPF/CNPJ), eu vou assumir este caso de uso para o exemplo a seguir.
+
+:::
+
+Então, os campos obrigatórios são:
+
+- **`name`**: Nome do cliente.
+- **`taxID`**: CPF ou CNPJ do cliente.
+- **`address`**: Endereço do cliente.
+
+Você pode encontrar documentação a respeito da modelagem do objeto de endereço [aqui](https://developers.openpix.com.br/api#tag/customer/paths/~1api~1v1~1customer/post).
+
+### Exemplo
+
+O body da requisição, com os dados de endereço adicionados fica semelhante à esta:
+
+```json
+{
+  "name": "Ana",
+  "taxID": "672.***.***-51",
+  "address": {
+    "zipcode": "137...",
+    "street": "R...",
+    "number": "15",
+    "neighborhood": "Centro",
+    "city": "S...",
+    "state": "SP",
+    "complement": "Casa"
+  }
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos o cliente criado.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "customer": {
+    "name": "ana",
+    "correlationID": "6ffa...",
+    "address": {
+      "zipcode": "137...",
+      "street": "R...",
+      "number": "15",
+      "neighborhood": "Centro",
+      "city": "S...",
+      "state": "SP",
+      "complement": "Casa"
+    },
+    "taxID": { "taxID": "67...", "type": "BR:CPF" }
+  }
+}
+```
+
+#### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/customer' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{"name": "Ana", "taxID": "672.***.***-51", "address": {
+        "zipcode": "137...", "street": "R...", "number": "15",
+        "neighborhood": "Centro", "city": "S...", "state": "SP",
+        "complement": "Casa" } }'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/customer', {
+  method: 'POST',
+  body: JSON.stringify({
+    name: 'Ana',
+    taxID: '672.***.***-51',
+    address: {
+      zipcode: '137...',
+      street: 'R...',
+      number: '15',
+      neighborhood: 'Centro',
+      city: 'S...',
+      state: 'SP',
+      complement: 'Casa',
+    },
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```

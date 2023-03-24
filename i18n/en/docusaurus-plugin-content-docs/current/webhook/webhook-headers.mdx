@@ -1,0 +1,50 @@
+---
+id: webhook-headers
+title: Configurando os cabeçalhos HTTP do meu webhook
+tags:
+- webhook
+- header
+- api
+- integration
+---
+
+## Criando um novo cabeçalho HTTP pro meu webhook
+
+Primeiro de tudo, é necessário acessar a rota para criar um novo webhook. Você
+consegue acessar ela [aqui](https://app.openpix.com/home/openpix/webhook-create).
+
+O que você vai ver é algo assim:
+
+![Novo webhook com os inputs de headers customizados](/img/webhook/create-new-webhook-custom-headers.png)
+
+A segunda seção, como pode perceber, é referente aos cabeçalhos da sua requisição HTTP (headers),
+ali você pode colocar qualquer valor customizado que queira. Referente a autenticação, como o `Authorization` header,
+do seu webhook, ou outra informação que queira utilizar no futuro.
+
+Os 3 primeiros valores presentes ali são valores que são enviados em **TODAS**
+as requisições feitas a partir do nosso webhook, não é possível alterá-las.
+
+### Referências
+
+- [Cabeçalhos HTTP - MDN](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers)
+
+## Editando os cabeçalhos de um webhook já criado
+
+Caso você queira editar os cabeçalhos de um webhook já criado, você precisará seguir o seguinte fluxo:
+
+Inicialmente, acesse a lista contendo os itens referentes a `API/Plugins` e `Webhooks`.
+Você consegue acessar por [aqui](https://app.openpix.com/home/api/list).
+
+Acessando a lista de webhooks já criados, clique em uma dessas linhas para acessar os detalhes dela.
+
+Quando acessado os detalhes de um webhook, o que você vai ver é algo semelhante a isto:
+
+![Detalhes de um webhook já criado](/img/webhook/webhook-details.png)
+
+Na seção de `Cabeçalhos HTTP`, clique nela para expandir. Expandido-a, o que você vai ver é os
+inputs semelhantes ao que você tem no fluxo de criação do webhook, contendo os 3 cabeçalhos padronizados
+de toda requsição.
+
+![Customizar os cabeçalhos da requisição HTTP](/img/webhook/webhook-details-custom-headers.png)
+
+Aqui, nessa seção, você consegue alterar os headers de cada webhook da forma que desejar.

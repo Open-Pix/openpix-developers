@@ -1,0 +1,79 @@
+---
+id: webhook-api
+title: Criando um webhook para interceptar um Pix via API
+tags:
+- webhook
+- api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Pela Openpix é possível criar webhooks para interceptar quando um pix for realizado. Hoje, há duas maneiras de realizar a criação do mesmo: via plataforma ou API.
+
+Neste tutorial iremos descrever como criar um webhook para interceptar a chegada de um novo Pix via uma chamada API.
+
+Para cadastrar o webhook via API basta seguir nossa especifição para realizar um POST na [api de Webhook](https://developers.openpix.com.br/api#tag/webhook/paths/~1api~1openpix~1v1~1webhook/post).
+
+<Tabs
+defaultValue="curl"
+    values={[
+        { label: 'cURL', value: 'curl', },
+        { label: 'JavaScript', value: 'js', },
+    ]
+}>
+
+<TabItem value="curl">
+
+```jsx
+curl --location --request POST 'http://api.openpix.com.br/api/openpix/v1/webhook' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <appID>' \
+--data-raw '{
+    "webhook": {
+    "name": "webhook via api",
+    "url": "https://minhaurl.test/webhook",
+    "authorization": "auth_key",
+    "isActive": true
+}
+}'
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```jsx
+const createWebhook = async () => {
+  const payload = {
+    name: 'webhook via api',
+    url: 'https://minhaurl.test/webhook',
+    authorization: 'auth_key',
+    isActive: true,
+  };
+
+  const response = await fetch(
+    'http://api.openpix.com.br/api/openpix/v1/webhook',
+    {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'appID',
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  const data = await response.json();
+  console.log({
+    data,
+  });
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+[Exemplos de payload do Webhook](/docs/category/exemplos)

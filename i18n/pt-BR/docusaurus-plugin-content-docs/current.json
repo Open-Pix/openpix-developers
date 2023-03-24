@@ -1,0 +1,262 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Introdução": {
+    "message": "Introdução",
+    "description": "The label for category Introdução in sidebar docs"
+  },
+  "sidebar.docs.category.Introdução.link.generated-index.title": {
+    "message": "Introdução visão geral",
+    "description": "The generated-index page title for category Introdução in sidebar docs"
+  },
+  "sidebar.docs.category.Apis": {
+    "message": "Apis",
+    "description": "The label for category Apis in sidebar docs"
+  },
+  "sidebar.docs.category.Apis.link.generated-index.title": {
+    "message": "Apis visão geral",
+    "description": "The generated-index page title for category Apis in sidebar docs"
+  },
+  "sidebar.docs.category.Bancos": {
+    "message": "Bancos",
+    "description": "The label for category Bancos in sidebar docs"
+  },
+  "sidebar.docs.category.Bancos.link.generated-index.title": {
+    "message": "Bancos visão geral",
+    "description": "The generated-index page title for category Bancos in sidebar docs"
+  },
+  "sidebar.docs.category.Cashback": {
+    "message": "Cashback",
+    "description": "The label for category Cashback in sidebar docs"
+  },
+  "sidebar.docs.category.Cashback.link.generated-index.title": {
+    "message": "Cashback visão geral",
+    "description": "The generated-index page title for category Cashback in sidebar docs"
+  },
+  "sidebar.docs.category.Cashback Fidelidade": {
+    "message": "Cashback Fidelidade",
+    "description": "The label for category Cashback Fidelidade in sidebar docs"
+  },
+  "sidebar.docs.category.Cashback Fidelidade.link.generated-index.title": {
+    "message": "Cashback Fidelidade visão geral",
+    "description": "The generated-index page title for category Cashback Fidelidade in sidebar docs"
+  },
+  "sidebar.docs.category.Cobrança": {
+    "message": "Cobrança",
+    "description": "The label for category Cobrança in sidebar docs"
+  },
+  "sidebar.docs.category.Cobrança.link.generated-index.title": {
+    "message": "Cobrança visão geral",
+    "description": "The generated-index page title for category Cobrança in sidebar docs"
+  },
+  "sidebar.docs.category.Conceitos": {
+    "message": "Conceitos",
+    "description": "The label for category Conceitos in sidebar docs"
+  },
+  "sidebar.docs.category.Conceitos.link.generated-index.title": {
+    "message": "Conceitos visão geral",
+    "description": "The generated-index page title for category Conceitos in sidebar docs"
+  },
+  "sidebar.docs.category.Clientes": {
+    "message": "Clientes",
+    "description": "The label for category Clientes in sidebar docs"
+  },
+  "sidebar.docs.category.Clientes.link.generated-index.title": {
+    "message": "Clientes visão geral",
+    "description": "The generated-index page title for category Clientes in sidebar docs"
+  },
+  "sidebar.docs.category.E-commerce": {
+    "message": "E-commerce",
+    "description": "The label for category E-commerce in sidebar docs"
+  },
+  "sidebar.docs.category.E-commerce.link.generated-index.title": {
+    "message": "E-commerce visão geral",
+    "description": "The generated-index page title for category E-commerce in sidebar docs"
+  },
+  "sidebar.docs.category.Magento1": {
+    "message": "Magento1",
+    "description": "The label for category Magento1 in sidebar docs"
+  },
+  "sidebar.docs.category.Magento1.link.generated-index.title": {
+    "message": "Magento1 visão geral",
+    "description": "The generated-index page title for category Magento1 in sidebar docs"
+  },
+  "sidebar.docs.category.Magento2": {
+    "message": "Magento2",
+    "description": "The label for category Magento2 in sidebar docs"
+  },
+  "sidebar.docs.category.Magento2.link.generated-index.title": {
+    "message": "Magento2 visão geral",
+    "description": "The generated-index page title for category Magento2 in sidebar docs"
+  },
+  "sidebar.docs.category.Oracle Commerce Cloud": {
+    "message": "Oracle Commerce Cloud",
+    "description": "The label for category Oracle Commerce Cloud in sidebar docs"
+  },
+  "sidebar.docs.category.Oracle Commerce Cloud.link.generated-index.title": {
+    "message": "Oracle Commerce Cloud visão geral",
+    "description": "The generated-index page title for category Oracle Commerce Cloud in sidebar docs"
+  },
+  "sidebar.docs.category.Woocommerce": {
+    "message": "Woocommerce",
+    "description": "The label for category Woocommerce in sidebar docs"
+  },
+  "sidebar.docs.category.Woocommerce.link.generated-index.title": {
+    "message": "WooCommerce visão geral",
+    "description": "The generated-index page title for category Woocommerce in sidebar docs"
+  },
+  "sidebar.docs.category.FAQ": {
+    "message": "FAQ",
+    "description": "The label for category FAQ in sidebar docs"
+  },
+  "sidebar.docs.category.FAQ.link.generated-index.title": {
+    "message": "FAQ visão geral",
+    "description": "The generated-index page title for category FAQ in sidebar docs"
+  },
+  "sidebar.docs.category.Fluxos": {
+    "message": "Fluxos",
+    "description": "The label for category Fluxos in sidebar docs"
+  },
+  "sidebar.docs.category.Fluxos.link.generated-index.title": {
+    "message": "Fluxos visão geral",
+    "description": "The generated-index page title for category Fluxos in sidebar docs"
+  },
+  "sidebar.docs.category.Webhook": {
+    "message": "Webhook",
+    "description": "The label for category Webhook in sidebar docs"
+  },
+  "sidebar.docs.category.Webhook.link.generated-index.title": {
+    "message": "Webhook visão geral",
+    "description": "The generated-index page title for category Webhook in sidebar docs"
+  },
+  "sidebar.docs.category.Giftback": {
+    "message": "Giftback",
+    "description": "The label for category Giftback in sidebar docs"
+  },
+  "sidebar.docs.category.Giftback.link.generated-index.title": {
+    "message": "Giftback visão geral",
+    "description": "The generated-index page title for category Giftback in sidebar docs"
+  },
+  "sidebar.docs.category.Integrações": {
+    "message": "Integrações",
+    "description": "The label for category Integrações in sidebar docs"
+  },
+  "sidebar.docs.category.Integrações.link.generated-index.title": {
+    "message": "Integrações visão geral",
+    "description": "The generated-index page title for category Integrações in sidebar docs"
+  },
+  "sidebar.docs.category.Login": {
+    "message": "Login",
+    "description": "The label for category Login in sidebar docs"
+  },
+  "sidebar.docs.category.Login.link.generated-index.title": {
+    "message": "Login visão geral",
+    "description": "The generated-index page title for category Login in sidebar docs"
+  },
+  "sidebar.docs.category.Parcerias": {
+    "message": "Parcerias",
+    "description": "The label for category Parcerias in sidebar docs"
+  },
+  "sidebar.docs.category.Parcerias.link.generated-index.title": {
+    "message": "Parcerias visão geral",
+    "description": "The generated-index page title for category Parcerias in sidebar docs"
+  },
+  "sidebar.docs.category.Pagamento": {
+    "message": "Pagamento",
+    "description": "The label for category Pagamento in sidebar docs"
+  },
+  "sidebar.docs.category.Pagamento.link.generated-index.title": {
+    "message": "Pagamento visão geral",
+    "description": "The generated-index page title for category Pagamento in sidebar docs"
+  },
+  "sidebar.docs.category.Maquininha Pix": {
+    "message": "Maquininha Pix",
+    "description": "The label for category Maquininha Pix in sidebar docs"
+  },
+  "sidebar.docs.category.Maquininha Pix.link.generated-index.title": {
+    "message": "Maquininha Pix visão geral",
+    "description": "The generated-index page title for category Maquininha Pix in sidebar docs"
+  },
+  "sidebar.docs.category.Plugin": {
+    "message": "Plugin",
+    "description": "The label for category Plugin in sidebar docs"
+  },
+  "sidebar.docs.category.Plugin.link.generated-index.title": {
+    "message": "Plugin visão geral",
+    "description": "The generated-index page title for category Plugin in sidebar docs"
+  },
+  "sidebar.docs.category.QRCode Estático": {
+    "message": "QRCode Estático",
+    "description": "The label for category QRCode Estático in sidebar docs"
+  },
+  "sidebar.docs.category.QRCode Estático.link.generated-index.title": {
+    "message": "QRCode Estático visão geral",
+    "description": "The generated-index page title for category QRCode Estático in sidebar docs"
+  },
+  "sidebar.docs.category.Segurança": {
+    "message": "Segurança",
+    "description": "The label for category Segurança in sidebar docs"
+  },
+  "sidebar.docs.category.Segurança.link.generated-index.title": {
+    "message": "Segurança visão geral",
+    "description": "The generated-index page title for category Segurança in sidebar docs"
+  },
+  "sidebar.docs.category.Assinaturas/Recorrência": {
+    "message": "Assinaturas/Recorrência",
+    "description": "The label for category Assinaturas/Recorrência in sidebar docs"
+  },
+  "sidebar.docs.category.Assinaturas/Recorrência.link.generated-index.title": {
+    "message": "Assinaturas/Recorrência visão geral",
+    "description": "The generated-index page title for category Assinaturas/Recorrência in sidebar docs"
+  },
+  "sidebar.docs.category.Bancos Suportados": {
+    "message": "Bancos Suportados",
+    "description": "The label for category Bancos Suportados in sidebar docs"
+  },
+  "sidebar.docs.category.Bancos Suportados.link.generated-index.title": {
+    "message": "Banco Suportados Visão Geral",
+    "description": "The generated-index page title for category Bancos Suportados in sidebar docs"
+  },
+  "sidebar.docs.category.Teste": {
+    "message": "Teste",
+    "description": "The label for category Teste in sidebar docs"
+  },
+  "sidebar.docs.category.Teste.link.generated-index.title": {
+    "message": "Teste visão geral",
+    "description": "The generated-index page title for category Teste in sidebar docs"
+  },
+  "sidebar.docs.category.Transação": {
+    "message": "Transação",
+    "description": "The label for category Transação in sidebar docs"
+  },
+  "sidebar.docs.category.Transação.link.generated-index.title": {
+    "message": "Transação visão geral",
+    "description": "The generated-index page title for category Transação in sidebar docs"
+  },
+  "sidebar.docs.category.API": {
+    "message": "API",
+    "description": "The label for category API in sidebar docs"
+  },
+  "sidebar.docs.category.API.link.generated-index.title": {
+    "message": "API visão geral",
+    "description": "The generated-index page title for category API in sidebar docs"
+  },
+  "sidebar.docs.category.Exemplos": {
+    "message": "Exemplos",
+    "description": "The label for category Exemplos in sidebar docs"
+  },
+  "sidebar.docs.category.Exemplos.link.generated-index.title": {
+    "message": "Exemplos",
+    "description": "The generated-index page title for category Exemplos in sidebar docs"
+  },
+  "sidebar.docs.category.Plataforma": {
+    "message": "Plataforma",
+    "description": "The label for category Plataforma in sidebar docs"
+  },
+  "sidebar.docs.category.Plataforma.link.generated-index.title": {
+    "message": "Plataforma visão geral",
+    "description": "The generated-index page title for category Plataforma in sidebar docs"
+  }
+}

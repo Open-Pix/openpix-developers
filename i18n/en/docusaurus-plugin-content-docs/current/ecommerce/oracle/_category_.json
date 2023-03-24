@@ -1,0 +1,13 @@
+{
+  "label": "Oracle Commerce Cloud",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Oracle Commerce Cloud visão geral"
+  },
+  "customProps": {
+    "description": "Oracle Commerce Cloud documentação"
+  }
+}

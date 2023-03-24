@@ -1,0 +1,13 @@
+{
+  "label": "Maquininha Pix",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Maquininha Pix visão geral"
+  },
+  "customProps": {
+    "description": "Maquininha Pix documentação"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "label": "Introdução",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Introdução visão geral"
+  },
+  "customProps": {
+    "description": "Introdução documentação"
+  }
+}

@@ -1,0 +1,137 @@
+---
+id: how-to-create-cobv-using-api
+title: Como usar a API para criar uma cobrança com vencimento (cobv)?
+tags:
+  - concept
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para criar uma cobrança Pix com vencimento, você utiliza o _endpoint_ `/api/v1/charge` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar uma cobrança Pix com vencimento são os sequintes:
+
+- **`value`**: O valor em centavos da cobrança Pix a ser criado.
+- **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
+- **`type`**: O tipo de cobrança. Especificamente com o valor `OVERDUE`.
+- **`customer`**: Um objeto que representa o usuário que vai receber a cobrança.
+
+Dentro de **`customer`** é necessário enviar a o CPF/CNPJ do cliente sendo cobrado.
+
+Se o cliente já estiver cadastrado em nosso banco de dados e tiver um endereço, essas informações bastam.
+
+Entretanto, caso o cliente não esteja cadastrado, ou não tenha endereço cadastrado, é necessário, ou cadastrar o cliente com um endereço, ou enviar essas informações junto com a requisição.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "value": 100,
+  "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+  "type": "OVERDUE",
+  "customer": {
+    "taxID": "607.681.970-74"
+  }
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos a assinatura criada.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "charge": {
+    "customer": {
+      "name": "S...",
+      "address": {
+        "zipcode": "13...",
+        "street": "R...",
+        "number": "151",
+        "neighborhood": "Centro",
+        "city": "S...",
+        "state": "SP",
+        "complement": "Casa"
+      },
+      "taxID": { "taxID": "60768197074", "type": "BR:CPF" },
+      "correlationID": "b6b1f741-f13f-4923-a14e-b515b245e6a5"
+    },
+    "value": 1500,
+    "identifier": "ec60c...",
+    "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+    "paymentLinkID": "98e76...",
+    "transactionID": "ec60c...",
+    "status": "ACTIVE",
+    "giftbackAppliedValue": 0,
+    "discount": 0,
+    "valueWithDiscount": 1500,
+    "expiresDate": "2023-03-04T02:59:59.999Z",
+    "type": "OVERDUE",
+    "createdAt": "2023-02-24T20:31:35.288Z",
+    "additionalInfo": [],
+    "updatedAt": "2023-02-24T20:31:43.744Z",
+    "interestsSettings": {
+      "fines": { "value": 1000 },
+      "interests": { "value": 200 }
+    },
+    "expiresIn": 628104,
+    "pixKey": "d65032...",
+    "brCode": "0002010...",
+    "paymentLinkUrl": "http://url.com/pay/...",
+    "qrCodeImage": "http://url.com/openpix/charge/brcode/image/...",
+    "globalID": "Q2hhcmdlOjYzZjkxZ..."
+  },
+  "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+  "brCode": "0002010..."
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":1500, "type": "OVERDUE","customer": {"taxID": "607.681.970-74"}}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 100,
+    correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+    type: 'OVERDUE',
+    customer: {
+      taxID: '607.681.970-74',
+    },
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```

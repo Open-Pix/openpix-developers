@@ -1,0 +1,13 @@
+{
+  "label": "Fluxos",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Fluxos visão geral"
+  },
+  "customProps": {
+    "description": "Fluxos documentação"
+  }
+}

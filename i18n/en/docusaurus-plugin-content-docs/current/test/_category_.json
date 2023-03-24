@@ -1,0 +1,13 @@
+{
+  "label": "Teste",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Teste visão geral"
+  },
+  "customProps": {
+    "description": "Teste documentação"
+  }
+}
