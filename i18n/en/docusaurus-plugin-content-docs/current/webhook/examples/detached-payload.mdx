@@ -1,0 +1,62 @@
+---
+id: webhook-detched-payload
+title: Payload de Pix Avulso
+tags:
+  - webhook
+  - header
+  - api
+---
+
+## Pix Avulso
+
+Os webhooks de `Pix Avulso` enviam objetos com os seguintes campos no seu payload:
+
+- `charge`: A cobrança a que esse Pix pertence
+- `pix`: Objeto com detalhes da transação Pix
+- `company`: Empresa a que a Transação pertence
+- `account`: Detalhes da conta que a Transação pertence
+
+## Exemplo
+
+```json
+{
+  "pixQrCode": null,
+  "charge": null,
+  "pix": {
+    "pixQrCode": null,
+    "charge": null,
+    "time": "2021-03-12T12:44:09.269Z",
+    "value": 1,
+    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
+    "infoPagador": "OpenPix testing",
+    "customer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    },
+    "payer": {
+      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+      "email": "email1@example.com",
+      "name": "Loma",
+      "phone": "+5511999999999",
+      "taxID": {
+        "taxID": "47043622050",
+        "type": "BR:CPF"
+      }
+    }
+  },
+  "company": {
+    "id": "624f46f9e93f9f521c8308d7",
+    "name": "Pizzaria do José",
+    "taxID": "4722767300014"
+  },
+  "account": {
+    "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
+  }
+}
+```

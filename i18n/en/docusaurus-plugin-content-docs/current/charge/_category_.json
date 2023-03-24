@@ -1,0 +1,13 @@
+{
+  "label": "Cobrança",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Cobrança visão geral"
+  },
+  "customProps": {
+    "description": "Cobrança documentação"
+  }
+}

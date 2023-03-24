@@ -1,0 +1,13 @@
+{
+  "label": "Segurança",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Segurança visão geral"
+  },
+  "customProps": {
+    "description": "Segurança documentação"
+  }
+}

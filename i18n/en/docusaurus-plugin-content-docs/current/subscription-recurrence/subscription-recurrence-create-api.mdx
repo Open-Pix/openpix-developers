@@ -1,0 +1,108 @@
+---
+id: subscription-recurrence-create-api
+sidebar_position: 1
+title: Como criar uma Assinatura usando a API?
+tags:
+  - subscription
+  - recurrence
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para criar uma nova assinatura usando a API, você deverá fazer uma chamada POST para o _endpoint_ `/api/v1/subscriptions`.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post) a documentação referente a esse _endpoint_.
+
+Como parte do `body` da requisição, esperamos o envio dos seguintes itens:
+
+- **`value`**: O valor em centavos da assinatura a ser criada.
+- **`customer`**: O cliente da assinatura a ser cobrado. Este campo é [idempotente](../concepts/idempotence.md), o que significa que se você enviar dados de um cliente que já exista, utilizaremos o existente ao invés de criar um novo.
+
+O body também aceita outros campos **opcionais**:
+
+- **`dayGenerateCharge`**: Dia do mês em que as cobranças serão geradas. Deve ser um valor de 0 a 27.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "value": 100,
+  "customer": {
+    "name": "Dan",
+    "taxID": "31324227036",
+    "email": "email0@example.com",
+    "phone": "5511999999999"
+  }
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos a assinatura criada.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "subscription": {
+    "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
+    "value": 100,
+    "customer": {
+      "name": "Dan",
+      "email": "email0@example.com",
+      "phone": "5511999999999",
+      "taxID": {
+        "taxID": "31324227036",
+        "type": "BR:CPF"
+      }
+    },
+    "dayGenerateCharge": 5
+  }
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+ curl --request POST \
+     --url https://api.openpix.com.br/api/v1/subscriptions \
+     --header 'Authorization: AUTHORIZATION' \
+     --header 'content-type: application/json' \
+     --data '{"value": 100,"customer": {"name":"Dan","taxID":"31324227036","email":"email0@example.com","phone":"5511999999999"}}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/subscriptions', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 100,
+    customer: {
+      name: 'Dan',
+      taxID: '31324227036',
+      email: 'email0@example.com',
+      phone: '5511999999999',
+    },
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```

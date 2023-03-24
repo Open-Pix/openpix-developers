@@ -1,0 +1,13 @@
+{
+  "label": "Conceitos",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Conceitos visão geral"
+  },
+  "customProps": {
+    "description": "Conceitos documentação"
+  }
+}

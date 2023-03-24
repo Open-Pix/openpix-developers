@@ -1,0 +1,94 @@
+---
+id: webhook-refund-payload
+title: Payload de Reembolso
+tags:
+  - webhook
+  - header
+  - api
+---
+
+## Payloads de Reembolso
+
+Os webhooks do tipo `Reembolso Recebido` enviam objetos com os seguintes campos no seu payload:
+
+- `event`: O tipo de Evento realizado
+- `charge`: A cobrança, se existir, que a transação original desse reembolso pertence
+- `pixQrCode`: O QR Code, se existir, que a transação original desse reembolso pertence
+- `pix`: Objeto com detalhes do reembolso Pix
+- `company`: Empresa a que a Transação pertence
+- `account`: Detalhes da conta que a Transação pertence
+
+Você pode identificar se o tipo de Reembolso é **Parcial** ou **Completo** pelo campo `partial` dentro do objeto `pix`
+
+Note que o objeto `pix` pertence ao Reembolso em si, não a transação original.
+
+## Exemplo
+
+```json
+{
+  "event": "OPENPIX:TRANSACTION_REFUND_RECEIVED",
+  "charge": {
+    "customer": null,
+    "value": 151,
+    "comment": "",
+    "identifier": "c37368e176894eea9b35fe0ea8ef2b7d",
+    "transactionID": "c37368e176894eea9b35fe0ea8ef2b7d",
+    "status": "COMPLETED",
+    "additionalInfo": [],
+    "giftbackAppliedValue": 0,
+    "discount": 0,
+    "valueWithDiscount": 151,
+    "createdAt": "2022-09-16T13:57:26.300Z",
+    "correlationID": "5e1f0740-4a18-4030-a5a7-686d3d8ec419",
+    "paymentLinkID": "47478762-f0fb-4996-a972-519edae95681",
+    "updatedAt": "2022-09-16T14:02:59.159Z",
+    "expiresIn": 2591999,
+    "pixKey": "c4249323-b4ca-43f2-8139-874baab09b93",
+    "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/01jAVrYybMRhanrjbpgCDIxFrHxa7zdBSdcIinjmXbp52040000530398654041.515802BR5912Your_Company6009Sao_Paulo62290525c37368e176894eea9b35fe0ea63047E32",
+    "paymentLinkUrl": "http://localhost:8777/pay/47478762-f0fb-4996-a972-519edae95681",
+    "qrCodeImage": "https://api.openpix.com.br/openpix/openpix/charge/brcode/image/47478762-f0fb-4996-a972-519edae95681.png",
+    "globalID": "Q2hhcmdlOjYzMjQ4MGM4MDIxM2I4YTA2Y2FlYjAxZg=="
+  },
+  "pixQrCode": null,
+  "pix": {
+    "customer": null,
+    "charge": {
+      "customer": null,
+      "value": 151,
+      "comment": "",
+      "identifier": "c37368e176894eea9b35fe0ea8ef2b7d",
+      "transactionID": "c37368e176894eea9b35fe0ea8ef2b7d",
+      "status": "COMPLETED",
+      "additionalInfo": [],
+      "giftbackAppliedValue": 0,
+      "discount": 0,
+      "valueWithDiscount": 151,
+      "createdAt": "2022-09-16T13:57:26.300Z",
+      "correlationID": "5e1f0740-4a18-4030-a5a7-686d3d8ec419",
+      "paymentLinkID": "47478762-f0fb-4996-a972-519edae95681",
+      "updatedAt": "2022-09-16T14:02:59.159Z",
+      "expiresIn": 2591999,
+      "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/01jAVrYybMRhanrjbpgCDIxFrHxa7zdBSdcIinjmXbp52040000530398654041.515802BR5912Your_Company6009Sao_Paulo62290525c37368e176894eea9b35fe0ea63047E32",
+      "paymentLinkUrl": "http://localhost:8777/pay/47478762-f0fb-4996-a972-519edae95681",
+      "qrCodeImage": "https://api.openpix.com.br/openpix/openpix/charge/brcode/image/47478762-f0fb-4996-a972-519edae95681.png",
+      "globalID": "Q2hhcmdlOjYzMjQ4MGM4MDIxM2I4YTA2Y2FlYjAxZg=="
+    },
+    "value": 151,
+    "time": "2022-09-16T14:15:39.597Z",
+    "endToEndId": "D23114447202209161415HPf0GiKMeR4",
+    "createdAt": "2022-09-16T14:15:41.909Z",
+    "pixKey": "c4249323-b4ca-43f2-8139-874baab09b93",
+    "partial": false,
+    "globalID": "UGl4VHJhbnNhY3Rpb246NjMyNDg1MGQ3OTE4NTgxZDczOGNkZjg0"
+  },
+  "company": {
+    "id": "61240394529a1b71ee70d855",
+    "name": "CASAS AMERICANAS",
+    "taxID": "05460236000124"
+  },
+  "account": {
+    "clientId": "71034651-61E0-1FAD-4688-D967F095CFBF"
+  },
+  "refunds": []
+}
+```

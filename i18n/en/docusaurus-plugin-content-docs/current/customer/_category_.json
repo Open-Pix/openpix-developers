@@ -1,0 +1,13 @@
+{
+  "label": "Clientes",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Clientes visão geral"
+  },
+  "customProps": {
+    "description": "Clientes documentação"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "label": "Cashback",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Cashback visão geral"
+  },
+  "customProps": {
+    "description": "Cashback documentação"
+  }
+}

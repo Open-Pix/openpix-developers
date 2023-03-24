@@ -1,0 +1,60 @@
+---
+id: how-to-create-a-webhook-and-intercept-a-pix
+title: Como interceptar um Pix utilizando um webhook
+tags:
+  - webhook
+  - platform
+  - api
+  - php
+  - languages
+--- 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Com a Openpix é possível criar webhooks para interceptar quando um Pix for realizado.
+
+Neste tutorial iremos descrever como criar um webhook para informar o recebimento de um novo Pix e devolvê-lo em uma API registrada.
+
+## Step 1 - Crie o seu webhook apontando para o seu endpoint
+
+Para criar um webhook via API basta seguir os passos desse tutorial: [Criando um webhook para interceptar um Pix Via API](/docs/webhook/api/webhook-api).
+
+Para criar um webhook via plataforma basta seguir os passos desse tutorial: [Criando um webhook para interceptar um Pix e chamar uma API](/docs/webhook/platform/webhook-platform-api.mdx).
+
+## Step 2 - Crie o seu endpoint
+
+Agora que você já tem o seu webhook criado, é necessário criar o seu endpoint para receber o webhook.
+
+Há diversas linguagens em que você pode criar o seu endpoint, abaixo iremos descrever como criar o seu endpoint em PHP.
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="php" label="PHP" default>
+```
+
+```php
+<?php
+
+  // Get the JSON input data
+  $input = file_get_contents('php://input');
+
+  // Decode the JSON data into an associative array
+  $data = json_decode($input, true);
+
+  // Access the charge object
+  $charge = $data['charge'];
+
+  // Now you can use the $charge object as needed
+  print_r($charge);
+
+  echo 'correlationID: ' . $charge['correlationID'];
+
+?>
+
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```

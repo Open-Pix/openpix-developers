@@ -1,0 +1,13 @@
+{
+  "label": "Exemplos",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Exemplos"
+  },
+  "customProps": {
+    "description": "Exemplos de Payload Webhook"
+  }
+}

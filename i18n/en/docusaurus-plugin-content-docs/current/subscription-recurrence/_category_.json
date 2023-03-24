@@ -1,0 +1,13 @@
+{
+  "label": "Assinaturas/Recorrência",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Assinaturas/Recorrência visão geral"
+  },
+  "customProps": {
+    "description": "Assinaturas/Recorrência documentação"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "label": "API",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "API visão geral"
+  },
+  "customProps": {
+    "description": "API documentação"
+  }
+}

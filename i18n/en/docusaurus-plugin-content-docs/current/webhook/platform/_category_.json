@@ -1,0 +1,13 @@
+{
+  "label": "Plataforma",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Plataforma visão geral"
+  },
+  "customProps": {
+    "description": "Plataforma documentação"
+  }
+}
