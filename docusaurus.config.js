@@ -35,21 +35,24 @@ module.exports = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: [
-          {
-            from: '/docs/ecommerce/woocommerce-plugin',
-            to: '/docs/ecommerce/woocommerce/woocommerce-plugin',
-          },
-          {
-            from: '/docs/ecommerce/magento1-plugin',
-            to: '/docs/ecommerce/magento1/magento1-plugin',
-          },
-          {
-            from: '/docs/ecommerce/magento2-plugin',
-            to: '/docs/ecommerce/magento2/magento2-plugin',
-          },
-        ],
+        createRedirects(existingPath) {
+          const redirect = ['woocommerce', 'magento1', 'magento2']
+
+          const redirectPlugin = redirect.filter((item) => existingPath.includes(item))
+
+          if (existingPath.includes('/docs/ecommerce') && redirectPlugin.length > 0) {
+
+            const newPath = existingPath.replace('/docs/ecommerce', `/docs/ecommerce/${redirectPlugin}`)
+
+            return [
+              newPath,
+            ]
+
+          }
+          return undefined; // Return a falsy value: no redirect created
+        },
       },
+      
     ],
   ],
   themeConfig: {

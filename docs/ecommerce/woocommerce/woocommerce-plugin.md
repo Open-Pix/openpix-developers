@@ -30,18 +30,18 @@ Entre em WooCommerce -> Settings > Payments.
 
 ![Payments](/img/ecommerce/woocommerce-payments.png)
 
-### Clique em `Manage` no Plugin OpenPix.
+### Clique em `Manage` no Plugin OpenPix
 
-- [ ] Cadastre um AppID do tipo API. Crie um appID [aqui](../apis/api-getting-started.md)
+- [ ] Cadastre um AppID do tipo API. Crie um appID [aqui](../../apis/api-getting-started.md)
 - [ ] Customize o Título, Descrição e Texto de Botão de Pedido
 
 ![Setup](/img/ecommerce/woocommerce-setup.png)
 
-### Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook.
+### Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook
 
 - [ ] Ao clicar os campos, `Webhook Authorization` e `Webhook HMAC Secret Key` irão atualizar automaticamente e mostrar o status em `Webhook Status`.
 
-### Caso não configure você pode acessar a plataforma, criar um webhook manualmente. Para isso:
+### Caso não configure você pode acessar a plataforma, criar um webhook manualmente. Para isso
 
 - [ ] Crie uma senha para a integração do Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 - [ ] Cadastre a URL de Callback do WooCommerce na OpenPix. Exemplo: <https://meusite.com.br/wc-api/WC_OpenPix_Pix_Gateway>
@@ -106,6 +106,7 @@ Basta clicar e selecionar qual status você quer que seja colocado no pedido qua
 Após esta alteração os novos pedidos quando forem pagos irão receber o valor desse campo em seu status.
 
 ## 7. Como ver meus logs OpenPix em minha loja WooCommerce/Wordpress
+
 Você pode visualizar os logs OpenPix em sua loja através dos seguintes passos:
 
 - 1. Tenha acesso aos arquivos da loja
