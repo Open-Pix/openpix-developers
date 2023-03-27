@@ -1,0 +1,27 @@
+---
+id: openpix-trigger-n8n
+title: Integrando Webhook Pix com o N8N
+tags:
+  - integration
+  - n8n
+  - webhook
+---
+
+import Embed from 'react-embed';
+
+## Como integrar o Webhook Pix com o N8N
+
+<Embed url="https://www.youtube.com/watch?v=Xss_AN1oz8U" />
+
+## Documentação
+
+1. Crie uma API na OpenPix [aqui](../apis/api-getting-started.md#passo-1---criar-um-novo-aplicativo)
+2. Copie o AppID
+3. Acesse a sua instância do N8N
+4. Acesse `Configurações` > `Community nodes`
+   4.1 Clique em `Install` e pesquise por `n8n-nodes-openpix`
+   ![OpenPix Trigger](/img/integrations/n8n/install-node.png)
+
+5. Crie um novo Workflow e utilize o nó `OpenPix Trigger`
+
+![OpenPix nodes](./__assets__/select-openpix-nodes.png)

@@ -48,6 +48,14 @@ module.exports = {
             from: '/docs/ecommerce/magento2-plugin',
             to: '/docs/ecommerce/magento2/magento2-plugin',
           },
+          {
+            from: '/docs/integrations/n8n-with-woovi',
+            to: '/docs/integrations/n8n-with-openpix',
+          },
+          {
+            from: '/docs/integrations/woovi-trigger-n8n',
+            to: '/docs/integrations/openpix-trigger-n8n',
+          },
         ],
       },
     ],
