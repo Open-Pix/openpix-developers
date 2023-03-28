@@ -41,8 +41,8 @@ module.exports = {
             to: '/docs/ecommerce/woocommerce/woocommerce-plugin',
           },
           {
-            from: '/docs/ecommerce/woocommerce-redirects',
-            to: '/docs/ecommerce/woocommerce/woocommerce-redirects',
+            from: '/docs/ecommerce/woocommerce-subscriptions',
+            to: '/docs/ecommerce/woocommerce/woocommerce-subscriptions',
           },
           {
             from: '/docs/ecommerce/magento1-plugin',
