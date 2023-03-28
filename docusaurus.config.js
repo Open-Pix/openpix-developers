@@ -41,6 +41,10 @@ module.exports = {
             to: '/docs/ecommerce/woocommerce/woocommerce-plugin',
           },
           {
+            from: '/docs/ecommerce/woocommerce-redirects',
+            to: '/docs/ecommerce/woocommerce/woocommerce-redirects',
+          },
+          {
             from: '/docs/ecommerce/magento1-plugin',
             to: '/docs/ecommerce/magento1/magento1-plugin',
           },
