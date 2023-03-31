@@ -7,7 +7,7 @@ tags:
   - concept
 ---
 
-## Solicitando acesso para realizar Pagaemntos
+## Solicitando acesso para realizar Pagamentos
 
 Se você é um cliente OpenPix e deseja solicitar a funcionalidade de pagamentos, saiba que é muito simples e fácil:
 Para solicitar a funcionalidade de pagamentos, basta entrar em contato com o suporte da OpenPix por meio do chat disponível na plataforma. Ao acessar o chat, um atendente estará disponível para auxiliá-lo e fornecer todas as informações necessárias para a ativação da funcionalidade.
