@@ -2999,6 +2999,8 @@ components:
         * **OPENPIX:TRANSACTION_REFUND_RECEIVED** - New PIX transaction refund received or refunded
 
         * **OPENPIX:MOVEMENT_CONFIRMED** - Payment confirmed is when the pix transaction related to the payment gets confirmed
+
+        * **OPENPIX:MOVEMENT_FAILED** - Payment failed is when the payment gets approved and a error occurs
       enum:
         - OPENPIX:CHARGE_CREATED
         - OPENPIX:CHARGE_COMPLETED
@@ -3006,6 +3008,7 @@ components:
         - OPENPIX:TRANSACTION_RECEIVED
         - OPENPIX:TRANSACTION_REFUND_RECEIVED
         - OPENPIX:MOVEMENT_CONFIRMED
+        - OPENPIX:MOVEMENT_FAILED
     End:
       type: string
       format: date-time
