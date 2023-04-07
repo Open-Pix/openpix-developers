@@ -60,6 +60,14 @@ module.exports = {
             from: '/docs/integrations/woovi-trigger-n8n',
             to: '/docs/integrations/openpix-trigger-n8n',
           },
+          {
+            from: '/docs/ecommerce/oracle-commerce-cloud',
+            to: 'docs/ecommerce/oracle/occ-getting-started'
+          },
+          {
+            from: '/docs/getting-started',
+            to: '/docs/intro/getting-started'
+          }
         ],
       },
     ],
