@@ -1,6 +1,6 @@
 ---
 id: how-to-create-cobv-using-api
-title: Como usar a API para criar uma cobrança com vencimento (cobv)?
+title: Como usar a API para criar uma cobrança com vencimento, multa e juros (cobv)?
 tags:
   - concept
   - api
@@ -9,12 +9,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Para criar uma cobrança Pix com vencimento, você utiliza o _endpoint_ `/api/v1/charge` da API.
+Para criar uma cobrança Pix com vencimento, multa e juros, você utiliza o _endpoint_ `/api/v1/charge` da API.
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
 a documentação referente a esse _endpoint_.
 
-Os campos obrigatórios para criar uma cobrança Pix com vencimento são os sequintes:
+Os campos obrigatórios para criar uma cobrança Pix com vencimento, multa e juros são os sequintes:
 
 - **`value`**: O valor em centavos da cobrança Pix a ser criado.
 - **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
