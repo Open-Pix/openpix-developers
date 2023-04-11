@@ -8,7 +8,10 @@ tags:
 - plugin
 ---
 
-### Plugin Pix para WooCommerce
+## Plugin Pix para WooCommerce
+
+> _Nota: Este documento espera que você já tenha um ambiente WooCommerce ativo e acesso à plataforma._
+> _Nota: Caso não tenha acesso à plataforma registre-se aqui: <https://app.openpix.com/register?src=wordpress-docs>._
 
 ## Resumo
 
@@ -30,18 +33,18 @@ Entre em WooCommerce -> Settings > Payments.
 
 ![Payments](/img/ecommerce/woocommerce-payments.png)
 
-### Clique em `Manage` no Plugin OpenPix.
+### Clique em `Manage` no Plugin OpenPix
 
 - [ ] Cadastre um AppID do tipo API. Crie um appID [aqui](../apis/api-getting-started.md)
 - [ ] Customize o Título, Descrição e Texto de Botão de Pedido
 
 ![Setup](/img/ecommerce/woocommerce-setup.png)
 
-### Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook.
+### Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook
 
 - [ ] Ao clicar os campos, `Webhook Authorization` e `Webhook HMAC Secret Key` irão atualizar automaticamente e mostrar o status em `Webhook Status`.
 
-### Caso não configure você pode acessar a plataforma, criar um webhook manualmente. Para isso:
+### Caso não configure você pode acessar a plataforma, criar um webhook manualmente. Para isso
 
 - [ ] Crie uma senha para a integração do Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 - [ ] Cadastre a URL de Callback do WooCommerce na OpenPix. Exemplo: <https://meusite.com.br/wc-api/WC_OpenPix_Pix_Gateway>
@@ -106,8 +109,42 @@ Basta clicar e selecionar qual status você quer que seja colocado no pedido qua
 Após esta alteração os novos pedidos quando forem pagos irão receber o valor desse campo em seu status.
 
 ## 7. Como ver meus logs OpenPix em minha loja WooCommerce/Wordpress
+
 Você pode visualizar os logs OpenPix em sua loja através dos seguintes passos:
 
 - 1. Tenha acesso aos arquivos da loja
 - 2. Acesse o seguinte path: `/wp-content/uploads/wc_logs`
 - 3. Dentro de `wc_logs` você irá encontrar os arquivos de logs da openpix com o seguinte padrão de nome `woocommerce_openpix-2023-01-13-7d609d821235742dd8162bbb0ef84862`
+
+## Instale o Plugin OpenPix na sua instância WooCommerce utilizando one click
+
+### 1. Instale a OpenPix na sua instância WooCommerce
+
+[OpenPix For WooCommerce](https://wordpress.org/plugins/openpix-for-woocommerce/)
+
+![Banner](/img/ecommerce/woocommerce-banner.png)
+![Install](/img/ecommerce/woocommerce-plugin-install.png)
+
+### 2. Configurando o Plugin WooCommerce
+
+Entre em plugins e clique em `Settings` para configurar o plugin
+
+![Configuracoes](/img/ecommerce/woocommerce/woocommerce-plugin-settings.png)
+
+### 3. Pegue a sua URL de Webhook
+
+Copie a URL de Webhook da sua loja WooCommerce
+
+![Webhook URL](/img/ecommerce/woocommerce/woocommerce-plugin-webhook.png)
+
+### 4. Configure a integração na OpenPix
+
+Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/woocommerce/add) ou vá em `API/Plugins` > `WooCommerce` > `Adicionar`
+
+![Webhook URL](/img/ecommerce/woocommerce/woocommerce-plugin-tutorial-card.png)
+
+### 5. Coloque o Webhook URL
+
+Cole a URL de Webhook que você no campo
+
+![Webhook URL](/img/ecommerce/woocommerce/woocommerce-plugin-tutorial.png)
