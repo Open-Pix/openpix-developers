@@ -62,12 +62,12 @@ module.exports = {
           },
           {
             from: '/docs/ecommerce/oracle-commerce-cloud',
-            to: 'docs/ecommerce/oracle/occ-getting-started'
+            to: '/docs/ecommerce/oracle/occ-getting-started',
           },
           {
             from: '/docs/getting-started',
-            to: '/docs/intro/getting-started'
-          }
+            to: '/docs/intro/getting-started',
+          },
         ],
       },
     ],
@@ -154,6 +154,7 @@ module.exports = {
           showLastUpdateTime: true,
           path: './docs',
           sidebarPath: './sidebars.js',
+          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
           editUrl: ({ locale, versionDocsDirPath, docPath }) => {
             return `https://github.com/Open-Pix/developers/edit/main/${versionDocsDirPath}/${docPath}`;
           },
