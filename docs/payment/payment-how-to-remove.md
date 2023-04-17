@@ -9,7 +9,9 @@ tags:
 
 ## Removendo Solicitações de Pagamentos
 
-**Pagamentos com os status de em processamento ou confirmados não podem ser removidos**
+:::info
+Pagamentos com os status de em processamento ou confirmados não podem ser removidos
+:::
 
 Remover solicitações de pagamentos na OpenPix é um processo simples e rápido.
 
