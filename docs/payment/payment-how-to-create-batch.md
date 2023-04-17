@@ -32,4 +32,6 @@ Com a OpenPix você consegue criar solicitações pagamentos com dados de um exc
 
 - Clique em `Ver Solicitações` para ser redirecionado para as solicitações criadas
 
-**Após a criação das solitações, os pagamentos ainda devem ser aprovados por um usuário**
+:::info
+Após a criação das solitações, os pagamentos ainda devem ser aprovados por um usuário
+:::
