@@ -633,9 +633,9 @@ paths:
         - name: id
           in: path
           description:
-            The correlation ID. You will need URI encoding if your correlation
-            ID has characters outside the ASCII set or reserved characters (%,
-            \#, /).
+            The correlation ID of the charge. You will need URI encoding if
+            your correlation ID has characters outside the ASCII set or reserved
+            characters (%, \#, /).
           required: true
           schema:
             type: string
@@ -686,9 +686,9 @@ paths:
         - name: id
           in: path
           description:
-            The correlation ID. You will need URI encoding if your correlation
-            ID has characters outside the ASCII set or reserved characters (%,
-            \#, /).
+            The correlation ID of the charge. You will need URI encoding if
+            your correlation ID has characters outside the ASCII set or reserved
+            characters (%, \#, /).
           required: true
           schema:
             type: string
