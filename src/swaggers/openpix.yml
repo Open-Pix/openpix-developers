@@ -623,6 +623,117 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/v1/charge/{id}/refund':
+    get:
+      tags:
+        - charge refund
+      summary: Get all refunds of a charge
+      description: Endpoint to get all refunds of a charge
+      parameters:
+        - name: id
+          in: path
+          description:
+            The correlation ID. You will need URI encoding if your correlation
+            ID has characters outside the ASCII set or reserved characters (%,
+            \#, /).
+          required: true
+          schema:
+            type: string
+          examples:
+            uuid:
+              value: cf4012c9-b2ac-484d-8121-deedd1c6d8af
+            random-string:
+              value: fe7834b4060c488a9b0f89811be5f5cf
+      responses:
+        '200':
+          description: A list of refunds
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refunds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChargeRefund'
+                example:
+                  refunds:
+                    - status: IN_PROCESSING
+                      value: 10
+                      correlationID: 9134e286-6f71-427a-bf00-241681624586
+                      endToEndId: E23114447202304181826HJNwY577YDX
+                      time: 2021-03-02T17:28:51.882Z
+                    - status: CONFIRMED
+                      value: 40
+                      correlationID: 589a378e-ab45-4f30-bd4d-4496c60f88cf
+                      endToEndId: E23114447202304181057pOhPMsp2pJZ
+                      time: 2021-03-05T14:49:02.922Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      tags:
+        - charge refund
+      summary: Create a new refund for a charge
+      description: Endpoint to create a new refund for a charge
+      parameters:
+        - name: id
+          in: path
+          description:
+            The correlation ID. You will need URI encoding if your correlation
+            ID has characters outside the ASCII set or reserved characters (%,
+            \#, /).
+          required: true
+          schema:
+            type: string
+          examples:
+            uuid:
+              value: cf4012c9-b2ac-484d-8121-deedd1c6d8af
+            random-string:
+              value: fe7834b4060c488a9b0f89811be5f5cf
+      requestBody:
+        description: Data to create a new refund for a charge
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/ChargeRefundPayload'
+            example:
+              correlationID: a273e72c-9547-4c75-a213-3b0a2735b8d5
+              value: 100
+      responses:
+        '200':
+          description: The created Refund
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refund:
+                    $ref: '#/components/schemas/ChargeRefund'
+                example:
+                  refund:
+                    status: IN_PROCESSING
+                    value: 100
+                    correlationID: a273e72c-9547-4c75-a213-3b0a2735b8d5
+                    endToEndId: E23114447202304181826HJNwY577YDX
+                    time: 2023-03-02T17:28:51.882Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
   '/api/v1/customer/{id}':
     get:
       tags:
@@ -2502,6 +2613,38 @@ components:
       required:
         - correlationID
         - value
+    ChargeRefund:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Value in cents of this refund
+        status:
+          type: string
+          enum:
+            - IN_PROCESSING
+            - CONFIRMED
+            - REJECTED
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this refund
+        endToEndId:
+          type: string
+          description: The endToEndId of this refund
+        time:
+          type: string
+          description: Time of this refund
+    ChargeRefundPayload:
+      type: object
+      properties:
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track for this refund
+        value:
+          type: number
+          description: Value in cents for this refund
+      required:
+        - correlationID
     Customer:
       type: object
       properties:
@@ -3036,6 +3179,9 @@ tags:
   - name: charge
     description: |
       Endpoint to manage Charges
+  - name: charge refund
+    description: |
+      Endpoint to manage charge refunds
   - name: customer
     description: |
       Endpoint to manage Customer
