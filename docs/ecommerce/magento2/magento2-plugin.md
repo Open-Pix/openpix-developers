@@ -20,15 +20,16 @@ Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real
 
 [OpenPix For Magento2](https://marketplace.magento.com/openpix-pix.html)
 
-![Banner](/img/ecommerce/woocommerce-banner.png)
-![Install](/img/ecommerce/magento2/magento2-marketplace-search.png)
+![Banner](./__assets__/magento2-banner.png)
+![Install](./__assets__/magento2-marketplace-search.png)
+
 [Download OpenPix Magento2 Plugin - versão 2.0.10](pathname:///magento2/openpix_pix.2.0.10.zip) - Versão Atual
 
 ## 2. Configurando o Plugin Magento2
 
 Entre em Magento2 Admin -> Stores > Configuration -> Sales -> Payment Method.
 
-![Payments](/img/ecommerce/magento2/magento2-payments.png)
+![Credentials](./__assets__/magento2-credentials.png)
 
 Clicando em em `Credentials` no Plugin OpenPix.
 
@@ -36,11 +37,11 @@ Clicando em em `Credentials` no Plugin OpenPix.
 
 Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 
-- [ ] Ao clicar os campos, `Webhook Authorization` e `Webhook HMAC Secret Key` irão atualizar automaticamente e mostrar o status em `Webhook Status`.
+- [ ] Ao clicar os campos, `Webhook Authorization` e `Webhook HMAC Secret Key` irão atualizar automaticamente e mostrar o status em `Webhook Status`.![](__assets__/magento2-webhook-configured.png)
 
 - [ ] Caso não haja nenhum erro clique em `Save Config` para salvar as configurações.
 
-![Webhook Configured](/img/ecommerce/magento2/magento2-webhook-configured.png)
+![Webhook Configured](./__assets__/magento2-webhook-configured.png)
 
 Caso não configure, você pode acessar a plataforma, criar um webhook manualmente. Para isso:
 
@@ -49,14 +50,14 @@ Caso não configure, você pode acessar a plataforma, criar um webhook manualmen
 - [ ] A URL de Callback que deve ser utilizada no cadastro se encontra logo abaixo ao campo em que se registra a senha do webhook dentro da sua loja Magento2
 - [ ] Clique em `Configure now with one click` novamente, para configurar o Webhook com esses novos dados criados.
 
-![Webhook Manual Configuration](/img/ecommerce/magento2/magento2-webhook-manual-configuration.png)
+![Webhook Manual Configuration](./__assets__/magento2-new-webhook.png)
 
 Clicando em `Payment via Pix` no Plugin OpenPix.
 
 - [ ] Ative ou Desative o Plugin
 - [ ] Customize o título do pagamento dentro da sua Store
 
-![Customize](/img/ecommerce/magento2/magento2-customize.png)
+![Customize](./__assets__/magento2-customize.png)
 
 ### 2.2 Configurando CPF/CNPJ para o Customer (opcional)
 
@@ -66,23 +67,17 @@ Para salvar o cpf/cnpj do customer da order na sua cobrança OpenPix é necessá
 
 Entre em Magento2 Admin -> Stores > Configuration -> Customers -> Customer Configuration
 
-![customer-sidemenu](/img/ecommerce/magento2/magento2-customer-sidemenu.png)
+![customer-sidemenu](./__assets__/magento2-customer-sidemenu.png)
 
 Primeiro ative o campo `Show VAT Number on Storefront` em `Create New Account Options`:
 
-![magento2-customer-create-new-account-options](/img/ecommerce/magento2/magento2-customer-create-new-account-options.png)
+![magento2-customer-create-new-account-options](./__assets__/magento2-customer-create-new-account-options.png)
 
 Em seguida em `Name and Address Options` ative o campo `Show Tax/VAT Number`:
 
-![magento2-customer-name-address-options.png](/img/ecommerce/magento2/magento2-customer-name-address-options.png)
+![magento2-customer-name-address-options.png](./__assets__/magento2-customer-name-address-options.png)
 
 A partir de agora os clientes terão que preencher esse campo com o CPF ou CNPJ e o mesmo será usado para salvar o cliente na plataforma OpenPix.
-
-### 2.3 Giftback
-
-Importante lembrete sobre a feature de [Giftback](../../giftback/what-is-giftback.md) para magento2. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
-
-> **A versão minima do plugin Magento2 para consumir a feature giftback é  a 2.0.6**
 
 ## 3. Crie o Webhook dentro da Plataforma OpenPix
 
@@ -94,18 +89,17 @@ Para realizar o registro de um novo Webhook siga os passos abaixo:
 - Utilize a mesma senha cadastrada em sua store Magento2. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 - A URL de Callback que deve ser utilizada no cadastro se encontra logo abaixo ao campo em que se registra a senha do webhook dentro da sua Store Magento2. O padrão é: <https://youstore.com.br/openpix/index/webhook>
 
-![Webhook](/img/ecommerce/magento2/magento2-openpix-webhook.png)
+![Webhook](./__assets__/magento2-webhook-configuration.png)
 
 ## 4. Realizar Pedido com Pix
 
 Escolha a opção de pagar o pedido usando Pix
 
-![Pay Pix](/img/ecommerce/magento2/magento2-checkout-cart.png)
+![Pay Pix](./__assets__/magento2-checkout-cart.png)
 
 Pague o Pix usando o app do seu banco.
 
-![Order](/img/ecommerce/magento2/m2-cs-1.png)
-![Order](/img/ecommerce/magento2/m2-cs-2.png)
+![Order](./__assets__/magento2-order.png)
 
 Valide que o status do Pedido mudou após o pagamento
 
@@ -113,9 +107,8 @@ Valide que o status do Pedido mudou após o pagamento
 
 Seu cliente poderá visualizar o pedido realizado via Pix dentro do detalhes do pedido. Basta clicar no botão que irá aparecer dentro da pagina de detalhe do pedido "Clique aqui para ver seu QRCode"
 
-![Order](/img/ecommerce/magento2/m2-od-1.png)
-![Order](/img/ecommerce/magento2/m2-od-2.png)
-
+![Order information](./__assets__/magento2-order-info.png)
+![Order](./__assets__/magento2-order-detail.png)
 ## Expiração
 
 A OpenPix ira cuidar da expiração da cobrança Pix. Entretanto, é preciso que seja configurado em sua loja magento a expiração da order pois o mesmo cuidará de todo o processo.
