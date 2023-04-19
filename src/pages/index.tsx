@@ -198,7 +198,7 @@ const cards = [
   {
     title: 'Assine Online',
     content:
-      'Assine Online. Crie Pix e envie um documento personalizado com dados da Woovi.',
+      'Assine Online. Crie Pix e envie um documento personalizado com dados da Openpix.',
     icon: <AssineOnlineIcon color={'#353535'} size={30} />,
     docsTo: '/docs/integrations/assine-online-with-woovi',
   },

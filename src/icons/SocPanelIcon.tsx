@@ -48,3 +48,4 @@ SocPanelIcon.defaultProps = {
 };
 
 export default SocPanelIcon;
+

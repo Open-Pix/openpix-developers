@@ -40,3 +40,4 @@ N8nIcon.defaultProps = {
 };
 
 export default N8nIcon;
+

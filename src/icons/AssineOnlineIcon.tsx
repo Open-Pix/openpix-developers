@@ -118,3 +118,4 @@ AssineOnlineIcon.defaultProps = {
 };
 
 export default AssineOnlineIcon;
+

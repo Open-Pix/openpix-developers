@@ -39,3 +39,4 @@ BotConversaIcon.defaultProps = {
 };
 
 export default BotConversaIcon;
+
