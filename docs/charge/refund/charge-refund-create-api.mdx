@@ -1,0 +1,90 @@
+---
+id: charge-refund-create-api
+sidebar_position: 1
+title: Como criar uma reembolso de uma cobrança usando a API?
+tags:
+  - charge
+  - refund
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para criar uma novo reembolso de uma cobrança usando a API, você deverá fazer uma chamada POST para o _endpoint_ `/api/v1/charge/{correlationID}/refund` usando `correlationID` da cobrança.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge-refund/paths/~1api~1v1~1charge~1%7Bid%7D~1refund/post) a documentação referente a esse _endpoint_.
+
+Como parte do `body` da requisição, esperamos o envio dos seguintes itens:
+
+- **`correlationID`**: O correlationID do reembolso a ser criado. Este campo é usado para [idempotencia](../concepts/idempotence.md).
+
+O body também aceita outros campos **opcionais**:
+
+- **`value`**: O valor em centavos do reembolso a ser criado. Se não informado será usado o valor total da cobrança ou o valor restante da cobrança que ainda não foi reembolsado.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb",
+  "value": 100,
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos a assinatura criada.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "refund": {
+    "status": "IN_PROCESSING"
+    "value": 100
+    "correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb"
+    "endToEndId": "E23114447202304181826HJNwY577YDX"
+    "time": "2023-03-02T17:28:51.882Z"
+  }
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+ curl --request POST \
+     --url https://api.openpix.com.br/api/v1/charge/{correlationID}/refund \
+     --header 'Authorization: AUTHORIZATION' \
+     --header 'content-type: application/json' \
+     --data '{"correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb","value": 100}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge/{correlationID}/refund', {
+  method: 'POST',
+  body: JSON.stringify({
+    correlationID: 'aafee9f5-94b3-4e3d-ab6a-416d0a1218cb',
+    value: 100,
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
