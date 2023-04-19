@@ -1,0 +1,23 @@
+.card-link--item {
+  flex-grow: 1;
+  flex-basis: 300px;
+  background-color: rgba(198, 198, 198, 0.35);
+  border-radius: 20px;
+  padding: 26px;
+}
+
+.card-link-div-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-link--item > h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.card-link--item > p {
+  font-size: 16px;
+  font-weight: 300;
+}
