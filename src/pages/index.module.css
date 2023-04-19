@@ -8,6 +8,10 @@
   }
 }
 
+.home-section > :not(:first-child) {
+  margin: 5vh 0;
+}
+
 /* reset margin */
 .home-section h3,
 .home-section p {
@@ -24,28 +28,6 @@ html[data-theme='dark'] .dark-mode--override h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-}
-
-.section-box--item {
-  flex-grow: 1;
-  flex-basis: 300px;
-  background-color: rgba(198, 198, 198, 0.35);
-  border-radius: 20px;
-  padding: 26px;
-}
-
-.section-box--item > h3 {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.section-box--item > p {
-  font-size: 16px;
-  font-weight: 300;
-}
-
-.products-section {
-  margin-top: 46px;
 }
 
 .products {

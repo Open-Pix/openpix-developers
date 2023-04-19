@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
@@ -127,9 +125,6 @@ module.exports = {
     'import/resolver': {
       node: true,
       'eslint-import-resolver-typescript': true,
-      'eslint-import-resolver-lerna': {
-        packages: path.resolve(__dirname, 'packages'),
-      },
     },
   },
 };
