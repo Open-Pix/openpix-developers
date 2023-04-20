@@ -2,6 +2,7 @@
 id: magento2-plugin
 title: Integrando a OpenPix com Magento2
 sidebar_label: Magento2 OpenPix Plugin
+sidebar_position: 0
 tags:
 - magento2
 - ecommerce
