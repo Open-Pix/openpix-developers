@@ -10,7 +10,7 @@ tags:
 ## Aprovando Pagamentos em Lote
 
 :::info
-Pagamentos com os status de em processamento ou confirmados não podem ser removidos
+Pagamentos com os status de em processamento ou confirmados não podem ser aprovados
 :::
 
 Com a OpenPix você consegue aprovar solicitações pagamentos de uma forma fácil e prática:
