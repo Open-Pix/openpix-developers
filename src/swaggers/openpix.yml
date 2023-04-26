@@ -3144,6 +3144,8 @@ components:
         * **OPENPIX:MOVEMENT_CONFIRMED** - Payment confirmed is when the pix transaction related to the payment gets confirmed
 
         * **OPENPIX:MOVEMENT_FAILED** - Payment failed is when the payment gets approved and a error occurs
+
+        * **OPENPIX:MOVEMENT_REMOVED** - Payment was removed by a user
       enum:
         - OPENPIX:CHARGE_CREATED
         - OPENPIX:CHARGE_COMPLETED
@@ -3152,6 +3154,7 @@ components:
         - OPENPIX:TRANSACTION_REFUND_RECEIVED
         - OPENPIX:MOVEMENT_CONFIRMED
         - OPENPIX:MOVEMENT_FAILED
+        - OPENPIX:MOVEMENT_REMOVED
     End:
       type: string
       format: date-time
