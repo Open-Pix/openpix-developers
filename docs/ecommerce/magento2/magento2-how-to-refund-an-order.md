@@ -37,8 +37,8 @@ Na parte superior da fatura, clique em **Credit memo** para criar uma nova nota 
 
 Nesta parte você poderá ajustar como será feito o reembolso:
 
-- No campo **Qty to refund** defina a quantidade de items que serão reembolsados. Ao inserir a quantidade, clique em **Update Qty's** para atualizar.
-- Selecione **Return to stock** se deseja que os items voltem ao estoque.
+- No campo **Qty to refund** defina a quantidade de itens que serão reembolsados. Ao inserir a quantidade, clique em **Update Qty's** para atualizar.
+- Selecione **Return to stock** se deseja que os itens voltem ao estoque.
 - Em **Refund shipping** você poderá definir o valor da taxa de entrega que será reembolsado. O padrão é a taxa total.
 
 Ao completar as informações, clique no botão **Refund** para realizar o reembolso.
