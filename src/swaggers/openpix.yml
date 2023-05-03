@@ -668,6 +668,7 @@ paths:
                       correlationID: 589a378e-ab45-4f30-bd4d-4496c60f88cf
                       endToEndId: E23114447202304181057pOhPMsp2pJZ
                       time: 2021-03-05T14:49:02.922Z
+                      comment: Comentário do reembolso
         '400':
           description: An error message
           content:
@@ -708,6 +709,7 @@ paths:
             example:
               correlationID: a273e72c-9547-4c75-a213-3b0a2735b8d5
               value: 100
+              comment: Comentário do reembolso
       responses:
         '200':
           description: The created Refund
@@ -725,6 +727,7 @@ paths:
                     correlationID: a273e72c-9547-4c75-a213-3b0a2735b8d5
                     endToEndId: E23114447202304181826HJNwY577YDX
                     time: 2023-03-02T17:28:51.882Z
+                    comment: Comentário do reembolso
         '400':
           description: An error message
           content:
@@ -1554,6 +1557,7 @@ paths:
                     correlationID: 7777-6f71-427a-bf00-241681624586
                     refundId: 11bf5b37e0b842e08dcfdc8c4aefc000
                     returnIdentification: D09089356202108032000a543e325902
+                    comment: Comentário do reembolso
         '400':
           description: An error message
           content:
@@ -1615,11 +1619,12 @@ paths:
                     hasPreviousPage: false
                     hasNextPage: true
                   refunds:
-                    status: IN_PROCESSING
-                    value: 100
-                    correlationID: 9134e286-6f71-427a-bf00-241681624586
-                    refundId: 9134e2866f71427abf00241681624586
-                    time: 2021-03-02T17:28:51.882Z
+                    - status: IN_PROCESSING
+                      value: 100
+                      correlationID: 9134e286-6f71-427a-bf00-241681624586
+                      refundId: 9134e2866f71427abf00241681624586
+                      time: 2021-03-02T17:28:51.882Z
+                      comment: Comentário do reembolso
         '400':
           description: An error message
           content:
@@ -1646,6 +1651,7 @@ paths:
               transactionEndToEndId: 9134e286-6f71-427a-bf00-241681624586
               correlationID: 9134e286-6f71-427a-bf00-241681624586
               value: 100
+              comment: Comentário do reembolso
       responses:
         '200':
           description: The created Refund
@@ -1663,6 +1669,7 @@ paths:
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     refundId: 9134e2866f71427abf00241681624586
                     time: 2021-03-02T17:28:51.882Z
+                    comment: Comentário do reembolso
         '400':
           description: An error message
           content:
@@ -2634,6 +2641,9 @@ components:
         time:
           type: string
           description: Time of this refund
+        comment:
+          type: string
+          description: Comment of this refund
     ChargeRefundPayload:
       type: object
       properties:
@@ -2643,6 +2653,10 @@ components:
         value:
           type: number
           description: Value in cents for this refund
+        comment:
+          type: string
+          description: Comment for this refund. Maximum length of 140 characters.
+          maximum: 140
       required:
         - correlationID
     Customer:
@@ -2969,6 +2983,9 @@ components:
         time:
           type: string
           description: Time of this refund
+        comment:
+          type: string
+          description: Comment of this refund
     RefundPayload:
       type: object
       properties:
@@ -2980,6 +2997,10 @@ components:
         correlationID:
           type: string
           description: Your correlation ID, unique identifier refund
+        comment:
+          type: string
+          description: Comment of this refund. Maximum length of 140 characters.
+          maximum: 140
     Subscription:
       type: object
       properties:

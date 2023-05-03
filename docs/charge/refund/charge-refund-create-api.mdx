@@ -22,6 +22,7 @@ Como parte do `body` da requisição, esperamos o envio dos seguintes itens:
 O body também aceita outros campos **opcionais**:
 
 - **`value`**: O valor em centavos do reembolso a ser criado. Se não informado será usado o valor total da cobrança ou o valor restante da cobrança que ainda não foi reembolsado.
+- **`comment`**: O comentário do reembolso a ser criado. Não deve ser maior que 140 caracteres.
 
 ## Exemplo
 
@@ -31,6 +32,7 @@ O body da sua requisição será semelhante a este exemplo:
 {
   "correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb",
   "value": 100,
+  "comment": "Comentário do reembolso"
 }
 ```
 
@@ -45,7 +47,8 @@ Retornarmeros a seguinte resposta de exemplo:
     "value": 100
     "correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb"
     "endToEndId": "E23114447202304181826HJNwY577YDX"
-    "time": "2023-03-02T17:28:51.882Z"
+    "time": "2023-03-02T17:28:51.882Z",
+    "comment": "Comentário do reembolso"
   }
 }
 ```
@@ -62,7 +65,7 @@ Retornarmeros a seguinte resposta de exemplo:
      --url https://api.openpix.com.br/api/v1/charge/{correlationID}/refund \
      --header 'Authorization: AUTHORIZATION' \
      --header 'content-type: application/json' \
-     --data '{"correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb","value": 100}'
+     --data '{"correlationID": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb","value": 100,"comment": "Comentário do reembolso"}'
 ```
 
 ```mdx-code-block
@@ -76,6 +79,7 @@ fetch('https://api.openpix.com.br/api/v1/charge/{correlationID}/refund', {
   body: JSON.stringify({
     correlationID: 'aafee9f5-94b3-4e3d-ab6a-416d0a1218cb',
     value: 100,
+    comment: "Comentário do reembolso"
   }),
   headers: {
     Authorization: 'AUTHORIZATION',
