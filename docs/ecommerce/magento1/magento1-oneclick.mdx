@@ -1,45 +1,54 @@
 ---
-id: magento1-plugin
-title: Integrando a OpenPix com Magento1
-sidebar_label: Magento1 OpenPix Plugin
+id: magento1-oneclick
+title: Integrando a OpenPix com Magento1 Em Um Clique
+sidebar_label: Magento1 OpenPix Um Clique
 tags:
   - magento1
   - ecommerce
 ---
+
 import Magento1Download from './__components__/magento1-download.mdx'
 
-### Plugin Pix para Magento1
+## Plugin Pix para Magento1
 
 ## Resumo
 
-Este documento detalha passos necessários para conectar a sua plataforma de e-Commerce, baseada no Magento1, na OpenPix. A plataforma OpenPix efetua em tempo real a conciliação entre seu Banco e seu e-Commerce.
-Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real com QrCodes Pix, enviar Links de Pagamento, gerenciar cobranças incluindo extornos.
+Este documento detalha passos necessários para conectar a sua plataforma de e-Commerce, baseada no Magento1, na OpenPix.
 
-> _Nota: Este documento espera que você já tenha um ambiente Magento1 ativo._
+:::caution Atenção
+Este documento espera que você já tenha um ambiente Magento1 ativo, e uma conta criada na OpenPix
+:::
 
-## 1. Instale o Plugin OpenPix na sua instância Magento1
+:::tip Dica
+Para utilizar este tutorial é necessário ter uma versão acima da 1.4.0
+:::
+
+## Configurando o Plugin Magento1
+
+### 1. Instale o Plugin OpenPix na sua instância Magento1
 
 <Magento1Download/>
 
-## 2. Configurando o Plugin Magento1
+### 2. Acesse a configuração do Magento1
 
-Entre em Magento1 Admin -> System > Configuration > Sales (side menu) > Payment Methods
+Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/magento1/add/oneclick) ou vá em `API/Plugins` > `Magento1` > `Adicionar`
 
-![sales_pay_method.png](/img/ecommerce/magento1/sales_pay_method.png)
+![Tutorial-box](./__assets__/magento1-tutorial-box.png)
 
-Ao acessar `Payment Methods` você irá notar o Collapsible `OpenPix - Pix`
+### 2.1 Coloque o Link do seu site
 
-![openpix_pay_tab.png](/img/ecommerce/magento1/openpix_pay_tab.png)
+Coloque a URL do seu site no campo
 
-- __App ID__ Insira o AppID ou Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/api-getting-started.md)
-- __Webhook Authorization__ Crie uma senha para a integração do Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
-  - Lembre-se: A URL a ser utilizada no webhook deverá ser: `https://yourstore/openpix/webhook` no momento em que cadastrá-lo na plataforma OpenPix
-  - Lembre-se: A chave que você utilizar aqui deverá ser a mesma no momento em que cadastrá-la na plataforma OpenPix.
-  - Crie um Webhook [aqui](#3-crie-o-webhook-dentro-da-plataforma-openpix).
-- __Enabled__ Ativar/Desativar o plugin como método de pagamento
-- __Title__ Título do método de pagamento em sua loja Magento1
+![Oneclick-Input](./__assets__/magento1-oneclick-input.png)
 
-### 2.2 Configurando CPF/CNPJ para o Customer (opcional)
+### 2.2 Clique em salvar
+
+Clique no botão de salvar, e assim que tiver sucesso na sua integração você verá a seguinte mensagem:
+![Oneclick-Success](./__assets__/magento1-oneclick-success.png)
+
+## Configurações Avançadas
+
+### Configurando CPF/CNPJ para o Customer (opcional)
 
 Para salvar o cpf/cnpj do customer da order na sua cobrança OpenPix é necessário que seja ativado o campo `TaxVat` em sua loja Magento.
 
@@ -53,13 +62,13 @@ Em `Show Tax/VAT Number` selecione o valor required:
 
 A partir de agora os clientes terão que preencher esse campo com o CPF ou CNPJ e o mesmo será usado para salvar o cliente na plataforma OpenPix.
 
-### 2.3 Giftback
+### Giftback
 
 Importante lembrete sobre a feature de Giftback para magento 1. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
 
 > A versão minima do plugin Magento1 para consumir a feature giftback é a 1.2.5
 
-## 3. Crie o Webhook dentro da Plataforma OpenPix
+### Crie o Webhook dentro da Plataforma OpenPix
 
 Registre o Webhook que será responsável para atualizar sua loja Magento1 quando uma cobrança Pix for paga.
 
@@ -71,7 +80,7 @@ Para realizar o registro de um novo Webhook siga os passos abaixo:
 
 ![Webhook](/img/ecommerce/magento1/magento1-openpix-webhook.png)
 
-## 4. Realizar Pedido com Pix
+### Realizar Pedido com Pix
 
 Escolha a opção de pagar o pedido usando Pix
 
@@ -83,7 +92,7 @@ Pague o Pix usando o app do seu banco.
 
 Valide que o status do Pedido mudou após o pagamento
 
-## Expiração
+### Expiração
 
 A OpenPix ira cuidar da expiração da cobrança Pix. Entretanto, é preciso que seja configurado em sua loja magento a expiração da order pois o mesmo cuidará de todo o processo.
 
@@ -102,13 +111,13 @@ No magento você pode utilizar a lib abaixo ou alguma de sua preferência:
 - <https://meetanshi.com/magento-auto-cancel-order.html>
 :::
 
-## Atualizando o plugin
+### Atualizando o plugin
 
 Indicamos aos clientes OpenPix estar sempre atualizados com a última versão do plugin. Você pode identificar a mesma no step de instalação.
 
 Caso seu plugin esteja desatualizado basta seguir os passos do mesmo step de instalação e atualizar os arquivos do plugin em seu ecommerce.
 
-## Debug
+### Debug
 
 Para debugar o plugin OpenPix temos dois arquivos e você encontra ambos dentro de `var/log`:
 
