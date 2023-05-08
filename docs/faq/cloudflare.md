@@ -6,7 +6,7 @@ tags:
 - cloudflare
 ---
 
-### Não estou conseguindo cadastrar meu Webhook ?
+## Não estou conseguindo cadastrar meu Webhook
 
 - Crie uma regra de excessão de firewall
 - Se a regra não funcionar, desative a proteção antibots
@@ -15,9 +15,13 @@ tags:
 
 Exemplo de regra de excessão de firewall:
 
+### Acesse `Security > WAF` 
+
 ![CloudFlare Regra de firewall](/img/cloudflare/cloudflare_regra_firewall.png)
 
 ## Desabilitar Cloudflare Bot
+
+### Acesse `Security > Bots`
 
 A solução de antibot da Cloudflare pode bloquear os requests de Webhooks. 
 
