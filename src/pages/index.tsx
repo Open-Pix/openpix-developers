@@ -16,12 +16,13 @@ import { TbBrandCSharp, TbWebhook } from 'react-icons/tb';
 
 import Layout from '@theme/Layout';
 
-import styles from './index.module.css';
 import { CardLink } from '../components/Card/CardLink';
 import BotConversaIcon from '../icons/BotConversaIcon';
 import SocPanelIcon from '../icons/SocPanelIcon';
 import N8nIcon from '../icons/N8NIcon';
 import AssineOnlineIcon from '../icons/AssineOnlineIcon';
+
+import styles from './index.module.css';
 
 const links = [
   {
@@ -74,16 +75,16 @@ const cards = [
     content:
       'Pix para Magento1. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
-    docsTo: '/docs/ecommerce/magento1/magento1-plugin',
-    to: 'https://app.woovi.com/home/applications/magento1/add',
+    docsTo: '/docs/ecommerce/magento1/magento1-oneclick',
+    to: 'https://app.woovi.com/home/applications/magento1/add/oneclick',
   },
   {
     title: 'Plugin Magento2',
     content:
       'Pix para Magento2. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
-    docsTo: '/docs/ecommerce/magento2/magento2-plugin',
-    to: 'https://app.woovi.com/home/applications/magento2/add',
+    docsTo: '/docs/ecommerce/magento2/magento2-oneclick',
+    to: 'https://app.woovi.com/home/applications/magento2/add/oneclick',
   },
   {
     title: 'Plugin WooCommerce',
@@ -91,7 +92,7 @@ const cards = [
       'Pix para Woo. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <SiWoo color={'#945888'} size={30} />,
     docsTo: '/docs/ecommerce/woocommerce/woocommerce-plugin',
-    to: 'https://app.woovi.com/home/applications/woocommerce/add',
+    to: 'https://app.woovi.com/home/applications/woocommerce/add/oneclick',
   },
   {
     title: 'Plugin Javascript',
