@@ -91,7 +91,7 @@ const cards = [
     content:
       'Pix para Woo. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <SiWoo color={'#945888'} size={30} />,
-    docsTo: '/docs/ecommerce/woocommerce/woocommerce-plugin',
+    docsTo: '/docs/ecommerce/woocommerce/woocommerce-oneclick',
     to: 'https://app.woovi.com/home/applications/woocommerce/add/oneclick',
   },
   {
