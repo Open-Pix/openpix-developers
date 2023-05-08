@@ -3,6 +3,7 @@
   "collapsible": true,
   "collapsed": true,
   "className": "red",
+  "position": 0,
   "link": {
     "type": "generated-index",
     "title": "WooCommerce visão geral"
