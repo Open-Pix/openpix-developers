@@ -10,7 +10,16 @@ tags:
 
 import Magento2Download from './__components__/magento2-install.mdx'
 
-### Plugin Pix para Magento2
+## Plugin Pix para Magento2
+
+:::caution Atenção
+Este documento está depreciado, para acessar a documentação atualizada [clique aqui](/docs/ecommerce/magento2/magento2-oneclick)
+:::
+
+:::caution Atenção
+Este documento espera que você já tenha um ambiente Magento2 ativo, e uma conta criada na OpenPix
+Caso não tenha acesso à plataforma registre-se [aqui](https://app.openpix.com/register?src=magento2-docs)
+:::
 
 ## Resumo
 
