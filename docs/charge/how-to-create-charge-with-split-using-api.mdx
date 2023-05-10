@@ -13,10 +13,6 @@ import TabItem from '@theme/TabItem';
 Para a ultilização dessa funcionalidade é necessário possuir a funcionalidade BETA
 :::
 
-:::warning
-Essa é uma API BETA e esta sujeita a alterações
-:::
-
 Para criar uma cobrança Pix com split, você utiliza o _endpoint_ `/api/v1/charge` da API.
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
@@ -37,13 +33,13 @@ O body da sua requisição será semelhante a este exemplo:
   "value": 100,
   "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
   "splits": [
-    { "type": "ACCOUNT", "accountId": "account1-id", "percentage": 15 }
-    { "type": "ACCOUNT", "accountId": "account2-id", "percentage": 85 }
+    { "pixKey": "destinatario@openpix.com.br", "value": 15 },
+    { "pixKey": "2a33747b-1715-4f57-8b9d-4cb73c15b19b", "value": 30 }
   ]
 }
 ```
 
-A soma do campo `percentage` dos objetos dentro do array de `splits`, são em [basis points](https://developers.openpix.com.br/docs/concepts/basis-points), e sua soma deve ser equivalente a **100**.
+O valor do campo `value` dentro do objeto no array de `splits`, é o valor desejado para a realização do split em **centavos**. O valor restante continuará na conta de origem da cobrança
 
 Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, além dos campos normais de cobrança criada, retornaremos os seguintes campos:
 
@@ -52,8 +48,8 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
   "charge": {
     ...Charge Payload
     "splits": [
-      { "type": "ACCOUNT", "accountId": "account1-id", "percentage": 15 }
-      { "type": "ACCOUNT", "accountId": "account2-id", "percentage": 85 }
+      { "pixKey": "destinatario@openpix.com.br", "value": 15 },
+      { "pixKey": "2a33747b-1715-4f57-8b9d-4cb73c15b19b", "value": 30 }
     ]
   },
   "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
@@ -73,7 +69,7 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
       -H "Accept: application/json" \
       -H "Content-Type: application/json" \
       -H "user-agent: node-fetch" \
-      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":1500, "splits": [{ "type": "ACCOUNT", "accountId": "account1-id", "percentage": 15 }, { "type": "ACCOUNT", "accountId": "account2-id", "percentage": 85 }]}'
+      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":100, "splits": [{ "pixKey": "destinatario@openpix.com.br", "value": 15 }, { "pixKey": "2a33747b-1715-4f57-8b9d-4cb73c15b19b", "value": 30 }]}'
 ```
 
 ```mdx-code-block
@@ -88,8 +84,8 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
     value: 100,
     correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
     splits: [
-      { type: 'ACCOUNT', accountId: 'account1-id', percentage: 15 },
-      { type: 'ACCOUNT', accountId: 'account2-id', percentage: 15 },
+      { pixKey: 'destinatario@openpix.com.br', value: 15 },
+      { pixKey: '2a33747b-1715-4f57-8b9d-4cb73c15b19b', value: 30 },
     ],
   }),
   headers: {
