@@ -10,7 +10,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-Para a ultilização dessa funcionalidade é necessário estar participando do programa de BETA
+Para a ultilização dessa funcionalidade é necessário possuir a funcionalidade BETA
 :::
 
 :::warning
@@ -37,40 +37,23 @@ O body da sua requisição será semelhante a este exemplo:
   "value": 100,
   "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
   "splits": [
-    { "type": "ACCOUNT", "accountId": "my-account-id", "percentage": 15 }
+    { "type": "ACCOUNT", "accountId": "account1-id", "percentage": 15 }
+    { "type": "ACCOUNT", "accountId": "account2-id", "percentage": 85 }
   ]
 }
 ```
 
-Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos a cobrança criada.
+A soma do campo `percentage` dos objetos dentro do array de `splits`, são em [basis points](https://developers.openpix.com.br/docs/concepts/basis-points), e sua soma deve ser equivalente a **100**.
 
-Retornarmeros a seguinte resposta de exemplo:
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, além dos campos normais de cobrança criada, retornaremos os seguintes campos:
 
 ```json
 {
   "charge": {
-    "customer": null,
-    "value": 100,
-    "identifier": "3be7e75c-52f5-4e81-b52e-8231b2df5f5e",
-    "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
-    "paymentLinkID": "c3eea3ac-3ef6-4ab0-bfeb-5d2d505f9647",
-    "transactionID": "8b524c72-0660-4ff1-8c01-9e5801bfc6d1",
-    "status": "ACTIVE",
-    "giftbackAppliedValue": 0,
-    "discount": 0,
-    "valueWithDiscount": 1500,
-    "expiresDate": "2023-02-25T20:09:06.141Z",
-    "type": "DYNAMIC",
-    "createdAt": "2023-02-24T20:09:06.141Z",
-    "additionalInfo": [],
-    "updatedAt": "2023-02-24T20:09:14.165Z",
-    "expiresIn": 86400,
-    "pixKey": "my_pix_key@openpix.com",
-    "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/011Q0PuArnNb5VzolFm8H9X0A7yQb5Ayi6wZ2Koj6RX52040000530398654043.335802BR5911Krusty_Krab6009Sao_Paulo62290525cac964d74db74c479add4eabc63047932",
-    "paymentLinkUrl": "http://url.com/pay/c3eea3ac-3ef6-4ab0-bfeb-5d2d505f9647",
-    "qrCodeImage": "http://url.com/openpix/charge/brcode/image/image-name.png",
+    ...Charge Payload
     "splits": [
-      { "type": "ACCOUNT", "accountId": "my-account-id", "percentage": 15 }
+      { "type": "ACCOUNT", "accountId": "account1-id", "percentage": 15 }
+      { "type": "ACCOUNT", "accountId": "account2-id", "percentage": 85 }
     ]
   },
   "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
@@ -90,7 +73,7 @@ Retornarmeros a seguinte resposta de exemplo:
       -H "Accept: application/json" \
       -H "Content-Type: application/json" \
       -H "user-agent: node-fetch" \
-      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":1500, "splits": [{ "type": "ACCOUNT", "accountId": "my-account-id", "percentage": 15 }]}'
+      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":1500, "splits": [{ "type": "ACCOUNT", "accountId": "account1-id", "percentage": 15 }, { "type": "ACCOUNT", "accountId": "account2-id", "percentage": 85 }]}'
 ```
 
 ```mdx-code-block
@@ -104,7 +87,10 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
   body: JSON.stringify({
     value: 100,
     correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
-    splits: [{ type: 'ACCOUNT', accountId: 'my-account-id', percentage: 15 }],
+    splits: [
+      { type: 'ACCOUNT', accountId: 'account1-id', percentage: 15 },
+      { type: 'ACCOUNT', accountId: 'account2-id', percentage: 15 },
+    ],
   }),
   headers: {
     Authorization: 'AUTHORIZATION',
