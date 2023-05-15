@@ -1,9 +1,11 @@
 ---
-id: flow-company-bank-test
-title: Testando Pix sem dinheiro real
+id: test-company-account
+title: Conta Bancária de Teste
 tags:
 - test
 ---
+
+## Conta Bancária de Teste
 
 Para gerar novas cobranças na OpenPix, você precisa criar sua conta virtual.
 
@@ -29,13 +31,24 @@ Depois disso, você pode criar uma nova Cobrança e escanear o QRCode usando a c
 
 Para promover seu ambiente de testes para produção, você precisa ter sua conta virtual aprovada.
 
-### Como limpar os dados de testes
-
 1. Acesse a [listagem de API's](https://app.openpix.com/home/applications/tab/list) e escolha qual você deseja promover para produção
 2. Dentro dos detalhes da API, selecione a conta bancária atrelada desejada
 ![Select_account](__assets__/select_account.png)
 
 ## Dúvidas frequentes
 
-- O QRCode não é um BRCode EMV válido, mas uma url que simula o pagamento
-- Para pagar utilizando a conta bancária de teste, veja essa [documentação](pay-pix-test.md)
+<details>
+  <summary>Não Consigo Scanear o QRcode de teste</summary>
+  <div>
+    <div>O QRCode não é um BRCode EMV válido, portanto você não consegue scanear em seu banco</div>
+    <br/>
+  </div>
+</details>
+
+<details>
+  <summary>Como pagar um QRCode de teste?</summary>
+  <div>
+    <div>Para pagar um QRCode de teste você precisa acessar o detalhe da cobrança, e clicar em simular pagamento</div>
+    <br/>
+  </div>
+</details>
