@@ -15,7 +15,7 @@ Exemplo:
 
 E também copiar o código do seu AppID, você irá encontrá-lo em `menu Administrador > API/Plugins`, clicar em seu respectivo `API/Plugin` criado e copiar o `AppID` no detalhe da aplicação.
 
-Mais infomações sobre o AppID aqui: https://developers.openpix.com.br/docs/plugin/app-id/
+Mais infomações sobre o AppID aqui: <https://developers.openpix.com.br/docs/plugin/app-id/>
 
 Exemplo:
 
