@@ -501,7 +501,9 @@ paths:
           required: false
           schema:
             type: boolean
-          example: true
+          examples:
+            return_existing:
+              value: true
       description: Endpoint to create a new Charge for a customer
       requestBody:
         description: Data to create a new charge
@@ -510,22 +512,58 @@ paths:
           application/json:
             schema:
               type: object
-            example:
-              correlationID: 9134e286-6f71-427a-bf00-241681624587
-              value: 100
-              comment: good
-              customer:
-                name: Dan
-                taxID: '31324227036'
-                email: email0@example.com
-                phone: '5511999999999'
-              additionalInfo:
-                - key: Product
-                  value: Pencil
-                - key: Invoice
-                  value: '18476'
-                - key: Order
-                  value: '302'
+              $ref: '#/components/schemas/ChargePayload'
+            examples:
+              Charge:
+                value:
+                  correlationID: 9134e286-6f71-427a-bf00-241681624587
+                  value: 100
+                  comment: good
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                  additionalInfo:
+                    - key: Product
+                      value: Pencil
+                    - key: Invoice
+                      value: '18476'
+                    - key: Order
+                      value: '302'
+              Charge with Interests and Fines:
+                value:
+                  type: OVERDUE
+                  correlationID: 9134e286-6f71-427a-bf00-241681624587
+                  value: 100
+                  comment: good
+                  daysForDueDate: 5
+                  daysAfterDueDate: 5
+                  interests:
+                    value: 10
+                  fines:
+                    value: 20
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                    address:
+                      zipcode: '30421322'
+                      street: Street
+                      number: '100'
+                      neighborhood: Neighborhood
+                      city: Belo Horizonte
+                      state: MG
+                      complement: APTO
+                      country: BR
+                  additionalInfo:
+                    - key: Product
+                      value: Pencil
+                    - key: Invoice
+                      value: '18476'
+                    - key: Order
+                      value: '302'
       responses:
         '200':
           description:
