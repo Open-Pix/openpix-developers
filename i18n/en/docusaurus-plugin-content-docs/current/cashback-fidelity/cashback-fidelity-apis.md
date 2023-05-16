@@ -14,7 +14,7 @@ Para dar cashback para um cliente via API, você utiliza o _endpoint_ `/api/v1/c
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/cashback-fidelity/paths/~1api~1v1~1cashback-fidelity/post)
 a documentação referente a esse _endpoint_.
 
-Os campos obrigatórios para dar um cashback são os sequintes:
+Os campos obrigatórios para dar um cashback são os seguintes:
 
 - **`value`**: O valor em centavos do cashback.
 - **`taxID`**: TaxID (CPF/CNPJ) do client.
