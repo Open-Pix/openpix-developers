@@ -41,7 +41,7 @@ Você pode solicitar o saque manual a qualquer momento, nesse caso, se a solicit
 O saque automático é grátis para valores iguais ou maiores do que R$ 500 e é realizado todo dia as 19h.
 
 :::info
-O valor mínimo de saque é configurado nos ajustes da conta transactional dentro da plataforma. Por padrão esse valor é de R$ 500,00. Valores abaixo de R$ 500,00 terão uma taxa de saque cobrada.
+O valor mínimo de saque é configurado nos ajustes da conta transactional dentro da plataforma. Por padrão esse valor é de R$ 500,00. Saques acima R$ 500,00 são gratuitos.
 :::
 
 ### Quais os limites de saque?
