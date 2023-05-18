@@ -36,9 +36,13 @@ Todo saldo gerado pelas cobranças é depositado de maneira automática, todos o
 Você pode solicitar o saque manual a qualquer momento, nesse caso, se a solicitação de saque for inferior a R$ 1.000,00 será cobrada uma taxa de R$ 1,00 por saque.
 
 ### Saque automático
+![Saque automatico config exemplo](https://github.com/Open-Pix/openpix-developers/assets/19939822/570639e4-a5b3-41b2-9986-249a1d0f8104)
 
-O saque automático é grátis e só é realizado se o saldo disponível for igual ou maior do que R$ 1.000,00.
-E é sempre realizado às 19h do dia.
+O saque automático é grátis para valores iguais ou maiores do que R$ 500 e é realizado todo dia as 19h.
+
+:::info
+O valor mínimo de saque é configurado nos ajustes da conta transactional dentro da plataforma. Por padrão esse valor é de R$ 500,00. Valores abaixo de R$ 500,00 terão uma taxa de saque cobrada.
+:::
 
 ### Quais os limites de saque?
 
