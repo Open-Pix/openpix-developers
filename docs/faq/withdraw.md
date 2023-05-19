@@ -19,29 +19,29 @@ Os saques da plataforma são instantâneos pelo Pix. 24 horas por dia, 7 dias po
 
 ### Como fazer um saque?
 
-1 - Na plataforma, clique no menu `Contas`;
+1 - Na plataforma, clique no menu `Saques/Pagamentos`;
 
-![Menu Accounts](/img/FAQ/accounts-menu.png)
+![Screenshot 2023-05-19 at 11 31 38](https://github.com/Open-Pix/openpix-developers/assets/48911345/0015cc73-caf9-47cf-b009-93e1e54a2039)
 
-2 - Selecionar a conta virtual OpenPix;
+2 - Clique no botão **Sacar** localizado no canto superior direito;
 
-![Openix Account](/img/FAQ/account-openpix.png)
+![Screenshot 2023-05-19 at 11 35 14](https://github.com/Open-Pix/openpix-developers/assets/48911345/d72c46cc-0a3b-4a86-a130-965fbdb0abb2)
 
 3- Clique no botão `Sacar`;
 
-![Withdraw](/img/FAQ/withdraw-modal.png)
+![Screenshot 2023-05-19 at 11 38 15](https://github.com/Open-Pix/openpix-developers/assets/48911345/da4ad6e7-1cb2-45d7-a47f-d31868480be5)
 
-Todo saldo gerado pelas cobranças é depositado de maneira automática, todos os dias às 19h, na conta bancária vinculada a Chave Pix do seu CNPJ.
+Todo saldo gerado pelas cobranças é depositado de maneira automática, todos os dias às 19h, na conta bancária vinculada a Chave Pix do seu CNPJ, assim que o valor mínimo para saque for atingido.
 
-Você pode solicitar o saque manual a qualquer momento, nesse caso, se a solicitação de saque for inferior a R$ 1.000,00 será cobrada uma taxa de R$ 1,00 por saque.
+Você pode solicitar o saque manual a qualquer momento, nesse caso, se a solicitação de saque for inferior a R$500,00 será cobrada uma taxa de R$ 1,00 por saque.
 
 ### Saque automático
 ![Saque automatico config exemplo](https://github.com/Open-Pix/openpix-developers/assets/19939822/570639e4-a5b3-41b2-9986-249a1d0f8104)
 
-O saque automático é grátis para valores iguais ou maiores do que R$ 500 e é realizado todo dia as 19h.
+O saque automático é gratuito para valores iguais ou maiores do que R$500 e é realizado todo dia às 19h.
 
 :::info
-O valor mínimo de saque é configurado nos ajustes da conta transactional dentro da plataforma. Por padrão esse valor é de R$ 500,00. Saques acima R$ 500,00 são gratuitos.
+O valor mínimo de saque é configurado nos ajustes da conta dentro da plataforma. Por padrão, esse valor é de R$ 500,00. Saques acima R$ 500,00 são gratuitos.
 :::
 
 ### Quais os limites de saque?
