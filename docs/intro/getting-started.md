@@ -1,6 +1,6 @@
 ---
 id: getting-started
-title: Configure a plataforma OpenPix
+title: Usando a plataforma OpenPix
 sidebar_label: Começando
 tags:
 - flow
@@ -10,11 +10,13 @@ tags:
 
 A plataforma OpenPix foi criada para facilitar a experiência do programador, garantindo ao mesmo tempo o mais alto nível de segurança. Esta documentação ajuda os programadores ou administradores dos sistemas a configurar corretamente a plataforma.
 
+A plataforma OpenPix foi desenvolvida com o objetivo de simplificar e gerenciar totalmente geração, cobrança, liquidação e conciliação em tempo real de pagamentos instantâneos usando Pix. Proporcionando ao mesmo tempo ótima experiência de programção atentendo requisitos de máximos de segurança. Esta documentação visa auxiliar os programadores e administradores de sistemas na configuração adequada da plataforma, especialmente em relação ao método de pagamento Pix.
+
 *Utilizar métodos automatizados tais como Single-Sign-On e APIs são preferenciais, uma vez que proporcionam uma melhor experiência ao usuário, aumentam a segurança e automatizam os processos.*
 
 ## Começando
 
-Uma vez registrado na plataforma, você será capaz de convidar mais usuários para a plataforma, configurar métodos de login como single-sign-on, APIs ou mesmo importar usuários utilizando arquivos Excel. 
+Uma vez registrado na plataforma, você será capaz de convidar mais usuários para a plataforma, configurar métodos de login, gerar cobranças, enviar cobranças em lote, usar APIs, integrações ou mesmo importar usuários utilizando arquivos Excel. 
 
 ## Configurando o Single Sign-On (SSO)
 
