@@ -38,16 +38,19 @@ Se a sua empresa utiliza SAML, poderá entrar automaticamente no OpenPix SAML Se
 
 A fim de operar corretamente os usuários da sua empresa precisam ter acesso aos servidores da OpenPix. A OpenPix utiliza tecnologias web padrão e aplica a encriptação em todas as comunicações, na maioria dos casos a sua configuração deve funcionar fora da caixa, sem requisitos adicionais.
 
-Se você se deparar com problemas utilizando a plataforma, por favor verifique os seguintes requisitos.
+Se você se deparar com problemas utilizando a plataforma, por favor verifique os seguintes requisitos:
 
-- Certifique-se de que possui uma lista de domínios permitidos da OpenPix no seu servidor proxy, ou firewall interno. Os seus utilizadores devem poder acessar a todos os domínios e subdomínios.
+- Certifique-se que os domínios da OpenPix estão liberados seu servidor proxy ou firewall. Além disso seus clientes também devem ter poder acessar todos os domínios e subdomínios.
   
-  > Tem que listar todos os domínios permitidos da OpenPix *.openpix.com.br
+  > Permitir todo tráfego para OpenPix *.openpix.com.br 
+  > Permitir todo tráfego para OpenPix *.openpix.com
 
 - Certifique-se de que não está bloqueando os e-mails do domínio da OpenPix.
   
-  > Tem que listar todos os domínios permitidos da Openpix *.openpix.com.br em seu fornecedor de e-mail
+  > Permitir emails da Openpix *.openpix.com.br em seu fornecedor de e-mail
+  > Permitir emails da Openpix *.openpix.com em seu fornecedor de e-mail
   
 - Não armazenar em cache
 
-    > Não alterar ou impor novas políticas de cache para conteúdo estático OpenPix ou endereço IP. OpenPix utiliza uma rede CDN global e proteções adicionais de servidor para que os IPs mudem frequentemente e sem aviso prévio.
+    > Não alterar ou impor novas políticas de cache para conteúdo estático OpenPix ou endereço IP. 
+    > OpenPix utiliza uma rede CDN global e proteções adicionais de servidor para que os IPs mudem frequentemente e sem aviso prévio.
