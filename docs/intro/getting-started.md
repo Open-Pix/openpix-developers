@@ -8,8 +8,6 @@ tags:
 - comecando
 ---
 
-A plataforma OpenPix foi criada para facilitar a experiência do programador, garantindo ao mesmo tempo o mais alto nível de segurança. Esta documentação ajuda os programadores ou administradores dos sistemas a configurar corretamente a plataforma.
-
 A plataforma OpenPix foi desenvolvida com o objetivo de simplificar e gerenciar totalmente geração, cobrança, liquidação e conciliação em tempo real de pagamentos instantâneos usando Pix. Proporcionando ao mesmo tempo ótima experiência de programção atentendo requisitos de máximos de segurança. Esta documentação visa auxiliar os programadores e administradores de sistemas na configuração adequada da plataforma, especialmente em relação ao método de pagamento Pix.
 
 *Utilizar métodos automatizados tais como Single-Sign-On e APIs são preferenciais, uma vez que proporcionam uma melhor experiência ao usuário, aumentam a segurança e automatizam os processos.*
