@@ -11,7 +11,7 @@ import {
   FaPython,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
-import { SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
+import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
 import { TbBrandCSharp, TbWebhook } from 'react-icons/tb';
 
 import Layout from '@theme/Layout';
@@ -93,6 +93,14 @@ const cards = [
     icon: <SiWoo color={'#945888'} size={30} />,
     docsTo: '/docs/ecommerce/woocommerce/woocommerce-oneclick',
     to: 'https://app.woovi.com/home/applications/woocommerce/add/oneclick',
+  },
+  {
+    title: 'Plugin VTEX',
+    content:
+      'Pix para VTEX. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
+    icon: <SiVtex color={'#ff3464'} size={30} />,
+    docsTo: '/docs/ecommerce/vtex/vtex-integrating',
+    to: 'https://app.woovi.com/home/applications/vtex/add',
   },
   {
     title: 'Plugin Javascript',
