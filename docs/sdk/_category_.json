@@ -1,0 +1,12 @@
+{
+  "label": "SDKs",
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "SDKs visão geral"
+  },
+  "customProps": {
+    "description": "Visão geral de todas as SDKs"
+  }
+}
