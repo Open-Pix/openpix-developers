@@ -745,6 +745,7 @@ Chame o método `list` no recurso de webhooks que irá retornar um paginador com
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/webhook/paths/~1api~1v1~1webhook/get).
 
 ```php
+// É possível passar uma string opcional com uma URL para filtrar todos os webhooks
 $paginator = $client->webhooks()->list("https://example.com");
 
 $remainingWebhooks = 10;
