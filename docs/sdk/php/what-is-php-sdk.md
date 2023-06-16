@@ -19,3 +19,5 @@ Utilizando o nosso paginador integrado, é fácil criar paginações para listag
 [PhpDocs](https://www.phpdoc.org/) estão em todas as classes e métodos para facilitar a utilização de nosso SDK pelo seu editor favorito, como PhpStorm e Visual Studio Code.
 
 O SDK é mantido oficialmente pela OpenPix e distribuído pelo [Packagist e Composer](https://getcomposer.org/).
+
+O código está num [repositório do GitHub](https://github.com/Open-Pix/php-sdk).
