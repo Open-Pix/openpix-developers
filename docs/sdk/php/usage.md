@@ -1,6 +1,6 @@
 ---
-id: usage
-title: Como iniciar
+id: sdk-php-usage
+title: Como começar
 tags:
   - api
   - php
@@ -10,23 +10,13 @@ tags:
 
 É necessário ter o PHP com versão superior à 7.4 instalado com o [Composer](https://getcomposer.org).
 
-A maneira mais fácil de instalar o SDK é com o comando abaixo que instala as dependências necessárias com o Composer:
+Execute o comando abaixo que instala as dependências necessárias com o Composer:
 
 ```bash
 $ composer require open-pix/php-sdk guzzlehttp/guzzle guzzlehttp/psr7
 ```
 
 Dessa forma, o SDK, um cliente HTTP (`guzzlehttp/guzzle`) e uma implementação da [PSR-17](https://www.php-fig.org/psr/psr-17/) (`guzzlehttp/psr7`) serão instalados.
-
-## Dependências
-
-O SDK depende de implementações das PSRs 17 e [18](https://www.php-fig.org/psr/psr-18/).
-
-A PSR-17 é usada para fornecer interfaces para mensagens HTTP, tanto requisições quanto respostas. Por outro lado, a PSR-18 é usada para fornecer interfaces para clientes HTTP.
-
-Sendo interfaces, é necessário ter uma implementação instalada, como `guzzlehttp/guzzle` para a PSR-18 e `guzzlehttp/psr7` para a PSR-17.
-
-As PSRs são utilizadas para não depender diretamente de clientes HTTP, deixado a cargo do desenvolvedor.
 
 ## Criando o cliente
 
@@ -39,7 +29,7 @@ use OpenPix\PhpSdk\Client;
 $client = Client::create("coloque seu appid aqui");
 ```
 
-O método `create` cria um novo cliente a partir de um ID de aplicativo obtido no [site da OpenPix](https://app.wooopenpix.com.br/home/applications/tab/list).
+O método `create` cria um novo cliente a partir de um ID de aplicativo obtido no [site da OpenPix](https://app.openpix.com.br/home/applications/tab/list).
 
 ## Chamando a API
 
@@ -53,13 +43,15 @@ Cada recurso irá ter um conjunto de métodos que podem serem executados para re
 
 ```php
 // Cria um cliente.
-$result = $client->customers()->create([
+$dadosCliente = [
     "name" => "Dan", // Nome
-    "taxID" => "31324227036", // TaxID
+    "taxID" => "31324227036", // CPF
     "email" => "email0@example.com", // E-mail
     "phone" => "5511999999999", // Telefone
     "correlationID" => "9134e286-6f71-427a-bf00-241681624586", // ID de correlação
-]);
+];
+
+$result = $client->customers()->create($dadosCliente);
 ```
 
 ## Operações em recursos
@@ -77,16 +69,19 @@ No caso de operações de listagem ou de criação, os argumentos de entradas s�
 
 ```php
 // Cria uma assinatura.
-$client->subscriptions()->create([
-    "value" => 100,
+$assinatura = [
+    "value" => 100, // Valor
     "customer" => [
-        "name" => "Dan",
-        "taxID" => "31324227036",
-        "email" => "email0@example.com",
-        "phone" => "5511999999999",
+        "name" => "Dan", // Nome
+        "taxID" => "31324227036", // CPF
+        "email" => "email0@example.com", // Email
+        "phone" => "5511999999999", // Telefone
     ],
+    // Dia do mês em que as cobranças serão geradas. Máximo de 27.
     "dayGenerateCharge" => 15,
-]);
+];
+
+$client->subscriptions()->create($assinatura);
 ```
 
 Argumentos simples como strings e inteiros são utilizados no caso de operações de obtenção de apenas um recurso ou remoção.
@@ -219,9 +214,9 @@ echo $page["customers"][0]["name"];
 
 ## PHPDocs
 
-Em cada operação disponível para um determinado tipo de recurso, existem PHPDocs disponíveis informando o formato de entrada e saída da operação com um link para a documentação da API Rest e exemplo de utilização.
+Em cada operação disponível para um determinado tipo de recurso, existem [PHPDocs](https://docs.phpdoc.org/guide/getting-started/what-is-a-docblock.html) disponíveis informando o formato de entrada e saída da operação com um link para a documentação da API Rest e exemplo de utilização.
 
-Para utilizar, é sugerido utilizar um editor com Intellisense como PhpStorm ou Visual Studio Code com a extensão Intelephense.
+Para utilizar, é sugerido utilizar um editor com Intellisense como [PhpStorm](https://www.jetbrains.com/pt-br/phpstorm/) ou [Visual Studio Code](https://code.visualstudio.com/) com a extensão [Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client).
 
 Também é possível consultar a documentação no site da OpenPix caso haja dúvidas.
 
@@ -236,3 +231,13 @@ Os seguintes recursos estão disponíveis no `Client`:
 - `$client->payments()`: Operações em solicitações de pagamentos.
 - `$client->transactions()`: Operações em transações.
 - `$client->webhooks()`: Operações em webhooks.
+
+## Dependências
+
+O SDK depende de implementações das PSRs 17 e [18](https://www.php-fig.org/psr/psr-18/).
+
+A PSR-17 é usada para fornecer interfaces para mensagens HTTP, tanto requisições quanto respostas. Por outro lado, a PSR-18 é usada para fornecer interfaces para clientes HTTP.
+
+Sendo interfaces, é necessário ter uma implementação instalada, como `guzzlehttp/guzzle` para a PSR-18 e `guzzlehttp/psr7` para a PSR-17.
+
+As PSRs são utilizadas para não depender diretamente de clientes HTTP, deixado a cargo do desenvolvedor.
