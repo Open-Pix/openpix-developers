@@ -99,7 +99,7 @@ foreach ($paginator as $result) {
 
 ## Cobranças
 
-O recurso de cobranças é acesso chamando o método `charges` no cliente da API.
+O recurso de cobranças é acessado chamando o método `charges` no cliente da API.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/charge).
 
@@ -241,5 +241,97 @@ $result = $client->charges()->getQrCodeImageLink($paymentLinkID, $size);
  * Exemplo de resultado:
  *
  * $result = "https://api.openpix.com.br/openpix/charge/brcode/image/7777-6f71-427a-bf00-241681624586.png?size=1024";
+ */
+```
+
+## Assinaturas
+
+O recurso de assinaturas é acessado chamando o método `subscriptions` no cliente da API.
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/subscription).
+
+```php
+$client->subscriptions();
+```
+
+### Criar uma assinatura
+
+Crie uma assinatura chamando o método `create` no recurso de assinaturas:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post).
+
+```php
+$customer = [
+    "name" => "Dan (php-sdk)",
+    "taxID" => generateCPF(), // CPF
+    "email" => "php-sdk0@example.com",
+    "phone" => "5511999999999",
+    "correlationID" => "test-php-sdk-" . generateUUID(),
+];
+
+// Criar o cliente da assinatura.
+$client->customers()->create($customer);
+
+$subscription = [
+    "value" => 1000, // Valor da assinatura em centavos. (R$ 10,00)
+    "customer" => $customer, // Especificar o cliente da assinatura.
+
+    // Dia do mês em que as cobranças serão geradas. Máximo de 27.
+    // Padrão é 5.
+    "dayGenerateCharge" => 5,
+];
+
+$result = $client->subscriptions()->create($subscription);
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *     "subscription" => [
+ *         "globalID" => "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
+ *         "customer" => [
+ *             "name" => "Dan (php-sdk)",
+ *             "email" => "php-sdk0@example.com",
+ *             "phone" => "5511999999999",
+ *             "taxID" => [
+ *                 "taxID" => "00000000000",
+ *                 "type" => "BR:CPF",
+ *             ],
+ *         ],
+ *         "value" => 1000,
+ *         "dayGenerateCharge" => 5,
+ *     ],
+ * ];
+ */
+```
+
+### Obter uma assinatura
+
+Obtenha uma assinatura chamando o método `getOne` no recurso de assinaturas passando o ID:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/get).
+
+```php
+$result = $client->subscriptions()->getOne("ID da assinatura");
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *     "subscription" => [
+ *         "globalID" => "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
+ *         "customer" => [
+ *             "name" => "Dan",
+ *             "email" => "email0@example.com",
+ *             "phone" => "5511999999999",
+ *             "taxID" => [
+ *                 "taxID" => "31324227036",
+ *                 "type" => "BR:CPF",
+ *             ],
+ *         ],
+ *         "value" => 100,
+ *         "dayGenerateCharge" => 5,
+ *     ],
+ * ];
  */
 ```
