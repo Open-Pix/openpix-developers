@@ -1,5 +1,5 @@
 ---
-id: what-is-php-sdk
+id: sdk-php-what-is
 title: O que é o SDK de PHP?
 tags:
   - api
