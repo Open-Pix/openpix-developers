@@ -6,9 +6,9 @@ tags:
   - php
 ---
 
-O SDK de PHP é um kit de ferramentas criado com o objetivo de integrar facilmente os serviços da Woovi e OpenPix em suas aplicações PHP.
+O SDK de PHP é um kit de ferramentas criado com o objetivo de integrar facilmente os serviços da OpenPix em suas aplicações PHP.
 
-Para tanto, o SDK permite que utilize qualquer cliente HTTP compatível com [PSR-18](https://www.php-fig.org/psr/psr-18/), como [Guzzle](https://docs.guzzlephp.org/en/stable/) e [symfony/http-client](https://symfony.com/doc/current/http_client.html). Portanto, é possível utilizar qualquer plataforma de PHP, como Laravel e Symfony.
+Para tanto, o SDK permite que utilize qualquer cliente HTTP compatível com [PSR-18](https://www.php-fig.org/psr/psr-18/), como [Guzzle](https://docs.guzzlephp.org/en/stable/) e [symfony/http-client](https://symfony.com/doc/current/http_client.html). Portanto, é possível utilizar qualquer plataforma de PHP, como Laravel, Symfony. Para integrações customizadas é possível utilizar também em ecommerces, como Magento, WooCommerce, PrestaShop e etc.
 
 Permite criar assinaturas recorrentes, cobranças, solicitações de pagamentos, webhooks, bem como gerenciar outros dados da API.
 
@@ -18,4 +18,4 @@ Utilizando o nosso paginador integrado, é fácil criar paginações para listag
 
 [PhpDocs](https://www.phpdoc.org/) estão em todas as classes e métodos para facilitar a utilização de nosso SDK pelo seu editor favorito, como PhpStorm e Visual Studio Code.
 
-O SDK é mantido oficialmente pela Woovi e distribuído pelo [Packagist e Composer](https://getcomposer.org/).
+O SDK é mantido oficialmente pela OpenPix e distribuído pelo [Packagist e Composer](https://getcomposer.org/).
