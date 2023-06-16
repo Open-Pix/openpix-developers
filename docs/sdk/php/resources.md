@@ -178,7 +178,7 @@ $result = $client->charges()->getOne("coloque o ID da cobrança aqui");
 $result["charge"]["value"]; // Valor da cobrança.
 $result["charge"]["customer"]; // Cliente. Array.
 
-// mais campos...
+// e mais campos...
 ```
 
 ### Listar cobranças
@@ -408,7 +408,7 @@ $client->transactions()->getOne("ID da transação");
 
 ### Listar transações
 
-Chame o método `list` no recurso de transações:
+Chame o método `list` no recurso de transações passando parâmetros de consulta que irá retornar um paginador com transações:
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/transactions/paths/~1api~1v1~1transaction/get).
 
@@ -440,11 +440,134 @@ $remainingTransactions = 10;
 foreach ($paginator as $result) {
     foreach ($result["transactions"] as $transaction) {
         echo $transaction["value"] . "\n"; // Valor da transação.
-        // mais campos...
+        // e mais campos...
 
         $remainingTransactions--;
 
         if ($remainingTransactions == 0) break 2;
+    }
+}
+```
+
+## Pagamentos
+
+O recurso de pagamentos é acessado chamando o método `payments` no cliente da API.
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/payment).
+
+```php
+$client->payments();
+```
+
+### Criar pagamento
+
+Crie uma solicitação de pagamento chamando o método `create` no recurso de pagamentos.
+
+[Documentação do endpoint para mais detalhes](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post>).
+
+```php
+$payment = [
+    // Valor do pagamento solicitado em centavos.
+    "value" => 100,
+
+    // A chave pix onde pagamento deve ser enviado.
+    "destinationAlias" => "c4249323-b4ca-43f2-8139-8232aab09b93",
+
+    // O comentário que será enviado juntamente com o seu pagamento.
+    "comment" => "comentário",
+
+    // Um identificador exclusivo para o seu pagamento.
+    "correlationID" => "payment1",
+
+    // Um id opcional para a conta de origem do pagamento, caso não informado assumirá a conta padrão.
+    "sourceAccountId" => "my-source-account-id",
+];
+
+$result = $client->payments()->create($payment);
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *    "payment" => [
+ *        "value" => 100,
+ *        "status" => "CREATED",
+ *        "destinationAlias" => "c4249323-b4ca-43f2-8139-8232aab09b93",
+ *        "comment" => "payment comment",
+ *        "correlationID" => "payment1",
+ *        "sourceAccountId" => "my-source-account-id",
+ *    ],
+ *  ],
+ * ];
+ */
+```
+
+### Obtendo um pagamento
+
+Chame o método `getOne` no recurso de pagamentos para obter uma solicitação de pagamento a partir de um ID de pagamento ou correlationID.
+
+[Documentação do endpoint para mais detalhes](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1%7Bid%7D/get>).
+
+```php
+$paymentOrCorrelationID = "id";
+
+$result = $client->payments()->getOne($paymentOrCorrelationID);
+
+/**
+ * Exemplo de resultado.
+ *
+ * $result = [
+ *     "payment" => [
+ *         "value" => 100,
+ *         "status" => "CONFIRMED",
+ *         "destinationAlias" => "c4249323-b4ca-43f2-8139-8232aab09b93",
+ *         "comment" => "payment comment",
+ *         "correlationID" => "payment1",
+ *         "sourceAccountId" => "my-source-account-id",
+ *     ],
+ *     "transaction" => [
+ *         "value" => 100,
+ *         "endToEndId" => "transaction-end-to-end-id",
+ *         "time" => "2023-03-20T13:14:17.000Z",
+ *     ],
+ *     "destination" => [
+ *         "name" => "Dan",
+ *         "taxID" => "31324227036",
+ *         "pixKey" => "c4249323-b4ca-43f2-8139-8232aab09b93",
+ *         "bank" => "A Bank",
+ *         "branch" => "1",
+ *         "account" => "123456",
+ *     ],
+ * ];
+ */
+```
+
+### Listar pagamentos
+
+Chame o método `list` no recurso de pagamentos passando parâmetros de consulta que irá retornar um paginador com pagamentos:
+
+[Documentação do endpoint para mais detalhes](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/get>).
+
+```php
+$paginator = $client->payments()->list();
+
+$remainingPayments = 10;
+
+foreach ($paginator as $result) {
+    foreach ($result["payments"] as $payment) {
+        echo $payment["payment"]["value"] . "\n"; // Valor do pagamento
+
+        // A chave pix onde o pagamento deve ser enviado
+        echo $payment["payment"]["destinationAlias"] . "\n";
+
+        // correlationID para acompanhar este pagamento
+        echo $payment["payment"]["correlationID"] . "\n";
+
+        // e mais campos...
+
+        $remainingPayments--;
+
+        if ($remainingPayments == 0) break 2;
     }
 }
 ```
