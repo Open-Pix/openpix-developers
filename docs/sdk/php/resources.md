@@ -571,3 +571,111 @@ foreach ($paginator as $result) {
     }
 }
 ```
+
+## Refunds
+
+O recurso de reembolsos é acessado chamando o método `refunds` no cliente da API.
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund).
+
+```php
+$client->refunds();
+```
+
+### Criar um reembolso
+
+Crie um reembolso chamando o método `create` no recurso de reembolsos:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund/paths/~1api~1v1~1refund/post).
+
+```php
+$refund = [
+    // Seu ID de transação, ou ID `endToEnd`, para acompanhar este reembolso
+    "transactionEndToEndId" => "9134e286-6f71-427a-bf00-241681624586",
+
+    // Seu correlationID, identificador exclusivo para o reembolso
+    "correlationID" => "9134e286-6f71-427a-bf00-241681624586",
+
+    "value" => 100,
+
+    // Comentário deste reembolso. Comprimento máximo de 140 caracteres
+    "comment" => "Comentário do reembolso",
+];
+
+$result = $client->refunds()->create($refund);
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *     "refund" => [
+ *         "status" => "IN_PROCESSING",
+ *         "value" => 100,
+ *         "correlationID" => "9134e286-6f71-427a-bf00-241681624586",
+ *         "refundId" => "9134e2866f71427abf00241681624586",
+ *         "time" => "2021-03-02T17:28:51.882Z",
+ *         "comment" => "Comentário do reembolso",
+ *     ],
+ * ];
+ */
+```
+
+### Obter um reembolso
+
+Para obter um reembolso pelo ID de reembolso ou correlationID, chame o método `getOne`:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund/paths/~1api~1v1~1refund~1%7Bid%7D/get).
+
+```php
+$result = $client->refunds()->getOne("Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA==");
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *     "pixTransactionRefund" => [
+ *         "value" => 100,
+ *         "correlationID" => "7777-6f71-427a-bf00-241681624586",
+ *         "refundId" => "11bf5b37e0b842e08dcfdc8c4aefc000",
+ *         "returnIdentification" => "D09089356202108032000a543e325902",
+ *         "comment" => "Comentário do reembolso",
+ *     ],
+ * ];
+ */
+```
+
+### Listar reembolsos
+
+Chame o método `list` no recurso de reembolsos que irá retornar um paginador com reembolsos:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund/paths/~1api~1v1~1refund/get).
+
+```php
+$paginator = $client->refunds()->list();
+
+$remainingRefunds = 10;
+
+foreach ($paginator as $result) {
+    foreach ($result["refunds"] as $key => $refund) {
+        echo $refund["value"] . "\n";
+
+        // Hora do reembolso
+        echo $refund["time"] . "\n";
+
+        // Pode ser "IN_PROCESSING", "REFUNDED" ou "NOT_ACCOMPLISHED".
+        echo $refund["status"] . "\n";
+
+        // correlationID para acompanhar este reembolso
+        echo $refund["correlationID"] . "\n";
+
+        echo $refund["refundId"] . "\n";
+        echo $refund["returnIdentification"] . "\n";
+
+        $remainingRefunds--;
+
+        echo "-------------------------\n";
+
+        if ($remainingRefunds == 0) break 2;
+    }
+}
+```
