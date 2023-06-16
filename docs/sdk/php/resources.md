@@ -679,3 +679,101 @@ foreach ($paginator as $result) {
     }
 }
 ```
+
+## Webhooks
+
+O recurso de webhooks é acessado chamando o método `webhooks` no cliente da API.
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/webhook).
+
+```php
+$client->webhooks();
+```
+
+### Criar um webhook
+
+Crie um webhook chamando o método `create` no recurso de webhooks:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/webhook/paths/~1api~1v1~1webhook/post).
+
+```php
+$webhook = [
+    "webhook" => [
+        "name" => "webhookName (php-sdk)",
+
+        // Eventos disponíveis para registrar um webhook para ouvir. Se ninguém selecionar ninguém, o evento padrão será OPENPIX:TRANSACTION_RECEIVED.
+        // OPENPIX:CHARGE_CREATED - Nova cobrança criada.
+        // OPENPIX:CHARGE_COMPLETED - Cobrança concluída é quando uma cobrança é totalmente paga.
+        // OPENPIX:CHARGE_EXPIRED - Cobrança expirada é quando uma cobrança não foi totalmente paga e expirou.
+        // OPENPIX:TRANSACTION_RECEIVED - Nova transação PIX recebida.
+        // OPENPIX:TRANSACTION_REFUND_RECEIVED - Novo reembolso de transação PIX recebido ou reembolsado.
+        // OPENPIX:MOVEMENT_CONFIRMED - Pagamento confirmado é quando a transação do pix referente ao pagamento é confirmada.
+        // OPENPIX:MOVEMENT_FAILED - Falha no pagamento é quando o pagamento é aprovado e ocorre um erro.
+        // OPENPIX:MOVEMENT_REMOVED - O pagamento foi removido por um usuário.
+        "event" => "OPENPIX:CHARGE_CREATED",
+
+        "url" => "https://example.com",
+        "authorization" => "openpix-php-sdk",
+        "isActive" => true,
+    ],
+];
+
+$result = $client->webhooks()->create($webhook);
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *     "webhook" => [
+ *         "id" => "V2ViaG9vazo2MDNlYmUxZWRlYjkzNWU4NmQyMmNmMTg=",
+ *         "name" => "webhookName",
+ *         "url" => "https://mycompany.com.br/webhook",
+ *         "authorization" => "openpix",
+ *         "isActive" => true,
+ *         "event" => "OPENPIX:TRANSACTION_RECEIVED",
+ *         "createdAt" => "2021-03-02T22:29:10.720Z",
+ *         "updatedAt" => "2021-03-02T22:29:10.720Z",
+ *     ],
+ * ];
+ */
+```
+
+### Listar webhooks
+
+Chame o método `list` no recurso de webhooks que irá retornar um paginador com webhooks:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/webhook/paths/~1api~1v1~1webhook/get).
+
+```php
+$paginator = $client->webhooks()->list("https://example.com");
+
+$remainingWebhooks = 10;
+
+foreach ($paginator as $result) {
+    foreach ($result["webhooks"] as $key => $webhook) {
+        echo $webhook["id"] . "\n";
+        echo $webhook["name"] . "\n";
+        echo $webhook["event"] . "\n"; // Quando o webhook é disparado
+        echo $webhook["url"] . "\n";
+        echo $webhook["isActive"] . "\n";
+
+        // e mais campos...
+
+        $remainingWebhooks--;
+
+        echo "---------------------------\n";
+
+        if ($remainingWebhooks == 0) break 2;
+    }
+}
+```
+
+### Remover um webhook
+
+Para remover um webhook, chame o método `delete` no recurso de webhooks, passando o ID:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/webhook/paths/~1api~1v1~1webhook~1%7Bid%7D/delete).
+
+```php
+$client->webhooks()->delete("id do webhook");
+```
