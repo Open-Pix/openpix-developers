@@ -335,3 +335,116 @@ $result = $client->subscriptions()->getOne("ID da assinatura");
  * ];
  */
 ```
+
+## Transações
+
+O recurso de transações é acessado chamando o método `transactions` no cliente da API.
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/transaction).
+
+```php
+$client->transactions();
+```
+
+### Obtendo uma transação
+
+Para obter uma transação pelo ID da transação do OpenPix ou pelo `endToEndId` da transação do banco, é necessário chamar o método `getOne` no recurso de transações, passando o respectivo ID:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/transactions/paths/~1api~1v1~1transaction~1%7Bid%7D/get).
+
+```php
+$client->transactions()->getOne("ID da transação");
+
+/**
+ * Exemplo de resultado:
+ *
+ * $result = [
+ *     "transaction" => [
+ *         "customer" => [
+ *             "name" => "Dan",
+ *             "email" => "email0@example.com",
+ *             "phone" => "5511999999999",
+ *             "taxID" => [
+ *                 "taxID" => "31324227036",
+ *                 "type" => "BR:CPF",
+ *             ],
+ *             "correlationID" => "9134e286-6f71-427a-bf00-241681624586",
+ *         ],
+ *         "payer" => [
+ *             "name" => "Dan",
+ *             "email" => "email0@example.com",
+ *             "phone" => "5511999999999",
+ *             "taxID" => [
+ *                 "taxID" => "31324227036",
+ *                 "type" => "BR:CPF",
+ *             ],
+ *             "correlationID" => "9134e286-6f71-427a-bf00-241681624586",
+ *         ],
+ *         "charge" => [
+ *             "status" => "ACTIVE",
+ *             "customer" => "603f81fcc6bccc24326ffb43",
+ *             "correlationID" => "9134e286-6f71-427a-bf00-241681624586",
+ *             "createdAt" => "2021-03-03T12:33:00.546Z",
+ *             "updatedAt" => "2021-03-03T12:33:00.546Z",
+ *         ],
+ *         "withdraw" => [
+ *             "value" => 100,
+ *             "time" => "2021-03-03T12:33:00.536Z",
+ *             "infoPagador" => "payer info 1",
+ *             "endToEndId" => "E18236120202012032010s01345689XBY",
+ *             "createdAt" => "2021-03-03T12:33:00.546Z",
+ *         ],
+ *         "infoPagador" => "payer info 0",
+ *         "value" => 100,
+ *         "time" => "2021-03-03T12:33:00.536Z",
+ *         "transactionID" => "transactionID",
+ *         "type" => "PAYMENT",
+ *         "endToEndId" => "E18236120202012032010s0133872GZA",
+ *         "globalID" => "UGl4VHJhbnNhY3Rpb246NzE5MWYxYjAyMDQ2YmY1ZjUzZGNmYTBi",
+ *     ],
+ * ];
+ */
+```
+
+### Listar transações
+
+Chame o método `list` no recurso de transações:
+
+[Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/transactions/paths/~1api~1v1~1transaction/get).
+
+```php
+$paginator = $client->transactions()->list([
+    // Data de início usada na consulta. Em conformidade com RFC 3339. Opcional.
+    // Exemplo: 2023-01-01T00:00:00Z
+    "start" => (new DateTimeImmutable("2023-01-01", new DateTimeZone("UTC")))->format(DateTime::RFC3339),
+
+    // Data de término usada na consulta. Em conformidade com RFC 3339. Opcional.
+    // Exemplo: 2023-12-01T00:00:00Z
+    "end" => (new DateTimeImmutable("2023-12-01", new DateTimeZone("UTC")))->format(DateTime::RFC3339),
+
+    // Você pode utilizar o ID de cobrança, o correlationID ou o ID de transação de cobrança
+    // para obter uma lista de transações relacionadas a esta transação.
+    "charge" => "id aqui",
+
+    // Você pode usar o ID estático do QrCode, o correlationID ou o campo `identifier` do
+    // QrCode estático para obter uma lista de QrCode relacionados a esta transação.
+    "pixQrCode" => "id aqui",
+
+    // Você pode usar o ID ou `endToEndId` de uma transação de retirada
+    // para obter todas as transações relacionadas à retirada.
+    "withdrawal" => "id aqui",
+]);
+
+$remainingTransactions = 10;
+
+foreach ($paginator as $result) {
+    foreach ($result["transactions"] as $transaction) {
+        echo $transaction["value"] . "\n"; // Valor da transação.
+        // mais campos...
+
+        $remainingTransactions--;
+
+        if ($remainingTransactions == 0) break 2;
+    }
+}
+```
