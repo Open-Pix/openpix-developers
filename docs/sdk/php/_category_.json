@@ -1,0 +1,13 @@
+{
+  "label": "PHP",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "SDK de PHP"
+  },
+  "customProps": {
+    "description": "SDK de PHP da OpenPix"
+  }
+}
