@@ -778,3 +778,34 @@ Para remover um webhook, chame o método `delete` no recurso de webhooks, passan
 ```php
 $client->webhooks()->delete("id do webhook");
 ```
+
+### Validar um webhook
+
+Toda invocação de webhook em sua aplicação traz um cabeçalho HTTP chamado `x-webhook-signature`, que consiste na assinatura gerada utilizando a chave secreta da Woovi e o _payload_ (corpo da requisição HTTP) do webhook. Ao receber esse cabeçalho, você pode validar se a assinatura é válida e prosseguir com o fluxo do webhook.
+
+Exemplo do cabeçalho HTTP:
+
+```yaml
+x-webhook-signature: lL2nnXgmLFGgxJ8+jCDguqouU4ucrIxYJcU5SPrJFaNcJajTJHYVldqc/z4YFIjAjtPEALe699WosgPY08W7CLpidvtm06Qwa4YMB0l/DcTS93O91NdSH/adjugEKiOb76Zj/0jB8mqOmWCFYbweOBa17bssuEkd5Lw7Q5L314Y=
+```
+
+[Veja um payload de exemplo recebido numa invocação de um webhook](https://developers.openpix.com.br/docs/webhook/webhook-signature-validation#exemplo-de-valida%C3%A7%C3%A3o).
+
+Para validar a assinatura de uma chamada de webhook, utilize o método `isWebhookValid` no recurso de webhooks. Esse método retornará `true` se a assinatura fornecida junto com o payload for válida, ou `false` caso contrário.
+
+```php
+// Precisamos obter o corpo da requisição como uma string JSON
+// Para isto, podemos utilizar a função `file_get_contents`.
+// Exemplo de payload: '{ "charge": { "status": "COMPLETED", ... }, ... }'
+$payload = file_get_contents("php://input");
+
+// Também precisamos da assinatura
+// Podemos utilizar a função `getallheaders`.
+$signature = getallheaders()["x-webhook-signature"];
+
+if ($client->webhooks()->isWebhookValid($payload, $signature)) {
+    // Continue seu fluxo pro webhook...
+} else {
+    // Pare o fluxo do webhook, pois ele não é válido!
+}
+```
