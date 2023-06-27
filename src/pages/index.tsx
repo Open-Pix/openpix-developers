@@ -136,10 +136,10 @@ const cards = [
   },
   {
     title: 'PHP',
-    content: 'Criar cobranças Pix usando PHP',
+    content: 'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaPhp color={'#787cb5'} size={30} />,
     docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+      '/docs/category/php',
     to: 'https://app.woovi.com/home/applications/php/add',
   },
   {
