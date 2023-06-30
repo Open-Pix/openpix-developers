@@ -9,6 +9,7 @@ import {
   FaPhp,
   FaJava,
   FaPython,
+  FaWhatsapp
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
 import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
@@ -93,6 +94,14 @@ const cards = [
     icon: <SiWoo color={'#945888'} size={30} />,
     docsTo: '/docs/ecommerce/woocommerce/woocommerce-oneclick',
     to: 'https://app.woovi.com/home/applications/woocommerce/add/oneclick',
+  },
+  {
+    title: 'WhatsApp',
+    content:
+      'Envie cobranças Pix por WhatsApp para seus clientes.',
+    icon: <FaWhatsapp color='#25d366' size={30} />,
+    docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
+    to: 'https://app.woovi.com/home/applications/js/add',
   },
   {
     title: 'Plugin VTEX',
