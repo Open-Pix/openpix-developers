@@ -1,0 +1,13 @@
+{
+  "label": "WhatsApp",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "WhatsApp visão geral"
+  },
+  "customProps": {
+    "description": "WhatsApp documentação"
+  }
+}
