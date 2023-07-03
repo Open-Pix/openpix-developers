@@ -5,6 +5,7 @@ sidebar_position: 2
 tags:
   - api
   - php
+  - sdk
 ---
 
 ## Clientes

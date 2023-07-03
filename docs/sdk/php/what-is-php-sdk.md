@@ -5,6 +5,7 @@ sidebar_position: 0
 tags:
   - api
   - php
+  - sdk
 ---
 
 O SDK de PHP é um kit de ferramentas criado com o objetivo de integrar facilmente os serviços da OpenPix em suas aplicações PHP.

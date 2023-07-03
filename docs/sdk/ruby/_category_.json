@@ -1,0 +1,13 @@
+{
+  "label": "Ruby",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "SDK de Ruby"
+  },
+  "customProps": {
+    "description": "Ruby SDK da OpenPix"
+  }
+}

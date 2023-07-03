@@ -4,6 +4,7 @@ title: Requisições HTTP customizadas
 tags:
   - php
   - api
+  - sdk
 ---
 
 O SDK permite que seja enviado requisições customizadas para um cliente HTTP possivelmente customizado.
