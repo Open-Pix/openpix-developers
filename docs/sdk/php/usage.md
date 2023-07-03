@@ -1,6 +1,7 @@
 ---
 id: sdk-php-usage
 title: Como começar
+sidebar_position: 1
 tags:
   - api
   - php
