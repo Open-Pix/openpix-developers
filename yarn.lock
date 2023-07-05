@@ -8011,10 +8011,10 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-embed@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/react-embed/-/react-embed-3.6.0.tgz#1fe2c4c96ee0ffec5f7acc948ca02d89942b0c74"
-  integrity sha512-sSiAIix6jQEvspitGG34l1L/VkZhVN/tugk/0h1EVTpIDDVUauXs/yGjc1NRPM1bH40CJaKjbaESehBzcc33CQ==
+react-embed@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-embed/-/react-embed-3.7.0.tgz#2c385cae46f501275bd834bd8da387e26f0cb27e"
+  integrity sha512-Mqaje4PB28vGiGLqq7S8Qey8j4rlQeXvTOTduoEmSRN6zmS5fDUwO/Oz0utuMhSoY9lgdInT61bho/lwFihYkA==
   dependencies:
     p4-css "^1.5.1"
     react-instagram-embed "^1.5.0"
