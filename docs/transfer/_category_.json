@@ -1,0 +1,13 @@
+{
+  "label": "Transferência",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Transferência visão geral"
+  },
+  "customProps": {
+    "description": "Transferência documentação"
+  }
+}
