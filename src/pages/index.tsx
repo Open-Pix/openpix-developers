@@ -13,17 +13,18 @@ import {
   FaOpencart,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
-import { SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
+import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
 import { TbBrandCSharp, TbWebhook } from 'react-icons/tb';
 
 import Layout from '@theme/Layout';
 
-import styles from './index.module.css';
 import { CardLink } from '../components/Card/CardLink';
 import BotConversaIcon from '../icons/BotConversaIcon';
 import SocPanelIcon from '../icons/SocPanelIcon';
 import N8nIcon from '../icons/N8NIcon';
 import AssineOnlineIcon from '../icons/AssineOnlineIcon';
+
+import styles from './index.module.css';
 
 const links = [
   {
@@ -33,19 +34,19 @@ const links = [
   },
   {
     title: 'E-commerces',
-    description: 'Integre a Woovi com o seu e-commerce',
+    description: 'Integre a OpenPix com o seu e-commerce',
     href: '/docs/category/e-commerce',
   },
   {
     title: 'Integrações',
     description:
-      'Integre a Woovi com as suas necessidades - WhatsApp, Telegram, Discord, etc',
+      'Integre a OpenPix com as suas necessidades - WhatsApp, Telegram, Discord, etc',
     href: '/docs/category/integra%C3%A7%C3%B5es',
   },
   {
     title: 'API',
     description:
-      'Para você que quer integrar a Woovi diretamente, fornecemos nossa API também',
+      'Para você que quer integrar a OpenPix diretamente, fornecemos nossa API também',
     href: '/api',
   },
 ];
@@ -76,31 +77,40 @@ const cards = [
     content:
       'Pix para Magento1. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
-    docsTo: '/docs/ecommerce/magento1/magento1-plugin',
-    to: 'https://app.woovi.com/home/applications/magento1/add',
+    docsTo: '/docs/ecommerce/magento1/magento1-oneclick',
+    to: 'https://app.woovi.com/home/applications/magento1/add/oneclick',
   },
   {
     title: 'Plugin Magento2',
     content:
       'Pix para Magento2. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
-    docsTo: '/docs/ecommerce/magento2/magento2-plugin',
-    to: 'https://app.woovi.com/home/applications/magento2/add',
+    docsTo: '/docs/ecommerce/magento2/magento2-oneclick',
+    to: 'https://app.woovi.com/home/applications/magento2/add/oneclick',
   },
   {
     title: 'Plugin WooCommerce',
     content:
       'Pix para Woo. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <SiWoo color={'#945888'} size={30} />,
-    docsTo: '/docs/ecommerce/woocommerce/woocommerce-plugin',
-    to: 'https://app.woovi.com/home/applications/woocommerce/add',
+    docsTo: '/docs/ecommerce/woocommerce/woocommerce-oneclick',
+    to: 'https://app.woovi.com/home/applications/woocommerce/add/oneclick',
   },
   {
     title: 'WhatsApp',
-    content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
-    icon: <FaWhatsapp color="#25d366" size={30} />,
+    content:
+      'Envie cobranças Pix por WhatsApp para seus clientes.',
+    icon: <FaWhatsapp color='#25d366' size={30} />,
     docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
     to: 'https://app.woovi.com/home/applications/js/add',
+  },
+  {
+    title: 'Plugin VTEX',
+    content:
+      'Pix para VTEX. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
+    icon: <SiVtex color={'#ff3464'} size={30} />,
+    docsTo: '/docs/ecommerce/vtex/vtex-integrating',
+    to: 'https://app.woovi.com/home/applications/vtex/add',
   },
   {
     title: 'Plugin Javascript',
@@ -123,7 +133,7 @@ const cards = [
     content:
       'Pix para Oracle. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <GrOracle color={'#ed3237'} size={30} />,
-    docsTo: 'https://woovi.com/ecommerce/oracle-commerce-cloud/',
+    docsTo: 'https://openpix.com.br/ecommerce/oracle-commerce-cloud',
     to: 'https://app.woovi.com/home/applications/oracle/add',
   },
   {
@@ -136,10 +146,10 @@ const cards = [
   },
   {
     title: 'PHP',
-    content: 'Criar cobranças Pix usando PHP',
+    content: 'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaPhp color={'#787cb5'} size={30} />,
     docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+      '/docs/category/php',
     to: 'https://app.woovi.com/home/applications/php/add',
   },
   {
@@ -202,12 +212,12 @@ const cards = [
     content:
       'Plug-in de integração n8n.io. Crie Pix e ouça eventos Pix diretamente em seus projetos n8n.',
     icon: <N8nIcon size={30} />,
-    docsTo: '/docs/integrations/n8n-with-woovi',
+    docsTo: '/docs/integrations/n8n-with-openpix',
   },
   {
     title: 'Assine Online',
     content:
-      'Assine Online. Crie Pix e envie um documento personalizado com dados da Woovi.',
+      'Assine Online. Crie Pix e envie um documento personalizado com dados da Openpix.',
     icon: <AssineOnlineIcon color={'#353535'} size={30} />,
     docsTo: '/docs/integrations/assine-online-with-woovi',
   },
@@ -223,8 +233,7 @@ const cards = [
     content:
       'SocPanel. Crie Pix e integre com o SocPanel para receber pagamentos via Pix.',
     icon: <SocPanelIcon size={30} />,
-    docsTo:
-      'https://developers.openpix.com.br/docs/integrations/socpanel-openpix',
+    docsTo: '/docs/integrations/socpanel-openpix',
   },
   {
     title: 'OpenCart',
