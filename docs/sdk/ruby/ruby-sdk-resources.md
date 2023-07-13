@@ -8,74 +8,203 @@ tags:
 - sdk
 ---
 
-### Usando os recursos
-`Openpix::RubySdk::Client` tem acesso a todos os recursos disponíveis por meio de um método de acesso com o nome do recurso no plural
-Ex: Charge -> client.charges (retorna a classe de recurso de cobrança com todos os métodos disponíveis)
+## Lista de recursos disponíveis
+
+### Charges
 ```ruby
-# Criando a Cobrança
-client.charges.init_body(
-  params: {
-    correlation_id: 'my-correlation-id',
-    value: 50000
-  }
-)
+require 'openpix/ruby_sdk'
+
+app_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+client = Openpix::RubySdk::Client.new(app_id)
+
+# Listar Charges
+response = client.charges.fetch(skip: 0, limit: 10)
+
+# Buscar próxima página
+response = client.charges.fetch_next_page!
+
+# Buscar página anterior
+response = client.charges.fetch_previous_page!
+
+# Criar um Charge
+charge_params = {
+  correlation_id: 'my-correlation-id',
+  value: 50000
+}
+# inicializar o body
+client.charges.init_body(params: charge_params)
+# faz o request para criar o recurso
 response = client.charges.save
-response.success? # should yield true
-response.resource_response # API response for this resource, example bellow \/
-# {
-#   "status" => "ACTIVE",
-#   "value" => 100,
-#   "comment" => "good",
-#   "correlationID" => "9134e286-6f71-427a-bf00-241681624586",
-#   ... and so on
-# }
 
-# Listando Cobranças
-# Default skip is 0 and limit is 100
-response = client.charges.fetch(skip: 0, limit: 100) # skip and limit are pagination params, https://developers.woovi.com/api#tag/charge/paths/~1api~1v1~1charge/get
-response.pagination_meta # holds information about pagination, like total, hasNextPage and so on
-response.resource_response # API response for this resource, should be an array
+# Metodos auxiliares para ajudar a construir body de criaçao
+# adicionar additional_info
+key = "minha-chave#123"
+value = "valor desejado"
+client.charges.add_additional_info(key, value)
 
-# If next or previous pages available, there is a convenience method to fetch next or previous pages
-# In order to call those methods, you need first to call #fetch or #fetch! to set the pagination params
-# Those methods will preserve any :params sent to #fetch or #fetch! method
-# BE CAREFUL, those methods only have bang! versions because they have a strong dependency on #fetch, handle properly their errors
-client.charges.fetch_next_page!
-client.charges.fetch_previous_page!
+# adicionar interests
+interest = 0.5
+client.charges.set_interests(interest)
 
-# Buscando Cobrança
-response = client.charges.find(id: 'my-charge-id')
-# response has same attributes from save, since it is a single resource response
+# adicionar fines
+fine = 0.2
+client.charges.set_fines(fine)
 
-# Deletando Cobrança
-response = client.charges.destroy(id: 'my-charge-id')
-response.success? # this operations just returns success
+# Buscar um Charge específico
+response = client.charges.find(id: "id-do-charge")
+
+# Deletar um Charge específico
+response = client.charges.destroy(id: "id-do-charge")
 ```
-### Available resources
-Os recursos disponiveis são:
-- Charge (charges)
-- Customer (customers)
-- Payment (payments)
-- Refund (refunds)
-- Subscription (subscriptions)
-- Webhook (webhooks)
-### Tratando erros
-- Todos os métodos de recursos disponíveis têm seu bang operator, que gera um erro sempre que algo dá errado para que você possa lidar adequadamente com esses casos.
-- Todos os erros têm alguma mensagem útil, mostrando o status da resposta e a resposta de erro da API.
 
-As classes de erro são:   
-**save!** -> `Openpix::RubySdk::Resources::RequestError`   
-**fetch!** -> `Openpix::RubySdk::Resources::RequestError`   
-**fetch_next_page!** -> `Openpix::RubySdk::Resources::RequestError`, `Openpix::RubySdk::Resources::NotFetchedError`, `Openpix::RubySdk::Resources::PageNotDefinedError`   
-**fetch_previous_page!** -> `Openpix::RubySdk::Resources::RequestError`, `Openpix::RubySdk::Resources::NotFetchedError`, `Openpix::RubySdk::Resources::PageNotDefinedError`   
-**find!** -> `Openpix::RubySdk::Resources::RequestError`   
-**destroy!** -> `Openpix::RubySdk::Resources::RequestError`
-
-Para a versão segura (sem bang operator) haverá um atributo `error_response` definido na resposta da API sempre que `success?` for falso.
+### Customer
 ```ruby
+require 'openpix/ruby_sdk'
+
+app_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+client = Openpix::RubySdk::Client.new(app_id)
+
+# Listar Customers
+response = client.customers.fetch(skip: 0, limit: 10)
+
+# Buscar próxima página
+response = client.customers.fetch_next_page!
+
+# Buscar página anterior
+response = client.customers.fetch_previous_page!
+
+# Criar um Customer
+customer_params = {
+  name: 'Client Name',
+  tax_id: 12306252832
+}
+# inicializar o body
+client.customers.init_body(params: customer_params)
+# faz o request para criar o recurso
 response = client.customers.save
 
-unless response.success?
-  response.error_response # error response from API
-end
+# Buscar um Customer específico
+response = client.customers.find(id: "id-do-customer")
+```
+
+### Payment
+```ruby
+require 'openpix/ruby_sdk'
+
+app_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+client = Openpix::RubySdk::Client.new(app_id)
+
+# Listar Payments
+response = client.payments.fetch(skip: 0, limit: 10)
+
+# Buscar próxima página
+response = client.payments.fetch_next_page!
+
+# Buscar página anterior
+response = client.payments.fetch_previous_page!
+
+# Criar um Payment
+payment_params = {
+  value: 100,
+  correlation_id: "my-correlation-id-123-!@#"
+}
+# inicializar o body
+client.payments.init_body(params: payment_params)
+# faz o request para criar o recurso
+response = client.payments.save
+
+# Buscar um Payment específico
+response = client.payments.find(id: "id-do-payment")
+```
+
+### Refund
+```ruby
+require 'openpix/ruby_sdk'
+
+app_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+client = Openpix::RubySdk::Client.new(app_id)
+
+# Listar Refunds
+response = client.refunds.fetch(skip: 0, limit: 10)
+
+# Buscar próxima página
+response = client.refunds.fetch_next_page!
+
+# Buscar página anterior
+response = client.refunds.fetch_previous_page!
+
+# Criar um Refund
+refund_params = {
+  value: 100,
+  correlation_id: "my-correlation-id-123-!@#",
+  transaction_end_to_end_id: "my-transaction-id-123-!@#"
+}
+# inicializar o body
+client.refunds.init_body(params: refund_params)
+# faz o request para criar o recurso
+response = client.refunds.save
+
+# Buscar um Refund específico
+response = client.refunds.find(id: "id-do-refund")
+```
+
+### Subscription
+```ruby
+require 'openpix/ruby_sdk'
+
+app_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+client = Openpix::RubySdk::Client.new(app_id)
+
+# Criar um Subscription
+subscription_params = {
+  client: {
+    name: "Cliente Legal",
+    tax_id: "123456"
+  },
+  value: 1234
+}
+# inicializar o body
+client.refunds.init_body(params: subscription_params)
+# faz o request para criar o recurso
+response = client.subscriptions.save
+
+# Buscar um Subscription específico
+response = client.subscriptions.find(id: "id-do-subscription")
+```
+
+### Webhooks
+```ruby
+require 'openpix/ruby_sdk'
+
+app_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+client = Openpix::RubySdk::Client.new(app_id)
+
+# Listar Webhooks
+response = client.webhooks.fetch(skip: 0, limit: 10)
+
+# Buscar próxima página
+response = client.webhooks.fetch_next_page!
+
+# Buscar página anterior
+response = client.webhooks.fetch_previous_page!
+
+# Criar um Webhook
+webhook_params = {
+  name: "nome do webhook",
+  event: "OPENPIX:CHARGE_CREATED",
+  url: "https://meu-endpoint/openpix/webhooks"
+}
+# inicializar o body
+client.webhooks.init_body(params: webhook_params)
+# faz o request para criar o recurso
+response = client.webhooks.save
+
+# Deletar um Webhook específico
+response = client.webhooks.destroy(id: "id-do-webhook")
 ```
