@@ -133,6 +133,25 @@ Ao confirmar a compra, o QR Code do Pix será exibido na página de sucesso, pro
 
 ## CPF/CNPJ
 
+O CPF/CNPJ utilizado nas cobranças do Pix pode ser obtido de duas formas:
+
+- Através dos _custom fields_ (campos personalizados) do OpenCart.
+- Ou diretamente durante o checkout.
+
+Os custom fields são uma funcionalidade do OpenCart que permitem adicionar campos adicionais nos dados dos clientes.
+
+Durante a instalação, a extensão configura automaticamente o custom field necessário para que os clientes possam inserir seu CPF/CNPJ durante o registro:
+
+![CPF/CNPJ durante o registro](/img/ecommerce/opencart/account-register-with-taxid.png)
+
+Caso deseje, é possível alterar o custom field utilizado ou até mesmo desativar essa configuração no painel de administração, selecionando a opção _None_ (Nenhum):
+
+![Configuração ou desativação do custom field](/img/ecommerce/opencart/admin-settings-custom-field.png)
+
+Se a extensão não puder encontrar um custom field, no checkout irá aparecer diretamente um campo para que o cliente possa inserir seu CPF ou CNPJ, logo acima do botão de confirmação do pedido:
+
+![Campo CPF/CNPJ durante o checkout](/img/ecommerce/opencart/checkout-custom-field.png)
+
 ## Como configurar os status dos pedidos
 
 ## Como visualizar os logs da sua loja
