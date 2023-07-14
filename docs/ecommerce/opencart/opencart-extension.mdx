@@ -88,9 +88,35 @@ Após isso, clique no botão azul com o ícone de um lápis para acessar a pági
 
 ## Configuração
 
-## CPF/CNPJ
+Após acessar a página de configurações da extensão, é necessário ativar a extensão no checkout pressionando o botão _Status_: 
+
+![Página de configurações com o botão _Status_](/img/ecommerce/opencart/admin-settings-status.png)
+
+Tendo habilitado o botão Status, _Pix_ deverá aparecer como método de pagamento no checkout.
+
+No entanto, é necessário integrar a extensão com a plataforma Woovi e isto pode ser feito adicionando a url de _webhook_ na plataforma.
+
+Para obter essa URL, vá até a página de configurações e copie ela:
+
+![Página de configurações com a url de webhook](/img/ecommerce/opencart/admin-settings-webhook.png)
+
+Entre na plataforma da Woovi e [clique aqui](https://app.woovi.com/home/applications/opencart/add/oneclick) ou vá em `API/Plugins` > `OpenCart` > `Adicionar`:
+
+![Botão de adicionar um plugin na plataforma Woovi](/img/ecommerce/opencart/woovi-plugin-card.png)
+
+Cole a URL de webhook no campo _Preencha a url do seu site_ e pressione o botão _Salvar_:
+
+![Formulário para adicionar uma integração na plataforma Woovi](/img/ecommerce/opencart/woovi-add-plugin-form.png)
+
+Após isto, verifique se o _AppID_, um código que identifica sua loja, se encontra na página de configurações:
+
+![Página de configurações com o AppID adicionado](/img/ecommerce/opencart/admin-settings-appid.png)
+
+Pronto, agora vamos aprender como utilizar o Pix no seu checkout.
 
 ## Como utilizar o Pix no checkout
+
+## CPF/CNPJ
 
 ## Como configurar os status dos pedidos
 
