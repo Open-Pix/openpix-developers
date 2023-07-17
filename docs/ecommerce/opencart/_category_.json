@@ -1,0 +1,13 @@
+{
+  "label": "OpenCart",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "OpenCart 4"
+  },
+  "customProps": {
+    "description": "Veja como integrar o Pix em sua loja OpenCart 4"
+  }
+}

@@ -9,7 +9,8 @@ import {
   FaPhp,
   FaJava,
   FaPython,
-  FaWhatsapp
+  FaWhatsapp,
+  FaOpencart,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
 import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
@@ -233,6 +234,14 @@ const cards = [
       'SocPanel. Crie Pix e integre com o SocPanel para receber pagamentos via Pix.',
     icon: <SocPanelIcon size={30} />,
     docsTo: '/docs/integrations/socpanel-openpix',
+  },
+  {
+    title: 'OpenCart',
+    content:
+      'Aumente suas vendas agora no OpenCart 4 recebendo pagamentos instantâneos com Pix!',
+    icon: <FaOpencart size={30} />,
+    docsTo: '/docs/ecommerce/opencart/opencart-extension',
+    to: 'https://app.woovi.com/home/applications/opencart/add',
   },
 ];
 
