@@ -1754,14 +1754,35 @@ paths:
             schema:
               type: object
               $ref: '#/components/schemas/SubscriptionPayload'
-            example:
-              value: 100
-              customer:
-                name: Dan
-                taxID: '31324227036'
-                email: email0@example.com
-                phone: '5511999999999'
-              dayGenerateCharge: 15
+            examples:
+              Subscription:
+                value:
+                  value: 100
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                  dayGenerateCharge: 15
+              Subscription with Interests and Fines:
+                value:
+                  value: 100
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                    address:
+                      zipcode: '30421322'
+                      street: Street
+                      number: '100'
+                      neighborhood: Neighborhood
+                      city: Belo Horizonte
+                      state: MG
+                      complement: APTO
+                      country: BR
+                  dayGenerateCharge: 15
+                  chargeType: OVERDUE
       responses:
         '200':
           description: The subscription created
@@ -3115,6 +3136,25 @@ components:
             taxID:
               type: string
               description: Customer taxID (CPF or CNPJ)
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
         value:
           type: number
           description: Value in cents of this subscription
