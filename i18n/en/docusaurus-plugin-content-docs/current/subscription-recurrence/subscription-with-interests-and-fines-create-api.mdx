@@ -1,0 +1,140 @@
+---
+id: subscription-with-interests-and-fines-create-api
+sidebar_position: 1
+title: How to Create a Subscription with interests and fines Using the API?
+tags:
+  - subscription
+  - cobv
+  - interests
+  - fines
+  - recurrence
+  - api
+---
+
+To create a new subscription with interests and fines using the API, you need to make a POST call to the `/api/v1/subscriptions` endpoint.
+
+You can access the documentation for this endpoint [here](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post).
+
+As part of the request `body`, we expect the following items to be sent:
+
+- **`value`**: The value of the subscription to be created, in cents.
+- **`customer`**: The customer of the subscription to be charged, along with their address. This field is [idempotent](../concepts/idempotence.md), which means that if you send data for a customer that already exists, we will use the existing customer instead of creating a new one.
+- **`chargeType`**: The type of charge you want to generate. In this case of interests and fines, you should specify the type `OVERDUE`.
+
+The `body` also accepts other **optional** fields:
+
+- **`dayGenerateCharge`**: The day of the month on which charges will be generated. It should be a value from 0 to 27.
+
+## Example
+
+The `body` of your request will look similar to this example:
+
+```json
+{
+  "value": 100,
+  "customer": {
+    "name": "Dan",
+    "taxID": "31324227036",
+    "email": "email0@example.com",
+    "phone": "5511999999999",
+    "address": {
+      "zipcode": "30421322",
+      "street": "Street",
+      "number": "100",
+      "neighborhood": "Neighborhood",
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "complement": "APTO",
+      "country": "BR"
+    }
+  },
+  "chargeType": "OVERDUE"
+}
+
+After making the request, if everything went well, the response's `status code` will be `2xx`, and in the response `body`, we will return the created subscription.
+
+We'll return the following example response:
+
+```json
+{
+  "subscription": {
+    "customer": {
+      "name": "Fernando Silva",
+      "email": "fernando@woovi.com",
+      "phone": "+5531988472275",
+      "taxID": { "taxID": "13225476617", "type": "BR:CPF" },
+      "correlationID": "1b112444-6530-46dd-934b-71d50d6c84bc",
+      "address": {
+        "zipcode": "30421322",
+        "street": "Street",
+        "number": "100",
+        "neighborhood": "Neighborhood",
+        "city": "Belo Horizonte",
+        "state": "MG",
+        "complement": "APTO",
+        "country": "BR",
+        "location": { "coordinates": [] },
+        "_id": "64b7d32db5a5555c9b750bc0"
+      }
+    },
+    "dayGenerateCharge": 5,
+    "value": 1500,
+    "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM="
+  }
+}
+```
+
+### Code Examples
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+ curl --request POST \
+     --url https://api.openpix.com.br/api/v1/subscriptions \
+     --header 'Authorization: AUTHORIZATION' \
+     --header 'content-type: application/json' \
+     --data '{"value": 100,"customer": {"name":"Dan","taxID":"31324227036","email":"email0@example.com","phone":"5511999999999", "address":{"zipcode":"30421322","street":"Street","number":"100","neighborhood":"Neighborhood","city":"Belo Horizonte","state":"MG","complement":"APTO","country":"BR"}},"chargeType":"OVERDUE"}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/subscriptions', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 100,
+    customer: {
+      name: 'Dan',
+      taxID: '31324227036',
+      email: 'email0@example.com',
+      phone: '5511999999999',
+      address: {
+        zipcode: '30421322',
+        street: 'Street',
+        number: '100',
+        neighborhood: 'Neighborhood',
+        city: 'Belo Horizonte',
+        state: 'MG',
+        complement: 'APTO',
+        country: 'BR',
+      },
+    },
+    chargeType: 'OVERDUE',
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
