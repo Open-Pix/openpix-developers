@@ -1,15 +1,17 @@
 ---
-id: subscription-with-cobv-create-api
+id: subscription-with-interests-and-fines-create-api
 sidebar_position: 1
-title: How to Create a Subscription with COBV Using the API?
+title: How to Create a Subscription with interests and fines Using the API?
 tags:
   - subscription
   - cobv
+  - interests
+  - fines
   - recurrence
   - api
 ---
 
-To create a new subscription with COBV (Charge Overdue Banking Billet) using the API, you need to make a POST call to the `/api/v1/subscriptions` endpoint.
+To create a new subscription with interests and fines using the API, you need to make a POST call to the `/api/v1/subscriptions` endpoint.
 
 You can access the documentation for this endpoint [here](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post).
 
@@ -17,7 +19,7 @@ As part of the request `body`, we expect the following items to be sent:
 
 - **`value`**: The value of the subscription to be created, in cents.
 - **`customer`**: The customer of the subscription to be charged, along with their address. This field is [idempotent](../concepts/idempotence.md), which means that if you send data for a customer that already exists, we will use the existing customer instead of creating a new one.
-- **`chargeType`**: The type of charge you want to generate. In this case of COBV, you should specify the type `OVERDUE`.
+- **`chargeType`**: The type of charge you want to generate. In this case of interests and fines, you should specify the type `OVERDUE`.
 
 The `body` also accepts other **optional** fields:
 

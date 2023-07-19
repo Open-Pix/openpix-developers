@@ -1,10 +1,14 @@
 ---
-id: subscription-with-cobv-create-api
+id: subscription-with-interests-and-fines-create-api
 sidebar_position: 1
-title: Como criar uma Assinatura com COBV usando a API?
+title: Como criar uma Assinatura com multa e juros usando a API?
 tags:
   - subscription
   - cobv
+  - interests
+  - fines
+  - multa
+  - juros
   - recurrence
   - api
 ---
@@ -12,7 +16,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Para criar uma nova assinatura com COBV usando a API, você deverá fazer uma chamada POST para o _endpoint_ `/api/v1/subscriptions`.
+Para criar uma nova assinatura com multa e juros usando a API, você deverá fazer uma chamada POST para o _endpoint_ `/api/v1/subscriptions`.
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post) a documentação referente a esse _endpoint_.
 
@@ -20,7 +24,7 @@ Como parte do `body` da requisição, esperamos o envio dos seguintes itens:
 
 - **`value`**: O valor em centavos da assinatura a ser criada.
 - **`customer`**: O cliente da assinatura a ser cobrado com o endereço. Este campo é [idempotente](../concepts/idempotence.md), o que significa que se você enviar dados de um cliente que já exista, utilizaremos o existente ao invés de criar um novo.
-- **`chargeType`**: O tipo da cobrança que você quer gerar. Nesse caso da COBV, você informa o tipo `OVERDUE`.
+- **`chargeType`**: O tipo da cobrança que você quer gerar. Nesse caso da multa e juros, você informa o tipo `OVERDUE`.
 
 O body também aceita outros campos **opcionais**:
 
