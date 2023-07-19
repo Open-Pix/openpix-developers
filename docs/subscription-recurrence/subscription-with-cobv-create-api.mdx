@@ -1,0 +1,142 @@
+---
+id: subscription-with-cobv-create-api
+sidebar_position: 1
+title: Como criar uma Assinatura com COBV usando a API?
+tags:
+  - subscription
+  - cobv
+  - recurrence
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para criar uma nova assinatura com COBV usando a API, você deverá fazer uma chamada POST para o _endpoint_ `/api/v1/subscriptions`.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post) a documentação referente a esse _endpoint_.
+
+Como parte do `body` da requisição, esperamos o envio dos seguintes itens:
+
+- **`value`**: O valor em centavos da assinatura a ser criada.
+- **`customer`**: O cliente da assinatura a ser cobrado com o endereço. Este campo é [idempotente](../concepts/idempotence.md), o que significa que se você enviar dados de um cliente que já exista, utilizaremos o existente ao invés de criar um novo.
+- **`chargeType`**: O tipo da cobrança que você quer gerar. Nesse caso da COBV, você informa o tipo `OVERDUE`.
+
+O body também aceita outros campos **opcionais**:
+
+- **`dayGenerateCharge`**: Dia do mês em que as cobranças serão geradas. Deve ser um valor de 0 a 27.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "value": 100,
+  "customer": {
+    "name": "Dan",
+    "taxID": "31324227036",
+    "email": "email0@example.com",
+    "phone": "5511999999999",
+    "address": {
+      "zipcode": "30421322",
+      "street": "Street",
+      "number": "100",
+      "neighborhood": "Neighborhood",
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "complement": "APTO",
+      "country": "BR"
+    }
+  },
+  "chargeType": "OVERDUE"
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, retornaremos a assinatura criada.
+
+Retornarmeros a seguinte resposta de exemplo:
+
+```json
+{
+  "subscription": {
+    "customer": {
+      "name": "Fernando Silva",
+      "email": "fernando@woovi.com",
+      "phone": "+5531988472275",
+      "taxID": { "taxID": "13225476617", "type": "BR:CPF" },
+      "correlationID": "1b112444-6530-46dd-934b-71d50d6c84bc",
+      "address": {
+        "zipcode": "30421322",
+        "street": "Street",
+        "number": "100",
+        "neighborhood": "Neighborhood",
+        "city": "Belo Horizonte",
+        "state": "MG",
+        "complement": "APTO",
+        "country": "BR",
+        "location": { "coordinates": [] },
+        "_id": "64b7d32db5a5555c9b750bc0"
+      }
+    },
+    "dayGenerateCharge": 5,
+    "value": 1500,
+    "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM="
+  }
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+ curl --request POST \
+     --url https://api.openpix.com.br/api/v1/subscriptions \
+     --header 'Authorization: AUTHORIZATION' \
+     --header 'content-type: application/json' \
+     --data '{"value": 100,"customer": {"name":"Dan","taxID":"31324227036","email":"email0@example.com","phone":"5511999999999", "address":{"zipcode":"30421322","street":"Street","number":"100","neighborhood":"Neighborhood","city":"Belo Horizonte","state":"MG","complement":"APTO","country":"BR"}},"chargeType":"OVERDUE"}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/subscriptions', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 100,
+    customer: {
+      name: 'Dan',
+      taxID: '31324227036',
+      email: 'email0@example.com',
+      phone: '5511999999999',
+      address: {
+        zipcode: '30421322',
+        street: 'Street',
+        number: '100',
+        neighborhood: 'Neighborhood',
+        city: 'Belo Horizonte',
+        state: 'MG',
+        complement: 'APTO',
+        country: 'BR',
+      },
+    },
+    chargeType: 'OVERDUE',
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
