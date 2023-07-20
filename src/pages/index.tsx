@@ -13,7 +13,7 @@ import {
   FaOpencart,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
-import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi } from 'react-icons/si';
+import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi, SiRuby } from 'react-icons/si';
 import { TbBrandCSharp, TbWebhook } from 'react-icons/tb';
 
 import Layout from '@theme/Layout';
@@ -151,6 +151,14 @@ const cards = [
     docsTo:
       '/docs/category/php',
     to: 'https://app.woovi.com/home/applications/php/add',
+  },
+  {
+    title: 'Ruby',
+    content: 'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    icon: <SiRuby color={'#CC342D'} size={30} />,
+    docsTo:
+      '/docs/category/ruby',
+    to: 'https://app.woovi.com/home/applications/ruby/add',
   },
   {
     title: 'Shell',
