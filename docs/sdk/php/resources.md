@@ -740,6 +740,62 @@ $result = $client->webhooks()->create($webhook);
  */
 ```
 
+### Como receber um webhook
+
+Quando ocorre um evento na API, como uma cobrança sendo paga, uma requisição é enviada para a URL configurada durante a criação do webhook. Essa requisição conterá um [_payload_](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Messages#corpo) (dados) em formato JSON, juntamente com um cabeçalho que precisa ser [validado](#validar-um-webhook).
+
+Para validar o webhook, é necessário ter a _exata_ string original do payload, o que pode ser realizado utilizando a função [`file_get_contents`](https://www.php.net/manual/pt_BR/function.file-get-contents.php) em conjunto com o _stream_ (fluxo) de entrada [`php://input`](https://www.php.net/manual/pt_BR/wrappers.php.php):
+
+```php
+// Obtém uma string "crua" contendo o payload enviado.
+$rawPayload = file_get_contents("php://input");
+```
+
+Também é possível utilizar um método específico do seu framework para obter a string do payload. Por exemplo, no Laravel e Symfony, você pode utilizar o método [`getContent`](https://symfony.com/doc/current/components/http_foundation.html#accessing-request-data):
+```php
+/** @var \Symfony\Component\HttpFoundation\Request $request */
+$rawPayload = $request->getContent();
+```
+
+Uma vez que o payload é obtido como uma string, é **essencial** [validar a assinatura](#validar-um-webhook).
+
+Após validar o payload, você poderá utilizar os dados contidos nele. Para isso, basta decodificar a string JSON usando a função [`json_decode`](https://www.php.net/manual/pt_BR/function.json-decode.php) ou, se preferir, utilizar o método específico do seu framework. Abaixo, segue um exemplo de um receptor de webhooks:
+
+```php
+namespace YourIntegration\Http;
+
+/**
+ * Webhook request example handler.
+ */
+class WebhookHandler
+{
+    const OPENPIX_CHARGE_COMPLETED = "OPENPIX:CHARGE_COMPLETED";
+
+    /**
+     * Handle an webhook request sent by API.
+     */
+    public function __invoke()
+    {
+        $rawPayload = file_get_contents("php://input", true);
+        $signature = getallheaders()["x-webhook-signature"] ?? "";
+
+        if (! $this->client->webhooks()->isWebhookValid($rawPayload, $signature)) {
+            http_response_code(400);
+            echo "Assinatura inválida\n";
+            return;
+        }
+
+        $payload = json_decode($rawPayload, true);
+
+        if ($payload["event"] === self::OPENPIX_CHARGE_COMPLETED) {
+            http_response_code(200);
+            echo "A cobrança foi paga totalmente!\n";
+            return;
+        }
+    }
+}
+```
+
 ### Listar webhooks
 
 Chame o método `list` no recurso de webhooks que irá retornar um paginador com webhooks:
