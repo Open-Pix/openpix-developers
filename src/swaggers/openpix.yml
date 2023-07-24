@@ -3158,6 +3158,9 @@ components:
         value:
           type: number
           description: Value in cents of this subscription
+        comment:
+          type: string
+          description: Comment to be added in infoPagador
         dayGenerateCharge:
           type: number
           description: Day of the month that the charges will be generated. Maximun of 27.
