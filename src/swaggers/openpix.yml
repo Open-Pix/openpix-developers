@@ -3161,6 +3161,18 @@ components:
         comment:
           type: string
           description: Comment to be added in infoPagador
+        additionalInfo:
+          description: Additional info of the charge
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                description: key of object
+                type: string
+              value:
+                description: value of object
+                type: string
         dayGenerateCharge:
           type: number
           description: Day of the month that the charges will be generated. Maximun of 27.
