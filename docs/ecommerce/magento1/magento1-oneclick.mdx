@@ -63,6 +63,24 @@ Em `Show Tax/VAT Number` selecione o valor required:
 
 A partir de agora os clientes terão que preencher esse campo com o CPF ou CNPJ e o mesmo será usado para salvar o cliente na plataforma OpenPix.
 
+### Parcelado
+
+É necessário o cliente informar seu endereço ao utilizar o método de pagamento Pix parcelado.
+
+Cada endereço precisa ter 4 linhas:
+  - rua
+  - número
+  - complemento
+  - bairro
+
+Para configurar a quantidade de linhas em cada endereço, acesse Magento1 Admin -> System > Configuration > Customers:
+
+![magento1-customer-sidemenu](/img/ecommerce/magento1/magento1-customer-sidemenu.png)
+
+Na seção `Name and Address options`, altere o campo _Number of Lines in a Street Address_ (Número de linhas em um endereço) para o valor 4:
+
+![magento1-address-options](/img/ecommerce/magento1/magento1-address-options.png)
+
 ### Giftback
 
 Importante lembrete sobre a feature de Giftback para magento 1. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
