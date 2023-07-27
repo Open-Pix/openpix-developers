@@ -1,0 +1,13 @@
+{
+  "label": "Java",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "orange",
+  "link": {
+    "type": "generated-index",
+    "title": "SDK de Java"
+  },
+  "customProps": {
+    "description": "Java SDK da OpenPix"
+  }
+}
