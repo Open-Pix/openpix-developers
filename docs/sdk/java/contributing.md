@@ -1,5 +1,5 @@
 ---
-id: ruby-sdk-contributing
+id: java-sdk-contributing
 title: Como contribuir com o SDK
 sidebar_position: 3
 tags:
