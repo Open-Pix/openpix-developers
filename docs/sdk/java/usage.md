@@ -154,55 +154,55 @@ Também é possível consultar a documentação no site da OpenPix caso haja dú
 
 Os seguintes recursos estão disponíveis no `Client`:
 
-- `Future<PixQrCodeResponse> getPixQrCodeAsync(...)`
+- `Future<PixQrCodeResponse> getPixQrCodeAsync(...)`: Obtém um Pix QR Code pelo ID.
 
-- `Future<PixQrCodeList> allPixQrCodesAsync(...)`
+- `Future<PixQrCodeList> allPixQrCodesAsync(...)`: Lista todos os Pix QR Codes.
 
-- `Future<PixQrCodeResponse> createPixQrCodeAsync(...)`
+- `Future<PixQrCodeResponse> createPixQrCodeAsync(...)`: Cria um Pix QR Code.
 
-- `Future<Account> getAccountAsync(...)`
+- `Future<Account> getAccountAsync(...)`: Obtém uma conta pelo ID.
 
-- `Future<AccountListResponse> allAccountsAsync(...)`
+- `Future<AccountListResponse> allAccountsAsync(...)`: Lista todas as contas.
 
-- `Future<WithdrawResponse> withdrawAsync(...)`
+- `Future<WithdrawResponse> withdrawAsync(...)`: Realiza um saque.
 
-- `Future<PaymentResponseObject> getPaymentAsync(...)`
+- `Future<PaymentResponseObject> getPaymentAsync(...)`: Obtém um pagamento pelo ID.
 
-- `Future<PaymentListResponse> allPaymentsAsync(...)`
+- `Future<PaymentListResponse> allPaymentsAsync(...)`: Lista todos os pagamentos.
 
-- `Future<PaymentResponseObject> createPaymentAsync(...)`
+- `Future<PaymentResponseObject> createPaymentAsync(...)`: Cria um pagamento.
 
-- `Future<ChargeDeleteResponse> deleteChargeAsync(...)`
+- `Future<ChargeDeleteResponse> deleteChargeAsync(...)`: Remove uma cobrança pelo ID.
 
-- `Future<ChargeResponse> getChargeAsync(...)`
+- `Future<ChargeResponse> getChargeAsync(...)`: Obtém uma cobrança pelo ID.
 
-- `Future<ChargeListResponse> chargesAsync(...)`
+- `Future<ChargeListResponse> chargesAsync(...)`: Lista todas as cobranças.
 
-- `Future<ChargeResponse> createChargeAsync(...)`
+- `Future<ChargeResponse> createChargeAsync(...)`: Cria uma cobrança.
 
-- `Future<File> chargeQrCodeImageAsync(...)`
+- `Future<File> chargeQrCodeImageAsync(...)`: Obtém a imagem de um QR Code de uma cobrança.
 
-- `Future<Customer> getCustomerAsync(...)`
+- `Future<Customer> getCustomerAsync(...)`: Obtém um cliente pelo ID.
 
-- `Future<CustomerListResponse> allCustomersAsync(...)`
+- `Future<CustomerListResponse> allCustomersAsync(...)`: Lista todos os clientes.
 
-- `Future<CustomerResponse> createCustomerAsync(...)`
+- `Future<CustomerResponse> createCustomerAsync(...)`: Cria um cliente.
 
-- `Future<RefundResponse> getRefundAsync(...)`
+- `Future<RefundResponse> getRefundAsync(...)`: Obtém um reembolso pelo ID.
 
-- `Future<RefundListResponse> allRefundsAsync(...)`
+- `Future<RefundListResponse> allRefundsAsync(...)`: Lista todos os reembolsos.
 
-- `Future<RefundResponse> createRefundAsync(...)`
+- `Future<RefundResponse> createRefundAsync(...)`: Cria um reembolso.
 
-- `Future<WebhookDeleteResponse> deleteWebhookAsync(...)`
+- `Future<WebhookDeleteResponse> deleteWebhookAsync(...)`: Remove um webhook pelo ID.
 
-- `Future<WebhookListResponse> allWebhooksAsync(...)`
+- `Future<WebhookListResponse> allWebhooksAsync(...)`: Lista todos os webhooks.
 
-- `Future<WebhookResponse> createWebhookAsync(...)`
+- `Future<WebhookResponse> createWebhookAsync(...)`: Cria um webhook.
 
-- `Future<TransactionResponse> getTransactionAsync(...)`
+- `Future<TransactionResponse> getTransactionAsync(...)`: Obtém uma transação pelo ID.
 
-- `Future<TransactionListResponse> transactionsAsync(...)`
+- `Future<TransactionListResponse> transactionsAsync(...)`: Lista todas as transações.
 
 ## Dependências
 
