@@ -1,0 +1,148 @@
+---
+id: how-to-create-charge-woovi-parcelado
+title: How to use the API to create a charge with OpenPix Parcelado?
+tags:
+   - concept
+   - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+In order to use this functionality, it is necessary to have the OpenPix Installment functionality. Request access via chat through the platform.
+:::
+
+To create a Pix charge with OpenPix Parcelado, you use the _endpoint_ `/api/v1/charge` of the API.
+
+You can access [here](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
+documentation for that _endpoint_.
+
+The mandatory fields to create a Pix charge with OpenPix Parcelado are the following:
+
+- **`value`**: The value in cents of the Pix charge to be created.
+- **`correlationID`**: A unique identifier for the Pix charge. [CorrelationID](../concepts/correlation-id)
+- **`type`**: The type of charge must be PIX_CREDIT
+- **`customer`**: It is mandatory that a customer be passed with: name, cpf/cnpj, email, telephone and full address
+
+## Example
+
+The body of your request will look like this example:
+
+```json
+{
+   "correlationID": "63c533c0-3bb2-4847-a568-e2270e99aad8",
+   "value": 1500,
+   "comment": "OpenPix Parcelado",
+   "type": "PIX_CREDIT",
+   "customer": {
+     "name": "Dan",
+     "taxID": "12345678900",
+     "phone": "+5519912345678",
+     "email": "test@openpix.com",
+     "address": {
+       "zipcode": "13142514",
+       "street": "OpenPix Street",
+       "number": "2019",
+       "neighborhood": "Home",
+       "city": "Sao Paulo",
+       "state": "SP",
+       "complement": "Brooklyn"
+     }
+   }
+}
+```
+
+After making the request, if everything went well, the _status code_ of the request will be `2xx` and in the `body` of the response, in addition to the normal charge fields created, with status `ACTIVE_WAITING_PAYMENT_METHOD`.
+
+## Rendering the charge
+
+For the flow to work completely after creating the charge with OpenPix Parcelado, it must be rendered using the same payment link or our Plugin Js.
+
+### Rendering Billing - Payment Link
+
+Rendering your OpenPix Parcelado charge with the payment link is the simplest way to complete the flow. Just take the `paymentLinkUrl` field and open it in a new browser tab.
+
+### Rendering the charge - Plugin Js
+
+You can find the docs on how to render it by clicking [here](/docs/plugin#come%C3%A7ando-com-o-plugin-de-order).
+
+Follow the steps below:
+
+1. Copy your correlationID
+2. Inject the js plugin according to the example below passing three fields:
+
+- **appID**: appID of your store, it is important that it be of the PLUGIN type. See how to create a Plugin type appID [here](/docs/apis/api-getting-started)
+- **correlationID**: correlationID of the charge
+- **node**: the node represents the node in your HTML that will receive our injected plugin. `<div id="openpix-order"></div> <!-- the node in this case is "openpix-order" -->`
+
+```html<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+   <meta charset="UTF-8" />
+   <title>OpenPix Plugin Demo</title>
+</head>
+
+<body>
+   <div id="openpix-order"></div> <!-- the node in this case is "openpix-order" -->
+   <script src="https://plugin.openpix.com.br/v1/openpix.js?appID=appID&correlationID=123&node=openpix-order"></script>
+</body>
+
+</html>
+```
+
+### Examples in code
+
+```mdx-code-block
+<Tabs>
+   <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+   curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
+       -H "Accept: application/json" \
+       -H "Content-Type: application/json" \
+       -H "user-agent: node-fetch" \
+       --data-binary '{"correlationID":"63c533c0-3bb2-4847-a568-e2270e99aad8","value":1500,"comment":"OpenPix Parcelado","type":"PIX_CREDIT","customer": {"name":"Dan ","taxID":"12345678900","phone":"+5519912345678","email":"test@openpix.com","address":{"zipcode":"13142514" ,"street":"OpenPix Street","number":"2019","neighborhood":"Casa","city":"Sao Paulo","state":"SP","complement":"Brooklin" }}}'
+```
+
+```mdx-code-block
+   </TabItem>
+   <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+   method: 'POST',
+   body: JSON.stringify({
+     value: 100,
+     correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+     type: 'PIX_CREDIT',
+     customer: {
+       name: 'Dan',
+       taxID: '12345678900',
+       phone: '+5519912345678',
+       email: 'test@openpix.com',
+       address: {
+         zipcode: '13142514',
+         street: 'OpenPix street',
+         number: '2019',
+         neighborhood: 'Home',
+         city: 'Sao Paulo',
+         state: 'SP',
+         complement: 'Brooklyn',
+       },
+     },
+   }),
+   headers: {
+     Authorization: 'appID',
+     'Content-Type': 'application/json',
+   },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+   </TabItem>
+</tabs>
+```
