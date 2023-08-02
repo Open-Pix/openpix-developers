@@ -1,0 +1,148 @@
+---
+id: how-to-create-charge-woovi-parcelado
+title: Como usar a API para criar uma cobrança com OpenPix Parcelado?
+tags:
+  - concept
+  - api
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a ultilização dessa funcionalidade é necessário possuir a funcionalidade OpenPix Parcelado. Solicite o acesso via chat pela plataforma.
+:::
+
+Para criar uma cobrança Pix com OpenPix Parcelado, você utiliza o _endpoint_ `/api/v1/charge` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar uma cobrança Pix com OpenPix Parcelado são os seguintes:
+
+- **`value`**: O valor em centavos da cobrança Pix a ser criado.
+- **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
+- **`type`**: O type da cobrança ser PIX_CREDIT
+- **`customer`**: É obrigatório que seja passado um cliente com: nome, cpf/cnpj, email, telefone e endereço completo
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "correlationID": "63c533c0-3bb2-4847-a568-e2270e99aad8",
+  "value": 1500,
+  "comment": "OpenPix Parcelado",
+  "type": "PIX_CREDIT",
+  "customer": {
+    "name": "Dan ",
+    "taxID": "12345678900",
+    "phone": "+5519912345678",
+    "email": "test@openpix.com",
+    "address": {
+      "zipcode": "13142514",
+      "street": "Rua OpenPix",
+      "number": "2019",
+      "neighborhood": "Casa",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "complement": "Brooklin"
+    }
+  }
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, além dos campos normais de cobrança criada, com status `ACTIVE_WAITING_PAYMENT_METHOD`.
+
+## Renderizando a cobrança
+
+Para que o fluxo funcione por completo após a crição da cobrança com OpenPix Parcelado é necessário que a mesma seja renderizada utilizando o link de pagamento da mesma ou o nosso Plugin Js.
+
+### Renderizando a cobrança - Link de Pagamento
+
+Renderizar sua cobrança OpenPix Parcelado com o link de pagamento é a forma mais simples de executar o fluxo por completo. Basta pegar o campo `paymentLinkUrl` e abrir em uma nova aba no navegador.
+
+### Renderizando a cobrança - Plugin Js
+
+Você encontra as docs sobre como renderiza-la clicando [aqui](/docs/plugin#come%C3%A7ando-com-o-plugin-de-order).
+
+Siga os steps abaixo:
+
+1. Copie o seu correlationID
+2. Injete o plugin js conforme o exemplo abaixo passando três campos:
+
+- **appID**: appID da sua loja, importante que o mesmo seja do tipo PLUGIN. Veja como criar um appID do tipo Plugin [aqui](/docs/apis/api-getting-started)
+- **correlationID**: correlationID da cobrança
+- **node**: o node representa o nó em seu HTML que ira receber nosso plugin injetado. `<div id="openpix-order"></div> <!-- o node nesse caso é "openpix-order" -->`
+
+```html<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Demo OpenPix Plugin</title>
+</head>
+
+<body>
+  <div id="openpix-order"></div> <!-- o node nesse caso é "openpix-order" -->
+  <script src="https://plugin.openpix.com.br/v1/openpix.js?appID=appID&correlationID=123&node=openpix-order"></script>
+</body>
+
+</html>
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{"correlationID":"63c533c0-3bb2-4847-a568-e2270e99aad8","value":1500,"comment":"OpenPix Parcelado","type":"PIX_CREDIT","customer":{"name":"Dan ","taxID":"12345678900","phone":"+5519912345678","email":"test@openpix.com","address":{"zipcode":"13142514","street":"Rua OpenPix","number":"2019","neighborhood":"Casa","city":"Sao Paulo","state":"SP","complement":"Brooklin"}}}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 100,
+    correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+    type: 'PIX_CREDIT',
+    customer: {
+      name: 'Dan ',
+      taxID: '12345678900',
+      phone: '+5519912345678',
+      email: 'test@openpix.com',
+      address: {
+        zipcode: '13142514',
+        street: 'Rua OpenPix',
+        number: '2019',
+        neighborhood: 'Casa',
+        city: 'Sao Paulo',
+        state: 'SP',
+        complement: 'Brooklin',
+      },
+    },
+  }),
+  headers: {
+    Authorization: 'appID',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
