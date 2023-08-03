@@ -186,10 +186,10 @@ const cards = [
   },
   {
     title: 'Java',
-    content: 'Criar cobranças Pix usando Java',
-    icon: <FaJava color={'#000000de'} size={30} />,
+    content: 'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    icon: <FaJava color={'#f89820'} size={30} />,
     docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+      '/docs/category/java',
     to: 'https://app.woovi.com/home/applications/java/add',
   },
   {
