@@ -61,7 +61,7 @@ leniência, e outros, que não vem ao caso, no momento. Todas elas estão docume
 
 Um SDK possui _métodos_ para acessar a API da OpenPix. Todos eles são assíncronos, e retornam um `Future` que pode ser usado para obter o resultado da chamada.
 
-```java,no
+```java
 sdk.allCustomersAsync().get();
 ```
 
@@ -71,7 +71,7 @@ Cada função retorna um futuro, que pode ser acessado em "single-thread" utiliz
 
 Para procurar páginas, você pode utilizar os métodos, que tem como parâmetro os "start", "end", "charge", e outros, que são os parâmetros de paginação da API. Um exemplo desses métodos, é o método `transactionsAsync`, que retorna uma página de transações.
 
-```java,no
+```java
 // Você pode utilizar o método get para obter o resultado da chamada. E não passar nenhum parametro, porque os parametros são opcionais.
 sdk.transactionsAsync().get();
 
@@ -83,7 +83,7 @@ sdk.transactionsAsync(start, end, charge, pixQrCode, withdrawal).get();
 
 Cada formato de entrada é uma classe com tipos, geralmente são nomeados como `Builder` no final, por exemplo `ChargeBuilder`.
 
-```java,no
+```java
 // Cria uma charge
 ChargeBuilder charge = new ChargeBuilder()
     .value(100)
@@ -97,7 +97,7 @@ sdk.createChargeAsync(charge).get();
 
 Argumentos simples como strings e inteiros são utilizados no caso de operações de obtenção de apenas um recurso ou remoção. Por exemplo
 
-```java,no
+```java
 // Obtém uma cobrança pelo ID. string.
 sdk.getChargeAsync(correlationID);
 
