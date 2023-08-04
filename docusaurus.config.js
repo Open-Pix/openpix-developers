@@ -124,7 +124,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['php', 'ruby', 'java'],
+      additionalLanguages: ['php', 'ruby'],
     },
     colorMode: {
       defaultMode: 'dark',
