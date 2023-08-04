@@ -30,7 +30,7 @@ da próxima vez que for chamado o método `itemsAsync` ou `pageInfoAsync`.
 
 #### Criar uma cobrança
 
-```java,no
+```java
 // Cria uma charge
 ChargeBuilder charge = new ChargeBuilder()
     .value(100)
@@ -44,14 +44,14 @@ sdk.createChargeAsync(charge).get();
 
 #### Obter uma cobrança
 
-```java,no
+```java
 // Obtém uma cobrança pelo ID. string.
 sdk.getChargeAsync(correlationID).get();
 ```
 
 #### Remover uma cobrança
 
-```java,no
+```java
 // Remove uma cobrança pelo ID. string.
 sdk.deleteChargeAsync(correlationID).get();
 ```
@@ -62,7 +62,7 @@ sdk.deleteChargeAsync(correlationID).get();
 
 #### Criar um pix qr code
 
-```java,no
+```java
 // Cria um pix qr code
 PixQrCodeBuilder pixQrCode = new PixQrCodeBuilder()
     .value(100)
@@ -76,7 +76,7 @@ sdk.createPixQrCodeAsync(pixQrCode).get();
 
 #### Obter um pix qr code
 
-```java,no
+```java
 // Obtém um pix qr code pelo ID. string.
 sdk.getPixQrCodeAsync(correlationID).get();
 ```
@@ -87,7 +87,7 @@ sdk.getPixQrCodeAsync(correlationID).get();
 
 #### Obter uma transação
 
-```java,no
+```java
 // Obtém uma transação pelo ID. string.
 sdk.getTransactionAsync(correlationID).get();
 ```
@@ -98,21 +98,21 @@ sdk.getTransactionAsync(correlationID).get();
 
 #### Obter uma conta
 
-```java,no
+```java
 // Obtém uma conta pelo ID. string.
 sdk.getAccountAsync(correlationID).get();
 ```
 
 #### Obter uma lista de contas
 
-```java,no
+```java
 // Obtém uma lista de contas.
 sdk.getAccountsAsync().get();
 ```
 
 #### Performar saque
     
-```java,no
+```java
 // Performa um saque.
 sdk.withdrawAsync(id, value).get();
 ```
@@ -123,7 +123,7 @@ sdk.withdrawAsync(id, value).get();
 
 #### Criar um reembolso
 
-```java,no
+```java
 // Cria um reembolso
 RefundBuilder refund = new RefundBuilder()
     .value(100)
@@ -137,7 +137,7 @@ sdk.createRefundAsync(refund).get();
 
 #### Obter um reembolso
 
-```java,no
+```java
 // Obtém um reembolso pelo ID. string.
 sdk.getRefundAsync(correlationID).get();
 ```
@@ -148,7 +148,7 @@ sdk.getRefundAsync(correlationID).get();
 
 #### Criar um webhook
 
-```java,no
+```java
 // Cria um webhook
 WebhookBuilder builder = new WebhookBuilder()
     .number(100)
@@ -160,7 +160,7 @@ sdk.createWebhookAsync(builder).get();
 
 #### Deletar um webhook
 
-```java,no
+```java
 // Deleta um webhook pelo ID. string.
 sdk.deleteWebhookAsync(correlationID).get();
 ```
@@ -171,7 +171,7 @@ sdk.deleteWebhookAsync(correlationID).get();
 
 #### Criar um customer
 
-```java,no
+```java
 // Cria um customer
 CustomerBuilder builder = new CustomerBuilder()
     .name("name")
@@ -185,7 +185,7 @@ sdk.createCustomerAsync(builder).get();
 
 #### Obter um customer
 
-```java,no
+```java
 // Obtém um customer pelo ID. string.
 sdk.getCustomerAsync(correlationID).get();
 ```
@@ -196,7 +196,7 @@ sdk.getCustomerAsync(correlationID).get();
 
 #### Criar um pagamento
 
-```java,no
+```java
 // Cria um pagamento
 PaymentBuilder payment = new PaymentBuilder()
     .value(100)
@@ -210,7 +210,7 @@ sdk.createPaymentAsync(payment).get();
 
 #### Obter um pagamento
 
-```java,no
+```java
 // Obtém um pagamento pelo ID. string.
 sdk.getPaymentAsync(correlationID).get();
 ```
