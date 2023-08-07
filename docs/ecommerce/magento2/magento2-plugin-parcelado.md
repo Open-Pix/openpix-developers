@@ -67,13 +67,13 @@ Escolha a opção de pagar o pedido à vista ou com Pix + Cartão de crédito
 ![Pay Pix](./__assets__/magento2-cart.png)
 
 Pague o Pix usando o app do seu banco.
-![Order](./__assets__/magento2-order.png)
+![Order](./__assets__/magento2-parcelado-order.png)
 
 Ao selecionar pagamento no pix à vista pague o qrcode.
 
 Ao selecionar pix + cartão de crédito insira os dados do cartão, pague o pix e o valor sera captura no cartão.
 
-![Order](./__assets__/magento2-order-2.png)
+![Order](./__assets__/magento2-parcelado-order-2.png)
 
 Valide que o status do Pedido mudou após o pagamento
 
@@ -81,7 +81,7 @@ Valide que o status do Pedido mudou após o pagamento
 
 Seu cliente poderá visualizar o pedido realizado via Pix dentro do detalhes do pedido. Basta clicar no botão que irá aparecer dentro da pagina de detalhe do pedido "Clique aqui para ver seu QRCode"
 
-![Order](./__assets__/magento2-detail.png)
+![Order](./__assets__/magento2-parcelado-detail.png)
 ## Expiração
 
 A OpenPix ira cuidar da expiração da cobrança Pix. Entretanto, é preciso que seja configurado em sua loja magento a expiração da order pois o mesmo cuidará de todo o processo.
