@@ -1173,6 +1173,49 @@ paths:
                 properties:
                   error:
                     type: string
+  /api/v1/payment/approve:
+    post:
+      tags:
+        - payment (request access)
+      summary: Approve a Payment Request
+      description: Endpoint to approve a payment
+      requestBody:
+        description: Data to approve a payment request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/PaymentApprovePayload'
+            example:
+              correlationID: payment1
+      responses:
+        '200':
+          description: Payment destination account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment:
+                    $ref: '#/components/schemas/Payment'
+                example:
+                  payment:
+                    value: 100
+                    status: APPROVED
+                    destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                    comment: payment comment
+                    correlationID: payment1
+                    sourceAccountId: my-source-account-id
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
   '/api/v1/payment/{id}':
     get:
       tags:
@@ -2953,6 +2996,12 @@ components:
         clientSecret:
           type: string
           description: The secret of this client application.
+    PaymentApprovePayload:
+      type: object
+      properties:
+        correlationID:
+          type: string
+          description: the correlation ID of the payment to be approved
     PaymentCreatePayload:
       type: object
       properties:
