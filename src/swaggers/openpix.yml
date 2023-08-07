@@ -1191,7 +1191,7 @@ paths:
               correlationID: payment1
       responses:
         '200':
-          description: The payment approved
+          description: The approved payment
           content:
             application/json:
               schema:
