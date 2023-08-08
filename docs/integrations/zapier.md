@@ -88,6 +88,14 @@ Após isso, prossiga para a seção _Test_ para testar o seu fluxo.
 
 ### Como remover uma cobrança?
 
+![Adicione uma action](#como-adicionar-uma-ação-da-woovi) com o evento _Delete a charge_ em fluxo do Zapier.
+
+Configure os campos da action na seção _Action_:
+
+![Configurando a action de remover uma cobrança](./__assets__/zapier-remove-charge-action-configuration.png)
+
+Como campo da action, temos o `id` que é onde você deve colocar o [`correlationID`](../concepts/correlation-id) ou o identificador da cobrança.
+
 ### Como criar um cliente?
 
 ### Criar reembolso de uma cobrança?
