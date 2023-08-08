@@ -3,20 +3,21 @@ id: java-sdk-resources
 title: Recursos
 sidebar_position: 2
 tags:
-- api
-- ruby
-- sdk
+  - api
+  - ruby
+  - sdk
 ---
 
 ## Lista de recursos disponíveis
 
-Existem recursos disponíveis para cada tipo de operação. Para cada recurso, existe uma classe que representa o recurso e uma classe que representa uma lista de recursos. Essas classes são as classes de paginação: `Paginator<T>`.
+Existem recursos disponíveis para cada tipo de operação. Para cada recurso, existe uma classe que representa o recurso e
+uma classe que representa uma lista de recursos. Essas classes são as classes de paginação: `Paginator<T>`.
 
 ### Paginação
 
 A classe `Paginator<T>` é uma classe que representa uma lista de recursos. Ela possui os seguintes métodos:
 
-- `Future<List<T>> itemsAsync()`: Obtém os itens da página atual. 
+- `Future<List<T>> itemsAsync()`: Obtém os itens da página atual.
 - `Future<PageInfo> pageInfoAsync()`: Obtém as informações da página atual.
 - `void next()`: Vai para a próxima página.
 - `void previous()`: Vai para a página anterior.
@@ -111,7 +112,7 @@ sdk.getAccountsAsync().get();
 ```
 
 #### Performar saque
-    
+
 ```java,no
 // Performa um saque.
 sdk.withdrawAsync(id, value).get();
@@ -145,6 +146,38 @@ sdk.getRefundAsync(correlationID).get();
 ### Webhook
 
 - `Webhook`: Representa um webhook.
+
+#### Verificar assinatura de um webhook
+
+Toda invocação de webhook em sua aplicação traz um cabeçalho HTTP chamado x-webhook-signature, que consiste na
+assinatura gerada utilizando a chave secreta da Woovi e o payload (corpo da requisição HTTP) do webhook. Ao receber esse
+cabeçalho, você pode validar se a assinatura é válida e prosseguir com o fluxo do webhook.
+
+```
+x-webhook-signature: lL2nnXgmLFGgxJ8+jCDguqouU4ucrIxYJcU5SPrJFaNcJajTJHYVldqc/z4YFIjAjtPEALe699WosgPY08W7CLpidvtm06Qwa4YMB0l/DcTS93O91NdSH/adjugEKiOb76Zj/0jB8mqOmWCFYbweOBa17bssuEkd5Lw7Q5L314Y=
+```
+
+Veja um [exemplo de validação de assinatura](https://developers.openpix.com.br/docs/webhook/webhook-signature-validation#exemplo-de-valida%C3%A7%C3%A3o).
+
+Para verificar a assinatura de um webhook, você precisa do corpo da requisição, o cabeçalho `x-webhook-signature` e o
+conteúdo enviado no request.
+
+```java,no
+// Verifica a assinatura de um webhook
+import br.com.openpix.OpenSSL;
+
+// The body of the request sent by the woovi servers
+String payload = "...";
+
+// The signature in the header `x-webhook-signature`
+String signature = "...";
+
+if OpenSSL.verify(payload, signature) {
+    // The signature is valid
+} else {
+    // The signature is invalid
+}
+```
 
 #### Criar um webhook
 
