@@ -98,6 +98,27 @@ Como campo da action, temos o `id` que é onde você deve colocar o [`correlatio
 
 ### Como criar um cliente?
 
+![Adicione uma action](#como-adicionar-uma-ação-da-woovi) com o evento _Create customer_ em fluxo do Zapier.
+
+Configure os campos da action na seção _Action_:
+
+![Configurando a action de criar um cliente](./__assets__/zapier-create-customer-action-configuration.png)
+
+A action possui as seguintes entradas pro cliente:
+- `Name` (obrigatório): Nome.
+- `Email`: E-mail do cliente.
+- `Phone`: Número de telefone.
+- `CorrelationID`: É o [`correlationID`](../concepts/correlation-id) do cliente, um identificador.
+- `Address`: Endereço do cliente.
+  - `Zip Code`: Coloque aqui o CEP.
+  - `Street`: A rua do cliente.
+  - `Number`: Número do endereço.
+  - `Neighborhood`: Bairro.
+  - `City`: Cidade.
+  - `State`: Estado do cliente.
+  - `Complement`: Complemento do endereço.
+  - `Country`: País. Por exemplo: `BR` para Brasil.
+
 ### Criar reembolso de uma cobrança?
 
 ## Gatilhos
