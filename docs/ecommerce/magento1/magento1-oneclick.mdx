@@ -63,24 +63,6 @@ Em `Show Tax/VAT Number` selecione o valor required:
 
 A partir de agora os clientes terão que preencher esse campo com o CPF ou CNPJ e o mesmo será usado para salvar o cliente na plataforma OpenPix.
 
-### Parcelado
-
-É necessário o cliente informar seu endereço ao utilizar o método de pagamento Pix parcelado.
-
-Cada endereço precisa ter 4 linhas:
-  - rua
-  - número
-  - complemento
-  - bairro
-
-Para configurar a quantidade de linhas em cada endereço, acesse Magento1 Admin -> System > Configuration > Customers:
-
-![magento1-customer-sidemenu](/img/ecommerce/magento1/magento1-customer-sidemenu.png)
-
-Na seção `Name and Address options`, altere o campo _Number of Lines in a Street Address_ (Número de linhas em um endereço) para o valor 4:
-
-![magento1-address-options](/img/ecommerce/magento1/magento1-address-options.png)
-
 ### Giftback
 
 Importante lembrete sobre a feature de Giftback para magento 1. O plugin suporta a mesma mas para que os clientes sejam contemplados apenas os que utilizarem CPF em suas compras serão inseridos na mesma.
@@ -108,18 +90,6 @@ Escolha a opção de pagar o pedido usando Pix
 Pague o Pix usando o app do seu banco.
 
 ![Checkout Success](/img/ecommerce/magento1/successPayment.png)
-
-Valide que o status do Pedido mudou após o pagamento
-
-### Realizar Pedido com Pix parcelado
-
-Escolha a opção de pagar o pedido usando Pix parcelado
-
-![Pay with Pix Parcelado](/img/ecommerce/magento1/magento1-pay-with-pix-parcelado.png)
-
-Pague o Pix usando o app do seu banco.
-
-![Checkout Success](/img/ecommerce/magento1/successPaymentPixParcelado.png)
 
 Valide que o status do Pedido mudou após o pagamento
 
@@ -154,3 +124,64 @@ Para debugar o plugin OpenPix temos dois arquivos e você encontra ambos dentro 
 
 - `openpix_exception.log`: arquivo que concentra logs referentes ao processo de criação de um novo pedido Magento e consequentemente a charge no lado da OpenPix
 - `openpix_webhooks.log`: arquivo que concentra logs referentes ao processo de pagamento de um pedido. O webhook é chamado quando identificamos um novo Pix em sua conta e o mesmo trata de atualizar o status da order em sua loja Magento.
+
+## OpenPix Parcelado
+
+### Configuração do OpenPix Parcelado
+
+1. É necessário que você tenha o plugin do Magento1 configurado. [Siga a documentação](#configurando-o-plugin-magento1).
+
+2. Vá até a seção de configurações do plugin Openpix.
+
+3. O que você pode fazer?
+ - Habilitar ou desativar o método de pagamento.
+ - Customizar o título do método de pagamento OpenPix Parcelado dentro da sua loja.
+ - Alterar qual deve ser o status inicial dos pedidos ao realizar uma compra.
+
+![Configurações OpenPix Parcelado](./__assets__/magento1-parcelado-settings.png)
+
+### Configurações do CPF/CNPJ e do endereço
+
+Para criar uma cobrança com OpenPix Parcelado, é necessário o cliente informar o seu CPF/CNPJ e os dados do endereço.
+
+Para configurar o CPF/CNPJ, [veja a nossa documentação](#configurando-cpfcnpj-para-o-customer-opcional).
+
+Em relação ao endereço, é necessário que ele tenha 4 linhas:
+  - rua
+  - número
+  - complemento
+  - bairro
+
+Para configurar a quantidade de linhas em cada endereço, acesse Magento1 Admin -> System > Configuration > Customers:
+
+![magento1-customer-sidemenu](/img/ecommerce/magento1/magento1-customer-sidemenu.png)
+
+Na seção `Name and Address options`, altere o campo _Number of Lines in a Street Address_ (Número de linhas em um endereço) para o valor 4:
+
+![magento1-address-options](/img/ecommerce/magento1/magento1-address-options.png)
+
+### Como criar um pedido com OpenPix Parcelado
+
+Escolha a opção de pagar o pedido usando Pix parcelado:
+
+![Pay with Pix Parcelado](/img/ecommerce/magento1/magento1-pay-with-pix-parcelado.png)
+
+Pague o Pix usando o app do seu banco.
+
+![Checkout Success](/img/ecommerce/magento1/successPaymentPixParcelado.png)
+
+Ao selecionar pagamento no Pix à vista pague o QR Code.
+
+Ao selecionar Pix + cartão de crédito insira os dados do cartão, pague o pix e o valor será capturado no cartão.
+
+![Pagando com OpenPix Parcelado](/img/ecommerce/magento1/openpix-parcelado-paying.png)
+
+Valide que o status do Pedido mudou após o pagamento.
+
+### Visualizando um pedido com OpenPix Parcelado
+
+Seu cliente poderá visualizar a cobrança Pix dentro do detalhes do pedido.
+
+Basta acessar a página de detalhes do pedido e visualizar em _Payment method_ (método de pagamento).
+
+![Visualizando um pedido](/img/ecommerce/magento1/openpix-parcelado-order-view.png)
