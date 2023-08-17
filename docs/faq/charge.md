@@ -15,29 +15,29 @@ Uma cobrança é uma solicitação de pagamento pelo Pix. Você pode configurar 
 
 Para criar uma nova cobrança, acesse o menu `Cobranças`
 
-![Menu Charge](/img/FAQ/charge-menu.png)
+![Menu Charge](./__assets__/charge-menu.png)
 
 Clique em `Nova cobrança`
 
-![New Charge](/img/FAQ/new-charge.png)
+![New Charge](./__assets__/new-charge.png)
 
 Você pode configurar a cobrança da forma que precisa.
 
-![Charge](/img/FAQ/charge.png)
+![Charge Form](./__assets__/charge-form.png)
 
 ### Como definir o tempo de expiração de uma cobrança?
 
-A configuração de expiração das cobranças pode ser configurado no menu `Ajustes`
+A configuração de expiração das cobranças pode ser configurado no menu `Cobranças`
 
-![Menu Settings](/img/FAQ/settings-menu.png)
+![Menu Charge](./__assets__/charge-menu.png)
 
-Na aba `Pix`
+Na aba `Ajustes`
 
-![Settings Pix](/img/FAQ/settings-pix.png)
+![Settings Pix](./__assets__/charge-settings-tab.png)
 
-Identifique o card `Tempo de Expiração` e configure da forma que deseja.
+Identifique o card `Tempo padrão de expiração de cobrança` e configure da forma que desejar com as opções disponíveis ou então customizadas.
 
-![Expiration Time](/img/FAQ/expiration-time.png)
+![Expiration Time](./__assets__/charge-expiration-options.png)
 
 ### Como compartilhar uma cobrança?
 
@@ -47,19 +47,19 @@ Você pode compartilhar esse link na nossa plataforma das seguintes formas:
 
 #### Enviando o Link de Pagamento através de um e-mail
 
-![Share Link Email](/img/FAQ/paymentLink-email.png)
+![Share Link Email](./__assets__/charge-send-email.png)
 
-![Share Link Email Detail](/img/FAQ/charge-email.png)
+![Share Link Email Detail](./__assets__/charge-send-email-modal.png)
 
 #### Enviando o Link de Pagamento
 
-![Share Link](/img/FAQ/paymentLink.png)
+![Share Link](./__assets__/charge-pay-link.png)
 
 #### Enviando o Link de Pagamento através do WhatsApp
 
-![Share Link WhatsApp](/img/FAQ/paymentLink-wpp.png)
+![Share Link WhatsApp](./__assets__/charge-share-wpp.png)
 
-![Share Link WhatsApp Detail](/img/FAQ/charge-wpp.png)
+![Share Link WhatsApp Detail](./__assets__/charge-wpp-detail.png)
 
 ### Como pagar uma cobrança?
 
@@ -67,7 +67,7 @@ Você pode pagar de várias maneiras uma cobrança em nossa plataforma, como:
 
 - Copiando o código do QR Code da cobrança e realizando o pagamento via Pix copia e cola
 
-![QR Code Copy Paste](/img/FAQ/charge-copy-paste.png)
+![QR Code Copy Paste](./__assets__/charge-copy-brcode.png)
 
 Exemplo de um código de QR Code:
 
@@ -79,7 +79,7 @@ Exemplo de um código de QR Code:
 
 O link de pagamento como o nome diz é um endereço de pagamento que você pode usar para enviar uma cobrança aos seus determinados clientes e realizar o pagamento do mesmo.
 
-![Payment Lik](/img/FAQ/payment-link.png)
+![Payment Lik](./__assets__/charge-payment-link-ui.png)
 
 - Para realizar o pagamento, você pode escanear o QR code usando o seu aplicativo de pagamento preferido.
 - Ou copiar o QR Code e colar no seu aplicativo de pagamento preferido.
