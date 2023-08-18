@@ -5,10 +5,25 @@ tags:
   - integration
 ---
 
+:::caution
+
+Essa documentação espera que você já tenha uma loja Shopify ativa e uma conta criada na OpenPix.
+
+:::
+
 ## 1. Criando uma nova aplicação
 
 Para integrar sua loja Shopify com a OpenPix, é necessário criar uma aplicação relacionada a essa integração.
-Para criar, basta acessar o formulário de criação de aplicação [clicando aqui](https://app.openpix.com/home/applications/shopify/add).
+
+Para criar uma nova aplicação, você pode seguir um dos seguintes passos:
+
+- Acessando diretamente o formulário de criação, clicando [aqui](https://app.openpix.com/home/applications/shopify/add);
+- Após acessar a plataforma da [OpenPix](https://app.openpix.com/home), você pode acessá-lo através do menu, clicando em:
+  1. API/Plugins;
+  2. Shopify;
+  3. Clique no botão `Adicionar`;
+
+Após seguir um desses fluxos, você será redirecionado para o formulário de criação da aplicação, conforme a imagem abaixo:
 
 ![Shopify integration form](./__assets__/shopify-integration-form.png)
 
