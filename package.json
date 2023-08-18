@@ -18,7 +18,7 @@
     "react-dom": "18.2.0",
     "react-embed": "^3.7.0",
     "react-icons": "^4.10.1",
-    "redoc": "2.0.0",
+    "redoc": "2.1.1",
     "redocusaurus": "1.6.3",
     "snippet-enricher-cli": "^0.0.8",
     "styled-components": "^5.3.11"
