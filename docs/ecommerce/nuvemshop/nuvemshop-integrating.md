@@ -1,10 +1,10 @@
 ---
-id: vtex-integrating
+id: nuvemshop-integrating
 title: Integrando Nuvemshop na OpenPix
 sidebar_position: 0
 tags:
   - ecommerce
-  - vtex
+  - nuvemshop
 ---
 
 :::caution Atenção
@@ -28,6 +28,9 @@ Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applic
 ### 3. Autorize o Aplicativo dentro da Nuvemshop
 
 ![2](./__assets__/how-to-install-nuvemshop-plugin-2.png)
+
+- OBS: Após você autorizar o nosso plugin no seu ecommerce, você será redirecionado novamente para plataforma para efetuar o
+cadastro da aplicação Nuvemshop dentro da OpenPix.
 
 ### 4. Crie uma nova aplicação
 
