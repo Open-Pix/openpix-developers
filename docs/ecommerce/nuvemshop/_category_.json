@@ -1,0 +1,13 @@
+{
+  "label": "Nuvemshop",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Nuvemshop visão geral"
+  },
+  "customProps": {
+    "description": "Nuvemshop documentação"
+  }
+}
