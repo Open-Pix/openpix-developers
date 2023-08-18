@@ -1896,16 +1896,6 @@
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-"@redocly/ajv@^8.6.4":
-  version "8.6.4"
-  resolved "https://registry.yarnpkg.com/@redocly/ajv/-/ajv-8.6.4.tgz#94053e7a9d4146d1a4feacd3813892873f229a85"
-  integrity sha512-y9qNj0//tZtWB2jfXNK3BX18BSBp9zNR7KE7lMysVHwbZtY392OJCjm6Rb/h4UHH2r1AqjNEHFD6bRn+DqU9Mw==
-  dependencies:
-    fast-deep-equal "^3.1.1"
-    json-schema-traverse "^1.0.0"
-    require-from-string "^2.0.2"
-    uri-js "^4.2.2"
-
 "@redocly/openapi-core@1.0.0-beta.123":
   version "1.0.0-beta.123"
   resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.0.0-beta.123.tgz#0c29ae9fabe5f143f571caf608a7d025f41125db"
@@ -1922,12 +1912,12 @@
     pluralize "^8.0.0"
     yaml-ast-parser "0.0.43"
 
-"@redocly/openapi-core@^1.0.0-beta.104":
-  version "1.0.0-beta.106"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.0.0-beta.106.tgz#5df810aee2ed64ecadf3d5100d8fbdf0d74c2924"
-  integrity sha512-ZHeczZ6iJrHL7K1v4s+NRFUOHsfZ1ZrB+bcS42CP4bhL/Y17PkOMWA+6Ubk0NVT4Ihdt5cLLWGfjVABD/bEM2A==
+"@redocly/openapi-core@^1.0.0-beta.104", "@redocly/openapi-core@^1.0.0-rc.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.0.2.tgz#773b48a98fe67383499a5af80a62175c451b387c"
+  integrity sha512-53dzhmG2bsi/8rcAAgBKk9ZLMR035VHgN7oSM3+BM4UAIoNBg6lMC/ChHSf9zO+GrX5qtuWVPqHhjjMti3SAlQ==
   dependencies:
-    "@redocly/ajv" "^8.6.4"
+    "@redocly/ajv" "^8.11.0"
     "@types/node" "^14.11.8"
     colorette "^1.2.0"
     js-levenshtein "^1.1.6"
@@ -7376,10 +7366,10 @@ open@^8.0.9, open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-openapi-sampler@^1.0.0-beta.14, openapi-sampler@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/openapi-sampler/-/openapi-sampler-1.3.0.tgz#5b99ceb4156b00d2aa3f860e52ccb768a5695793"
-  integrity sha512-2QfjK1oM9Sv0q82Ae1RrUe3yfFmAyjF548+6eAeb+h/cL1Uj51TW4UezraBEvwEdzoBgfo4AaTLVFGTKj+yYDw==
+openapi-sampler@^1.0.0-beta.14, openapi-sampler@^1.3.0, openapi-sampler@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/openapi-sampler/-/openapi-sampler-1.3.1.tgz#eebb2a1048f830cc277398bc8022b415f887e859"
+  integrity sha512-Ert9mvc2tLPmmInwSyGZS+v4Ogu9/YoZuq9oP3EdUklg2cad6+IGndP9yqJJwbgdXwZibiq5fpv6vYujchdJFg==
   dependencies:
     "@types/json-schema" "^7.0.7"
     json-pointer "0.6.2"
@@ -8512,6 +8502,33 @@ redoc@2.0.0:
     slugify "~1.4.7"
     stickyfill "^1.1.1"
     style-loader "^3.3.1"
+    swagger2openapi "^7.0.6"
+    url-template "^2.0.8"
+
+redoc@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/redoc/-/redoc-2.1.1.tgz#e36934791cfed85af45da8198ff04d87a683e057"
+  integrity sha512-0Gb5VDK1K19LrCv7UfUUjCmmOhpq31G309nbGjbTprbRZOCsQWIpWvesCjlfYi50UILab8lyJUXab4L1wraO1g==
+  dependencies:
+    "@redocly/openapi-core" "^1.0.0-rc.2"
+    classnames "^2.3.1"
+    decko "^1.2.0"
+    dompurify "^2.2.8"
+    eventemitter3 "^4.0.7"
+    json-pointer "^0.6.2"
+    lunr "^2.3.9"
+    mark.js "^8.11.1"
+    marked "^4.0.15"
+    mobx-react "^7.2.0"
+    openapi-sampler "^1.3.1"
+    path-browserify "^1.0.1"
+    perfect-scrollbar "^1.5.5"
+    polished "^4.1.3"
+    prismjs "^1.27.0"
+    prop-types "^15.7.2"
+    react-tabs "^3.2.2"
+    slugify "~1.4.7"
+    stickyfill "^1.1.1"
     swagger2openapi "^7.0.6"
     url-template "^2.0.8"
 
