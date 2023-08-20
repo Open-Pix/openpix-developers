@@ -1628,11 +1628,11 @@ paths:
               schema:
                 type: object
                 properties:
-                  refund:
+                  pixTransactionRefund:
                     type: object
                     $ref: "#/components/schemas/Refund"
                 example:
-                  refund:
+                  pixTransactionRefund:
                     value: 100
                     correlationID: 7777-6f71-427a-bf00-241681624586
                     refundId: 11bf5b37e0b842e08dcfdc8c4aefc000
