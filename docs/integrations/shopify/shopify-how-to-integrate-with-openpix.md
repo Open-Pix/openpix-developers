@@ -1,5 +1,5 @@
 ---
-title: How to integrate Shopify with OpenPix?
+title: Como integrar a OpenPix com Shopify?
 tags:
   - shopify
   - integration
