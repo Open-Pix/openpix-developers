@@ -24,7 +24,9 @@ import SocPanelIcon from '../icons/SocPanelIcon';
 import N8nIcon from '../icons/N8NIcon';
 import AssineOnlineIcon from '../icons/AssineOnlineIcon';
 
-import styles from './index.module.css';
+import WabizIcon from '../icons/WabizIcon';
+
+import styles from './index.module.css';git
 
 const links = [
   {
@@ -250,6 +252,14 @@ const cards = [
     icon: <FaOpencart size={30} />,
     docsTo: '/docs/ecommerce/opencart/opencart-extension',
     to: 'https://app.woovi.com/home/applications/opencart/add',
+  },
+  {
+    title: 'Wabiz',
+    content:
+      'Wabiz. Crie Pix e integre com o Wabiz para receber pagamentos via Pix em seu restaurante.',
+    icon: <WabizIcon size={30} />,
+    docsTo: '/docs/partnerships/wabiz-partner',
+    to: 'https://app.woovi.com/home/applications/wabiz/add',
   },
 ];
 
