@@ -26,7 +26,7 @@ import AssineOnlineIcon from '../icons/AssineOnlineIcon';
 
 import WabizIcon from '../icons/WabizIcon';
 
-import styles from './index.module.css';git
+import styles from './index.module.css';
 
 const links = [
   {
