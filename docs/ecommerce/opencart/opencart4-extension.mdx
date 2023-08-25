@@ -1,5 +1,5 @@
 ---
-id: opencart-extension
+id: opencart4-extension
 title: Como integrar o Pix em sua loja OpenCart 4
 sidebar_label: Extensão pro OpenCart 4
 tags:
@@ -38,7 +38,7 @@ Para acessar o marketplace e carregar a extensão na sua loja, siga estes passos
 1. No painel de administração da sua loja, localize a barra lateral e clique na opção _Extensions_.
 
 2. Em seguida, no submenu que é exibido, clique na opção _Marketplace_:
-![Acesso ao submenu com o marketplace como opção](/img/ecommerce/opencart/marketplace-access.png)
+![Acesso ao submenu com o marketplace como opção](./__assets__/opencart4/marketplace-access.png)
 
 Ao seguir essas etapas, você será direcionado para o marketplace oficial do OpenCart.
 
@@ -46,20 +46,20 @@ Ao seguir essas etapas, você será direcionado para o marketplace oficial do Op
 
 Ao acessar o marketplace, pesquise pela extensão _woovi_:
 
-![Listagem do marketplace com a extensão](/img/ecommerce/opencart/marketplace-search.png)
+![Listagem do marketplace com a extensão](./__assets__/opencart4/marketplace-search.png)
 
 #### 3) Inicie o download
 
 Role um pouco a página até encontrar a seção _Download_. Clique nessa seção e em seguida no botão _Download_ para carregar a nossa extensão na sua loja:
 
-![Página da extensão com o botão de Download](/img/ecommerce/opencart/extension-download-page.png)
+![Página da extensão com o botão de Download](./__assets__/opencart4/extension-download-page.png)
 
 ### Upload do arquivo
 
 Além do marketplace, você também tem a opção de carregar manualmente o arquivo da extensão. Para isso, acesse a página de downloads no [marketplace oficial](https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=45252&filter_search=woovi) e baixe primeiramente o arquivo da extensão:
 
-![Página da extensão no marketplace indicando o botão de acesso aos downloads](/img/ecommerce/opencart/marketplace-download-button.png)
-![Página de downloads no marketplace](/img/ecommerce/opencart/marketplace-downloads-page.png)
+![Página da extensão no marketplace indicando o botão de acesso aos downloads](./__assets__/opencart4/marketplace-download-button.png)
+![Página de downloads no marketplace](./__assets__/opencart4/marketplace-downloads-page.png)
 
 :::caution Preste atenção
 Assegure-se de que o nome do arquivo da extensão seja _woovi.ocmod.zip_ ao fazer o upload, porque o OpenCart considera o nome do arquivo como um "identificador" da extensão, que precisa ser _woovi_.
@@ -67,31 +67,31 @@ Assegure-se de que o nome do arquivo da extensão seja _woovi.ocmod.zip_ ao faze
 
 Após isso, acesse a página do instalador de extensões, localizado na opção _Installer_ no menu _Extensions_ do OpenCart:
 
-![Opção do instalador de extensões no menu do OpenCart](/img/ecommerce/opencart/extension-installer-menu-option.png)
+![Opção do instalador de extensões no menu do OpenCart](./__assets__/opencart4/extension-installer-menu-option.png)
 
 Ao acessar a página do instalador de extensões, localize o botão de upload azul localizado no canto superior direito do seu painel. Clique nesse botão e selecione o arquivo da extensão que deseja carregar:
 
-![Seleção do arquivo](/img/ecommerce/opencart/extension-file-selection.png)
+![Seleção do arquivo](./__assets__/opencart4/extension-file-selection.png)
 
 ### Instalando a extensão
 
 Após baixar a extensão, seja através do marketplace ou por upload, você encontrará a extensão na página do instalador de extensões. Nessa página, localize a extensão _Woovi_ e clique no botão verde com o símbolo "+" para dar continuidade à instalação:
 
-![Botão para instalar a extensão](/img/ecommerce/opencart/install-extension-button.png)
+![Botão para instalar a extensão](./__assets__/opencart4/install-extension-button.png)
 
 ### Instalando o método de pagamento
 
 Acesse a página de extensões por meio da sub-opção _Extensions_ dentro da outra opção _Extensions_:
 
-![Sub-opção "Extensions" selecionada](/img/ecommerce/opencart/extensions-menu-option.png)
+![Sub-opção "Extensions" selecionada](./__assets__/opencart4/extensions-menu-option.png)
 
 Na página de extensões, utilize a opção de filtro para selecionar extensões do tipo _Payment_:
 
-![Filtro pelo tipo _Payment_ habilitado](/img/ecommerce/opencart/extension-list-filtered-by-payment-type.png)
+![Filtro pelo tipo _Payment_ habilitado](./__assets__/opencart4/extension-list-filtered-by-payment-type.png)
 
 Para instalar _definitivamente_ nossa extensão como um método de pagamento, role um pouco para baixo na página e clique no botão verde com o símbolo "+" na extensão Woovi:
 
-![Instalação da extensão Woovi como método de pagamento](/img/ecommerce/opencart/install-payment-method.png)
+![Instalação da extensão Woovi como método de pagamento](./__assets__/opencart4/install-payment-method.png)
 
 Após isso, clique no botão azul com o ícone de um lápis para acessar a página de configuração da extensão.
 
@@ -99,7 +99,7 @@ Após isso, clique no botão azul com o ícone de um lápis para acessar a pági
 
 Após acessar a página de configurações da extensão, é necessário ativar a extensão no checkout pressionando o botão _Status_: 
 
-![Página de configurações com o botão _Status_](/img/ecommerce/opencart/admin-settings-status.png)
+![Página de configurações com o botão _Status_](./__assets__/opencart4/admin-settings-status.png)
 
 Tendo habilitado o botão Status, _Pix_ deverá aparecer como método de pagamento no checkout.
 
@@ -107,19 +107,19 @@ No entanto, é necessário integrar a extensão com a plataforma Woovi e isto po
 
 Para obter essa URL, vá até a página de configurações e copie ela:
 
-![Página de configurações com a url de webhook](/img/ecommerce/opencart/admin-settings-webhook.png)
+![Página de configurações com a url de webhook](./__assets__/opencart4/admin-settings-webhook.png)
 
 Entre na plataforma da Woovi e [clique aqui](https://app.woovi.com/home/applications/opencart/add/oneclick) ou vá em `API/Plugins` > `OpenCart` > `Adicionar`:
 
-![Botão de adicionar um plugin na plataforma Woovi](/img/ecommerce/opencart/woovi-plugin-card.png)
+![Botão de adicionar um plugin na plataforma Woovi](./__assets__/opencart4/woovi-plugin-card.png)
 
 Cole a URL de webhook no campo _Preencha a url do seu site_ e pressione o botão _Salvar_:
 
-![Formulário para adicionar uma integração na plataforma Woovi](/img/ecommerce/opencart/woovi-add-plugin-form.png)
+![Formulário para adicionar uma integração na plataforma Woovi](./__assets__/opencart4/woovi-add-plugin-form.png)
 
 Após isto, verifique se o _AppID_, um código que identifica sua loja, se encontra na página de configurações:
 
-![Página de configurações com o AppID adicionado](/img/ecommerce/opencart/admin-settings-appid.png)
+![Página de configurações com o AppID adicionado](./__assets__/opencart4/admin-settings-appid.png)
 
 Pronto, agora vamos aprender como utilizar o Pix no seu checkout.
 
@@ -129,16 +129,16 @@ Ao realizar uma compra em sua loja OpenCart, o cliente será redirecionado para 
 
 Nesta página, o cliente deverá inserir seu CPF ou CNPJ, que será utilizado para a cobrança Pix:
 
-![Formulário de checkout com o CPF/CNPJ](/img/ecommerce/opencart/checkout-form-with-tax-id.png)
+![Formulário de checkout com o CPF/CNPJ](./__assets__/opencart4/checkout-form-with-tax-id.png)
 
 Após isso, o cliente deve selecionar _Pix_ como método de pagamento (_Payment Method_):
 
-![Selecionando Pix como método de pagamento](/img/ecommerce/opencart/checkout-payment-method-selector.png)
+![Selecionando Pix como método de pagamento](./__assets__/opencart4/checkout-payment-method-selector.png)
 
 Ao confirmar a compra, o QR Code do Pix será exibido na página de sucesso, pronto para ser escaneado pelo seu cliente:
 
-![Página de sucesso do checkout](/img/ecommerce/opencart/checkout-success-js-plugin.png)
-![QrCode do Pix na página de sucesso do checkout](/img/ecommerce/opencart/checkout-success-js-plugin-part2.png)
+![Página de sucesso do checkout](./__assets__/opencart4/checkout-success-js-plugin.png)
+![QrCode do Pix na página de sucesso do checkout](./__assets__/opencart4/checkout-success-js-plugin-part2.png)
 
 ## CPF/CNPJ
 
@@ -151,48 +151,48 @@ Os custom fields são uma funcionalidade do OpenCart que permitem adicionar camp
 
 Durante a instalação, a extensão configura automaticamente o custom field necessário para que os clientes possam inserir seu CPF/CNPJ durante o registro:
 
-![CPF/CNPJ durante o registro](/img/ecommerce/opencart/account-register-with-taxid.png)
+![CPF/CNPJ durante o registro](./__assets__/opencart4/account-register-with-taxid.png)
 
 Caso deseje, é possível alterar o custom field utilizado ou até mesmo desativar essa configuração no painel de administração, selecionando a opção _None_ (Nenhum):
 
-![Configuração ou desativação do custom field](/img/ecommerce/opencart/admin-settings-custom-field.png)
+![Configuração ou desativação do custom field](./__assets__/opencart4/admin-settings-custom-field.png)
 
 Se a extensão não puder encontrar um custom field, no checkout irá aparecer diretamente um campo para que o cliente possa inserir seu CPF ou CNPJ, logo acima do botão de confirmação do pedido:
 
-![Campo CPF/CNPJ durante o checkout](/img/ecommerce/opencart/checkout-custom-field.png)
+![Campo CPF/CNPJ durante o checkout](./__assets__/opencart4/checkout-custom-field.png)
 
 ## Como configurar os status dos pedidos
 
 As configurações dos status de cada pedido podem ser encontradas na página de configurações:
 
-![Configurações dos status dos pedidos](/img/ecommerce/opencart/admin-settings-order-status.png)
+![Configurações dos status dos pedidos](./__assets__/opencart4/admin-settings-order-status.png)
 
 ### Quando um pedido for criado
 
 Por padrão, quando a cobrança da Woovi é criada, o status do pedido é alterado para _Pending_ (pendente). No entanto, é possível configurá-lo para qualquer status desejado:
 
-![Configuração do status quando um pedido for criado](/img/ecommerce/opencart/admin-settings-order-status-when-waiting.png)
+![Configuração do status quando um pedido for criado](./__assets__/opencart4/admin-settings-order-status-when-waiting.png)
 
 Veja um exemplo de pedido que acabou de ser criado:
 
-![Pedido de exemplo com o status pendente](/img/ecommerce/opencart/example-order-pending-status.png)
+![Pedido de exemplo com o status pendente](./__assets__/opencart4/example-order-pending-status.png)
 
 ### Quando o pedido for pago
 
 Por padrão, quando a cobrança da Woovi é paga, o status do pedido é alterado para _Processing_ (processando). No entanto, é possível configurá-lo para qualquer status desejado:
 
-![Configuração do status quando um pedido for pago](/img/ecommerce/opencart/admin-settings-order-status-when-paid.png)
+![Configuração do status quando um pedido for pago](./__assets__/opencart4/admin-settings-order-status-when-paid.png)
 
 Veja um exemplo de pedido que acabou de ser pago:
 
-![Pedido de exemplo com o status processando](/img/ecommerce/opencart/example-order-processing-status.png)
+![Pedido de exemplo com o status processando](./__assets__/opencart4/example-order-processing-status.png)
 
 ## Como visualizar os logs da sua loja
 
 Você pode acessar os logs da sua loja acessando a página localizada na barra lateral do seu painel de administração, em _System_ (Sistema) > _Maintenance_ (Manutenção) > _Error logs_ (Registro de erros):
 
-![Opção de log na barra lateral do painel](/img/ecommerce/opencart/admin-sidebar-log-option.png)
+![Opção de log na barra lateral do painel](./__assets__/opencart4/admin-sidebar-log-option.png)
 
 Na página de logs, clique no botão "woovi.log" para acessar a página com os logs da extensão:
 
-![Página de logs da extensão](/img/ecommerce/opencart/admin-logs-page.png)
+![Página de logs da extensão](./__assets__/opencart4/admin-logs-page.png)
