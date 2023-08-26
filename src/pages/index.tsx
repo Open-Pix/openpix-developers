@@ -13,7 +13,14 @@ import {
   FaOpencart,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
-import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi, SiRuby } from 'react-icons/si';
+import {
+  SiVtex,
+  SiNodedotjs,
+  SiPowershell,
+  SiWoo,
+  SiDelphi,
+  SiRuby,
+} from 'react-icons/si';
 import { TbBrandCSharp, TbWebhook } from 'react-icons/tb';
 
 import Layout from '@theme/Layout';
@@ -23,6 +30,7 @@ import BotConversaIcon from '../icons/BotConversaIcon';
 import SocPanelIcon from '../icons/SocPanelIcon';
 import N8nIcon from '../icons/N8NIcon';
 import AssineOnlineIcon from '../icons/AssineOnlineIcon';
+import NuvemshopIcon from '../icons/NuvemshopIcon';
 
 import WabizIcon from '../icons/WabizIcon';
 
@@ -100,8 +108,7 @@ const cards = [
   },
   {
     title: 'WhatsApp',
-    content:
-      'Envie cobranças Pix por WhatsApp para seus clientes.',
+    content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
     icon: <FaWhatsapp color='#25d366' size={30} />,
     docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
     to: 'https://app.woovi.com/home/applications/js/add',
@@ -113,6 +120,14 @@ const cards = [
     icon: <SiVtex color={'#ff3464'} size={30} />,
     docsTo: '/docs/ecommerce/vtex/vtex-integrating',
     to: 'https://app.woovi.com/home/applications/vtex/add',
+  },
+  {
+    title: 'Plugin Nuvemshop',
+    content:
+      'Pix para Nuvemshop. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
+    icon: <NuvemshopIcon color={'#2B3356'} size={30} />,
+    docsTo: '/docs/ecommerce/nuvemshop/nuvemshop-integrating',
+    to: 'https://app.woovi.com/home/applications/nuvemshop/add',
   },
   {
     title: 'Plugin Javascript',
@@ -148,18 +163,18 @@ const cards = [
   },
   {
     title: 'PHP',
-    content: 'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    content:
+      'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaPhp color={'#787cb5'} size={30} />,
-    docsTo:
-      '/docs/category/php',
+    docsTo: '/docs/category/php',
     to: 'https://app.woovi.com/home/applications/php/add',
   },
   {
     title: 'Ruby',
-    content: 'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    content:
+      'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <SiRuby color={'#CC342D'} size={30} />,
-    docsTo:
-      '/docs/category/ruby',
+    docsTo: '/docs/category/ruby',
     to: 'https://app.woovi.com/home/applications/ruby/add',
   },
   {
@@ -188,10 +203,10 @@ const cards = [
   },
   {
     title: 'Java',
-    content: 'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    content:
+      'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaJava color={'#f89820'} size={30} />,
-    docsTo:
-      '/docs/category/java',
+    docsTo: '/docs/category/java',
     to: 'https://app.woovi.com/home/applications/java/add',
   },
   {
