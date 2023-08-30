@@ -1,0 +1,13 @@
+{
+  "label": "Laravel",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Laravel"
+  },
+  "customProps": {
+    "description": "Integração Woovi com Laravel"
+  }
+}
