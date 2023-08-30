@@ -1,0 +1,13 @@
+{
+  "label": "Frameworks",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Frameworks"
+  },
+  "customProps": {
+    "description": "Integração Woovi com frameworks PHP"
+  }
+}
