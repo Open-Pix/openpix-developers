@@ -45,4 +45,4 @@ Nossa extensão oficial para o OpenCart v3 utiliza nosso SDK em PHP para criar c
 
 Veja o código-fonte dela no [GitHub](https://github.com/Open-Pix/opencart3-woovi).
 
-Para saber mais sobre essa extensão, consulte a nossa [documentação](../../ecommerce/opencart3-extension).
+Para saber mais sobre essa extensão, consulte a nossa [documentação](../../ecommerce/opencart/opencart3-extension).
