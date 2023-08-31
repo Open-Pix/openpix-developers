@@ -244,6 +244,6 @@ Sendo interfaces, é necessário ter uma implementação instalada, como `guzzle
 
 As PSRs são utilizadas para não depender diretamente de clientes HTTP, deixado a cargo do desenvolvedor.
 
-## Exemplo de integração
+## Exemplos de integração
 
-[Veja um exemplo de integração com o SDK de PHP](./example.md).
+[Veja exemplos de integração com o SDK de PHP](./examples.md).
