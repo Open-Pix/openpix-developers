@@ -91,10 +91,33 @@ class OpenPixServiceProvider extends ServiceProvider
             $appId = env('OPENPIX_APP_ID');
             $baseUri = env('OPENPIX_BASE_URI', 'https://api.openpix.com.br');
 
-            return new Client($appId, $baseUri);
+            return Client::create($appId, $baseUri);
         });
     }
 }
+```
+
+Após criar o provedor de serviços, é necessário [registrá-lo](https://laravel.com/docs/10.x/providers#registering-providers), adicionando-o ao arquivo de configuração `config/app.php`:
+
+```php
+    // ...
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        // ...
+
+        /*
+         * Application Service Providers...
+         */
+
+        // ...
+        App\Providers\OpenPixServiceProvider::class,
+    ])->toArray(),
+    // ...
+```
+
+Não se esqueça de limpar o cache de configuração, já que você fez uma atualização nas configurações:
+
+```bash
+php artisan config:clear
 ```
 
 ## Como utilizar o SDK
