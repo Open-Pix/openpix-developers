@@ -11,6 +11,7 @@ import {
   FaPython,
   FaWhatsapp,
   FaOpencart,
+  FaShopify,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
 import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi, SiRuby } from 'react-icons/si';
@@ -78,7 +79,7 @@ const cards = [
       'Pix para Magento1. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
     docsTo: '/docs/ecommerce/magento1/magento1-oneclick',
-    to: 'https://app.woovi.com/home/applications/magento1/add/oneclick',
+    to: 'https://app.openpix.com/home/applications/magento1/add/oneclick',
   },
   {
     title: 'Plugin Magento2',
@@ -111,6 +112,13 @@ const cards = [
     icon: <SiVtex color={'#ff3464'} size={30} />,
     docsTo: '/docs/ecommerce/vtex/vtex-integrating',
     to: 'https://app.woovi.com/home/applications/vtex/add',
+  },
+  {
+    title: 'Shopify',
+    content:'Shopify. Integrate with Shopify to receive payments via Pix in your account.',
+    docsTo: 'https://developers.openpix.com.br/docs/integrations/shopify/shopify-how-to-integrate-with-openpix',
+    icon: <FaShopify color={'#96bf48'} size={30} />,
+    to: 'https://app.openpix.com/home/applications/shopify/add',
   },
   {
     title: 'Plugin Javascript',
