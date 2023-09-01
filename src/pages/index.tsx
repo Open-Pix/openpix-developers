@@ -115,7 +115,7 @@ const cards = [
   },
   {
     title: 'Shopify',
-    content:'Shopify. Integrate with Shopify to receive payments via Pix in your account.',
+    content:'Integre com Shopify para receber pagamentos via Pix em sua conta.',
     docsTo: 'https://developers.openpix.com.br/docs/integrations/shopify/shopify-how-to-integrate-with-openpix',
     icon: <FaShopify color={'#96bf48'} size={30} />,
     to: 'https://app.openpix.com/home/applications/shopify/add',
