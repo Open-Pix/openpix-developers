@@ -243,3 +243,7 @@ A PSR-17 é usada para fornecer interfaces para mensagens HTTP, tanto requisiç�
 Sendo interfaces, é necessário ter uma implementação instalada, como `guzzlehttp/guzzle` para a PSR-18 e `guzzlehttp/psr7` para a PSR-17.
 
 As PSRs são utilizadas para não depender diretamente de clientes HTTP, deixado a cargo do desenvolvedor.
+
+## Exemplos de integração
+
+[Veja exemplos de integração com o SDK de PHP](./examples.md).

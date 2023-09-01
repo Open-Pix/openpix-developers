@@ -14,7 +14,14 @@ import {
   FaShopify,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
-import { SiVtex, SiNodedotjs, SiPowershell, SiWoo, SiDelphi, SiRuby } from 'react-icons/si';
+import {
+  SiVtex,
+  SiNodedotjs,
+  SiPowershell,
+  SiWoo,
+  SiDelphi,
+  SiRuby,
+} from 'react-icons/si';
 import { TbBrandCSharp, TbWebhook } from 'react-icons/tb';
 
 import Layout from '@theme/Layout';
@@ -24,6 +31,9 @@ import BotConversaIcon from '../icons/BotConversaIcon';
 import SocPanelIcon from '../icons/SocPanelIcon';
 import N8nIcon from '../icons/N8NIcon';
 import AssineOnlineIcon from '../icons/AssineOnlineIcon';
+import NuvemshopIcon from '../icons/NuvemshopIcon';
+
+import WabizIcon from '../icons/WabizIcon';
 
 import styles from './index.module.css';
 
@@ -99,8 +109,7 @@ const cards = [
   },
   {
     title: 'WhatsApp',
-    content:
-      'Envie cobranças Pix por WhatsApp para seus clientes.',
+    content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
     icon: <FaWhatsapp color='#25d366' size={30} />,
     docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
     to: 'https://app.openpix.com/home/applications/js/add',
@@ -119,6 +128,14 @@ const cards = [
     docsTo: 'https://developers.openpix.com.br/docs/integrations/shopify/shopify-how-to-integrate-with-openpix',
     icon: <FaShopify color={'#96bf48'} size={30} />,
     to: 'https://app.openpix.com/home/applications/shopify/add',
+  },
+  {
+    title: 'Plugin Nuvemshop',
+    content:
+      'Pix para Nuvemshop. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
+    icon: <NuvemshopIcon color={'#2B3356'} size={30} />,
+    docsTo: '/docs/ecommerce/nuvemshop/nuvemshop-integrating',
+    to: 'https://app.woovi.com/home/applications/nuvemshop/add',
   },
   {
     title: 'Plugin Javascript',
@@ -154,15 +171,16 @@ const cards = [
   },
   {
     title: 'PHP',
-    content: 'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    content:
+      'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaPhp color={'#787cb5'} size={30} />,
-    docsTo:
-      '/docs/category/php',
+    docsTo: '/docs/category/php',
     to: 'https://app.openpix.com/home/applications/php/add',
   },
   {
     title: 'Ruby',
-    content: 'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    content:
+      'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <SiRuby color={'#CC342D'} size={30} />,
     docsTo:
       '/docs/category/ruby',
@@ -194,7 +212,8 @@ const cards = [
   },
   {
     title: 'Java',
-    content: 'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
+    content:
+      'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaJava color={'#f89820'} size={30} />,
     docsTo:
       '/docs/category/java',
@@ -252,12 +271,28 @@ const cards = [
     docsTo: '/docs/integrations/socpanel-openpix',
   },
   {
-    title: 'OpenCart',
+    title: 'OpenCart 3',
+    content:
+      'Aumente suas vendas agora no OpenCart 3 recebendo pagamentos instantâneos com Pix!',
+    icon: <FaOpencart size={30} />,
+    docsTo: '/docs/ecommerce/opencart/opencart3-extension',
+    to: 'https://app.woovi.com/home/applications/opencart3/add',
+  },
+  {
+    title: 'OpenCart 4',
     content:
       'Aumente suas vendas agora no OpenCart 4 recebendo pagamentos instantâneos com Pix!',
     icon: <FaOpencart size={30} />,
-    docsTo: '/docs/ecommerce/opencart/opencart-extension',
+    docsTo: '/docs/ecommerce/opencart/opencart4-extension',
     to: 'https://app.openpix.com/home/applications/opencart/add',
+  },
+  {
+    title: 'Wabiz',
+    content:
+      'Wabiz. Crie Pix e integre com o Wabiz para receber pagamentos via Pix em seu restaurante.',
+    icon: <WabizIcon size={30} />,
+    docsTo: '/docs/partnerships/wabiz-partner',
+    to: 'https://app.woovi.com/home/applications/wabiz/add',
   },
 ];
 

@@ -1,13 +1,13 @@
 {
-  "label": "OpenCart",
+  "label": "Laravel",
   "collapsible": true,
   "collapsed": true,
   "className": "red",
   "link": {
     "type": "generated-index",
-    "title": "OpenCart"
+    "title": "Laravel"
   },
   "customProps": {
-    "description": "Veja como integrar o Pix em sua loja OpenCart"
+    "description": "Integração Woovi com Laravel"
   }
 }
