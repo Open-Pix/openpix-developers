@@ -11,6 +11,7 @@ import {
   FaPython,
   FaWhatsapp,
   FaOpencart,
+  FaShopify,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
 import {
@@ -88,7 +89,7 @@ const cards = [
       'Pix para Magento1. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
     docsTo: '/docs/ecommerce/magento1/magento1-oneclick',
-    to: 'https://app.woovi.com/home/applications/magento1/add/oneclick',
+    to: 'https://app.openpix.com/home/applications/magento1/add/oneclick',
   },
   {
     title: 'Plugin Magento2',
@@ -96,7 +97,7 @@ const cards = [
       'Pix para Magento2. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaMagento color={'#f46f26'} size={30} />,
     docsTo: '/docs/ecommerce/magento2/magento2-oneclick',
-    to: 'https://app.woovi.com/home/applications/magento2/add/oneclick',
+    to: 'https://app.openpix.com/home/applications/magento2/add/oneclick',
   },
   {
     title: 'Plugin WooCommerce',
@@ -104,14 +105,14 @@ const cards = [
       'Pix para Woo. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <SiWoo color={'#945888'} size={30} />,
     docsTo: '/docs/ecommerce/woocommerce/woocommerce-oneclick',
-    to: 'https://app.woovi.com/home/applications/woocommerce/add/oneclick',
+    to: 'https://app.openpix.com/home/applications/woocommerce/add/oneclick',
   },
   {
     title: 'WhatsApp',
     content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
     icon: <FaWhatsapp color='#25d366' size={30} />,
     docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
-    to: 'https://app.woovi.com/home/applications/js/add',
+    to: 'https://app.openpix.com/home/applications/js/add',
   },
   {
     title: 'Plugin VTEX',
@@ -119,7 +120,14 @@ const cards = [
       'Pix para VTEX. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <SiVtex color={'#ff3464'} size={30} />,
     docsTo: '/docs/ecommerce/vtex/vtex-integrating',
-    to: 'https://app.woovi.com/home/applications/vtex/add',
+    to: 'https://app.openpix.com/home/applications/vtex/add',
+  },
+  {
+    title: 'Shopify',
+    content:'Integre com Shopify para receber pagamentos via Pix em sua conta.',
+    docsTo: 'https://developers.openpix.com.br/docs/integrations/shopify/shopify-how-to-integrate-with-openpix',
+    icon: <FaShopify color={'#96bf48'} size={30} />,
+    to: 'https://app.openpix.com/home/applications/shopify/add',
   },
   {
     title: 'Plugin Nuvemshop',
@@ -135,7 +143,7 @@ const cards = [
       'Pix para portais de cliente ou eCommerce Nativo. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <FaJsSquare color={'#f7e018'} size={30} />,
     docsTo: '/docs/plugin',
-    to: 'https://app.woovi.com/home/applications/js/add',
+    to: 'https://app.openpix.com/home/applications/js/add',
   },
   {
     title: 'API REST',
@@ -143,7 +151,7 @@ const cards = [
     icon: <FaReact color={'#353535'} size={30} />,
     docsTo:
       '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin',
-    to: 'https://app.woovi.com/home/applications/api/add',
+    to: 'https://app.openpix.com/home/applications/api/add',
   },
   {
     title: 'Oracle Commerce Cloud',
@@ -151,7 +159,7 @@ const cards = [
       'Pix para Oracle. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <GrOracle color={'#ed3237'} size={30} />,
     docsTo: 'https://openpix.com.br/ecommerce/oracle-commerce-cloud',
-    to: 'https://app.woovi.com/home/applications/oracle/add',
+    to: 'https://app.openpix.com/home/applications/oracle/add',
   },
   {
     title: 'Webhook',
@@ -159,7 +167,7 @@ const cards = [
       'Seja avisado em tempo real sempre que um pagamento via Pix for realizado.',
     icon: <TbWebhook color={'#353535'} size={30} />,
     docsTo: '/docs/webhook/platform/webhook-platform-api',
-    to: 'https://app.woovi.com/home/applications/webhook/create',
+    to: 'https://app.openpix.com/home/applications/webhook/create',
   },
   {
     title: 'PHP',
@@ -167,15 +175,16 @@ const cards = [
       'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaPhp color={'#787cb5'} size={30} />,
     docsTo: '/docs/category/php',
-    to: 'https://app.woovi.com/home/applications/php/add',
+    to: 'https://app.openpix.com/home/applications/php/add',
   },
   {
     title: 'Ruby',
     content:
       'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <SiRuby color={'#CC342D'} size={30} />,
-    docsTo: '/docs/category/ruby',
-    to: 'https://app.woovi.com/home/applications/ruby/add',
+    docsTo:
+      '/docs/category/ruby',
+    to: 'https://app.openpix.com/home/applications/ruby/add',
   },
   {
     title: 'Shell',
@@ -183,7 +192,7 @@ const cards = [
     icon: <SiPowershell color={'#787cb5'} size={30} />,
     docsTo:
       '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
-    to: 'https://app.woovi.com/home/applications/shell/add',
+    to: 'https://app.openpix.com/home/applications/shell/add',
   },
   {
     title: 'NodeJs',
@@ -191,7 +200,7 @@ const cards = [
     icon: <SiNodedotjs color={'#80bd41'} size={30} />,
     docsTo:
       '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
-    to: 'https://app.woovi.com/home/applications/nodejs/add',
+    to: 'https://app.openpix.com/home/applications/nodejs/add',
   },
   {
     title: 'C#',
@@ -199,15 +208,16 @@ const cards = [
     icon: <TbBrandCSharp color={'#9b4f97'} size={30} />,
     docsTo:
       '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
-    to: 'https://app.woovi.com/home/applications/csharp/add',
+    to: 'https://app.openpix.com/home/applications/csharp/add',
   },
   {
     title: 'Java',
     content:
       'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaJava color={'#f89820'} size={30} />,
-    docsTo: '/docs/category/java',
-    to: 'https://app.woovi.com/home/applications/java/add',
+    docsTo:
+      '/docs/category/java',
+    to: 'https://app.openpix.com/home/applications/java/add',
   },
   {
     title: 'Python',
@@ -215,7 +225,7 @@ const cards = [
     icon: <FaPython size={30} />,
     docsTo:
       '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
-    to: 'https://app.woovi.com/home/applications/python/add',
+    to: 'https://app.openpix.com/home/applications/python/add',
   },
   {
     title: 'Delphi',
@@ -223,7 +233,7 @@ const cards = [
     icon: <SiDelphi color={'#f42736'} size={30} />,
     docsTo:
       '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
-    to: 'https://app.woovi.com/home/applications/delphi/add',
+    to: 'https://app.openpix.com/home/applications/delphi/add',
   },
   {
     title: 'SDK React',
@@ -274,7 +284,7 @@ const cards = [
       'Aumente suas vendas agora no OpenCart 4 recebendo pagamentos instantâneos com Pix!',
     icon: <FaOpencart size={30} />,
     docsTo: '/docs/ecommerce/opencart/opencart4-extension',
-    to: 'https://app.woovi.com/home/applications/opencart/add',
+    to: 'https://app.openpix.com/home/applications/opencart/add',
   },
   {
     title: 'Wabiz',
