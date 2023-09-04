@@ -150,3 +150,9 @@ class DonationController extends Controller
 ```
 
 Nesse exemplo, estamos utilizando a funcionalidade de [injeção automática](https://laravel.com/docs/10.x/container#automatic-injection) do Laravel.
+
+## Exemplo de integração
+
+Temos um exemplo de integração com o SDK de PHP e Laravel preparado para você em nosso repositório do GitHub: https://github.com/Open-Pix/laravel-backend-integration
+
+Mostra o fluxo do SDK de PHP em ação, incluindo a criação de cobranças, a atualização dos status das doações em tempo real por meio de webhooks, bem como a instalação e configuração do SDK de PHP, e muito mais.

@@ -309,3 +309,9 @@ public function handleChargePaidWebhook(Request $request)
     return response()->json(["message" => "Success."]);
 }
 ```
+
+## Exemplo de integração com webhooks
+
+Temos um exemplo completo do controller que recebe webhooks [nesse arquivo](https://github.com/Open-Pix/laravel-backend-integration/blob/623baa803e501c5bbd75f19ad43a3b61e205c534/app/Http/Controllers/WebhookController.php).
+
+Veja mais exemplos de integração com Laravel em [nosso repositório](https://github.com/Open-Pix/laravel-backend-integration).
