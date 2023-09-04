@@ -47,7 +47,7 @@ Veja o código-fonte dela no [GitHub](https://github.com/Open-Pix/opencart3-woov
 
 Para saber mais sobre essa extensão, consulte a nossa [documentação](../../ecommerce/opencart/opencart3-extension).
 
-### Laravel
+## Laravel
 
 Produzimos um simples aplicativo web de doações que demonstra o fluxo do SDK de PHP, como criação de cobranças, atualização em tempo real dos status das doações via webhooks, instalação e configuração do SDK de PHP e mais.
 
