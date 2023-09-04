@@ -46,3 +46,9 @@ Nossa extensão oficial para o OpenCart v3 utiliza nosso SDK em PHP para criar c
 Veja o código-fonte dela no [GitHub](https://github.com/Open-Pix/opencart3-woovi).
 
 Para saber mais sobre essa extensão, consulte a nossa [documentação](../../ecommerce/opencart/opencart3-extension).
+
+### Laravel
+
+Produzimos um simples aplicativo web de doações que demonstra o fluxo do SDK de PHP, como criação de cobranças, atualização em tempo real dos status das doações via webhooks, instalação e configuração do SDK de PHP e mais.
+
+Veja em nosso repositório como foi feita a integração: https://github.com/Open-Pix/laravel-backend-integration
