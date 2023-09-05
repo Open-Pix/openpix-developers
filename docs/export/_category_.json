@@ -1,0 +1,13 @@
+{
+  "label": "Exportações/Relatórios",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Expotrações/Relatórios visão geral"
+  },
+  "customProps": {
+    "description": "Expotrações/Relatórios documentação"
+  }
+}
