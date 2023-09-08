@@ -9,7 +9,7 @@ tags:
 
 ## Pagamento confirmado
 
-Os webhooks de `Pagamento confirmado` enviam objetos com os seguintes campos no seu payload:
+Os webhooks de `Pagamento Externo Confirmado (Pix Out)` enviam objetos com os seguintes campos no seu payload:
 
 - `payment`: Objeto com detalhes do Pagamento
 - `transaction`: Objeto com detalhes da Transação Pix
@@ -36,7 +36,7 @@ Os webhooks de `Pagamento confirmado` enviam objetos com os seguintes campos no 
 
 ## Falha no pagamento
 
-Os webhooks de `Falha no pagamento` enviam objetos com os seguintes campos no seu payload:
+Os webhooks de `Pagamento Externo com Falha (Pix Out)` enviam objetos com os seguintes campos no seu payload:
 
 - `payment`: Objeto com detalhes do Pagamento
 - `transaction`: Objeto com detalhes da Transação Pix se ela existir
@@ -63,7 +63,7 @@ Os webhooks de `Falha no pagamento` enviam objetos com os seguintes campos no se
 
 ## Pagamento removido
 
-Os webhooks de `Pagamento removido` enviam objetos com os seguintes campos no seu payload:
+Os webhooks de `Pagamento Externo Removido (Pix Out)` enviam objetos com os seguintes campos no seu payload:
 
 - `payment`: Objeto com o correlationID do pagamento removido
 
