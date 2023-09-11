@@ -13,24 +13,38 @@ import Embed from 'react-embed';
 
 ### 2. Configurando o Plugin WooCommerce
 
-Entre em plugins e clique em `Settings` para configurar o plugin
+Após a instalação, é necessário integrar o plugin com a nossa plataforma. Isso pode ser realizado por meio do nosso botão de um clique ou inserindo a URL do seu ecommerce diretamente em nossa plataforma.
+
+Ao configurar uma nova integração, será possível criar novos pedidos com Pix e OpenPix Parcelado, e o webhook já estará configurado para atualizar o status de seus pedidos em tempo real.
+
+Antes de tudo, vá até a página de configurações do seu plugin, clicando em "Settings", para configurar o plugin:
 
 ![Configuracoes](/img/ecommerce/woocommerce/woocommerce-plugin-settings.png)
 
-### 3. Pegue a sua URL de Webhook
+### 2.1. Configurando com um clique (recomendado)
 
-Copie a URL de Webhook da sua loja WooCommerce
+Na página de configurações do plugin, clique no botão "Configure now with one click":
+
+![Configurações do plugin com o botão de um clique](../__assets__/woocommerce-admin-1click.png)
+
+Ao pressionar este botão, uma nova página será aberta em nossa plataforma, onde você poderá configurar rapidamente uma nova integração com sua loja WooCommerce.
+
+Na plataforma, a URL do seu e-commerce será configurada automaticamente; você só precisará clicar em "Salvar":
+
+![Nova integração WooCommerce na plataforma](../__assets__/woocommerce-save-platform-integration.png)
+
+### 2.2. Configurando através da URL de seu ecommerce
+
+Outra alternativa para autenticar o seu plugin seria acessar diretamente a plataforma e inserir a URL do seu e-commerce.
+
+Na página de configurações do plugin, copie a URL de Webhook da sua loja WooCommerce:
 
 ![Webhook URL](/img/ecommerce/woocommerce/woocommerce-plugin-webhook.png)
 
-### 4. Configure a integração na OpenPix
-
-Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/woocommerce/add/oneclick) ou vá em `API/Plugins` > `WooCommerce` > `Adicionar`
+Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/woocommerce/add/oneclick) ou vá em `API/Plugins` > `WooCommerce` > `Adicionar`:
 
 ![Webhook URL](/img/ecommerce/woocommerce/woocommerce-plugin-tutorial-card.png)
 
-### 5. Coloque o Webhook URL
-
-Cole a URL de Webhook que você copiou no campo
+Cole a URL de Webhook que você copiou no campo "Site":
 
 ![Webhook URL](/img/ecommerce/woocommerce/woocommerce-plugin-tutorial.png)
