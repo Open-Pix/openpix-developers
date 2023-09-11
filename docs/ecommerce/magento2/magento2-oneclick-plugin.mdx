@@ -30,19 +30,35 @@ Para utilizar este tutorial é necessário ter uma versão acima da 2.3.0
 
 <Magento2Download />
 
-### 2. Acesse a configuração do Magento2
+### 2. Autenticação
 
-Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/magento2/add/oneclick) ou vá em `API/Plugins` > `Magento2` > `Adicionar`
+Após a instalação, é necessário autenticar o plugin com a nossa plataforma. Isso pode ser realizado por meio do nosso botão de um clique ou ao lidar com a URL do webhook.
+
+### 2.1. Autenticação com um clique (preferencialmente)
+
+Na página de configurações do plugin em `Vendas > Formas de pagamento` (`Sales > Payment Methods`), clique no botão "Conectar a extensão" (_Connect the extension_):
+
+![Configurações da extensão com o botão de um clique](./__assets__/magento2-admin-1click.png)
+
+Ao pressionar este botão, uma nova página será aberta em nossa plataforma, onde você poderá configurar rapidamente uma nova integração com o Magento 2.
+
+Na plataforma, a URL do seu e-commerce será configurada automaticamente; você só precisará clicar em "Salvar":
+
+![Nova integração Magento 2 na plataforma](./__assets__/magento2-save-platform-integration.png)
+
+Ao salvar, será possível criar novos pedidos com Pix e OpenPix Parcelado, e o webhook já estará configurado para atualizar o status de seus pedidos em tempo real.
+
+### 2.2. Autenticação com a URL do e-commerce
+
+Outra alternativa para autenticar o seu plugin seria acessar diretamente a plataforma e inserir a URL do seu e-commerce.
+
+Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/magento2/add/oneclick) ou vá em `API/Plugins` > `Magento2` > `Adicionar`.
 
 ![Tutorial-box](./__assets__/magento2-tutorial-box.png)
 
-### 2.1 Coloque o Link do seu site
-
-Coloque a URL do seu site no campo
+Coloque a URL do seu site no campo "Site":
 
 ![Oneclick-Input](./__assets__/magento2-oneclick-input.png)
-
-### 2.2 Clique em salvar
 
 Clique no botão de salvar, e assim que tiver sucesso na sua integração você verá a seguinte mensagem:
 ![Oneclick-Success](./__assets__/magento2-oneclick-success.png)
