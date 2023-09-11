@@ -12,6 +12,7 @@ import {
   FaWhatsapp,
   FaOpencart,
   FaShopify,
+  FaLaravel,
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
 import {
@@ -175,6 +176,14 @@ const cards = [
       'SDK PHP completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaPhp color={'#787cb5'} size={30} />,
     docsTo: '/docs/category/php',
+    to: 'https://app.openpix.com/home/applications/php/add',
+  },
+  {
+    title: 'Laravel',
+    content:
+      'Com Laravel e OpenPix, você alcança sucesso rápido em vendas e desenvolvimento web com pagamentos instantâneos.',
+    icon: <FaLaravel color={'#F05340'} size={30} />,
+    docsTo: '/docs/category/laravel',
     to: 'https://app.openpix.com/home/applications/php/add',
   },
   {
