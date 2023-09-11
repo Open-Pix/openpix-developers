@@ -33,7 +33,7 @@ import SocPanelIcon from '../icons/SocPanelIcon';
 import N8nIcon from '../icons/N8NIcon';
 import AssineOnlineIcon from '../icons/AssineOnlineIcon';
 import NuvemshopIcon from '../icons/NuvemshopIcon';
-
+import BubbleIcon from '../icons/BubbleIcon';
 import WabizIcon from '../icons/WabizIcon';
 
 import styles from './index.module.css';
@@ -257,6 +257,13 @@ const cards = [
       'Plug-in de integração n8n.io. Crie Pix e ouça eventos Pix diretamente em seus projetos n8n.',
     icon: <N8nIcon size={30} />,
     docsTo: '/docs/integrations/n8n-with-openpix',
+  },
+  {
+    title: 'Bubble',
+    content:
+      'Integre a OpenPix direto com sua aplicação Bubble. Crie cobranças, ouça eventos, tudo direto da sua aplicação.',
+    icon: <BubbleIcon size={30} />,
+    docsTo: '/docs/integrations/integrating-openpix-with-bubbleio',
   },
   {
     title: 'Assine Online',
