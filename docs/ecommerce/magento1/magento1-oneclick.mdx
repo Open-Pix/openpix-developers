@@ -26,25 +26,42 @@ Para utilizar este tutorial é necessário ter uma versão acima da 1.4.0
 
 ## Configurando o Plugin Magento1
 
-### 1. Instale o Plugin OpenPix na sua instância Magento1
+### Instale o Plugin OpenPix na sua instância Magento1
 
 <Magento1Download/>
 
-### 2. Acesse a configuração do Magento1
+### Autenticação
 
-Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/magento1/add/oneclick) ou vá em `API/Plugins` > `Magento1` > `Adicionar`
+Após a instalação, é necessário autenticar o plugin com a nossa plataforma. Isso pode ser realizado por meio do nosso botão de um clique ou ao lidar com a URL do webhook.
+
+#### Através do botão de um clique (preferencialmente)
+
+Na página de configurações do plugin em `Vendas > Formas de pagamento` (`Sales > Payment methods`), clique no botão "Conectar a extensão" (_Connect the extension_):
+
+![Página de configurações com o botão de conectar a extensão](./__assets__/magento1-admin-1click-button.png)
+
+Ao pressionar este botão, uma nova página será aberta em nossa plataforma, onde você poderá configurar rapidamente uma nova integração com o Magento 1.
+
+Na plataforma, a URL do seu e-commerce será configurada automaticamente; você só precisará clicar em "Salvar":
+
+![Página de integração com Magento1 em nossa plataforma](./__assets__/magento1-save-integration-platform.png)
+
+Ao salvar, será possível criar novos pedidos com Pix e OpenPix Parcelado, e o webhook já estará configurado para atualizar o status de seus pedidos em tempo real.
+
+#### Através da URL do e-commerce
+
+Outra alternativa para autenticar o seu plugin seria acessar diretamente a plataforma e inserir a URL do seu e-commerce.
+
+Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/magento1/add/oneclick) ou vá em `API/Plugins` > `Magento1` > `Adicionar`.
 
 ![Tutorial-box](./__assets__/magento1-tutorial-box.png)
 
-### 2.1 Coloque o Link do seu site
-
-Coloque a URL do seu site no campo
+Coloque a URL do seu site no campo "Site":
 
 ![Oneclick-Input](./__assets__/magento1-oneclick-input.png)
 
-### 2.2 Clique em salvar
-
 Clique no botão de salvar, e assim que tiver sucesso na sua integração você verá a seguinte mensagem:
+
 ![Oneclick-Success](./__assets__/magento1-oneclick-success.png)
 
 ## Configurações Avançadas
