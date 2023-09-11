@@ -109,6 +109,13 @@ const cards = [
     to: 'https://app.openpix.com/home/applications/woocommerce/add/oneclick',
   },
   {
+    title: 'Plugin WooCommerce com OpenPix Parcelado',
+    content:
+      'Explore a OpenPix Parcelado com WooCommerce, que permite efetuar um pagamento inicial de 50% via Pix, deixando o restante em 4 parcelas no cartão.',
+    icon: <SiWoo color={'#945888'} size={30} />,
+    docsTo: '/docs/ecommerce/woocommerce/woocommerce-parcelado',
+  },
+  {
     title: 'WhatsApp',
     content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
     icon: <FaWhatsapp color='#25d366' size={30} />,
