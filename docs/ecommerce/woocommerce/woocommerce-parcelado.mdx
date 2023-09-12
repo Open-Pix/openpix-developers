@@ -27,29 +27,46 @@ Este documento detalha passos necessários para conectar a sua plataforma de e-C
 
 ### 2. Configurando o Plugin WooCommerce
 
-Entre em plugins e clique em `Settings Parcelado` para configurar o plugin
+Após a instalação, é necessário integrar o plugin com a nossa plataforma. Isso pode ser realizado por meio do nosso botão de um clique ou inserindo a URL do seu ecommerce diretamente em nossa plataforma.
 
-![Configuracoes Settings Parcelado](./__assets__/woocommerce-plugin-settings-v261.png)
+Ao configurar uma nova integração, será possível criar novos pedidos com Pix e OpenPix Parcelado, e o webhook já estará configurado para atualizar o status de seus pedidos em tempo real.
 
-### 3. Pegue a sua URL de Webhook
+Antes de tudo, vá até a página de configurações do seu plugin, clicando em "Settings Parcelado", para configurar o plugin:
 
-Copie a URL de Webhook da sua loja WooCommerce
+![Configurações Settings Parcelado](./__assets__/woocommerce-plugin-settings-v261.png)
+
+### 2.1. Configurando com um clique (recomendado)
+
+Na página de configurações do plugin, clique no botão "Configure now with one click":
+
+![Configurações do plugin com o botão de um clique](./__assets__/woocommerce-parcelado-admin-1click.png)
+
+Ao pressionar este botão, uma nova página será aberta em nossa plataforma, onde você poderá configurar rapidamente uma nova integração com sua loja WooCommerce.
+
+Na plataforma, a URL do seu e-commerce será configurada automaticamente; você só precisará clicar em "Salvar":
+
+![Nova integração WooCommerce na plataforma](./__assets__/woocommerce-save-platform-parcelado-integration.png)
+
+Após salvo, sua integração ja estará configurada. Você pode ir para o passo de [ativar as configurações dos clientes](#3-ativando-plugin-brazilian-market).
+
+### 2.2. Configurando através da URL de seu ecommerce
+
+Outra alternativa para configurar o plugin seria acessar diretamente a plataforma e inserir a URL do seu e-commerce.
+
+Primeiramente, copie a URL de Webhook da sua loja WooCommerce:
 
 ![Webhook URL Parcelado](./__assets__/woocommerce-plugin-webhook-parcelado.png)
 
-### 4. Configure a integração na OpenPix
-
-Entre na plataforma da OpenPix e [clique aqui](https://app.openpix.com/home/applications/woocommerce-pix-credit-card/add/oneclick) ou vá em `API/Plugins` > `Plugin WooCommerce Parcelado` > `Adicionar`
+Entre na plataforma da OpenPix e [clique aqui](https://app.openpix.com/home/applications/woocommerce-pix-credit-card/add/oneclick) ou vá em `API/Plugins` > `Plugin WooCommerce Parcelado` > `Adicionar`:
 
 ![Integration Box](./__assets__/woocommerce-integration-box-parcelado.png)
 
-### 5. Coloque o Webhook URL
-
-Cole a URL de Webhook que você copiou no campo
+Cole a URL de Webhook que você copiou no campo "Site":
 
 ![Webhook URL](./__assets__/woocommerce-plugin-tutorial.png)
 
-### 6. Ativando Plugin Brazilian Market
+### 3. Ativando Plugin Brazilian Market
+
 Para utilizar o OpenPix Parcelado e salvar o customer da order na sua cobrança OpenPix é necessário que seja ativado um plugin que possibilite que o cliente informe os campos abaixo no momento da compra.
 
 - Nome
@@ -60,7 +77,7 @@ Para utilizar o OpenPix Parcelado e salvar o customer da order na sua cobrança 
 
 Indicamos o uso do plugin [woocommerce-extra-checkout-fields-for-brazil](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/) para este caso. Uma vez ativado o plugin passará a salvar os clientes que informarem o CPF/CNPJ no momento da compra.
 
-### 7. Configurações do Plugin no WooCommerce
+### 4. Configurações do Plugin no WooCommerce
 Ao acessar as configurações do plugin após os passos anteriores note que o AppID OpenPix ja estará preenchido e confirme que o campo seja **Configured**.
 
 Você também pode editar o titulo, descrição e label do botão de compra do plugin.
@@ -69,7 +86,7 @@ Para o tutorial iremos seguir com o titulo **Pagar com OpenPix Parcelado** como 
 
 ![Parcelado Settings](./__assets__/woo-settings-parcelado.png)
 
-## 8. Realizar Pedido com Pix no WooCommerce
+## 5. Realizar Pedido com Pix no WooCommerce
 
 Escolha a opção de pagar o pedido usando OpenPix Parcelado ou o nome que você escolheu no momento da configuração do Plugin
 
