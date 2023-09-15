@@ -1,0 +1,13 @@
+{
+  "label": "Wake",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Wake visão geral"
+  },
+  "customProps": {
+    "description": "Wake documentação"
+  }
+}
