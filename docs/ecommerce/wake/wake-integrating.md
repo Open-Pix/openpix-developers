@@ -15,7 +15,7 @@ Este documento espera que você já tenha um ambiente Wake, e uma conta criada n
 
 ### 1. Acesse a configuração da Wake
 
-Entre na plataforma da OpenPix e [clique aqui](https://app.woovi.com/home/applications/wake/add) ou vá em `API/Plugins` > `Plugin Wake` > `Adicionar`
+Entre na plataforma da OpenPix e [clique aqui](https://app.openpix.com/home/applications/wake/add) ou vá em `API/Plugins` > `Plugin Wake` > `Adicionar`
 
 ![1](./__assets__/wake-integrating-1.png)
 
