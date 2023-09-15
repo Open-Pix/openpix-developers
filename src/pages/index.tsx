@@ -35,6 +35,7 @@ import AssineOnlineIcon from '../icons/AssineOnlineIcon';
 import NuvemshopIcon from '../icons/NuvemshopIcon';
 import BubbleIcon from '../icons/BubbleIcon';
 import WabizIcon from '../icons/WabizIcon';
+import WakeIcon from '../icons/WakeIcon';
 
 import styles from './index.module.css';
 
@@ -118,7 +119,7 @@ const cards = [
   {
     title: 'WhatsApp',
     content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
-    icon: <FaWhatsapp color='#25d366' size={30} />,
+    icon: <FaWhatsapp color="#25d366" size={30} />,
     docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
     to: 'https://app.openpix.com/home/applications/js/add',
   },
@@ -132,8 +133,10 @@ const cards = [
   },
   {
     title: 'Shopify',
-    content:'Integre com Shopify para receber pagamentos via Pix em sua conta.',
-    docsTo: 'https://developers.openpix.com.br/docs/integrations/shopify/shopify-how-to-integrate-with-openpix',
+    content:
+      'Integre com Shopify para receber pagamentos via Pix em sua conta.',
+    docsTo:
+      'https://developers.openpix.com.br/docs/integrations/shopify/shopify-how-to-integrate-with-openpix',
     icon: <FaShopify color={'#96bf48'} size={30} />,
     to: 'https://app.openpix.com/home/applications/shopify/add',
   },
@@ -143,7 +146,15 @@ const cards = [
       'Pix para Nuvemshop. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
     icon: <NuvemshopIcon color={'#2B3356'} size={30} />,
     docsTo: '/docs/ecommerce/nuvemshop/nuvemshop-integrating',
-    to: 'https://app.woovi.com/home/applications/nuvemshop/add',
+    to: 'https://app.openpix.com/home/applications/nuvemshop/add',
+  },
+  {
+    title: 'Plugin Wake',
+    content:
+      'Pix para Wake. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
+    icon: <WakeIcon color={'#C505F2'} size={40} />,
+    docsTo: '/docs/ecommerce/wake/wake-integrating',
+    to: 'https://app.openpix.com/home/applications/wake/add',
   },
   {
     title: 'Plugin Javascript',
@@ -198,8 +209,7 @@ const cards = [
     content:
       'SDK Ruby completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <SiRuby color={'#CC342D'} size={30} />,
-    docsTo:
-      '/docs/category/ruby',
+    docsTo: '/docs/category/ruby',
     to: 'https://app.openpix.com/home/applications/ruby/add',
   },
   {
@@ -231,8 +241,7 @@ const cards = [
     content:
       'SDK Java completo para criar cobranças, cadastrar clientes, consultar transações e muito mais.',
     icon: <FaJava color={'#f89820'} size={30} />,
-    docsTo:
-      '/docs/category/java',
+    docsTo: '/docs/category/java',
     to: 'https://app.openpix.com/home/applications/java/add',
   },
   {
