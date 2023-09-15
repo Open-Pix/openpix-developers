@@ -45,9 +45,9 @@ Entre na plataforma da OpenPix e [clique aqui](https://app.openpix.com/home/appl
 
 ![7](./__assets__/wake-integrating-7.png)
 
-### 8. Adicione a configuração
+Depois de preencher, adicione a configuração.
 
-### 9. Vá para a configuração que você acabou de criar e preencha as seguintes informações:
+### 8. Vá para a configuração que você acabou de criar e preencha as seguintes informações:
 
 - Configuração do Endpoint de Pagamento: https://api.woovi.com/api/wake
 - Versão: Completa
@@ -55,23 +55,23 @@ Entre na plataforma da OpenPix e [clique aqui](https://app.openpix.com/home/appl
   - paymentType: pix
   - appID: Coloque o AppID que você gerou na etapa [2.1](#21-copie-o-app-id-gerado)
 
-### 10. Vá até `Pagamentos > Grupos e Parcelamentos`
-
 ![8](./__assets__/wake-integrating-8.png)
 
-### 11. Crie um novo grupo
+### 9. Vá até `Pagamentos > Grupos e Parcelamentos`
 
 ![9](./__assets__/wake-integrating-9.png)
 
-### 12. Preencha com as seguintes informações
+### 10. Crie um novo grupo
 
 ![10](./__assets__/wake-integrating-10.png)
 
-### 13. Após salvar, volte em `Pagamentos > Grupos e Parcelamentos`
-
-### 14. Vincule a forma de pagamento que você criou anteriormente
+### 11. Preencha com as seguintes informações
 
 ![11](./__assets__/wake-integrating-11.png)
+
+### 12. Após salvar, volte em `Pagamentos > Grupos e Parcelamentos`
+
+### 13. Vincule a forma de pagamento que você criou anteriormente
 
 ![12](./__assets__/wake-integrating-12.png)
 
@@ -79,22 +79,24 @@ Entre na plataforma da OpenPix e [clique aqui](https://app.openpix.com/home/appl
 
 ![14](./__assets__/wake-integrating-14.png)
 
-### 15. Vá `Pagamentos > Estrutura de pagamentos`
-
 ![15](./__assets__/wake-integrating-15.png)
 
-### 16. Crie uma nova estrutura
+### 14. Vá `Pagamentos > Estrutura de pagamentos`
 
 ![16](./__assets__/wake-integrating-16.png)
 
-![17](./__assets__/wake-integrating-17.png)
+### 15. Crie uma nova estrutura
 
-### 17. Configure o grupo de pagamento que você acabou de criar nessa nova estrutura
+![17](./__assets__/wake-integrating-17.png)
 
 ![18](./__assets__/wake-integrating-18.png)
 
-### 18. Salve a estrutura
+### 16. Configure o grupo de pagamento que você acabou de criar nessa nova estrutura
 
 ![19](./__assets__/wake-integrating-19.png)
+
+### 17. Salve a estrutura
+
+![20](./__assets__/wake-integrating-20.png)
 
 Pronto, o método de pagamento Pix da OpenPix está configurado na sua Wake!
