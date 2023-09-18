@@ -153,6 +153,4 @@ Nesse exemplo, estamos utilizando a funcionalidade de [injeção automática](ht
 
 ## Exemplo de integração
 
-Temos um exemplo de integração com o SDK de PHP e Laravel preparado para você em nosso repositório do GitHub: https://github.com/Open-Pix/laravel-backend-integration
-
-Mostra o fluxo do SDK de PHP em ação, incluindo a criação de cobranças, a atualização dos status das doações em tempo real por meio de webhooks, bem como a instalação e configuração do SDK de PHP, e muito mais.
+Temos disponível um exemplo de integração Laravel que irá te auxiliar na utilização do Laravel. [Saiba mais](./example-integration.md).
