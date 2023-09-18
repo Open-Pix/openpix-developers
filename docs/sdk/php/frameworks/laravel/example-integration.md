@@ -67,3 +67,7 @@ Por padrão, a aplicação web é executada na URL http://0.0.0.0.
 Os logs deste exemplo de integração estarão na pasta de armazenamento de logs do Laravel, sendo por padrão `storage/logs`.
 
 Saiba mais na [documentação do Laravel](https://laravel.com/docs/10.x/logging).
+
+## Solução de problemas
+
+Preparamos um guia para você com possíveis soluções para problemas. [Saiba mais](./troubleshooting.md).
