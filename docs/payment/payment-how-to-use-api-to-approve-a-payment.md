@@ -23,7 +23,7 @@ Num exemplo prático, o body da sua requisição seguiria semelhante a este exem
 
 ```json
 {
-  "correlationID": "31ee9576-99ec-412a-9ac7-e142a4a6acf0"
+  "correlationID": "31ee9576-99ec-412a-9ac7-e142a4a6acf0",
 }
 ```
 
