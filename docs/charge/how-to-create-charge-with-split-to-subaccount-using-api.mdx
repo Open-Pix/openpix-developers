@@ -1,0 +1,102 @@
+---
+id: how-to-create-charge-with-split-to-subbaccount-using-api
+title: Como usar a API para criar uma cobrança com split para Sub Conta?
+tags:
+  - concept
+  - api
+  - subaccount
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade BETA
+:::
+
+Para criar uma cobrança Pix com split para sub conta, você utiliza o _endpoint_ `/api/v1/charge` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar uma cobrança Pix com Split são os seguintes:
+
+- **`value`**: O valor em centavos da cobrança Pix a ser criado.
+- **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
+- **`splits`**: Um array contendo as configurações de split realizado na hora do recebimento. No caso de split para sub contas 
+**_o array de splits deve sempre conter somente um elemento_**.
+
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "value": 100,
+  "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+  "splits": [
+    { "pixKey": "destinatario@openpix.com.br", "value": 15, splitType: "SPLIT_ACCUMULATOR" },
+  ]
+}
+```
+
+
+O valor do campo `value` dentro do objeto no array de `splits`, é o valor desejado para a realização do split em **centavos**. O valor do split não será debitado da conta de origem pois transações de split para sub contas são transações virtuais, somente será debitado da conta de origem o valor integral do saldo da sub conta no momento do saque da mesma.
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, além dos campos normais de cobrança criada, retornaremos os seguintes campos:
+
+```json
+{
+  "charge": {
+    ...Charge Payload
+    "splits": [
+      { "pixKey": "destinatario@openpix.com.br", "value": 15, splitType: "SPLIT_ACCUMULATOR" },
+    ]
+  },
+  "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+  "brCode": "00020101021226990014br.gov.bcb.pix2577pix-h.bpp.com.br/23114447/qrs1/v2/011Q0PuArnNb5VzolFm8H9X0A7yQb5Ayi6wZ2Koj6RX52040000530398654043.335802BR5911Krusty_Krab6009Sao_Paulo62290525cac964d74db74c479add4eabc63047932"
+}
+```
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":100, "splits": [{ "pixKey": "destinatario@openpix.com.br", "value": 15, splitType:"SPLIT_ACCUMULATOR"  }]}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 100,
+    correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+    splits: [
+      { pixKey: 'destinatario@openpix.com.br', value: 15, splitType: "SPLIT_ACCUMULATOR" },
+    ],
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
