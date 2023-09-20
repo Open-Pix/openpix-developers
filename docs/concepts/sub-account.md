@@ -8,6 +8,6 @@ tags:
 ---
 
 ## Sub Conta
-s
+
 Sub contas são contas virtuais representadas por uma chave pix que podem transacionar virtualmente valores através do sistema de split de pagamentos. Esses valores podem ser convertidos em transações reais através do saque para a chave pix registrada para a subconta.
 
