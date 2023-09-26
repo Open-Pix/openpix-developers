@@ -10,7 +10,7 @@ tags:
 
 ## Instalando
 
-É necessário ter o PHP com versão superior à 8.0 instalado com o [Gradle](https://gradle.org) ou [Maven](https://maven.apache.org/).
+É necessário ter o Java com versão superior à 8.0 instalado com o [Gradle](https://gradle.org) ou [Maven](https://maven.apache.org/).
 
 Use o repositório do "Maven Central" para instalar o SDK:
 
