@@ -2763,6 +2763,36 @@ paths:
                     type: string
 components:
   schemas:
+    SubAccount:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the sub account
+        pixKey:
+          type: string
+          description: The pix key for the sub account
+        balance:
+          type: number
+          description: Number in cents that represent the balance of the sub account
+    transaction:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the transaction
+        value:
+          type: number
+          description: The value of the transaction in cents
+        correlationID:
+          type: string
+          description: The correlation ID of the transaction
+        destinationAlias:
+          type: string
+          description: The pix key of the transaction
+        comment:
+          type: string
+          description: The comment of the transaction
     CompanyBankAccount:
       type: object
       properties:
@@ -3641,6 +3671,9 @@ components:
       in: header
       name: Authorization
 tags:
+  - name: sub account (request access)
+    description: |
+      Endpoint to manage sub accounts.
   - name: account
     description: |
       Endpoint to manage Accounts
