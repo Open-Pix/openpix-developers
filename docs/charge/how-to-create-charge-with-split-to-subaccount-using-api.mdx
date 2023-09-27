@@ -23,9 +23,7 @@ Os campos obrigatórios para criar uma cobrança Pix com Split são os seguintes
 
 - **`value`**: O valor em centavos da cobrança Pix a ser criado.
 - **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
-- **`splits`**: Um array contendo as configurações de split realizado na hora do recebimento. No caso de split para sub contas 
-**_o array de splits deve sempre conter somente um elemento_**.
-
+- **`splits`**: Um array contendo as configurações de split realizado na hora do recebimento.
 
 ## Exemplo
 
@@ -36,11 +34,14 @@ O body da sua requisição será semelhante a este exemplo:
   "value": 100,
   "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
   "splits": [
-    { "pixKey": "destinatario@openpix.com.br", "value": 15, splitType: "SPLIT_ACCUMULATOR" },
+    {
+      "pixKey": "destinatario@openpix.com.br",
+      "value": 15,
+      "splitType": "SPLIT_SUB_ACCOUNT"
+    }
   ]
 }
 ```
-
 
 O valor do campo `value` dentro do objeto no array de `splits`, é o valor desejado para a realização do split em **centavos**. O valor do split não será debitado da conta de origem pois transações de split para sub contas são transações virtuais, somente será debitado da conta de origem o valor integral do saldo da sub conta no momento do saque da mesma.
 
@@ -51,7 +52,7 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
   "charge": {
     ...Charge Payload
     "splits": [
-      { "pixKey": "destinatario@openpix.com.br", "value": 15, splitType: "SPLIT_ACCUMULATOR" },
+      { "pixKey": "destinatario@openpix.com.br", "value": 15, splitType: "SPLIT_SUB_ACCOUNT" },
     ]
   },
   "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
@@ -71,7 +72,7 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
       -H "Accept: application/json" \
       -H "Content-Type: application/json" \
       -H "user-agent: node-fetch" \
-      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":100, "splits": [{ "pixKey": "destinatario@openpix.com.br", "value": 15, splitType:"SPLIT_ACCUMULATOR"  }]}'
+      --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":100, "splits": [{ "pixKey": "destinatario@openpix.com.br", "value": 15, splitType:"SPLIT_SUB_ACCOUNT"  }]}'
 ```
 
 ```mdx-code-block
@@ -86,7 +87,11 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
     value: 100,
     correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
     splits: [
-      { pixKey: 'destinatario@openpix.com.br', value: 15, splitType: "SPLIT_ACCUMULATOR" },
+      {
+        pixKey: 'destinatario@openpix.com.br',
+        value: 15,
+        splitType: 'SPLIT_SUB_ACCOUNT',
+      },
     ],
   }),
   headers: {
