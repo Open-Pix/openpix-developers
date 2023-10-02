@@ -1,0 +1,13 @@
+{
+  "label": "Subconta",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Subconta visão geral"
+  },
+  "customProps": {
+    "description": "Subcontas documentação"
+  }
+}

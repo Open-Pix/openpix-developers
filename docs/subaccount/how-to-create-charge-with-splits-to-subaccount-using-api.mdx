@@ -1,6 +1,6 @@
 ---
 id: how-to-create-charge-with-split-to-subbaccount-using-api
-title: Como usar a API para criar uma cobrança com split para Sub Conta?
+title: Como usar a API para criar uma cobrança com split para Subconta?
 tags:
   - concept
   - api
@@ -11,7 +11,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-Para a utilização desta funcionalidade é necessário possuir a funcionalidade BETA
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
 :::
 
 Para criar uma cobrança Pix com split para sub conta, você utiliza o _endpoint_ `/api/v1/charge` da API.
@@ -72,6 +72,7 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
       -H "Accept: application/json" \
       -H "Content-Type: application/json" \
       -H "user-agent: node-fetch" \
+      -H "Authorization": "app_id"
       --data-binary '{"correlationID":"c782e0ac-833d-4a89-9e73-9b60b2b41d3a","value":100, "splits": [{ "pixKey": "destinatario@openpix.com.br", "value": 15, splitType:"SPLIT_SUB_ACCOUNT"  }]}'
 ```
 
@@ -95,7 +96,7 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
     ],
   }),
   headers: {
-    Authorization: 'AUTHORIZATION',
+    Authorization: 'app_id',
     'Content-Type': 'application/json',
   },
 }).then((res) => res.json());
