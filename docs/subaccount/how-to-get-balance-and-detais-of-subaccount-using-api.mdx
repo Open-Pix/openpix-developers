@@ -1,0 +1,76 @@
+---
+id: how-to-get-balance-and-details-of-subaccount-using-api
+title: Como  acessar saldo e detalhes de uma Subconta via API?
+tags:
+  - api
+  - subaccount
+  - detalhes
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
+:::
+
+Para acessar o saldo e detalhes de uma subconta, você utiliza o _endpoint_ `/api/v1/subaccount/{ID}` da API.
+
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1%7Bid%7D/get)
+a documentação referente a esse _endpoint_.
+
+A chave pix registrada na subconta deve ser passada na url da requisição como parâmetro.
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, uma objeto contendo os campos de balance, name, pixKey da subconta requisitada.
+
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta -X GET \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      -H "Authorization": "app_id"
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta', {
+  method: 'GET',
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+### Exemplos de resposta
+
+
+```jsx
+{
+  "SubAccount": {
+    "name": "test-sub-account",
+    "pixKey": "c4249323-b4ca-43f2-8139-8232aab09b93",
+    "balance": 100
+  }
+}
+```
+
+

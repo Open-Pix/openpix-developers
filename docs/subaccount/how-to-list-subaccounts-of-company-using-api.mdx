@@ -1,0 +1,83 @@
+---
+id: how-to-list-subaccounts-of-a-company-using-api
+title: Como usar a API listar  as Subcontas de uma empresa via API?
+tags:
+  - api
+  - subaccount
+  - lista
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
+:::
+
+Para listar subcontas de uma empersa, você utiliza o _endpoint_ `/api/v1/subaccount` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount/get)
+a documentação referente a esse _endpoint_.
+
+A empresa é identificada a partir do app_id usado no cabeçalho Authorization.
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, uma lista das subcontas pertencentes a empresa
+além de detalhes de paginação:
+
+
+### Exemplos em código
+
+```mdx-code-block
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+```
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/subaccount' -X GET \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      -H "Authorization": "app_id"
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+```
+
+```js
+fetch('https://api.openpix.com.br/api/v1/subaccount', {
+  method: 'GET',
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+### Exemplos de resposta
+
+```jsx
+{
+  "subAccounts": {
+    "subaccount": {
+      "name": "test-sub-account",
+      "pixKey": "c4249323-b4ca-43f2-8139-8232aab09b93",
+    }
+  },
+  "pageInfo": {
+    "skip": 0,
+    "limit": 10,
+    "totalCount": 20,
+    "hasPreviousPage": false,
+    "hasNextPage": true
+  }
+}
+```
+
+
