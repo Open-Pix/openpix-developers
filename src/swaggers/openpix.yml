@@ -2793,7 +2793,6 @@ paths:
                   SubAccount:
                     name: test-sub-account
                     pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
-                    balance: 0
         '400':
           description: An error message
           content:
