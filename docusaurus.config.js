@@ -30,6 +30,10 @@ module.exports = {
   trailingSlash: false,
   onBrokenMarkdownLinks: 'warn',
   plugins: [
+    [
+      '@gracefullight/docusaurus-plugin-microsoft-clarity',
+      { projectId: 'j6ihzvjzvu' },
+    ],
     require.resolve('./sitePlugin'),
     require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
     [
