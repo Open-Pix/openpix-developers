@@ -4,7 +4,7 @@ Para salvar o customer da order na sua cobrança OpenPix é necessário que seja
 
 Indicamos o uso do plugin [woocommerce-extra-checkout-fields-for-brazil](https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/) para este caso. Uma vez ativado o plugin passará a salvar os clientes que informarem o CPF/CNPJ no momento da compra.
 
-__Obs: O uso não é obrigatório. Caso você siga sem a configuração do mesmo, suas cobranças serão salvas sem o cliente da mesma.__
+**Obs: O uso não é obrigatório. Caso você siga sem a configuração do mesmo, suas cobranças serão salvas sem o cliente da mesma.**
 
 ## 2. Realizar Pedido com Pix no WooCommerce
 
@@ -54,7 +54,23 @@ Basta clicar e selecionar qual status você quer que seja colocado no pedido qua
 
 Após esta alteração os novos pedidos quando forem pagos irão receber o valor desse campo em seu status.
 
-## 6. Como ver meus logs OpenPix em minha loja WooCommerce/Wordpress
+## 6. Como redirecionar o usuário após uma cobrança ser paga
+
+Quando um usuário efetua o pagamento de uma cobrança durante a finalização do pedido, é possível redirecioná-lo para outra página.
+
+Para fazer isso, acesse as configurações do plugin e altere a URL de redirecionamento.
+
+![Configurações da URL de redirecionamento](/img/ecommerce/woocommerce/woocommerce-redirect-url-setting.png)
+
+Após o usuário efetuar o pagamento da cobrança, ele será redirecionado para a URL configurada.
+
+O [\`correlationID\`](../../../concepts/correlation-id.md) será passado na URL e, com esse identificador, você poderá manipular qual é a cobrança em questão.
+
+Por exemplo, se você configurou a URL de redirecionamento como \`https://example.com/script.php\`, a URL final será \`https://example.com/script.php?correlationID=correlationID-da-cobranca\`.
+
+Para obter uma cobrança usando o [\`correlationID\`](/api#tag/charge/paths/~1api~1v1~1charge~1%7Bid%7D/get), você pode utilizar a API.
+
+## 7. Como ver meus logs OpenPix em minha loja WooCommerce/Wordpress
 
 Você pode visualizar os logs OpenPix em sua loja através dos seguintes passos:
 
