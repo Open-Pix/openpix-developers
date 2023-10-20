@@ -24,7 +24,7 @@ Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real
 ![Banner](./__assets__/magento2-banner.png)
 ![Install](./__assets__/magento2-marketplace-search.png)
 
-[Download OpenPix Magento2 Plugin - versão 2.5.2](pathname:///magento2/openpix_pix.2.5.2.zip) - Versão Atual
+[Download OpenPix Magento2 Plugin - versão 2.5.3](pathname:///magento2/openpix_pix.2.5.3.zip) - Versão Atual
 
 ## 2. Configurando o Plugin Magento2
 
