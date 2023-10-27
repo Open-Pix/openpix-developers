@@ -2973,6 +2973,12 @@ components:
               value:
                 type: string
                 description: value of object
+        enableCashbackPercentage:
+          type: boolean
+          description: true to enable cashback and false to disable.
+        enableCashbackExclusivePercentage:
+          type: boolean
+          description: true to enable fidelity cashback and false to disable.
       required:
         - correlationID
         - value
