@@ -3059,40 +3059,113 @@ components:
             country:
               type: string
     CustomerPayload:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        taxID:
-          type: string
-        correlationID:
-          type: string
-        address:
-          type: object
+      description:
+        Customer field is not required. However, if you decide to send it,
+        you must send at least one of the following combinations, name + taxID
+        or name + email or name + phone.
+      oneOf:
+        - type: object
           properties:
-            zipcode:
+            name:
               type: string
-            street:
+            email:
               type: string
-            number:
+            phone:
               type: string
-            neighborhood:
+            taxID:
               type: string
-            city:
+            correlationID:
               type: string
-            state:
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
+          required:
+            - name
+            - taxID
+        - type: object
+          properties:
+            name:
               type: string
-            complement:
+            email:
               type: string
-            country:
+            phone:
               type: string
-      required:
-        - name
-        - taxID
+            taxID:
+              type: string
+            correlationID:
+              type: string
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
+          required:
+            - name
+            - email
+        - type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            taxID:
+              type: string
+            correlationID:
+              type: string
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
+          required:
+            - name
+            - phone
     End:
       type: string
       format: date-time
