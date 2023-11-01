@@ -8,6 +8,8 @@ tags:
   - imprimir
 ---
 
+import Embed from 'react-embed';
+
 :::info
 É esperado que você já possua conta com a OpenPix, caso não tenha, [clique aqui](https://ajuda.openpix.com.br/pt-br/article/como-cadastrar-minha-empresa-14e7lwx/) para saber como criar uma conta.
 :::
@@ -22,7 +24,7 @@ A Maquininha PIX é um produto da Woovi que permite que você gere cobranças PI
 
 Acesse o tutorial da maquininha para instalar o nosso aplicativo: <https://app.openpix.com/home/pix-machine/tutorial> e clique em `Download Windows`
 
-![Download Windows](__assets__/maquininha-tutorial.png)
+<Embed url='https://www.youtube.com/watch?v=UdehtJz3MVo'/>
 
 Após baixar o arquivo, clique em `Abrir`, e em seguida, clique em `Executar`
 
