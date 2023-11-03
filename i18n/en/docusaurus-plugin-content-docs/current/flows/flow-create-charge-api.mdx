@@ -80,3 +80,8 @@ const createCharge = async () => {
 - customer.email: customer email
 - customer.taxID: customer CPF/CNPJ
 - customer.phone: customer phone
+
+Customer field is not required. However, if you decide to use it, you must send at least one of the following combinations:
+1. name + taxID
+2. name + email
+3. name + phone
