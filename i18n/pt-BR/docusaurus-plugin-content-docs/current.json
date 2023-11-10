@@ -131,14 +131,6 @@
     "message": "Webhook visão geral",
     "description": "The generated-index page title for category Webhook in sidebar docs"
   },
-  "sidebar.docs.category.Giftback": {
-    "message": "Giftback",
-    "description": "The label for category Giftback in sidebar docs"
-  },
-  "sidebar.docs.category.Giftback.link.generated-index.title": {
-    "message": "Giftback visão geral",
-    "description": "The generated-index page title for category Giftback in sidebar docs"
-  },
   "sidebar.docs.category.Integrações": {
     "message": "Integrações",
     "description": "The label for category Integrações in sidebar docs"
