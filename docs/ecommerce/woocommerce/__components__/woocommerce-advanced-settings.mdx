@@ -61,3 +61,13 @@ Você pode visualizar os logs OpenPix em sua loja através dos seguintes passos:
 - 1. Tenha acesso aos arquivos da loja
 - 2. Acesse o seguinte path: `/wp-content/uploads/wc_logs`
 - 3. Dentro de `wc_logs` você irá encontrar os arquivos de logs da openpix com o seguinte padrão de nome `woocommerce_openpix-2023-01-13-7d609d821235742dd8162bbb0ef84862`
+
+## 7. Como verificar se o HPOS está habilitado?
+
+HPOS (High Performance Order Storage) é uma nova forma de armazenamento de pedidos no WooCommerce, sendo a opção padrão para novas lojas, o que possibilitará um aumento de desempenho em sua loja.
+
+Gradualmente, cada loja deve migrar para utilizar o HPOS, e cada plugin deve adicionar compatibilidade.
+
+Para verificar se esta opção está ativa em sua loja Woocommerce, vá até a aba de "Recursos", acessando "Woocommerce" > "Configurações" > "Avançado" > "Recursos" e verificando se a opção _High-performance order storage (recommended)_ está ativada:
+
+![Opção para ativar ou desativar HPOS](../__assets__/woo-hpos-settings.png)
