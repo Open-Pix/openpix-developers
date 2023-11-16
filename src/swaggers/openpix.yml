@@ -1575,10 +1575,10 @@ paths:
               type: object
               $ref: '#/components/schemas/PixQrCodePayload'
             example:
+              name: my-qr-code
               correlationID: 9134e286-6f71-427a-bf00-241681624586
               value: 100
               comment: good
-              identifier: zr7833b4060c488a9b0f89811
       responses:
         '200':
           description:
@@ -2099,7 +2099,7 @@ paths:
       tags:
         - transfer (request access)
       summary: Create a Transfer
-      description: Endpoint to to transfer values between sub accounts
+      description: Endpoint to to transfer values between accounts
       requestBody:
         description: Data to create a transfer
         required: true
@@ -2973,6 +2973,12 @@ components:
               value:
                 type: string
                 description: value of object
+        enableCashbackPercentage:
+          type: boolean
+          description: true to enable cashback and false to disable.
+        enableCashbackExclusivePercentage:
+          type: boolean
+          description: true to enable fidelity cashback and false to disable.
       required:
         - correlationID
         - value
@@ -3053,40 +3059,113 @@ components:
             country:
               type: string
     CustomerPayload:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        taxID:
-          type: string
-        correlationID:
-          type: string
-        address:
-          type: object
+      description:
+        Customer field is not required. However, if you decide to send it,
+        you must send at least one of the following combinations, name + taxID
+        or name + email or name + phone.
+      oneOf:
+        - type: object
           properties:
-            zipcode:
+            name:
               type: string
-            street:
+            email:
               type: string
-            number:
+            phone:
               type: string
-            neighborhood:
+            taxID:
               type: string
-            city:
+            correlationID:
               type: string
-            state:
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
+          required:
+            - name
+            - taxID
+        - type: object
+          properties:
+            name:
               type: string
-            complement:
+            email:
               type: string
-            country:
+            phone:
               type: string
-      required:
-        - name
-        - taxID
+            taxID:
+              type: string
+            correlationID:
+              type: string
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
+          required:
+            - name
+            - email
+        - type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            taxID:
+              type: string
+            correlationID:
+              type: string
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                neighborhood:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                complement:
+                  type: string
+                country:
+                  type: string
+          required:
+            - name
+            - phone
     End:
       type: string
       format: date-time
@@ -3312,9 +3391,6 @@ components:
           type: string
         comment:
           type: string
-        identifier:
-          type: string
-          description: Custom identifier for EMV
         brCode:
           type: string
           description: EMV BRCode to be rendered as a Pix QRCode
@@ -3347,12 +3423,8 @@ components:
         comment:
           type: string
           description: Comment to be added in infoPagador
-        identifier:
-          type: string
-          description: Custom identifier for EMV
       required:
         - name
-        - identifier
     Refund:
       type: object
       properties:
@@ -3471,7 +3543,7 @@ components:
         dayGenerateCharge:
           type: number
           description: Day of the month that the charges will be generated. Maximun of 27.
-          minimum: 0
+          minimum: 1
           maximum: 27
           default: 5
         chargeType:
