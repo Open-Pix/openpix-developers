@@ -2099,7 +2099,7 @@ paths:
       tags:
         - transfer (request access)
       summary: Create a Transfer
-      description: Endpoint to to transfer values between sub accounts
+      description: Endpoint to to transfer values between accounts
       requestBody:
         description: Data to create a transfer
         required: true
