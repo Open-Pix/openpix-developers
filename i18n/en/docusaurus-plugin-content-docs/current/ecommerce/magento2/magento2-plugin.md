@@ -4,8 +4,8 @@ title: Integrando a OpenPix com Magento2
 sidebar_label: Magento2 OpenPix Plugin
 sidebar_position: 0
 tags:
-- magento2
-- ecommerce
+  - magento2
+  - ecommerce
 ---
 
 ### Plugin Pix para Magento2
@@ -15,7 +15,7 @@ tags:
 Este documento detalha passos necessários para conectar a sua plataforma de e-Commerce, baseada no Magento2, na OpenPix. A plataforma OpenPix efetua em tempo real a conciliação entre seu Banco e seu e-Commerce.
 Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real com QrCodes Pix, enviar Links de Pagamento, gerenciar cobranças incluindo extornos.
 
-> *Nota: Este documento espera que você já tenha um ambiente Magento2 ativo.*
+> _Nota: Este documento espera que você já tenha um ambiente Magento2 ativo._
 
 ## 1. Instale o Plugin OpenPix na sua instância Magento2
 
@@ -24,7 +24,7 @@ Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real
 ![Banner](./__assets__/magento2-banner.png)
 ![Install](./__assets__/magento2-marketplace-search.png)
 
-[Download OpenPix Magento2 Plugin - versão 2.0.10](pathname:///magento2/openpix_pix.2.0.10.zip) - Versão Atual
+[Download OpenPix Magento2 Plugin - versão 2.5.3](pathname:///magento2/openpix_pix.2.5.3.zip) - Versão Atual
 
 ## 2. Configurando o Plugin Magento2
 
@@ -110,20 +110,24 @@ Seu cliente poderá visualizar o pedido realizado via Pix dentro do detalhes do 
 
 ![Order information](./__assets__/magento2-order-info.png)
 ![Order](./__assets__/magento2-order-detail.png)
+
 ## Expiração
 
 A OpenPix ira cuidar da expiração da cobrança Pix. Entretanto, é preciso que seja configurado em sua loja magento a expiração da order pois o mesmo cuidará de todo o processo.
 
 Indicamos que a expiração/cancelamento da order no magento possua um tempo semelhante ao tempo configurado na OpenPix. Exemplo:
+
 - tempo de expiração da cobrança OpenPix: 15 minutos
 - coloque os mesmos 15 minutos dentro da sua loja Magento.
 
 :::info
 No magento você pode utilizar o lifetime order seguindo a doc abaixo:
+
 - <https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html>
-:::
+  :::
 
 ## Atualizando o plugin
+
 Indicamos aos clientes OpenPix estar sempre atualizados com a última versão do plugin. Você pode identificar a mesma no step de instalação.
 
 Caso seu plugin esteja desatualizado basta seguir os passos do mesmo step de instalação e atualizar os arquivos do plugin em seu ecommerce.

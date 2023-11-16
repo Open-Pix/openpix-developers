@@ -18,7 +18,7 @@ defaultValue="curl"
 <TabItem value="curl">
 
 ```jsx
-curl --location --request POST 'http://api.openpix.com.br/api/openpix/v1/charge' \
+curl --location --request POST 'https://api.openpix.com.br/api/openpix/v1/charge' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: <appID>' \
 --data-raw '{
@@ -51,7 +51,7 @@ const createCharge = async () => {
     }
   }
 
-  const response = await fetch('http://api.openpix.com.br/api/openpix/v1/charge', {
+  const response = await fetch('https://api.openpix.com.br/api/openpix/v1/charge', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -80,3 +80,8 @@ const createCharge = async () => {
 - customer.email: customer email
 - customer.taxID: customer CPF/CNPJ
 - customer.phone: customer phone
+
+Customer field is not required. However, if you decide to use it, you must send at least one of the following combinations:
+1. name + taxID
+2. name + email
+3. name + phone

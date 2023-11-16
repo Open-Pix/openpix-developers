@@ -117,6 +117,12 @@ const cards = [
     docsTo: '/docs/ecommerce/woocommerce/woocommerce-parcelado',
   },
   {
+    title: 'Plugin WooCommerce com Pix + Crediário',
+    content: 'Conheça o Pix Crediário com WooCommerce, um sistema inovador para gerir crediários próprios cobrados por meio do Pix. Agilidade, simplicidade e segurança se unem para criar uma experiência de venda inovadora.',
+    icon: <SiWoo color={'#945888'} size={30} />,
+    docsTo: '/docs/ecommerce/woocommerce/woocommerce-crediary',
+  },
+  {
     title: 'WhatsApp',
     content: 'Envie cobranças Pix por WhatsApp para seus clientes.',
     icon: <FaWhatsapp color="#25d366" size={30} />,

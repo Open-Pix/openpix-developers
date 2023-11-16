@@ -26,7 +26,7 @@ defaultValue="curl"
 <TabItem value="curl">
 
 ```jsx
-curl --location --request POST 'http://api.openpix.com.br/api/openpix/v1/webhook' \
+curl --location --request POST 'https://api.openpix.com.br/api/openpix/v1/webhook' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: <appID>' \
 --data-raw '{
@@ -53,7 +53,7 @@ const createWebhook = async () => {
   };
 
   const response = await fetch(
-    'http://api.openpix.com.br/api/openpix/v1/webhook',
+    'https://api.openpix.com.br/api/openpix/v1/webhook',
     {
       method: 'POST',
       headers: {
