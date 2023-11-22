@@ -404,6 +404,11 @@ paths:
               - ACTIVE
               - COMPLETED
               - EXPIRED
+        - name: customer
+          description: Customer Correlation ID
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: A list of charges
