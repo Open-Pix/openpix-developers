@@ -1,4 +1,5 @@
 ---
+id: charge-how-to-filter-charges-by-customer
 title: Como filtrar cobranças de um cliente em particular
 tags:
   - how-to
