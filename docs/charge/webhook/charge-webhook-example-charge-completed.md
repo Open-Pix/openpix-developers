@@ -21,73 +21,121 @@ paga (`OPENPIX:CHARGE_COMPLETED`). Esse webhook é disparado no momento que um u
 ```json
 {
   "event": "OPENPIX:CHARGE_COMPLETED",
-  "pixQrCode": null,
   "charge": {
-    "status": "COMPLETED",
     "customer": {
-      "name": "Antonio Victor",
-      "taxID": { "taxID": "12345678976", "type": "BR:CPF" },
-      "email": "antoniocliente@example.com",
-      "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4"
+      "name": "John Doe",
+      "email": "john@doe.com",
+      "phone": "+5511123456789",
+      "taxID": {
+        "taxID": "07549767000113",
+        "type": "BR:CNPJ"
+      },
+      "correlationID": "cb25ba21-fc5d-40f6-80bc-47079f5bc482"
     },
-    "value": 1000,
-    "comment": "Pagamento OpenPix",
-    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
-    "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
-    "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
-    "createdAt": "2021-03-12T12:43:54.528Z",
-    "updatedAt": "2021-03-12T12:44:09.360Z",
-    "brCode": "https://api.openpix.com.br/openpix/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29"
+    "value": 5000,
+    "comment": "",
+    "identifier": "db85f0c5380c493b8eb3cf6b6780fd98",
+    "paymentLinkID": "b982c71a-e9a2-4ff7-8cb0-34a2717fe7ed",
+    "transactionID": "db85f0c5380c493b8eb3cf6b6780fd98",
+    "status": "COMPLETED",
+    "additionalInfo": [],
+    "discount": 0,
+    "valueWithDiscount": 5000,
+    "expiresDate": "2023-11-28T12:30:34.164Z",
+    "type": "DYNAMIC",
+    "correlationID": "51b3e0ea-abfc-4a7b-999c-847f27c35add",
+    "createdAt": "2023-11-28T11:30:34.652Z",
+    "updatedAt": "2023-11-28T11:30:40.042Z",
+    "paidAt": "2023-11-28T11:30:39.933Z",
+    "payer": {
+      "name": "QA",
+      "taxID": {
+        "taxID": "05460236000124",
+        "type": "BR:CNPJ"
+      },
+      "correlationID": "1ba4011d-f670-4e63-9ecf-4b2606501660"
+    },
+    "brCode": "00020101021226900014br.gov.bcb.pix2568api.openpix.com/api/testaccount/qr/v1/db85f0c5380c493b8eb3cf6b6780fd98520400005303986540550.005802BR5909admin_dev6009Sao_Paulo62290525db85f0c5380c493b8eb3cf6b663046A80",
+    "expiresIn": 3599,
+    "pixKey": "d94d2ebc-0b3e-4b48-8b96-2eddac9e4f0e",
+    "paymentLinkUrl": "https://openpix.com/pay/b982c71a-e9a2-4ff7-8cb0-34a2717fe7ed",
+    "qrCodeImage": "https://api.openpix.com/openpix/charge/brcode/image/b982c71a-e9a2-4ff7-8cb0-34a2717fe7ed.png",
+    "globalID": "Q2hhcmdlOjY1NjVjZjVhZmIzNDE4Y2EwYTJjMWVlOQ=="
   },
   "pix": {
-    "charge": {
-      "status": "COMPLETED",
-      "customer": {
-        "name": "Antonio Victor",
-        "taxID": { "taxID": "12345678976", "type": "BR:CPF" },
-        "email": "antoniocliente@example.com",
-        "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4"
-      },
-      "value": 1000,
-      "comment": "Pagamento OpenPix",
-      "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
-      "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
-      "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
-      "createdAt": "2021-03-12T12:43:54.528Z",
-      "updatedAt": "2021-03-12T12:44:09.360Z"
-    },
     "customer": {
-      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-      "email": "email1@example.com",
-      "name": "Loma",
-      "phone": "+5511999999999",
+      "name": "John Doe",
+      "email": "john@doe.com",
+      "phone": "+5511123456789",
       "taxID": {
-        "taxID": "47043622050",
-        "type": "BR:CPF"
-      }
+        "taxID": "07549767000113",
+        "type": "BR:CNPJ"
+      },
+      "correlationID": "cb25ba21-fc5d-40f6-80bc-47079f5bc482"
     },
     "payer": {
-      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-      "email": "email1@example.com",
-      "name": "Loma",
-      "phone": "+5511999999999",
+      "name": "QA",
       "taxID": {
-        "taxID": "47043622050",
-        "type": "BR:CPF"
-      }
+        "taxID": "05460236000124",
+        "type": "BR:CNPJ"
+      },
+      "correlationID": "1ba4011d-f670-4e63-9ecf-4b2606501660"
     },
-    "time": "2021-03-12T12:44:09.269Z",
-    "value": 1,
-    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
-    "infoPagador": "OpenPix testing"
+    "charge": {
+      "customer": {
+        "name": "John Doe",
+        "email": "john@doe.com",
+        "phone": "+5511123456789",
+        "taxID": {
+          "taxID": "07549767000113",
+          "type": "BR:CNPJ"
+        },
+        "correlationID": "cb25ba21-fc5d-40f6-80bc-47079f5bc482"
+      },
+      "value": 5000,
+      "comment": "",
+      "identifier": "db85f0c5380c493b8eb3cf6b6780fd98",
+      "paymentLinkID": "b982c71a-e9a2-4ff7-8cb0-34a2717fe7ed",
+      "transactionID": "db85f0c5380c493b8eb3cf6b6780fd98",
+      "status": "COMPLETED",
+      "additionalInfo": [],
+      "discount": 0,
+      "valueWithDiscount": 5000,
+      "expiresDate": "2023-11-28T12:30:34.164Z",
+      "type": "DYNAMIC",
+      "correlationID": "51b3e0ea-abfc-4a7b-999c-847f27c35add",
+      "createdAt": "2023-11-28T11:30:34.652Z",
+      "updatedAt": "2023-11-28T11:30:40.042Z",
+      "paidAt": "2023-11-28T11:30:39.933Z",
+      "payer": {
+        "name": "QA",
+        "taxID": {
+          "taxID": "05460236000124",
+          "type": "BR:CNPJ"
+        },
+        "correlationID": "1ba4011d-f670-4e63-9ecf-4b2606501660"
+      },
+      "brCode": "00020101021226900014br.gov.bcb.pix2568api.openpix.com/api/testaccount/qr/v1/db85f0c5380c493b8eb3cf6b6780fd98520400005303986540550.005802BR5909admin_dev6009Sao_Paulo62290525db85f0c5380c493b8eb3cf6b663046A80",
+      "expiresIn": 3599,
+      "pixKey": "d94d2ebc-0b3e-4b48-8b96-2eddac9e4f0e",
+      "paymentLinkUrl": "https://openpix.com/pay/b982c71a-e9a2-4ff7-8cb0-34a2717fe7ed",
+      "qrCodeImage": "https://api.openpix.com/openpix/charge/brcode/image/b982c71a-e9a2-4ff7-8cb0-34a2717fe7ed.png",
+      "globalID": "Q2hhcmdlOjY1NjVjZjVhZmIzNDE4Y2EwYTJjMWVlOQ=="
+    },
+    "value": 5000,
+    "time": "2023-11-28T11:30:39.933Z",
+    "endToEndId": "E39f22d047934468f89c8347ed4cd80d0",
+    "transactionID": "db85f0c5380c493b8eb3cf6b6780fd98",
+    "infoPagador": "OpenPix testing",
+    "type": "PAYMENT",
+    "createdAt": "2023-11-28T11:30:39.954Z",
+    "globalID": "UGl4VHJhbnNhY3Rpb246NjU2NWNmNWZmYjM0MThjYTBhMmMxZjc3"
   },
   "company": {
-    "id": "624f46f9e93f9f521c8308d7",
-    "name": "Pizzaria do José",
-    "taxID": "4722767300014"
+    "id": "5fa58a32bb2a83003433e506",
+    "name": "Admin Dev S/A",
+    "taxID": "05460236000124"
   },
-  "account": {
-    "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
-  }
+  "account": {}
 }
 ```
