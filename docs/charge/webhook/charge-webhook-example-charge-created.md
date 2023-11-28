@@ -1,5 +1,5 @@
 ---
-title: Exemplo de resposta do webhook de cobrança paga
+title: Exemplo de resposta do webhook de cobrança criada
 tags:
   - charge
   - webhook
