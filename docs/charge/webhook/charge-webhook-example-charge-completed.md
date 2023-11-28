@@ -9,12 +9,18 @@ tags:
 ## Webhook de cobrança paga
 
 Segue abaixo o exemplo dos dados que são enviados numa requisição do webhook de cobrança
-paga (`CHARGE:COMPLETED`). Esse webhook é disparado no momento que um usuário paga uma cobrança.
+paga (`OPENPIX:CHARGE_COMPLETED`). Esse webhook é disparado no momento que um usuário paga uma cobrança.
+
+- `pix`: Objeto com detalhes da transação Pix relacionada ao pagamento da cobrança;
+- `company`: Empresa do qual a cobrança pertence;
+- `account`: Detalhes da conta que a Transação pertence;
+- `charge`: Detalhes da cobrança paga;
 
 ## Resposta (JSON) de exemplo
 
 ```json
 {
+  "event": "OPENPIX:CHARGE_COMPLETED",
   "pixQrCode": null,
   "charge": {
     "status": "COMPLETED",
