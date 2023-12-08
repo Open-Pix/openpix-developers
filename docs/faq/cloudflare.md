@@ -7,12 +7,11 @@ tags:
 ---
 import Embed from 'react-embed';
 
-## Não estou conseguindo cadastrar meu Webhook
+## Como ajustar o Cloudflare para permitir o cadastro de Webhooks da forma corretas e evitar bloqueios?
 
-- Crie uma regra de excessão de firewall
-- Se a regra não funcionar, desative a proteção antibots
+Neste artigo, abordaremos como configurar o Cloudflare para permitir o cadastro eficaz de Webhooks, evitando bloqueios. Vamos ensinar a criar uma regra de exceção no firewall do Cloudflare e, se necessário, a desativar temporariamente a proteção antibots.
 
-## Regra de excessão de firewall
+## Regra de Exceção no Firewall: Explicaremos como criar uma regra específica no Cloudflare para permitir Webhooks seguros.
 
 <Embed url='https://youtu.be/q-XhQbGziGk' />
 
@@ -22,7 +21,7 @@ Exemplo de regra de excessão de firewall:
 
 ![CloudFlare Regra de firewall](/img/cloudflare/cloudflare_regra_firewall.png)
 
-## Desabilitar Cloudflare Bot
+## Desativar Proteção Antibots: Mostraremos como desativar a proteção antibots, mantendo a segurança.
 
 ### Acesse `Security > Bots`
 
