@@ -6,7 +6,7 @@ tags:
   - payment
 ---
 
-Pagar uma chave pix testar se o Webhook cadastrado está funcionando, alem de testar as funcionalidades de pagamento.
+Pagar uma chave pix possibilita testar se o Webhook cadastrado está funcionando, alem de testar as funcionalidades de pagamento.
 
 Para pagar uma chave pix usando a conta de testes, primeiro vá até o menu de `Saques/Pagamentos` e clique em `Novo Pagamento`, no canto superior direito da tela.
 
