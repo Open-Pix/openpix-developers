@@ -5,7 +5,7 @@ tags:
   - test
 ---
 
-A conta de teste é uma conta que pode ser usada para testar as funcionalidades da plataforma, sem a necessidade de usar uma conta bancária real. Sua empresa sempre terá uma conta de teste disponível para usar.
+A conta de teste é uma conta que pode ser usada para testar as funcionalidades da plataforma sem a necessidade de usar uma conta bancária real. Sua empresa sempre terá uma conta de teste disponível para usar.
 
 A conta de teste não utiliza nenhum dado real, como por exemplo, o nome do titular da conta, o saldo da conta, os reembolsos, etc...
 
