@@ -57,3 +57,15 @@ Num exemplo, essa será a nossa resposta:
   }
 }
 ```
+
+## Saldo insuficiente ao aprovar pagamentos via API
+Ao tentar realizar a aprovação de um pagamento via API e estiver sem saldo será retornado o seguinte erro:
+
+```ts
+{
+    "error": "Você não possui saldo o suficiente para realizar esse pagamento"
+}
+```
+
+Na plataforma o pagamento continuará com o status solicitado sendo possível realizar a aprovação do mesmo quando houver saldo suficiente.
+
