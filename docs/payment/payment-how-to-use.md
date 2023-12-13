@@ -45,3 +45,11 @@ Para realizar Pagamentos em sua empresa siga os passos abaixo:
 - Clique em `Aprovar`
 
 ![approve payment](/img/payment/approve-payment.png)
+
+## Saldo insuficiente ao aprovar pagamentos via Plataforma
+Ao tentar realizar a aprovação de um pagamento via plataforma e estiver sem saldo o modal será exibido com a seguinte informação:
+
+![Modal de aprovação de pagamentos com a informação de saldo insuficiente](__assets__/payment-how-to-use-modal-without-balance.png)
+
+Na plataforma o pagamento continuará com o status solicitado sendo possível realizar a aprovação do mesmo quando houver saldo suficiente.
+
