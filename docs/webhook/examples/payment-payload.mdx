@@ -40,6 +40,11 @@ Os webhooks de `Pagamento Externo com Falha (Pix Out)` enviam objetos com os seg
 
 - `payment`: Objeto com detalhes do Pagamento
 - `transaction`: Objeto com detalhes da Transação Pix se ela existir
+- `error`:  Objeto com o código e descrição do motivo da falha.
+
+:::info
+Veja mais detalhes sobre erros relacionados a um Pagamento externo na [documentação](/docs/payment/payment-failed-errors)
+:::
 
 ## Exemplo
 
@@ -57,6 +62,10 @@ Os webhooks de `Pagamento Externo com Falha (Pix Out)` enviam objetos com os seg
     "value": 30,
     "endToEndId": "E23114447202303161242u80lZNR7nQZ",
     "time": "2023-03-16T12:42:47.526Z"
+  },
+  "error": {
+    "code":"PAY_PIX_KEY_ERROR",
+    "description":"Falha ao Pagar Chave Pix"
   }
 }
 ```
