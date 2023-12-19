@@ -2,8 +2,9 @@
 id: plugin
 title: Plugin
 tags:
-- plugin
+  - plugin
 ---
+
 A OpenPix possui 2 plugins para ser utilizados em seu negócio, o Plugin de `Order` e o Plugin de `Widget`.
 
 ## O que é necessário saber antes de utilizar os plugins?
@@ -89,24 +90,24 @@ window.$openpix.push([
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
-
   <head>
     <meta charset="UTF-8" />
     <title>Demo OpenPix Plugin</title>
   </head>
 
   <body>
-    <button onclick="displayOpenPixModal()">
-      Clique para abrir o modal
-    </button>
+    <button onclick="displayOpenPixModal()">Clique para abrir o modal</button>
     <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
     <script>
       function displayOpenPixModal() {
         window.$openpix = window.$openpix || [];
 
-        window.$openpix.push(['config', {
-          appID: 'yourOpenPixAppId',
-        }]);
+        window.$openpix.push([
+          'config',
+          {
+            appID: 'yourOpenPixAppId',
+          },
+        ]);
 
         window.$openpix.push([
           'pix',
@@ -119,7 +120,6 @@ window.$openpix.push([
       }
     </script>
   </body>
-
 </html>
 ```
 
@@ -219,6 +219,7 @@ Os eventos disponiveis são
 - `CHARGE_COMPLETED`: quando a cobrança foi paga pelo cliente e deu baixa na OpenPix.
 - `CHARGE_EXPIRED`: quando a cobrança foi expirada.
 - `ON_CLOSE`: quando o modal da cobrança foi fechado.
+- `ON_ERROR`: quando ocorre algum erro no plugin.
 
 ```jsx
 const logEvents = (e) => {
@@ -233,10 +234,14 @@ const logEvents = (e) => {
   if (e.type === 'ON_CLOSE') {
     console.log('o modal da cobrança foi fechado');
   }
-}
+
+  if (e.type === 'ON_ERROR') {
+    console.log('ocorreu um erro');
+  }
+};
 
 // only register event listener when plugin is already loaded
-if(!!window.$openpix?.addEventListener) {
+if (!!window.$openpix?.addEventListener) {
   const unsubscribe = window.$openpix.addEventListener(logEvents);
 
   // parar de escutar os eventos
@@ -247,27 +252,26 @@ if(!!window.$openpix?.addEventListener) {
 #### Exemplo de arquivo HTML
 
 ```html
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-
   <head>
     <meta charset="UTF-8" />
     <title>Demo OpenPix Plugin</title>
   </head>
 
   <body>
-    <button onclick="displayOpenPixModal()">
-      Clique para abrir o modal
-    </button>
+    <button onclick="displayOpenPixModal()">Clique para abrir o modal</button>
     <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
     <script>
       function displayOpenPixModal() {
         window.$openpix = window.$openpix || []; // priorize o objeto já instanciado
 
-        window.$openpix.push(['config', {
-          appID: 'yourAppId'
-        }]);
+        window.$openpix.push([
+          'config',
+          {
+            appID: 'yourAppId',
+          },
+        ]);
 
         window.$openpix.push([
           'pix',
@@ -289,10 +293,14 @@ if(!!window.$openpix?.addEventListener) {
           if (e.type === 'ON_CLOSE') {
             console.log('o modal da cobrança foi fechado');
           }
-        }
-        
-      // only register event listener when plugin is already loaded
-        if(!!window.$openpix?.addEventListener) {
+
+          if (e.type === 'ON_ERROR') {
+            console.log('o modal da cobrança foi fechado');
+          }
+        };
+
+        // only register event listener when plugin is already loaded
+        if (!!window.$openpix?.addEventListener) {
           const unsubscribe = window.$openpix.addEventListener(logEvents);
 
           // parar de escutar os eventos
@@ -301,7 +309,6 @@ if(!!window.$openpix?.addEventListener) {
       }
     </script>
   </body>
-
 </html>
 ```
 
@@ -320,17 +327,16 @@ ex: `?appID=<APPIDVALIDO>&correlationID=<CORRELATION-ID-VALIDO>&node=<DIV-PARA-I
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Demo OpenPix Plugin</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Demo OpenPix Plugin</title>
-</head>
-
-<body>
-  <div id="openpix-order"></div> <!-- o node nesse caso é "openpix-order" -->
-  <script src="https://plugin.openpix.com.br/v1/openpix.js?appID=appID&correlationID=appID&node=openpix-order"></script>
-</body>
-
+  <body>
+    <div id="openpix-order"></div>
+    <!-- o node nesse caso é "openpix-order" -->
+    <script src="https://plugin.openpix.com.br/v1/openpix.js?appID=appID&correlationID=appID&node=openpix-order"></script>
+  </body>
 </html>
 ```
 
