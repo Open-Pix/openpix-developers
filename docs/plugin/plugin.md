@@ -295,7 +295,7 @@ if (!!window.$openpix?.addEventListener) {
           }
 
           if (e.type === 'ON_ERROR') {
-            console.log('o modal da cobrança foi fechado');
+            console.log('ocorreu um erro');
           }
         };
 
