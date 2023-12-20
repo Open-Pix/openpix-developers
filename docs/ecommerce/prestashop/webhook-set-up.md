@@ -10,7 +10,7 @@ tags:
 
 Esta seção demonstra como configurar webhooks com seu e-commerce Prestashop. 
 
-## 0. Registre o link do seu webhook na Woovi
+## 1. Registre o link do seu webhook na Woovi
 
 Para encontrá-lo, acesso o seguinte menu **API/Plugins**.
 
@@ -25,12 +25,12 @@ https://seuwebsiteaqui.com.br/woovi/webhook
 
 Ele deverá ser digitado no campo  **URL**:
 
-![Registering webhook endpoint in woovi](./__assets__/webhook-set-up-step-0.PNG "step 0")
+![Registering webhook endpoint in woovi](./__assets__/prestashop-webhook-set-up-step-1.png "step 1")
 
 Pronto! Webhook cadastrado.
 
-## 1. Agora, os pedidos já podem ser atualizados pela Woovi
+## 2. Agora, os pedidos já podem ser atualizados pela Woovi
 
 Depois da confirmação do pagamento, o status do pedido será alterado para **Pagamento Aceito**.
 
-![Order status updated in prestashop after webhook endpoint is triggered](./__assets__/webhook-set-up-step-1-pt-br.PNG "step 1")
+![Order status updated in prestashop after webhook endpoint is triggered](./__assets__/prestashop-webhook-set-up-step-2-pt-br.png "step 2")
