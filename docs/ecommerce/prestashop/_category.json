@@ -1,0 +1,13 @@
+{
+    "label": "Prestashop",
+    "collapsible": true,
+    "collapsed": true,
+    "className": "red",
+    "link": {
+      "type": "generated-index",
+      "title": "Prestashop visão geral"
+    },
+    "customProps": {
+      "description": "Prestashop documentação"
+    }
+  }
