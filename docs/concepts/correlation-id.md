@@ -26,7 +26,7 @@ Onde cada caractere é uma representação hexadecimal.
 
 Vamos considerar um cenário em que estamos desenvolvendo um serviço de pagamento em um ambiente de microserviços, onde várias solicitações são processadas simultaneamente. Ao receber uma solicitação de pagamento, geramos um Correlation ID único para essa transação. Aqui está um exemplo de implementação em Python:
 
-```
+```python
 import uuid
 
 def process_payment(request):
