@@ -1,0 +1,48 @@
+---
+id: split-sub-account-usecases
+title: Casos de uso de split de sub-contas
+tags:
+  - concept
+  - api
+---
+
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
+:::info
+Para a utilização dessa funcionalidade é necessário possuir a funcionalidade Split
+:::
+
+## Casos de uso de split de sub-contas
+
+O split de sub-contas é uma funcionalidade que permite que o recebimento de uma cobrança seja dividido entre chaves pix. Entenda mais aqui: [O que é um split](../split-introduction.md)
+
+:::info
+Entenda melhor sobre qual tipo de split utilizar [aqui](../split-introduction.md#tipos-de-split)
+:::
+
+### Caso de uso 1 - Dividir o valor entre os sócios da empresa
+
+Imagine que você tem uma empresa com 3 sócios e deseja dividir o valor de uma cobrança entre eles. Para isso, você pode criar uma cobrança pix com split de sub-contas, onde o valor da cobrança será dividido entre as chaves pix dos sócios, isso facilita a divisão do valor entre os sócios, economizando tempo e evitando erros.
+
+#### Como dividir o valor entre os sócios da empresa via API
+
+Para dividir o valor entre os sócios da empresa via API, você deve utilizar o _endpoint_ `/api/v1/charge` da API.
+
+Para a API é necessário enviar o campo `splits` no body da requisição, que é um array contendo as configurações de split realizado na hora do recebimento com os valores fixos já definidos, ou seja, seu sistema deve definir o valor que vai para cada chave pix e informar na api da OpenPix.
+
+### Caso de uso 2 - Gorjeta
+
+Administradores de empresas do ramo de alimentação como restaurantes e bares podem cadastrar chave pix de garçons e atendentes como uma subconta e configurar valores
+por cobrança a serem registrados como crédito, podendo então ser sacado a qualquer momento por integração via API ou diretamente pela plataforma.
+
+### Caso de uso 3 - Comissão para vendedores
+
+Gestores de comércio podem cadastrar vendedores através da chave pix do vendendor como subconta e assim gerenciar cada cobrança, para creditar valroes de comissão automaticamente podendo fazer os saque a qualquer momento por integração via API ou diretamente pela plataforma.
+
+## MarketPlace
+
+Gestores de MarketPlace digitais podem criar cobranças com chave pix cadastrada como subconta, registrando assim em cada cobrança paga o valor da comissão por venda
+relacionada a vendas dentro de seu marketplace. Esta integração permite a gestores um gerenciamento de valores automático e facilidade na gestão e no pagamento de valores ao longo do tempo. O saque pode ser feito por integração via api ou diretamente pela plataforma.

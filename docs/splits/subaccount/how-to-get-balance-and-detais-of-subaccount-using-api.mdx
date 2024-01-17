@@ -1,6 +1,6 @@
 ---
 id: how-to-get-balance-and-details-of-subaccount-using-api
-title: Como  acessar saldo e detalhes de uma Subconta via API?
+title: Como acessar saldo e detalhes de uma Subconta via API?
 tags:
   - api
   - subaccount
@@ -16,14 +16,12 @@ Para a utilização desta funcionalidade é necessário possuir a funcionalidade
 
 Para acessar o saldo e detalhes de uma subconta, você utiliza o _endpoint_ `/api/v1/subaccount/{ID}` da API.
 
-
-Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1%7Bid%7D/get)
+Você pode acessar [aqui](<https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1%7Bid%7D/get>)
 a documentação referente a esse _endpoint_.
 
 A chave pix registrada na subconta deve ser passada na url da requisição como parâmetro.
 
 Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, uma objeto contendo os campos de balance, name, pixKey da subconta requisitada.
-
 
 ### Exemplos em código
 
@@ -62,7 +60,6 @@ fetch('https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta', {
 
 ### Exemplos de resposta
 
-
 ```jsx
 {
   "SubAccount": {
@@ -72,5 +69,3 @@ fetch('https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta', {
   }
 }
 ```
-
-

@@ -16,14 +16,12 @@ Para a utilização desta funcionalidade é necessário possuir a funcionalidade
 
 Para realizar o saque integral de uma subconta, você utiliza o _endpoint_ `/api/v1/subaccount/{ID}/withdraw` da API.
 
-
-Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1%7Bid%7D/get)
+Você pode acessar [aqui](<https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1%7Bid%7D/get>)
 a documentação referente a esse _endpoint_.
 
 A chave pix registrada na subconta deve ser passada na url da requisição como parâmetro.
 
-Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, um objeto com os detalhes da transação efetuada para a chave pix registrada na subconta. 
-
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `2xx` e no `body` da resposta, um objeto com os detalhes da transação efetuada para a chave pix registrada na subconta.
 
 ### Exemplos em código
 
@@ -46,13 +44,16 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
 ```
 
 ```js
-fetch('https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta/withdraw', {
-  method: 'POST',
-  headers: {
-    Authorization: 'AUTHORIZATION',
-    'Content-Type': 'application/json',
+fetch(
+  'https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta/withdraw',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'AUTHORIZATION',
+      'Content-Type': 'application/json',
+    },
   },
-}).then((res) => res.json());
+).then((res) => res.json());
 ```
 
 ```mdx-code-block
@@ -60,9 +61,7 @@ fetch('https://api.openpix.com.br/api/v1/subaccount/chave-pix-subconta/withdraw'
 </Tabs>
 ```
 
-
-
-### Exemplos de resposta 
+### Exemplos de resposta
 
 ```jsx
 {

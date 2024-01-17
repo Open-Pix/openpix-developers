@@ -1,0 +1,13 @@
+{
+  "label": "Split de cobranças",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Splits visão geral"
+  },
+  "customProps": {
+    "description": "Splits documentação"
+  }
+}
