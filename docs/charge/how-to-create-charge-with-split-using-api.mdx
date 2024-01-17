@@ -10,8 +10,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-Para a ultilização dessa funcionalidade é necessário possuir a funcionalidade Split
+Para a utilização dessa funcionalidade é necessário possuir a funcionalidade Split
 :::
+
+## Criar Split via API
 
 Para criar uma cobrança Pix com split, você utiliza o _endpoint_ `/api/v1/charge` da API.
 
@@ -24,7 +26,7 @@ Os campos obrigatórios para criar uma cobrança Pix com Split são os seguintes
 - **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
 - **`splits`**: Um array contendo as configurações de split realizado na hora do recebimento
 
-## Exemplo
+### Exemplo
 
 O body da sua requisição será semelhante a este exemplo:
 

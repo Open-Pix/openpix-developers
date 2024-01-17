@@ -1,0 +1,104 @@
+---
+id: how-to-create-charge-with-splits-with-plugin
+title: Como usar o Plugin JS para criar uma cobrança com split para Subconta?
+tags:
+  - concept
+  - api
+  - subaccount
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
+:::
+
+Para criar uma cobrança Pix com split para sub conta, você precisa informar no plugin.js o array de splits a serem realizados na cobrança.
+
+Os campos obrigatórios para criar uma cobrança Pix com Split são os seguintes:
+
+- **`value`**: O valor em `centavos` da cobrança Pix a ser criado.
+- **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
+- **`splits`**: Um array contendo as configurações de split realizado na hora do recebimento.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```javascript
+function displayOpenPixModal() {
+  window.$openpix = window.$openpix || [];
+
+  window.$openpix.push([
+    'config',
+    {
+      appID: 'yourOpenPixAppId',
+    },
+  ]);
+
+  window.$openpix.push([
+    'pix',
+    {
+      value: 100, // R$ 1,00
+      correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+      splits: [
+        {
+          pixKey: 'destinatario@openpix.com.br', // chave pix da subconta
+          value: 15, // valor a ser splitado em centavos (R$ 0,15)
+          splitType: 'SPLIT_SUB_ACCOUNT', // tipo de split (não alterar)
+        },
+      ],
+    },
+  ]);
+}
+```
+
+O valor do campo `value` dentro do objeto no array de `splits`, é o valor desejado para a realização do split em **centavos**. O valor do split não será debitado da conta de origem pois transações de split para sub contas são transações virtuais, somente será debitado da conta de origem o valor integral do saldo da sub conta no momento do saque da mesma.
+
+Após efetuar a requisição, se tudo ocorreu bem, o plugin exibirá normalmente o qrcode. Caso haja algum erro sintático(formato) no array de splits irá exibir um erro no modal do plugin.
+
+### Exemplos em código
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Open Pix</title>
+  </head>
+  <body>
+    <button id="btn">Pagar com pix</button>
+    <script
+      src="https://plugin.openpix.com.br/v1/openpix.js"
+      allow="clipboard-read; clipboard-write"
+    ></script>
+    <script>
+      const appID = 'seuAppId';
+
+      window.$openpix = window.$openpix ?? [];
+      window.$openpix.push(['config', { appID }]);
+
+      const correlationID = Math.floor(Math.random() * 1000000000);
+
+      document.getElementById('btn').addEventListener('click', () => {
+        window.$openpix.push([
+          'pix',
+          {
+            value: 10000, // R$ 100,00
+            correlationID: correlationID, // no seu sistema, use um identificador único
+            description: 'OpenPix Demo',
+            splits: [
+              {
+                value: 5000, // R$ 50,00
+                pixKey: 'email@email.com', // chave pix que receberá R$ 50,00
+                splitType: 'SPLIT_SUB_ACCOUNT', // tipo do split, não mexer
+              },
+            ],
+          },
+        ]);
+      });
+    </script>
+  </body>
+</html>
+```

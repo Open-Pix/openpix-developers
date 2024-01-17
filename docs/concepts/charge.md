@@ -20,4 +20,6 @@ Uma Cobrança aceita somente 1 pagamento.
 
 Uma Cobrança possui um prazo de vencimento.
 
+Cada cobrança paga gera uma nova transação.
+
 Casos de uso: criar uma cobrança para um pedido, criar uma cobrança para um serviço, criar uma cobrança para um produto.
