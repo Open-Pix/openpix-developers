@@ -1,5 +1,5 @@
 ---
-id: sdk-php-laravel-getting-started
+id: sdk-php-laravel-getting-started-example
 title: Começando sua integração OpenPix com Laravel
 tags:
   - php
@@ -7,7 +7,7 @@ tags:
   - sdk
 ---
 
-Temos um exemplo de integração com o SDK de PHP e Laravel preparado para você em nosso repositório do GitHub: https://github.com/Open-Pix/laravel-backend-integration
+Temos um exemplo de integração com o SDK de PHP e Laravel preparado para você em nosso repositório do GitHub: <https://github.com/Open-Pix/laravel-backend-integration>
 
 Mostra o fluxo do SDK de PHP em ação, incluindo a criação de cobranças, a atualização dos status das doações em tempo real por meio de webhooks, bem como a instalação e configuração do SDK de PHP, e muito mais.
 
@@ -28,14 +28,15 @@ Siga as etapas abaixo para usar o Docker via Sail:
 - Clone o repositório: `git clone https://github.com/Open-Pix/laravel-backend-integration`
 - Vá para o diretório do repositório: `cd laravel-backend-integration`
 - [Instale as dependências do Composer utilizando Docker](https://laravel.com/docs/10.x/sail#installing-composer-dependencies-for-existente-projects):
-   ```bash
-   docker run --rm \
-      -u "$(id -u):$(id -g)" \
-      -v "$(pwd):/var/www/html" \
-      -w /var/www/html \
-      laravelsail/php82-composer:latest \
-      composer install --ignore-platform-reqs
-   ```
+
+  ```bash
+  docker run --rm \
+     -u "$(id -u):$(id -g)" \
+     -v "$(pwd):/var/www/html" \
+     -w /var/www/html \
+     laravelsail/php82-composer:latest \
+     composer install --ignore-platform-reqs
+  ```
 
 - Copie `.env.example` para `.env`: `cp .env.example .env`
 - Configure seu AppID no arquivo `.env`.
@@ -60,7 +61,7 @@ Tendo o [Composer](https://getcomposer.org) e o PHP `>=8.2.0` instalados diretam
 
 ## Acessando o exemplo
 
-Por padrão, a aplicação web é executada na URL http://0.0.0.0.
+Por padrão, a aplicação web é executada na URL <http://0.0.0.0>.
 
 ## Visualização de logs
 
