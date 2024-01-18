@@ -1,0 +1,13 @@
+{
+  "label": "Maquininha Pix: Tutoriais",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Maquininha Pix Tutoriais"
+  },
+  "customProps": {
+    "description": "Maquininha Pix Tutoriais"
+  }
+}
