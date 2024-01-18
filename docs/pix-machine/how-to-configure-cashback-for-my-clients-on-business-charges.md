@@ -1,6 +1,6 @@
 ---
 id: how-to-configure-cashback-for-my-clients-on-business-charges
-sidebar_position: 9
+sidebar_class_name: hidden
 title: Como configuro cashback para meus clientes nas cobranças impressas?
 tags:
   - pix

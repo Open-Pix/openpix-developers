@@ -1,6 +1,6 @@
 ---
 id: how-to-print-a-charge
-sidebar_position: 1
+sidebar_class_name: hidden
 title: Como imprimir uma cobrança?
 tags:
   - pix

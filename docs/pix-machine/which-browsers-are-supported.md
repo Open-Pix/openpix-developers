@@ -1,6 +1,6 @@
 ---
 id: which-browsers-are-supported
-sidebar_position: 5
+sidebar_class_name: hidden
 title: Quais navegadores são suportados?
 tags:
   - pix
