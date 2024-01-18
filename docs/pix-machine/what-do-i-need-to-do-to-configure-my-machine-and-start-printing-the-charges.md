@@ -1,6 +1,6 @@
 ---
 id: what-do-i-need-to-do-to-configure-my-machine-and-start-printing-the-charges
-sidebar_position: 8
+sidebar_class_name: hidden
 title: O que preciso fazer pra configurar minha maquininha e começar a imprimir as cobranças?
 tags:
   - pix

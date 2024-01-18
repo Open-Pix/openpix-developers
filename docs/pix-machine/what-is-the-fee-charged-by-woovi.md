@@ -1,6 +1,6 @@
 ---
 id: what-is-the-fee-charged-by-woovi
-sidebar_position: 7
+sidebar_class_name: hidden
 title: Qual a taxa cobrada pela Woovi?
 tags:
   - pix

@@ -1,6 +1,6 @@
 ---
 id: which-machine-printer-should-use-to-print-the-charges
-sidebar_position: 6
+sidebar_class_name: hidden
 title: Qual maquininha/impressora devo utilizar para imprimir as cobranças?
 tags:
   - pix

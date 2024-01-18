@@ -1,6 +1,6 @@
 ---
 id: what-is-the-difference-between-the-non-tax-and-tax-thermal-printer
-sidebar_position: 2
+sidebar_class_name: hidden
 title: Qual a diferença entre a impressora térmica não fiscal e fiscal?
 tags:
   - pix

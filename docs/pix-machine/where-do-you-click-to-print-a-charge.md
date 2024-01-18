@@ -1,6 +1,6 @@
 ---
 id: where-do-you-click-to-print-a-charge
-sidebar_position: 4
+sidebar_class_name: hidden
 title: Onde clica para imprimir uma cobrança?
 tags:
   - pix

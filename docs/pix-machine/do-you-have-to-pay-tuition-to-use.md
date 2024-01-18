@@ -1,6 +1,6 @@
 ---
 id: do-you-have-to-pay-tuition-to-use
-sidebar_position: 7
+sidebar_class_name: hidden
 title: Tem que pagar mensalidade pra usar?
 tags:
   - pix

@@ -29,5 +29,5 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
