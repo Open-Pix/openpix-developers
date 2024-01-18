@@ -34,8 +34,10 @@ Com um QR code estático criado a partir da nossa plataforma, você pode imprimi
 físicamente, podendo deixar ele visível no seu caixa, em cada uma das mesas, ou até mesmo vindo
 junto a comanda.
 
+![QR code filter](./__assets__/pix-machine-qrcode-filter.png)
+
 Na sua integração da impressora, dentro da Maquininha Pix, é necessário que ela tenha o filtro de
-"QR code estático pago" selecionado. Deste modo, quando o cliente realizar o pagamento daquele QR code
+**"QR code estático pago"** selecionado. Deste modo, quando o cliente realizar o pagamento daquele QR code
 que você compartilhou, a Maquininha irá automaticament imprimir o recibo de pagamento contendo as
 informações da transação.
 
@@ -49,6 +51,8 @@ perfeito para alavancar ainda mais suas vendas.
 
 Com as cobranças, você tem a possibilidade tanto de imprimir o respectivo QR code daquela cobrança, quanto
 o seu recibo de pagamento.
+
+![Pix Machine Filtro de Charges](./__assets__/pix-machine-charge-filter.png)
 
 Para a impressão do QR code de uma cobrança, a sua integração da Maquininha precisa ter o filtro de **"Cobrança criada"**
 habilitado. Deste modo, conforme as cobranças vão sendo criadas a partir da nossa plataforma, a Maquininha
