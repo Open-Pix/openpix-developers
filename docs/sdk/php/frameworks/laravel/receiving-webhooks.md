@@ -47,8 +47,6 @@ class WebhookController extends Controller
 {
     const SIGNATURE_HEADER = "x-webhook-signature";
 
-    const TEST_WEBHOOK_EVENT = "teste_webhook";
-
     const OPENPIX_CHARGE_COMPLETED_EVENT = "OPENPIX:CHARGE_COMPLETED";
 
     public function __construct(private Client $openpix)
@@ -172,7 +170,6 @@ Cada requisição irá trazer consigo um parâmetro `event` contendo o tipo do w
 - `OPENPIX:MOVEMENT_CONFIRMED` - Pagamento confirmado é quando a transação do pix referente ao pagamento é confirmada.
 - `OPENPIX:MOVEMENT_FAILED` - Falha no pagamento é quando o pagamento é aprovado e ocorre um erro.
 - `OPENPIX:MOVEMENT_REMOVED` - O pagamento foi removido por um usuário.
-- `teste_webhook`: Enviado pela plataforma para testar seu webhook.
 
 Assumindo que você tenha um método `handleWebhook` que recebe todos os webhooks com a assinatura validada, veja o exemplo:
 
@@ -240,7 +237,8 @@ private function isChargePaidPayload(Request $request)
 
 Ao configurar uma nova integração via webhooks na plataforma, ela enviará um webhook de teste para verificar se tudo está correto com sua aplicação.
 
-Esse webhook de teste apresenta uma exceção durante a validação, onde o campo enviado é nomeado como `evento` em vez de `event`, com o valor `teste_webhook`.
+Esse webhook de teste será enviado com o campo `event` contendo o valor especificado pelo evento selecionado na plataforma. 
+Por exemplo, se você selecionar o evento `Cobrança paga`, o campo `event` será `OPENPIX:CHARGE_COMPLETED`.
 
 Veja como é possível verificar se um webhook é de teste:
 
@@ -253,10 +251,9 @@ Veja como é possível verificar se um webhook é de teste:
  */
 private function isTestPayload(Request $request)
 {
-    $event = $request->input("evento");
+    $event = $request->input("event");
 
-    // self::TEST_WEBHOOK_EVENT = "teste_webhook"
-    return ! empty($event) && $event === self::TEST_WEBHOOK_EVENT;
+    return ! empty($event) && $event === self::OPENPIX_CHARGE_COMPLETED_EVENT;
 }
 ```
 

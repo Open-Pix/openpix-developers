@@ -37,7 +37,7 @@ defaultValue="PHP"
 ```php
   <?php 
     $headers['X-OpenPix-Signature'] = 'jgR2XF0PKDiAwHP1s+TryvxMySQ='; // vira da chamada do webhook
-    $body = '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook"}'; // vira da chamada do webhook
+    $body = '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}'; // vira da chamada do webhook
 
     $secretKeyOnOpenpixPlatform = 'hmac-secret-key'; // secret key da chave de acesso do OpenPix
 
@@ -71,7 +71,7 @@ defaultValue="PHP"
 
     const openpixSignatureHeader = 'jgR2XF0PKDiAwHP1s+TryvxMySQ='; // vem da chamada do webhook
 
-    const body = '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook"}'; // vem da chamada do webhook
+    const body = '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}'; // vem da chamada do webhook
 
     const key = 'hmac-secret-key'; // secret key da chave de acesso do OpenPix
 
@@ -91,11 +91,18 @@ defaultValue="PHP"
 
   ```bash
 
-  echo -n '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook"}' | openssl dgst -sha1 -hmac "hmac-secret-key" -binary | base64
-  
+  echo -n '{"data_criacao":"2021-08-10T20:32:14.429Z","evento":"teste_webhook","event":"OPENPIX:CHARGE_COMPLETED"}' | openssl dgst -sha1 -hmac "hmac-secret-key" -binary | base64
+
   ```
 </TabItem>
 </Tabs>
+
+:::info
+
+O campo `event` enviado junto ao payload do webhook tem seu valor conforme o tipo de evento que você escolheu no momento em que criou o webhook.
+Para saber mais sobre os tipos de eventos, acesse a [documentação de eventos](./webhook-events-type).
+
+:::
 
 Nesse link temos um exemplo de validação do HMAC usando JavaScript
 [WebhookPost](https://github.com/Open-Pix/node-backend-integration/blob/master/src/webhook/webhookPost.ts)
