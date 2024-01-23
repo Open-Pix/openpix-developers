@@ -3804,7 +3804,7 @@ tags:
       Endpoint to manage Transactions
   - name: transfer (request access)
     description: |
-      Endpoint to transfer values between sub accounts.
+      Endpoint to transfer values between accounts.
   - name: webhook
     description: |
       Endpoint to manage Webhooks
