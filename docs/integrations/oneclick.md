@@ -36,7 +36,8 @@ A primeira chamada será uma teste, para identificar se o seu endpoint existe e 
 ```json
 {
   "data_criacao": "2023-07-12T13:58:06.821Z",
-  "evento": "teste_webhook"
+  "evento": "teste_webhook",
+  "event": "OPENPIX:TRANSACTION_RECEIVED"
 }
 ```
 
@@ -53,7 +54,7 @@ curl -X 'POST' \
  -H 'x-openpix-authorization: ' \
  -H 'content-type: application/json' \
  -H 'accept: application/json' \
- -d $'{"data_criacao":"2023-07-12T13:58:06.821Z","evento":"teste_webhook"}'
+ -d $'{"data_criacao":"2023-07-12T13:58:06.821Z","evento":"teste_webhook","event":"OPENPIX:TRANSACTION_RECEIVED"}'
  ```
 
 #### 4.2. Segunda chamada
