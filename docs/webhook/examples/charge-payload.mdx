@@ -1,15 +1,15 @@
 ---
 id: webhook-charge-payload
-title: Payload de Pix Cobrança
+title: Payload de Cobrança Paga
 tags:
   - webhook
   - header
   - api
 ---
 
-## Pix Cobrança
+## Pix Cobrança Paga (CHARGE_COMPLETED)
 
-Os webhooks de `Pix Cobrança` enviam objetos com os seguintes campos no seu payload:
+Os webhooks de `Pix Cobrança Paga` enviam objetos com os seguintes campos no seu payload:
 
 - `pix`: Objeto com detalhes da transação Pix
 - `company`: Empresa a que a Transação pertence
@@ -19,73 +19,164 @@ Os webhooks de `Pix Cobrança` enviam objetos com os seguintes campos no seu pay
 
 ```json
 {
-  "pixQrCode": null,
+  "event": "OPENPIX:CHARGE_COMPLETED",
   "charge": {
-    "status": "COMPLETED",
     "customer": {
-      "name": "Antonio Victor",
-      "taxID": { "taxID": "12345678976", "type": "BR:CPF" },
-      "email": "antoniocliente@example.com",
-      "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4"
+      "name": "cliente",
+      "email": "cliente@openpix.com.br",
+      "phone": "+5511973591090",
+      "taxID": { "taxID": "67784666004", "type": "BR:CPF" },
+      "correlationID": "4f8093dc-1800-4e6b-bf83-178c24f1e0cd",
+      "address": {
+        "zipcode": "",
+        "street": "",
+        "number": "",
+        "neighborhood": "",
+        "city": "",
+        "state": "",
+        "complement": ""
+      }
     },
-    "value": 1000,
-    "comment": "Pagamento OpenPix",
-    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
-    "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
-    "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
-    "createdAt": "2021-03-12T12:43:54.528Z",
-    "updatedAt": "2021-03-12T12:44:09.360Z",
-    "brCode": "https://api.openpix.com.br/openpix/openpix/testing?transactionID=ea83401ed4834b3ea6f1f283b389af29"
+    "value": 10000,
+    "comment": "",
+    "identifier": "79a955477ca34fffae213363d5c34070",
+    "paymentLinkID": "36e4f36d-813c-48e4-916f-fcf061231074",
+    "transactionID": "79a955477ca34fffae213363d5c34070",
+    "status": "COMPLETED",
+    "additionalInfo": [],
+    "discount": 0,
+    "valueWithDiscount": 10000,
+    "expiresDate": "2024-01-25T09:50:56.954Z",
+    "type": "DYNAMIC",
+    "correlationID": "b05a3247-5d2b-432b-9b29-253db3125634",
+    "createdAt": "2024-01-25T09:45:57.562Z",
+    "updatedAt": "2024-01-25T09:46:15.544Z",
+    "paidAt": "2024-01-25T09:46:14.824Z",
+    "payer": {
+      "name": "EDUARDO MACIEL DE MATOS",
+      "taxID": { "taxID": "67784666004", "type": "BR:CPF" },
+      "correlationID": "a191393b-2f72-4cbb-8ce7-e1810153b0db",
+      "address": {
+        "zipcode": "13142514",
+        "street": "Rua OpenPix",
+        "number": "2019",
+        "neighborhood": "Casa",
+        "city": "Sao Paulo",
+        "state": "SP",
+        "complement": "Brooklin"
+      }
+    },
+    "brCode": "00020101021226950014br.gov.bcb.pix2573api.openpix.com.br/api/testaccount/qr/v1/79a955477ca34fffae213363d5c340705204000053039865406100.005802BR5914EDUARDO_MACIEL6009Sao_Paulo6229052579a955477ca34fffae213363d6304219B",
+    "expiresIn": 300,
+    "pixKey": "5081d2e9-45d0-4075-86b6-64c77bc5b73b",
+    "paymentLinkUrl": "https://openpix.com.br/pay/36e4f36d-813c-48e4-916f-fcf061231074",
+    "qrCodeImage": "https://api.openpix.com.br/openpix/charge/brcode/image/36e4f36d-813c-48e4-916f-fcf061231074.png",
+    "globalID": "Q2hhcmdlOjY1YjIyZGQ1MGU3ODU5YTRhZTNmZDM5NA=="
   },
   "pix": {
-    "charge": {
-      "status": "COMPLETED",
-      "customer": {
-        "name": "Antonio Victor",
-        "taxID": { "taxID": "12345678976", "type": "BR:CPF" },
-        "email": "antoniocliente@example.com",
-        "correlationID": "4979ceba-2132-4292-bd90-bee7fb2125e4"
-      },
-      "value": 1000,
-      "comment": "Pagamento OpenPix",
-      "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
-      "correlationID": "417bae21-3d08-4cdb-9c2d-fee63c89e9e4",
-      "paymentLinkID": "34697ed2-3790-4b60-8512-e7465b142d84",
-      "createdAt": "2021-03-12T12:43:54.528Z",
-      "updatedAt": "2021-03-12T12:44:09.360Z"
-    },
     "customer": {
-      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-      "email": "email1@example.com",
-      "name": "Loma",
-      "phone": "+5511999999999",
-      "taxID": {
-        "taxID": "47043622050",
-        "type": "BR:CPF"
+      "name": "cliente",
+      "email": "cliente@openpix.com.br",
+      "phone": "+5511973591090",
+      "taxID": { "taxID": "67784666004", "type": "BR:CPF" },
+      "correlationID": "4f8093dc-1800-4e6b-bf83-178c24f1e0cd",
+      "address": {
+        "zipcode": "",
+        "street": "",
+        "number": "",
+        "neighborhood": "",
+        "city": "",
+        "state": "",
+        "complement": "",
+        "country": "BR",
+        "location": { "coordinates": [] },
+        "_id": "6512f4da3343177a352199cb"
       }
     },
     "payer": {
-      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
-      "email": "email1@example.com",
-      "name": "Loma",
-      "phone": "+5511999999999",
-      "taxID": {
-        "taxID": "47043622050",
-        "type": "BR:CPF"
+      "name": "EDUARDO MACIEL DE MATOS",
+      "taxID": { "taxID": "67784666004", "type": "BR:CPF" },
+      "correlationID": "4f8093dc-1800-4e6b-bf83-178c24f1e0cd",
+      "address": {
+        "zipcode": "13142514",
+        "street": "Rua OpenPix",
+        "number": "2019",
+        "neighborhood": "Casa",
+        "city": "Sao Paulo",
+        "state": "SP",
+        "complement": "Brooklin",
+        "country": "BR",
+        "location": { "coordinates": [] },
+        "_id": "64e37c0fea92115c2e2a5ecc"
       }
     },
-    "time": "2021-03-12T12:44:09.269Z",
-    "value": 1,
-    "transactionID": "ea83401ed4834b3ea6f1f283b389af29",
-    "infoPagador": "OpenPix testing"
+    "charge": {
+      "customer": {
+        "name": "rumbling",
+        "email": "cris@entria.com.br",
+        "phone": "+5511973591090",
+        "address": {
+          "zipcode": "",
+          "street": "",
+          "number": "",
+          "neighborhood": "",
+          "city": "",
+          "state": "",
+          "complement": ""
+        },
+        "taxID": { "taxID": "67784666004", "type": "BR:CPF" },
+        "correlationID": "4f8093dc-1800-4e6b-bf83-178c24f1e0cd"
+      },
+      "value": 10000,
+      "comment": "",
+      "identifier": "79a955477ca34fffae213363d5c34070",
+      "paymentLinkID": "36e4f36d-813c-48e4-916f-fcf061231074",
+      "transactionID": "79a955477ca34fffae213363d5c34070",
+      "status": "COMPLETED",
+      "additionalInfo": [],
+      "discount": 0,
+      "valueWithDiscount": 10000,
+      "expiresDate": "2024-01-25T09:50:56.954Z",
+      "type": "DYNAMIC",
+      "correlationID": "b05a3247-5d2b-432b-9b29-253db3125634",
+      "createdAt": "2024-01-25T09:45:57.562Z",
+      "updatedAt": "2024-01-25T09:46:15.544Z",
+      "paidAt": "2024-01-25T09:46:14.824Z",
+      "payer": {
+        "name": "EDUARDO MACIEL DE MATOS",
+        "taxID": { "taxID": "67784666004", "type": "BR:CPF" },
+        "correlationID": "a191393b-2f72-4cbb-8ce7-e1810153b0db",
+        "address": {
+          "zipcode": "13142514",
+          "street": "Rua OpenPix",
+          "number": "2019",
+          "neighborhood": "Casa",
+          "city": "Sao Paulo",
+          "state": "SP",
+          "complement": "Brooklin"
+        }
+      },
+      "brCode": "00020101021226950014br.gov.bcb.pix2573api.openpix.com.br/api/testaccount/qr/v1/79a955477ca34fffae213363d5c340705204000053039865406100.005802BR5914EDUARDO_MACIEL6009Sao_Paulo6229052579a955477ca34fffae213363d6304219B",
+      "expiresIn": 300,
+      "pixKey": "5081d2e9-45d0-4075-86b6-64c77bc5b73b",
+      "paymentLinkUrl": "https://openpix.com.br/pay/36e4f36d-813c-48e4-916f-fcf061231074",
+      "qrCodeImage": "https://api.openpix.com.br/openpix/charge/brcode/image/36e4f36d-813c-48e4-916f-fcf061231074.png",
+      "globalID": "Q2hhcmdlOjY1YjIyZGQ1MGU3ODU5YTRhZTNmZDM5NA=="
+    },
+    "value": 10000,
+    "time": "2024-01-25T09:46:14.824Z",
+    "endToEndId": "Eac490bf76a684b21a2e458d56f888091",
+    "transactionID": "79a955477ca34fffae213363d5c34070",
+    "infoPagador": "OpenPix testing",
+    "type": "PAYMENT",
+    "createdAt": "2024-01-25T09:46:15.446Z",
+    "globalID": "UGl4VHJhbnNhY3Rpb246NjViMjJkZTczNzJlMDNlNDhiZTI0ZDc0"
   },
   "company": {
-    "id": "624f46f9e93f9f521c8308d7",
-    "name": "Pizzaria do José",
-    "taxID": "4722767300014"
+    "id": "6384cca8cecc7a26b98c49fd",
+    "name": "Eduardo Maciel",
+    "taxID": "45036856000155"
   },
-  "account": {
-    "clientId": "ZOJ64B9B-ZM1W-89MI-4UCI-OP2LVIU6NY75"
-  }
+  "account": {}
 }
 ```
