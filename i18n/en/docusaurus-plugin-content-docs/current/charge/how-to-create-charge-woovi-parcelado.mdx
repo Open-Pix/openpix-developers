@@ -94,10 +94,8 @@ Follow the steps below:
 
 ### Examples in code
 
-```mdx-code-block
 <Tabs>
    <TabItem value="shell-curl" label="Shell + cURL" default>
-```
 
 ```sh
    curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
@@ -107,10 +105,8 @@ Follow the steps below:
        --data-binary '{"correlationID":"63c533c0-3bb2-4847-a568-e2270e99aad8","value":1500,"comment":"OpenPix Parcelado","type":"PIX_CREDIT","customer": {"name":"Dan ","taxID":"12345678900","phone":"+5519912345678","email":"test@openpix.com","address":{"zipcode":"13142514" ,"street":"OpenPix Street","number":"2019","neighborhood":"Casa","city":"Sao Paulo","state":"SP","complement":"Brooklin" }}}'
 ```
 
-```mdx-code-block
    </TabItem>
    <TabItem value="javascript" label="JavaScript + Fetch" default>
-```
 
 ```js
 fetch('https://api.openpix.com.br/api/v1/charge', {
@@ -142,7 +138,5 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
 }).then((res) => res.json());
 ```
 
-```mdx-code-block
    </TabItem>
 </Tabs>
-```
