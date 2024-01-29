@@ -22,7 +22,7 @@ Para instalar a Maquininha PIX, você precisa de uma impressora térmica conecta
 
 A Maquininha PIX é um produto da Woovi que permite que você gere cobranças PIX e imprima o QR Code fisicamente, para que seus clientes possam pagar com o PIX.
 
-Acesse o tutorial da maquininha para instalar o nosso aplicativo: <https://app.openpix.com/home/pix-machine/tutorial> e clique em `Download Windows`
+Acesse o tutorial da maquininha para instalar o nosso aplicativo: [https://app.openpix.com/home/pix-machine/tutorial](https://app.openpix.com/home/pix-machine/tutorial) e clique em `Download Windows`
 
 <Embed url='https://www.youtube.com/watch?v=UdehtJz3MVo'/>
 

@@ -12,7 +12,7 @@ tags:
 Nós disponibilizamos o _endpoint_ `/api/v1/payment` para que você possa criar
 um novo _payment_ para a respectiva empresa afiliada.
 
-Você pode acessar [aqui](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post>)
+Você pode acessar [aqui]([https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post))
 a documentação referente a esse _endpoint_.
 
 Como parte do `body` da requisição, esperamos o envio dos seguintes itens: `value`, `destinationAlias`, `correlationID`, e um valor opcional `comment`:

@@ -465,7 +465,7 @@ $client->payments();
 
 Crie uma solicitação de pagamento chamando o método `create` no recurso de pagamentos.
 
-[Documentação do endpoint para mais detalhes](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post>).
+[Documentação do endpoint para mais detalhes]([https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)).
 
 ```php
 $payment = [
@@ -508,7 +508,7 @@ $result = $client->payments()->create($payment);
 
 Chame o método `getOne` no recurso de pagamentos para obter uma solicitação de pagamento a partir de um ID de pagamento ou correlationID.
 
-[Documentação do endpoint para mais detalhes](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1%7Bid%7D/get>).
+[Documentação do endpoint para mais detalhes]([https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1%7Bid%7D/get](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1%7Bid%7D/get)).
 
 ```php
 $paymentOrCorrelationID = "id";
@@ -548,7 +548,7 @@ $result = $client->payments()->getOne($paymentOrCorrelationID);
 
 Chame o método `list` no recurso de pagamentos passando parâmetros de consulta que irá retornar um paginador com pagamentos:
 
-[Documentação do endpoint para mais detalhes](<https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/get>).
+[Documentação do endpoint para mais detalhes]([https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/get](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/get)).
 
 ```php
 $paginator = $client->payments()->list();

@@ -88,7 +88,7 @@ Para realizar o registro de um novo Webhook siga os passos abaixo:
 
 - Va até a plataforma OpenPix e acesse: Admin -> API/Plugins -> Novo Webhook
 - Utilize a mesma senha cadastrada em sua store Magento2. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
-- A URL de Callback que deve ser utilizada no cadastro se encontra logo abaixo ao campo em que se registra a senha do webhook dentro da sua Store Magento2. O padrão é: <https://youstore.com.br/openpix/index/webhook>
+- A URL de Callback que deve ser utilizada no cadastro se encontra logo abaixo ao campo em que se registra a senha do webhook dentro da sua Store Magento2. O padrão é: [https://youstore.com.br/openpix/index/webhook](https://youstore.com.br/openpix/index/webhook)
 
 ![Webhook](./__assets__/magento2-webhook-configuration.png)
 
@@ -123,7 +123,7 @@ Indicamos que a expiração/cancelamento da order no magento possua um tempo sem
 :::info
 No magento você pode utilizar o lifetime order seguindo a doc abaixo:
 
-- <https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html>
+- [https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html](https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html)
   :::
 
 ## Atualizando o plugin

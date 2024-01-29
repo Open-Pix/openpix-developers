@@ -19,11 +19,11 @@ Essa documentação assume que você tenha preenchido alguns requisitos que são
 
 :::info
 
-Caso você já tenha um App criado no <https://bubble.io>, esse passo é opcional.
+Caso você já tenha um App criado no [https://bubble.io](https://bubble.io), esse passo é opcional.
 
 :::
 
-Após acessar a home do <https://bubble.io>. Você irá estar vendo uma tela similar a esta:
+Após acessar a home do [https://bubble.io](https://bubble.io). Você irá estar vendo uma tela similar a esta:
 
 ![Bubble.io Home Page](./__assets__/bubbleio-home-page.png)
 
