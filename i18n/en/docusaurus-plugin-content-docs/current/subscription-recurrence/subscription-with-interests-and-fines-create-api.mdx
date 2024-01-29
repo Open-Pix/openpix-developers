@@ -11,6 +11,9 @@ tags:
   - api
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 To create a new subscription with interests and fines using the API, you need to make a POST call to the `/api/v1/subscriptions` endpoint.
 
 You can access the documentation for this endpoint [here](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions/post).
@@ -29,7 +32,7 @@ The `body` also accepts other **optional** fields:
 
 The `body` of your request will look similar to this example:
 
-```json
+````json
 {
   "value": 100,
   "customer": {
@@ -82,7 +85,7 @@ We'll return the following example response:
     "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM="
   }
 }
-```
+````
 
 ### Code Examples
 
