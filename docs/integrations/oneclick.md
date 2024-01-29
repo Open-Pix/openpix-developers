@@ -19,11 +19,11 @@ Ao criar o plugin que será integrado é necessário que seja possível salvar o
 ### 2. Endereço de callback
 
 O primeiro passo é possuir um endereço de url que será responsável por receber as requisições da OpenPix.
-Ex: <https://www.suaaplicacao.com.br/openpix>
+Ex: [https://www.suaaplicacao.com.br/openpix](https://www.suaaplicacao.com.br/openpix)
 
 ### 3. Criando a integração
 
-Ao inserir a sua integração dentro do nosso formulário de oneclick( ex: <https://app.woovi.com/home/applications/magento2/add/oneclick>) será necessário apenas preencher o campo de callback com o endereço de callback que foi criado no passo 2.
+Ao inserir a sua integração dentro do nosso formulário de oneclick( ex: [https://app.woovi.com/home/applications/magento2/add/oneclick](https://app.woovi.com/home/applications/magento2/add/oneclick)) será necessário apenas preencher o campo de callback com o endereço de callback que foi criado no passo 2.
 
 ### 4. Recebendo as requisições
 

@@ -23,8 +23,8 @@ Agora, dizer `A taxa de juros aumentou em 50 basis points` trás clareza e um le
 
 ### Referências externas
 
-Calculadora de basis points: <https://www.omnicalculator.com/finance/basis-point>
+Calculadora de basis points: [https://www.omnicalculator.com/finance/basis-point](https://www.omnicalculator.com/finance/basis-point)
 
-<https://www.suno.com.br/artigos/basis-points/>
+[https://www.suno.com.br/artigos/basis-points/](https://www.suno.com.br/artigos/basis-points/)
 
-<https://www.investopedia.com/ask/answers/what-basis-point-bps>
+[https://www.investopedia.com/ask/answers/what-basis-point-bps](https://www.investopedia.com/ask/answers/what-basis-point-bps)

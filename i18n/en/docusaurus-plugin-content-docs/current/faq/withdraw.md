@@ -63,4 +63,4 @@ Se esse não for o caso, entre em contato com o nosso suporte.
 
 ### Reserva de Segurança
 
-Conforme as normas do Banco Central precisamos manter uma porcentagem do saldo total como reserva de segurança para reembolsos em casos de fraude. Clique aqui <https://www.bcb.gov.br/detalhenoticia/17417/nota> e saiba mais.
+Conforme as normas do Banco Central precisamos manter uma porcentagem do saldo total como reserva de segurança para reembolsos em casos de fraude. Clique aqui [https://www.bcb.gov.br/detalhenoticia/17417/nota](https://www.bcb.gov.br/detalhenoticia/17417/nota) e saiba mais.

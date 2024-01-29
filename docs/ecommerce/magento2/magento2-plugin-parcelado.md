@@ -92,7 +92,7 @@ Indicamos que a expiração/cancelamento da order no magento possua um tempo sem
 
 :::info
 No magento você pode utilizar o lifetime order seguindo a doc abaixo:
-- <https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html>
+- [https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html](https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html)
   :::
 
 ## Atualizando o plugin

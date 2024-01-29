@@ -34,7 +34,7 @@ Para realizar a integração com a Wabiz junto com a OpenPix é bem simples, bas
 
 ### Apresentação Comercial da Wabiz + OpenPix
 
-Acesse o link a seguir para baixar a apresentação comercial da Wabiz + Openpix: <https://drive.google.com/file/d/1mzJUOZj2oadEgOIcfZ1DXag9rj9UlMd0/view>
+Acesse o link a seguir para baixar a apresentação comercial da Wabiz + Openpix: [https://drive.google.com/file/d/1mzJUOZj2oadEgOIcfZ1DXag9rj9UlMd0/view](https://drive.google.com/file/d/1mzJUOZj2oadEgOIcfZ1DXag9rj9UlMd0/view)
 
 ### 1. Ter uma conta na Wabiz
 
@@ -51,7 +51,7 @@ A criação de conta na OpenPix é bem simples, rápida e segura. [Acesse online
 
 ### 3. Criar uma conta virtual na OpenPix
 
-Após ter acesso à plataforma da OpenPix você deve ativar sua conta virtual, conta em que você receberá todos os seus pagamentos. Para isso, basta seguir os passos bem explicados no link a seguir <https://ajuda.openpix.com.br/pt-br/article/como-ativar-a-conta-virtual-da-minha-empresa-1syj32q/>
+Após ter acesso à plataforma da OpenPix você deve ativar sua conta virtual, conta em que você receberá todos os seus pagamentos. Para isso, basta seguir os passos bem explicados no link a seguir [https://ajuda.openpix.com.br/pt-br/article/como-ativar-a-conta-virtual-da-minha-empresa-1syj32q/](https://ajuda.openpix.com.br/pt-br/article/como-ativar-a-conta-virtual-da-minha-empresa-1syj32q/)
 
 ### 4. Configurar a integração na Wabiz
 

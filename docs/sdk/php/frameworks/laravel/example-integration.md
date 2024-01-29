@@ -7,7 +7,7 @@ tags:
   - sdk
 ---
 
-Temos um exemplo de integração com o SDK de PHP e Laravel preparado para você em nosso repositório do GitHub: <https://github.com/Open-Pix/laravel-backend-integration>
+Temos um exemplo de integração com o SDK de PHP e Laravel preparado para você em nosso repositório do GitHub: [https://github.com/Open-Pix/laravel-backend-integration](https://github.com/Open-Pix/laravel-backend-integration)
 
 Mostra o fluxo do SDK de PHP em ação, incluindo a criação de cobranças, a atualização dos status das doações em tempo real por meio de webhooks, bem como a instalação e configuração do SDK de PHP, e muito mais.
 
@@ -61,7 +61,7 @@ Tendo o [Composer](https://getcomposer.org) e o PHP `>=8.2.0` instalados diretam
 
 ## Acessando o exemplo
 
-Por padrão, a aplicação web é executada na URL <http://0.0.0.0>.
+Por padrão, a aplicação web é executada na URL [http://0.0.0.0](http://0.0.0.0).
 
 ## Visualização de logs
 

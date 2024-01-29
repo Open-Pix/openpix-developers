@@ -35,5 +35,5 @@ Pessoa Jurídica (PJ): O limite é de 20 consultas. A cada consulta não conclu�
 Entender esses limites é essencial para evitar bloqueios indesejados. Recomendamos que as consultas de chave Pix sejam feitas com a intenção de completar o pagamento, e que se evite consultas desnecessárias ou repetitivas.
 
 :::info
-Artigo Original <https://ajuda.openpix.com.br/pt-br/article/como-funciona-o-limite-de-consulta-de-chave-pix-para-realizar-pagamentos-kbsxq8/#2-o-que-e-o-leaky-bucket>
+Artigo Original [https://ajuda.openpix.com.br/pt-br/article/como-funciona-o-limite-de-consulta-de-chave-pix-para-realizar-pagamentos-kbsxq8/#2-o-que-e-o-leaky-bucket](https://ajuda.openpix.com.br/pt-br/article/como-funciona-o-limite-de-consulta-de-chave-pix-para-realizar-pagamentos-kbsxq8/#2-o-que-e-o-leaky-bucket)
 :::
