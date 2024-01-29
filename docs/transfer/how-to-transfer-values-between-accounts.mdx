@@ -49,10 +49,8 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
 
 ### Exemplos em código
 
-```mdx-code-block
 <Tabs>
   <TabItem value="shell-curl" label="Shell + cURL" default>
-```
 
 ```sh
   curl 'https://api.openpix.com.br/api/v1/transfer' -X POST \
@@ -62,10 +60,8 @@ Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisiç�
       --data-binary '{"value": 100, "fromPixKey": "from@openpix.com.br", "toPixKey": "to@openpix.com.br"}'
 ```
 
-```mdx-code-block
   </TabItem>
   <TabItem value="javascript" label="JavaScript + Fetch" default>
-```
 
 ```js
 fetch('https://api.openpix.com.br/api/v1/transfer', {
@@ -82,7 +78,5 @@ fetch('https://api.openpix.com.br/api/v1/transfer', {
 }).then((res) => res.json());
 ```
 
-```mdx-code-block
   </TabItem>
 </Tabs>
-```
