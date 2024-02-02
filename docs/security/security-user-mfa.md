@@ -14,13 +14,32 @@ Authy, entre outros.
 
 Para ativar a autenticação multi-fator, siga os passos abaixo:
 
-1. Acesse a [página de configurações](https://app.openpix.com.br/home/me/account/edit) da sua conta.
-2. Na seção "Informação da Plataforma", clique em "Autenticação multifator"
-3. Clique no botão "Ativar autenticação de dois fatores"
-4. Escaneie o QR Code com o aplicativo de autenticação, caso não conseguir, você pode inserir o código manualmente.
-5. Após escanear o QR Code, insira o código gerado pelo aplicativo de autenticação no campo abaixo de "Digite o código de verificação".
-6. Clique no botão "Salvar"
-7. Você configurou a autenticação multi-fator com sucesso!
+Acesse a [página de configurações](https://app.openpix.com.br/home/me/account/edit) da sua conta.
+
+Na seção "Informação da Plataforma", clique em "Autenticação multifator"
+
+![Primeiro passo](./__assets__/security-user-mfa-first-step.png)
+
+Clique no botão "Ativar autenticação de dois fatores"
+
+Escaneie o QR Code com o aplicativo de autenticação, caso não conseguir, você pode inserir o código manualmente.
+
+:::info
+
+Caso não seja possivel escanear o QR code a partir do seu dispositivo, você pode estar
+inserindo manualmente o código conforme o informado quando você clica em `"chave de configuração"`.
+
+:::
+
+Após escanear o QR Code, insira o código gerado pelo aplicativo de autenticação no campo abaixo de "Digite o código de verificação".
+
+![Segundo passo](./__assets__/security-user-mfa-second-step.png)
+
+Clique no botão "Salvar"
+
+Você configurou a autenticação multi-fator com sucesso!
+
+![Terceiro passo](./__assets__/security-user-mfa-third-step.png)
 
 Com isso, todas as ações que exigem uma autenticação na sua conta, alteração de senha,
 saques, pagamentos externos, entre outros, irão exigir a autenticação multi-fator para serem realizadas.
@@ -34,6 +53,8 @@ para auxiliar na troca do dispositivo.
 ## Desativando a autenticação multi-fator
 
 Caso você queira desativar a autenticação multi-fator, siga os passos abaixo:
+
+![Terceiro passo](./__assets__/security-user-mfa-third-step.png)
 
 1. Acesse a [página de configurações](https://app.openpix.com.br/home/me/account/edit) da sua conta.
 2. Na seção "Informação da Plataforma", clique em "Autenticação multifator"
@@ -55,3 +76,17 @@ preferido para autenticação multi-fator. Para isso, siga os passos abaixo:
 3. Selecione o método de autenticação que você deseja utilizar como preferido.
 4. Clique no botão "Salvar"
 5. Você configurou o método de autenticação multi-fator preferido com sucesso!
+
+## Recomendações de Apps de Autenticação
+
+Existem diversos aplicativos de autenticação disponíveis no mercado, abaixo listamos alguns
+dos mais utilizados:
+
+- Google Authenticator
+- Microsoft Authenticator
+- Authy
+- LastPass Authenticator
+- 1Password
+
+Caso você tenha dúvidas sobre qual aplicativo utilizar, recomendamos que você entre em contato
+com o suporte do aplicativo de autenticação para obter mais informações.
