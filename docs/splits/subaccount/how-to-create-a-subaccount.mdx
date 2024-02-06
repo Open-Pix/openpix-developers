@@ -1,0 +1,57 @@
+---
+id: how-to-create-a-subbaccount
+title: Como criar uma subconta
+tags:
+  - api
+  - subaccount
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
+:::
+
+Atualmente a criação de uma subconta é feita apenas via API. Para isso você pode está utilizando o _endpoint_ `/api/v1/subaccount` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar uma subconta são os seguintes:
+
+- **`name`**: O nome de identificação da subconta.
+- **`pixKey`**: A chave PIX da subconta (Não precisa ser necessariamente atrelada a uma conta da OpenPix).
+
+### Exemplos em código
+
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/subaccount' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "Authorization": "app_id"
+      --data-binary '{"name":"subaccount#1","pixKey": "destinatario@openpix.com.br"}'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+
+```js
+fetch('https://api.openpix.com.br/api/v1/subaccount', {
+  method: 'POST',
+  body: JSON.stringify({
+    name: "subaccount#1",
+    pixKey: "destinatario@openpix.com.br"
+  }),
+  headers: {
+    Authorization: 'app_id',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+  </TabItem>
+</Tabs>
