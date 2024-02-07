@@ -1400,14 +1400,14 @@ paths:
                 value:
                   value: 100
                   destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                  destinationAliasType: RANDOM
                   comment: payment comment
                   correlationID: payment1
                   sourceAccountId: my-source-account-id
               qrCode:
                 summary: QR Code
                 value:
-                  qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
-                    Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+                  qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009SaoPaulo62360532867ba5173c734202ac659721306b38c963044BCA
                   comment: payment comment
                   correlationID: payment1
                   sourceAccountId: my-source-account-id
@@ -1429,6 +1429,7 @@ paths:
                       value: 100
                       status: CREATED
                       destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                      destinationAliasType: RANDOM
                       comment: payment comment
                       correlationID: payment1
                       sourceAccountId: my-source-account-id
@@ -1439,7 +1440,9 @@ paths:
                       value: 100
                       status: CREATED
                       destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
-                      qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      destinationAliasType: RANDOM
+                      qrCode:
+                        000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                         Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                       comment: payment comment
                       correlationID: payment1
@@ -3302,6 +3305,7 @@ components:
           required:
             - value
             - destinationAlias
+            - destinationAliasType
             - correlationID
           properties:
             value:
@@ -3310,6 +3314,15 @@ components:
             destinationAlias:
               type: string
               description: the pix key the payment should be sent to
+            destinationAliasType:
+              type: string
+              enum:
+                - CPF
+                - CNPJ
+                - EMAIL
+                - PHONE
+                - RANDOM
+              description: the type of the pix key the payment should be sent to
             correlationID:
               type: string
               description: an unique identifier for your payment
@@ -3348,6 +3361,9 @@ components:
         destinationAlias:
           type: string
           description: the pix key the payment should be sent to
+        destinationAliasType:
+          type: string
+          description: the type of the pix key the payment should be sent to
         qrCode:
           type: string
           description: the QR Code to be paid
