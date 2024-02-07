@@ -1,0 +1,13 @@
+{
+  "label": "Taxa customizada do parceiro",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Taxa customizada do parceiro visão geral"
+  },
+  "customProps": {
+    "description": "Taxa customizada do parceiro documentação"
+  }
+}
