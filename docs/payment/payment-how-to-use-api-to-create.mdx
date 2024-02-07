@@ -15,7 +15,7 @@ import TabItem from '@theme/TabItem';
 Nós disponibilizamos o _endpoint_ `/api/v1/payment` para que você possa criar
 um novo _payment_ para a respectiva empresa afiliada.
 
-Você pode acessar [aqui](<[https://developers.woovi.com/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post](https://developers.woovi.com/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)>)
+Você pode acessar [aqui](<[https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)>)
 a documentação referente a esse _endpoint_.
 
 Como parte do `body` da requisição, possuímos dois modos de pagamento, por chave Pix e por QR Code:
@@ -27,7 +27,7 @@ Abaixo temos a descrição de cada campo junto dos opcionais:
 
 - **`value`**: O valor em centavos do pagamento a ser criado.
 - **`destinationAlias`**: A chave pix destinatária do pagamento criado.
-- **`destinationAliasType`**: A tipo da chave pix destinatária do pagamento criado.
+- **`destinationAliasType`**: A tipo da chave pix destinatária do pagamento criado. Deve ser um dos seguintes valores: CPF, CNPJ, EMAIL, PHONE, RANDOM.
 - **`qrCode`**: O QR Code a ser pago
 - **`correlationID`**: Um identificador único para o pagamento.
 - **`comment`**: Comentário que será atrelado a seu pagamento quando a transferencia for realizada.
