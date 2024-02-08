@@ -1452,8 +1452,7 @@ paths:
                       status: CREATED
                       destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
                       destinationAliasType: RANDOM
-                      qrCode:
-                        000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                         Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                       comment: payment comment
                       correlationID: payment1
@@ -2959,6 +2958,9 @@ components:
         expiresIn:
           type: number
           description: Expires the charge in seconds (minimum is 15 minutes)
+        expiresDate:
+          type: string
+          description: Expiration date of the charge. Only in ISO 8601 format.
         customer:
           type: object
           $ref: '#/components/schemas/CustomerPayload'
