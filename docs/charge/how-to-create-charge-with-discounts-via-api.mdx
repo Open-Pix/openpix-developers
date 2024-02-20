@@ -1,6 +1,6 @@
 ---
 id: how-to-create-charge-with-discounts-via-api
-title: Como usar a API para criar uma cobrança com desconto?
+title: Como usar a API para criar uma cobrança com descontos?
 tags:
   - concept
   - api
@@ -10,21 +10,21 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Criar cobrança com desconto via API
+## Criar cobrança com descontos via API
 
-Para criar uma cobrança Pix com desconto, você utiliza o _endpoint_ `/api/v1/charge` da API.
+Para criar uma cobrança Pix com descontos, você utiliza o _endpoint_ `/api/v1/charge` da API.
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
 a documentação referente a esse _endpoint_.
 
-Os campos obrigatórios para criar uma cobrança Pix com desconto são os seguintes:
+Os campos obrigatórios para criar uma cobrança Pix com descontos são os seguintes:
 
-- **`type`**: O tipo de cobrança Pix.
+- **`type`**: O tipo de cobrança Pix (Apenas o tipo `OVERDUE` é considerado para essa modalidade).
 - **`customer`**: O cliente que será destinado a essa cobrança Pix.
 - **`daysForDueDate`**: O número de dias para vencimento da cobrança.
 - **`value`**: O valor em centavos da cobrança Pix a ser criado.
 - **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
-- **`discountSettings`**: O objeto que contém as configurações de desconto da cobrança Pix.
+- **`discountSettings`**: O objeto que contém as configurações de descontos da cobrança Pix.
 
 ### Exemplo
 
@@ -62,7 +62,7 @@ O body da sua requisição será semelhante a este exemplo:
 
 O `modality` dentro do objeto `discountSettings` é o tipo de desconto que será aplicado na cobrança. No exemplo acima, o desconto será aplicado em valor fixo até a data especificada. Todavia, você também pode aplicar desconto em porcetagem até a data especificada também.
 
-Atualmente contamos com os seguintes _enums_ para especificar a modalidate do desconto:
+Atualmente contamos com os seguintes _enums_ para especificar a modalidade do desconto:
 
 - `FIXED_VALUE_UNTIL_SPECIFIED_DATE` (Valor fixo até a data especificada)
 - `PERCENTAGE_UNTIL_SPECIFIED_DATE` (Porcentagem até a data especificada)
