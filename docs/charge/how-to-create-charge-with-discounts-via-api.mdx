@@ -1,0 +1,156 @@
+---
+id: how-to-create-charge-with-discounts-via-api
+title: Como usar a API para criar uma cobrança com descontos?
+tags:
+  - concept
+  - api
+  - discount
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Criar cobrança com descontos via API
+
+Para criar uma cobrança Pix com descontos, você utiliza o _endpoint_ `/api/v1/charge` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar uma cobrança Pix com descontos são os seguintes:
+
+- **`type`**: O tipo de cobrança Pix (Apenas o tipo `OVERDUE` é considerado para essa modalidade).
+- **`customer`**: O cliente que será destinado a essa cobrança Pix.
+- **`daysForDueDate`**: O número de dias para vencimento da cobrança.
+- **`value`**: O valor em centavos da cobrança Pix a ser criado.
+- **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
+- **`discountSettings`**: O objeto que contém as configurações de descontos da cobrança Pix.
+
+### Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+  "value": 1600,
+  "type": "OVERDUE",
+  "daysForDueDate": 15,
+  "customer": {
+    "name": "Jonh Doe",
+    "taxID": "123.456-789-10",
+    "address": {
+      "zipcode": "00000000",
+      "street": "Rua 00",
+      "number": "0",
+      "neighborhood": "Bairro",
+      "city": "São Paulo",
+      "state": "SP"
+    }
+  },
+  "discountSettings": {
+    "modality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+    "discountFixedDate": [
+      {
+        "daysActive": 5,
+        "value": 150
+      }
+    ]
+  }
+}
+```
+
+O `modality` dentro do objeto `discountSettings` é o tipo de desconto que será aplicado na cobrança. No exemplo acima, o desconto será aplicado em valor fixo até a data especificada. Todavia, você também pode aplicar desconto em porcetagem até a data especificada também.
+
+Atualmente contamos com os seguintes _enums_ para especificar a modalidade do desconto:
+
+- `FIXED_VALUE_UNTIL_SPECIFIED_DATE` (Valor fixo até a data especificada)
+- `PERCENTAGE_UNTIL_SPECIFIED_DATE` (Porcentagem até a data especificada)
+
+O `discountFixedDate` é um array de objetos que contém os seguintes campos:
+
+- **`value`**: descreve o valor do desconto em centavos.
+- **`daysActive`**: descreve o número de dias que o desconto será aplicado.
+  - Exemplo: Hoje é dia 20/02/2024, eu quero aplicar um desconto de R$ 1,50 caso o meu cliente pague antecipado até o dia 28/02/2024. Então o `daysActive` será de `8` e o `value` será `150`.
+
+### Exemplos em código
+
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{
+        "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+        "value": 1600,
+        "type": "OVERDUE",
+        "daysForDueDate": 15,
+        "customer": {
+          "name": "Jonh Doe",
+          "taxID": "123.456-789-10",
+          "address": {
+            "zipcode": "00000000",
+            "street": "Rua 00",
+            "number": "0",
+            "neighborhood": "Bairro",
+            "city": "São Paulo",
+            "state": "SP"
+          }
+        },
+        "discountSettings": {
+          "modality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+          "discountFixedDate": [
+            {
+              "daysActive": 5,
+              "value": 150
+            }
+          ]
+        }
+      }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+  method: 'POST',
+  body: JSON.stringify({
+    correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+    value: 1600,
+    type: 'OVERDUE',
+    daysForDueDate: 15,
+    customer: {
+      name: 'Jonh Doe',
+      taxID: '123.456-789-10',
+      address: {
+        zipcode: '00000000',
+        street: 'Rua 00',
+        number: '0',
+        neighborhood: 'Bairro',
+        city: 'São Paulo',
+        state: 'SP',
+      },
+    },
+    discountSettings: {
+      modality: 'FIXED_VALUE_UNTIL_SPECIFIED_DATE',
+      discountFixedDate: [
+        {
+          daysActive: 5,
+          value: 150,
+        },
+      ],
+    },
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+  </TabItem>
+</Tabs>
