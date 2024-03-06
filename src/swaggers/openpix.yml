@@ -3089,6 +3089,9 @@ components:
         enableCashbackExclusivePercentage:
           type: boolean
           description: true to enable fidelity cashback and false to disable.
+        subaccount:
+          type: string
+          description: Pix key of the subaccount to receive the charge
       required:
         - correlationID
         - value
