@@ -2836,6 +2836,55 @@ paths:
                 properties:
                   error:
                     type: string
+  /api/v1/subaccount/transfer:
+    post:
+      tags:
+        - sub account (request access)
+      summary: Transfer between subaccounts
+      description: Transfer between subaccounts
+      requestBody:
+        description: Data to make a new transfer between subaccounts
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/SubAccountTransferPayload'
+            examples:
+              SubAccount:
+                value:
+                  value: 65
+                  fromPixKey: c4249323-b4ca-43f2-8139-874baab09b93
+                  fromPixKeyType: RANDOM
+                  toPixKey: 3143da48-2bc7-49a4-89bd-4e22f73bfb0c
+                  toPixKeyType: RANDOM
+      responses:
+        '200':
+          description: Transfer response success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/SubAccountTransferResponsePayload'
+              example:
+                value: 65
+                destinationSubaccount:
+                  name: test-sub-account-1
+                  pixKey: c4249323-b4ca-43f2-8139-874baab09b93
+                  balance: 100
+                originSubaccount:
+                  name: test-sub-account-2
+                  pixKey: 3143da48-2bc7-49a4-89bd-4e22f73bfb0c
+                  balance: 100
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 components:
   schemas:
     CompanyBankAccount:
@@ -3866,6 +3915,76 @@ components:
         name:
           type: string
           description: Name of the sub account
+    SubAccountTransferPayload:
+      required:
+        - value
+        - fromPixKey
+        - fromPixKeyType
+        - toPixKey
+        - toPixKeyType
+      properties:
+        value:
+          type: number
+          description: The value of the transfer in cents
+        fromPixKey:
+          type: string
+          description: The transfer origin pix key
+        fromPixKeyType:
+          type: string
+          description: The transfer origin pix key type
+          enum:
+            - CPF
+            - CNPJ
+            - EMAIL
+            - PHONE
+            - RANDOM
+        toPixKey:
+          type: string
+          description: The transfer destination pix key
+        toPixKeyType:
+          type: string
+          description: The transfer destination pix key type
+          enum:
+            - CPF
+            - CNPJ
+            - EMAIL
+            - PHONE
+            - RANDOM
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this transfer
+    SubAccountTransferResponsePayload:
+      type: object
+      properties:
+        value:
+          type: number
+          description: The value of the transfer in cents
+        destinationSubaccount:
+          type: object
+          description: The destination subaccount
+          properties:
+            name:
+              type: string
+              description: Name of the subaccount
+            pixKey:
+              type: string
+              description: The pix key for the subaccount
+            balance:
+              type: number
+              description: Number in cents that represent the balance of the subaccount
+        originSubaccount:
+          type: object
+          description: The destination subaccount
+          properties:
+            name:
+              type: string
+              description: Name of the subaccount
+            pixKey:
+              type: string
+              description: The pix key for the subaccount
+            balance:
+              type: number
+              description: Number in cents that represent the balance of the subaccount
   securitySchemes:
     AppID:
       type: apiKey
