@@ -1,0 +1,81 @@
+---
+id: how-to-create-charge-with-subaccount-via-api
+title: Como usar a API para criar uma cobrança com uma subconta atrelada?
+tags:
+  - concept
+  - api
+  - subaccount
+  - charge
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Criar cobrança com atrelada à uma subconta via API
+
+Para criar uma cobrança Pix com uma subconta atrelada, você utiliza o _endpoint_ `/api/v1/charge` da API.
+
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/post)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para criar uma cobrança Pix com descontos são os seguintes:
+
+- **`value`**: O valor em centavos da cobrança Pix a ser criado.
+- **`correlationID`**: Um identificador único para a cobrança Pix. [CorrelationID](../concepts/correlation-id)
+- **`subaccount`**: A chave da subconta que será atrelada à cobrança Pix.
+
+### Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+  "value": 1600,
+  "subaccount": "pixkey@pixkey.com" // Aqui estamos usando um email como chave Pix.
+}
+```
+
+O campo `subaccount` é a chave Pix da subconta que será atrelada à cobrança Pix. Após o pagamento da cobrança, o valor será creditado (já aplicado a tarifa da plataforma) na subconta que você especificou na criação.
+
+:::info
+Antes de criar uma cobrança Pix com uma subconta atrelada, você precisa ter uma subconta cadastrada na plataforma OpenPix. Para saber como criar uma subconta, acesse esta [documentação](/docs/subaccount/how-to-create-a-subbaccount).
+:::
+
+### Exemplos em código
+
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/charge' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{
+        "correlationID": "c782e0ac-833d-4a89-9e73-9b60b2b41d3a",
+        "value": 1600,
+        "subaccount": "pixkey@pixkey.com"
+      }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+  method: 'POST',
+  body: JSON.stringify({
+    correlationID: 'c782e0ac-833d-4a89-9e73-9b60b2b41d3a',
+    value: 1600,
+    subaccount: 'pixkey@pixkey.com',
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+  </TabItem>
+</Tabs>
