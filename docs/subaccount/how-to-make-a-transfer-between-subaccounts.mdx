@@ -1,0 +1,92 @@
+---
+id: how-to-make-a-transfer-between-subaccounts
+title: Como fazer uma transferência entre subcontas?
+tags:
+  - api
+  - subaccount
+  - transfer
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
+:::
+
+Para realizar uma transferência entre subcontas da mesma empresa, você utiliza o _endpoint_ `/api/v1/subaccount/transfer` da API.
+
+Você pode acessar [aqui](<[https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1transfer/post](https://developers.openpix.com.br/api#tag/sub-account-(request-access)/paths/~1api~1v1~1subaccount~1transfer/post)>)
+a documentação referente a esse _endpoint_.
+
+Os campos obrigatórios para fazer uma transferência entre subcontas são os seguintes:
+
+- **`value`**: O valor em centavos da cobrança Pix a ser criado.
+- **`fromPixKey`**: A chave Pix da subconta que irá realizar a transferência.
+- **`fromPixKeyType`**: O tipo da chave Pix da subconta que irá realizar a transferência.
+- **`toPixKey`**: A chave Pix da subconta que receberá a transferência.
+- **`toPixKeyType`**: O tipo da chave Pix da subconta que receberá a transferência.
+
+Existe também a possibilidade de adicionar os seguintes campos (opcionais):
+
+- **`correlationID`**: Um identificador único para cada transferência. [CorrelationID](../concepts/correlation-id)
+
+:::info
+Lembrando que o `correlationID` é um campo opcional, caso você não o envie, fazermos a geração internamente.
+:::
+
+### Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```js
+{
+  value: 65,
+  fromPixKey: 'pixKey@pixKey.com',
+  fromPixKeyType: 'EMAIL',
+  toPixKey: 'mediator@pixKey.com',
+  toPixKeyType: 'EMAIL',
+}
+```
+
+### Exemplos em código
+
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+
+```sh
+  curl 'https://api.openpix.com.br/api/v1/subaccount/transfer' -X POST \
+      -H "Accept: application/json" \
+      -H "Content-Type: application/json" \
+      -H "user-agent: node-fetch" \
+      --data-binary '{
+        "value": 65,
+        "fromPixKey": "pixKey@pixKey.com",
+        "fromPixKeyType": "EMAIL",
+        "toPixKey": "mediator@pixKey.com",
+        "toPixKeyType": "EMAIL"
+      }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch" default>
+
+```js
+fetch('https://api.openpix.com.br/api/v1/charge', {
+  method: 'POST',
+  body: JSON.stringify({
+    value: 65,
+    fromPixKey: 'pixKey@pixKey.com',
+    fromPixKeyType: 'EMAIL',
+    toPixKey: 'mediator@pixKey.com',
+    toPixKeyType: 'EMAIL',
+  }),
+  headers: {
+    Authorization: 'AUTHORIZATION',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json());
+```
+
+  </TabItem>
+</Tabs>
