@@ -1,0 +1,13 @@
+{
+  "label": "Checkout",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Visão geral"
+  },
+  "customProps": {
+    "description": "Documentações relacionadas ao produto Checkout - OpenPix"
+  }
+}
