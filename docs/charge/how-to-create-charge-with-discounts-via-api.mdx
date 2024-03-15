@@ -49,11 +49,15 @@ O body da sua requisição será semelhante a este exemplo:
     }
   },
   "discountSettings": {
-    "modality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+    "modality": "PERCENTAGE_UNTIL_SPECIFIED_DATE",
     "discountFixedDate": [
       {
         "daysActive": 5,
         "value": 150
+      },
+      {
+        "daysActive": 15,
+        "value": 100
       }
     ]
   }
@@ -106,6 +110,10 @@ O `discountFixedDate` é um array de objetos que contém os seguintes campos:
             {
               "daysActive": 5,
               "value": 150
+            },
+            {
+              "daysActive": 15,
+              "value": 100
             }
           ]
         }
@@ -141,6 +149,10 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
         {
           daysActive: 5,
           value: 150,
+        },
+        {
+          daysActive: 15,
+          value: 100,
         },
       ],
     },
