@@ -105,7 +105,7 @@ O `discountFixedDate` é um array de objetos que contém os seguintes campos:
           }
         },
         "discountSettings": {
-          "modality": "FIXED_VALUE_UNTIL_SPECIFIED_DATE",
+          "modality": "PERCENTAGE_UNTIL_SPECIFIED_DATE",
           "discountFixedDate": [
             {
               "daysActive": 5,
@@ -144,7 +144,7 @@ fetch('https://api.openpix.com.br/api/v1/charge', {
       },
     },
     discountSettings: {
-      modality: 'FIXED_VALUE_UNTIL_SPECIFIED_DATE',
+      modality: 'PERCENTAGE_UNTIL_SPECIFIED_DATE',
       discountFixedDate: [
         {
           daysActive: 5,
