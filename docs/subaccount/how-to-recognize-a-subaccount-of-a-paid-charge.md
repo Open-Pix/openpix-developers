@@ -12,7 +12,7 @@ tags:
 Para a utilização desta funcionalidade é necessário possuir a funcionalidade Subconta
 :::
 
-A forma mais recomendada para reconhecer uma subconta de uma cobrança após o pagamento em tempo real é utilizando o nosso Webhook de cobrança paga. Nele é retornado todas as informações da cobrança, inclusive a subconta, caso a cobrança esteja atrelada à uma. Segue o exemplo do payload retornado pelo Webhook de uma cobrança atreladaà uma subconta:
+A forma mais recomendada para reconhecer uma subconta de uma cobrança após o pagamento em tempo real é utilizando o nosso Webhook de cobrança paga. Nele é retornado todas as informações da cobrança, inclusive a subconta, caso a cobrança esteja atrelada à uma. Segue o exemplo do payload retornado pelo Webhook de uma cobrança atrelada à uma subconta:
 
 ```json
 {
