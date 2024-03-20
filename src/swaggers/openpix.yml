@@ -914,6 +914,79 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/v1/customer/{correlationID}':
+    patch:
+      tags:
+        - customer
+      summary: Update a Customer
+      parameters:
+        - name: correlationID
+          in: path
+          description: correlation ID
+          required: true
+          schema:
+            type: string
+          examples:
+            correlationID:
+              value: fe7834b4060c488a9b0f89811be5f5cf
+      description: Endpoint to update a Customer
+      requestBody:
+        description: Data to update a existent customer
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/CustomerPatchPayload'
+            example:
+              name: Dan
+              email: email0@example.com
+              phone: '5511999999999'
+              address:
+                zipcode: '30421322'
+                street: Street
+                number: '100'
+                neighborhood: Neighborhood
+                city: Belo Horizonte
+                state: MG
+                complement: APTO
+                country: BR
+      responses:
+        '200':
+          description: Customer ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer:
+                    $ref: '#/components/schemas/Customer'
+                example:
+                  customer:
+                    name: Dan
+                    email: email0@example.com
+                    phone: '5511999999999'
+                    taxID:
+                      taxID: '31324227036'
+                      type: BR:CPF
+                    address:
+                      zipcode: '30421322'
+                      street: Street
+                      number: '100'
+                      neighborhood: Neighborhood
+                      city: Belo Horizonte
+                      state: MG
+                      complement: APTO
+                      country: BR
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
   /api/v1/partner/application:
     post:
       tags:
@@ -2600,6 +2673,28 @@ paths:
               responses:
                 '200':
                   description: Notificação recebida com sucesso
+  /api/v1/webhook/ips:
+    get:
+      tags:
+        - webhook
+      summary: Get a list of webhook IPs
+      responses:
+        '200':
+          description: A list of webhook IPs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ips:
+                    type: array
+                    items:
+                      type: string
+                example:
+                  ips:
+                    - 189.51.60.9
+                    - 138.97.124.129
+                    - 177.71.136.66
   '/openpix/charge/brcode/image/{:id}.png?size=1024':
     get:
       tags:
@@ -3279,6 +3374,36 @@ components:
           required:
             - name
             - phone
+    CustomerPatchPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        taxID:
+          type: string
+        address:
+          type: object
+          properties:
+            zipcode:
+              type: string
+            street:
+              type: string
+            number:
+              type: string
+            neighborhood:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            complement:
+              type: string
+            country:
+              type: string
     End:
       type: string
       format: date-time
