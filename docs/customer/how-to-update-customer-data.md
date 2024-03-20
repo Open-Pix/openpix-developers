@@ -1,6 +1,6 @@
 ---
 id: how-to-update-customer-data
-title: Como usar atualizar os dados de um cliente
+title: Como atualizar os dados de um cliente
 tags:
   - concept
   - api
