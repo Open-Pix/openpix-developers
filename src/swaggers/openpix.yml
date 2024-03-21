@@ -3846,9 +3846,13 @@ components:
           minimum: 3
           default: 7
           description: Days that the charge will take to expire from the generation day.
+        correlationID:
+          type: string
+          description: Your correlation ID to keep track of this subscription
       required:
         - customer
         - value
+        - correlationID
     Transaction:
       type: object
       properties:
