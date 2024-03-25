@@ -14,7 +14,7 @@
     "core-js": "^3.36.1",
     "mdx-mermaid": "^2.0.0",
     "mermaid": "^10.7.0",
-    "mobx": "^6.12.0",
+    "mobx": "^6.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-embed": "^3.7.0",
