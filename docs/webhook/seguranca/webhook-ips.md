@@ -16,11 +16,6 @@ IPs para envio de Webhooks ativos
 - 138.97.124.129
 ```
 
-Antigo IP - Será descontinuado em Março/2024
-```
-177.71.136.66
-```
-
 
 :::warning[**Nota Importante**]
 
