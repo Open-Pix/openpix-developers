@@ -1,0 +1,13 @@
+{
+    "label": "EasyDigitalDownloads",
+    "collapsible": true,
+    "collapsed": true,
+    "className": "red",
+    "link": {
+      "type": "generated-index",
+      "title": "EasyDigitalDownloads visão geral"
+    },
+    "customProps": {
+      "description": "EasyDigitalDownloads documentação"
+    }
+  }
