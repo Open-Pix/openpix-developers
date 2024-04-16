@@ -3161,9 +3161,6 @@ components:
         comment:
           type: string
           description: Comment to be added in infoPagador
-        identifier:
-          type: string
-          description: Custom identifier for EMV
         expiresIn:
           type: number
           description: Expires the charge in seconds (minimum is 15 minutes)
