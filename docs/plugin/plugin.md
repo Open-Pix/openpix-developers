@@ -75,6 +75,7 @@ window.$openpix.push([
   'pix',
   {
     value: 1000, // R$ 10,00
+    // cada cobrança precisa de um correlationID único
     correlationID: 'myCorrelationId',
     description: 'product A',
   },
@@ -101,6 +102,7 @@ window.$openpix.push([
     <script>
       function displayOpenPixModal() {
         window.$openpix = window.$openpix || [];
+        const gerarCorrelationIdUnico = (len, chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') => [...Array(len)].map(() => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
 
         window.$openpix.push([
           'config',
@@ -113,7 +115,8 @@ window.$openpix.push([
           'pix',
           {
             value: 1000,
-            correlationID: 'randomCorrelationID',
+            // cada cobrança precisa de um correlationID único
+            correlationID: gerarCorrelationIdUnico(30),
             description: 'product A',
           },
         ]);
@@ -266,6 +269,7 @@ if (!!window.$openpix?.addEventListener) {
       function displayOpenPixModal() {
         window.$openpix = window.$openpix || []; // priorize o objeto já instanciado
 
+        const gerarCorrelationIdUnico = (len, chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') => [...Array(len)].map(() => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
         window.$openpix.push([
           'config',
           {
@@ -277,7 +281,7 @@ if (!!window.$openpix?.addEventListener) {
           'pix',
           {
             value: 1000, // R$ 10,00
-            correlationID: 'yourRandomCorrelationId',
+            correlationID: gerarCorrelationIdUnico(30),
           },
         ]);
 
