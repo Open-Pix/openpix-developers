@@ -39,3 +39,5 @@ Sendo assim, essa é a tabela de retentativas:
 | 8         | 1280                 |
 
 Caso todas as tentativas falhem, o webhook não será mais retentado.
+
+Porém ainda sim é possível retentar manualmente via plataforma.
