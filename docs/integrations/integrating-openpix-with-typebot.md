@@ -56,3 +56,5 @@ Após isso, seu fluxo de criação de cobrança está pronto para uso!
 Segue uma imagem de como o fluxo ficou na forma final:
 
 ![5](./__assets__/integrating-openpix-with-typebot-5.png)
+
+Caso queirar importar o fluxo criado nesse tutorial, basta baixar [aqui](./__assets__/typebot-flow.json).
