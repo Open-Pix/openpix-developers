@@ -157,7 +157,7 @@ cabeçalho, você pode validar se a assinatura é válida e prosseguir com o flu
 x-webhook-signature: lL2nnXgmLFGgxJ8+jCDguqouU4ucrIxYJcU5SPrJFaNcJajTJHYVldqc/z4YFIjAjtPEALe699WosgPY08W7CLpidvtm06Qwa4YMB0l/DcTS93O91NdSH/adjugEKiOb76Zj/0jB8mqOmWCFYbweOBa17bssuEkd5Lw7Q5L314Y=
 ```
 
-Veja um [exemplo de validação de assinatura](https://developers.openpix.com.br/docs/webhook/webhook-signature-validation#exemplo-de-valida%C3%A7%C3%A3o).
+Veja um [exemplo de validação de assinatura](https://developers.openpix.com.br/docs/webhook/seguranca/webhook-signature-validation#exemplo-de-valida%C3%A7%C3%A3o).
 
 Para verificar a assinatura de um webhook, você precisa do corpo da requisição, o cabeçalho `x-webhook-signature` e o
 conteúdo enviado no request.
