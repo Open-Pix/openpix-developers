@@ -9,7 +9,7 @@ You can use [@openpix/react](https://www.npmjs.com/package/@openpix/react) to ea
 ## How to install
 
 ```jsx
-yarn install @openpix/react
+yarn add @openpix/react
 ```
 
 ## Setup Polyfills
@@ -18,7 +18,7 @@ This plugin uses core-js to polyfill Promises
 Install core-js
 
 ```jsx
-yarn install core-js
+yarn add core-js
 ```
 
 Add it to your App entrypoint
