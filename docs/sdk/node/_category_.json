@@ -1,0 +1,13 @@
+{
+  "label": "Node",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "SDK de Node"
+  },
+  "customProps": {
+    "description": "SDK de Node da OpenPix"
+  }
+}
