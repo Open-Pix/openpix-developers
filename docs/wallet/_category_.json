@@ -1,0 +1,13 @@
+{
+  "label": "Wallet",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Wallet visão geral"
+  },
+  "customProps": {
+    "description": "Wallet documentação"
+  }
+}
