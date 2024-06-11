@@ -24,7 +24,7 @@ E também adicione a dependência do SDK:
 
 ```groovy
 dependencies {
-    implementation 'br.com.openpix:java-sdk:1.0.0'
+    implementation 'br.com.openpix:java-sdk:0.0.13'
 }
 ```
 
