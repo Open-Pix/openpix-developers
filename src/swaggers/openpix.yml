@@ -373,6 +373,21 @@ paths:
                     expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
+                    paymentMethods:
+                      pix:
+                        method: PIX_COB
+                        transactionID: 9134e286-6f71-427a-bf00-241681624586
+                        identifier: 9134e286-6f71-427a-bf00-241681624586
+                        additionalInfo: []
+                        fee: 50
+                        value: 200
+                        valueWithDiscount: 200
+                        status: ACTIVE
+                        txId: 9134e286-6f71-427a-bf00-241681624586
+                        brCode:
+                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -484,6 +499,21 @@ paths:
                     expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
+                    paymentMethods:
+                      pix:
+                        method: PIX_COB
+                        transactionID: 9134e286-6f71-427a-bf00-241681624586
+                        identifier: 9134e286-6f71-427a-bf00-241681624586
+                        additionalInfo: []
+                        fee: 50
+                        value: 200
+                        valueWithDiscount: 200
+                        status: ACTIVE
+                        txId: 9134e286-6f71-427a-bf00-241681624586
+                        brCode:
+                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -674,6 +704,21 @@ paths:
                         value: '18476'
                       - key: Order
                         value: '302'
+                    paymentMethods:
+                      pix:
+                        method: PIX_COB
+                        transactionID: 9134e286-6f71-427a-bf00-241681624586
+                        identifier: 9134e286-6f71-427a-bf00-241681624586
+                        additionalInfo: []
+                        fee: 50
+                        value: 200
+                        valueWithDiscount: 200
+                        status: ACTIVE
+                        txId: 9134e286-6f71-427a-bf00-241681624586
+                        brCode:
+                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          Paulo62360532867ba5173c734202ac659721306b38c963044BCA
+                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -3084,6 +3129,7 @@ components:
           enum:
             - DYNAMIC
             - OVERDUE
+            - BOLETO
           description:
             Charge type is used to determine whether a charge will have a
             deadline, fines and interests
@@ -3141,6 +3187,42 @@ components:
         subscription:
           type: object
           $ref: '#/components/schemas/Subscription'
+        paymentMethods:
+          type: object
+          properties:
+            pix:
+              type: object
+              nullable: true
+              properties:
+                method:
+                  type: string
+                transactionID:
+                  type: string
+                identifier:
+                  type: string
+                additionalInfo:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+                fee:
+                  type: number
+                value:
+                  type: number
+                valueWithDiscount:
+                  type: number
+                status:
+                  type: string
+                txId:
+                  type: string
+                brCode:
+                  type: string
+                qrCodeImage:
+                  type: string
     ChargePayload:
       type: object
       properties:
