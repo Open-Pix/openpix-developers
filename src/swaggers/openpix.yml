@@ -381,7 +381,6 @@ paths:
                         additionalInfo: []
                         fee: 50
                         value: 200
-                        valueWithDiscount: 200
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
@@ -507,7 +506,6 @@ paths:
                         additionalInfo: []
                         fee: 50
                         value: 200
-                        valueWithDiscount: 200
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
@@ -712,7 +710,6 @@ paths:
                         additionalInfo: []
                         fee: 50
                         value: 200
-                        valueWithDiscount: 200
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
@@ -3212,8 +3209,6 @@ components:
                 fee:
                   type: number
                 value:
-                  type: number
-                valueWithDiscount:
                   type: number
                 status:
                   type: string
