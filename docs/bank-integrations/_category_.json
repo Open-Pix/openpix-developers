@@ -1,13 +1,13 @@
 {
-  "label": "Bancos",
+  "label": "Plano Connect",
   "collapsible": true,
   "collapsed": true,
   "className": "red",
   "link": {
     "type": "generated-index",
-    "title": "Bancos visão geral"
+    "title": "Plano Connect visão geral"
   },
   "customProps": {
-    "description": "Bancos documentação"
+    "description": "Plano Connect documentação"
   }
 }
