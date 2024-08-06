@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@cmfcmf/docusaurus-search-local@1.2.0':
-    hash: jpmto2klszff5ddnlfderuuhzi
+    hash: euhqvfpim3ta5kgu5mgmwbhkae
     path: patches/@cmfcmf__docusaurus-search-local@1.2.0.patch
 
 importers:
@@ -15,7 +15,7 @@ importers:
     dependencies:
       '@cmfcmf/docusaurus-search-local':
         specifier: 1.2.0
-        version: 1.2.0(patch_hash=jpmto2klszff5ddnlfderuuhzi)(@docusaurus/core@3.4.0(@docusaurus/types@3.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(eslint@9.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(search-insights@2.16.0)
+        version: 1.2.0(patch_hash=euhqvfpim3ta5kgu5mgmwbhkae)(@docusaurus/core@3.4.0(@docusaurus/types@3.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(eslint@9.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(search-insights@2.16.0)
       '@docusaurus/core':
         specifier: 3.4.0
         version: 3.4.0(@docusaurus/types@3.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(eslint@9.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
@@ -34,6 +34,9 @@ importers:
       '@gracefullight/docusaurus-plugin-microsoft-clarity':
         specifier: ^1.0.0
         version: 1.0.0(@docusaurus/types@3.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.5.4)
+      '@mdx-js/react':
+        specifier: ^3.0.1
+        version: 3.0.1(@types/react@18.3.3)(react@18.3.1)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -7777,7 +7780,7 @@ snapshots:
       react-is: 18.3.1
       react-shallow-renderer: 16.15.0(react@18.3.1)
 
-  '@cmfcmf/docusaurus-search-local@1.2.0(patch_hash=jpmto2klszff5ddnlfderuuhzi)(@docusaurus/core@3.4.0(@docusaurus/types@3.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(eslint@9.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(search-insights@2.16.0)':
+  '@cmfcmf/docusaurus-search-local@1.2.0(patch_hash=euhqvfpim3ta5kgu5mgmwbhkae)(@docusaurus/core@3.4.0(@docusaurus/types@3.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(eslint@9.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(search-insights@2.16.0)':
     dependencies:
       '@algolia/autocomplete-js': 1.17.4(@algolia/client-search@4.24.0)(algoliasearch@4.24.0)(search-insights@2.16.0)
       '@algolia/autocomplete-theme-classic': 1.17.4
