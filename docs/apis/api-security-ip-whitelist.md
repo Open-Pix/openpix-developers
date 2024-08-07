@@ -13,7 +13,7 @@ Vamos ver como você pode adicionar uma lista de permissões de IP à sua API.
 ## Adicionando uma lista de permissões de IP à sua API
 
 Primeiramente, como um requisito, você precisa ter uma API criada.
-Se você ainda não criou uma API, pode seguir os passos no guia [Criando uma API](./api-getting-started.md).
+Se você ainda não criou uma API, pode seguir os passos no guia [Criando uma API](./getting-started-api.md).
 
 Após criar a API, você pode acessar os detalhes dela clicando no nome da API na [lista de APIs](https://app.openpix.com.br/home/applications/tab/list).
 

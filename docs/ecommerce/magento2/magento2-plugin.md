@@ -4,8 +4,8 @@ title: Integrando a OpenPix com Magento2
 sidebar_label: Magento2 OpenPix Plugin (deprecated)
 sidebar_position: 1
 tags:
-- magento2
-- ecommerce
+  - magento2
+  - ecommerce
 ---
 
 import Magento2Download from './__components__/magento2-install.mdx'
@@ -40,7 +40,7 @@ Entre em Magento2 Admin -> Stores > Configuration -> Sales -> Payment Method.
 
 Clicando em em `Credentials` no Plugin OpenPix.
 
-- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/api-getting-started.md)
+- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/getting-started-api.md)
 
 Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 
