@@ -8,7 +8,7 @@ tags:
   - ecommerce
 ---
 
-import Magento2Download from './**components**/magento2-install.mdx'
+import Magento2Download from './__components__/magento2-install.mdx'
 
 ## Plugin Pix para Magento2
 
