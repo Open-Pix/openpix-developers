@@ -37,7 +37,7 @@ Primeiro, dentro do N8N:
 2. Clique em Add Credential
 3. Selecione o tipo de credencial “OpenPix API”
 4. Preencha o campo de API Key com o seu APP ID
-   4.1. Você pode encontrar o seu APP ID na aba de aplicações/plugins ou criar um novo [documentação](../apis/api-getting-started)
+   4.1. Você pode encontrar o seu APP ID na aba de aplicações/plugins ou criar um novo [documentação](../apis/getting-started-api)
 
 ## Como criar cobrança usando N8N?
 

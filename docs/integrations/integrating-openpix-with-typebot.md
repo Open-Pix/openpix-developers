@@ -12,7 +12,7 @@ Essa documentação assume que você tenha preenchido alguns requisitos que são
 
 1. Ter uma conta no [Typebot](https://typebot.io/)
 2. Ter um fluxo já criado no [Typebot](https://typebot.io/)
-3. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/api-getting-started.md).
+3. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/getting-started-api.md).
 
 :::
 

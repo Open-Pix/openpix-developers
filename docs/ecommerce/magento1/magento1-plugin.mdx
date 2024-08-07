@@ -6,7 +6,8 @@ tags:
   - magento1
   - ecommerce
 ---
-import Magento1Download from './__components__/magento1-download.mdx'
+
+import Magento1Download from './__components__/magento1-download.mdx';
 
 ### Plugin Pix para Magento1
 
@@ -25,7 +26,7 @@ Caso não tenha acesso à plataforma registre-se [aqui](https://app.openpix.com/
 
 ## 1. Instale o Plugin OpenPix na sua instância Magento1
 
-<Magento1Download/>
+<Magento1Download />
 
 ## 2. Configurando o Plugin Magento1
 
@@ -37,7 +38,7 @@ Ao acessar `Payment Methods` você irá notar o Collapsible `OpenPix - Pix`
 
 ![openpix_pay_tab.png](/img/ecommerce/magento1/openpix_pay_tab.png)
 
-- __App ID__ Insira o AppID ou Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/api-getting-started.md)
+- __App ID__ Insira o AppID ou Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/getting-started-api.md)
 - __Webhook Authorization__ Crie uma senha para a integração do Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
   - Lembre-se: A URL a ser utilizada no webhook deverá ser: `https://yourstore/openpix/webhook` no momento em que cadastrá-lo na plataforma OpenPix
   - Lembre-se: A chave que você utilizar aqui deverá ser a mesma no momento em que cadastrá-la na plataforma OpenPix.

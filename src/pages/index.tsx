@@ -166,8 +166,7 @@ const cards = [
     title: 'API REST',
     content: 'API REST. Crie cobranças do seu back-end.',
     icon: <FaReact color={'#353535'} size={30} />,
-    docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin',
+    docsTo: '/docs/apis/getting-started-api',
     to: 'https://app.openpix.com/home/applications/api/add',
   },
   {
@@ -214,24 +213,21 @@ const cards = [
     title: 'Shell',
     content: 'Criar cobranças Pix usando Shell',
     icon: <SiPowershell color={'#787cb5'} size={30} />,
-    docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+    docsTo: '/docs/apis/getting-started-api',
     to: 'https://app.openpix.com/home/applications/shell/add',
   },
   {
     title: 'NodeJs',
     content: 'Criar cobranças Pix usando Nodejs',
     icon: <SiNodedotjs color={'#80bd41'} size={30} />,
-    docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+    docsTo: '/docs/apis/getting-started-api',
     to: 'https://app.openpix.com/home/applications/nodejs/add',
   },
   {
     title: 'C#',
     content: 'Criar cobranças Pix usando C#',
     icon: <TbBrandCSharp color={'#9b4f97'} size={30} />,
-    docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+    docsTo: '/docs/apis/getting-started-api',
     to: 'https://app.openpix.com/home/applications/csharp/add',
   },
   {
@@ -246,16 +242,14 @@ const cards = [
     title: 'Python',
     content: 'Criar cobranças Pix usando Python',
     icon: <FaPython size={30} />,
-    docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+    docsTo: '/docs/apis/getting-started-api',
     to: 'https://app.openpix.com/home/applications/python/add',
   },
   {
     title: 'Delphi',
     content: 'Criar cobranças Pix usando Delphi',
     icon: <SiDelphi color={'#f42736'} size={30} />,
-    docsTo:
-      '/docs/apis/api-getting-started#criando-uma-nova-chave-de-apiplugin.',
+    docsTo: '/docs/apis/getting-started-api',
     to: 'https://app.openpix.com/home/applications/delphi/add',
   },
   {

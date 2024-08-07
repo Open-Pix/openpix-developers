@@ -5,6 +5,7 @@ tags:
   - api
   - comecando
   - getting-started
+sidebar_class_name: hidden
 ---
 
 Este documento irá ajudá-lo a começar a utilizar as APIs e Plugins da OpenPix.
@@ -30,7 +31,7 @@ Vá para `Api/Plugins` na barra lateral e clique em `Nova API/Plugin`.
 Dentro da tela de criação, coloque um nome para a integração, e selecione `API` ou `Plugin`
 
 > **API**: api para ser utilizada em um ambiente/servidor
-> 
+>
 > **PLUGIN**: api para ser utilizada com nossos plugins ecommerce ou js
 
 ![appid-2](/img/appId-2.png)
@@ -38,7 +39,6 @@ Dentro da tela de criação, coloque um nome para a integração, e selecione `A
 Você será redirecionado para a tela de dados da `API/Plugin`, e basta copiar o AppID para utilizar em suas integrações.
 
 ![appid-3](/img/appId-3.png)
-
 
 ![AddNewApi](/img/apis/add-new-api.png)
 

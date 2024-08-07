@@ -11,11 +11,11 @@ tags:
 Essa documentação assume que você tenha preenchido alguns requisitos que são:
 
 1. Ter uma conta no [Bubble.io](https://bubble.io)
-2. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/api-getting-started.md).
+2. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/getting-started-api.md).
 
 :::
 
-## 1. Criando um App no Bubble.io 
+## 1. Criando um App no Bubble.io
 
 :::info
 
@@ -66,14 +66,14 @@ Preencha as informações necessárias levando em consideração os seguintes po
 1. Dê um nome pra sua API no campo de `API Name`, garantindo que seja fácil identificar essa nova API.
 2. No campo `Authentication`, selecione a opção: `Private key in header`.
 3. Irá aparecer uma seção abaixo contendo os seguintes fields: `Key name` e `Key value`. Preencha-os da seguinte forma:
-    - **Key name:** `Authorization`
-    - **Key value:** O AppID da sua aplicação OpenPix.
+   - **Key name:** `Authorization`
+   - **Key value:** O AppID da sua aplicação OpenPix.
 
 :::info
 
 Caso tenha dúvida em como pegar o `AppID` da sua aplicação OpenPix.
 
-Siga este tutorial [aqui](../apis/api-getting-started.md).
+Siga este tutorial [aqui](../apis/getting-started-api.md).
 
 :::
 
@@ -91,11 +91,11 @@ Neste mesmo campo do API Connector, ele irá adicionar uma nova chamada para um 
 
 Conforme a documentação da [API da OpenPix](https://developers.openpix.com.br/api), vamos preencher estes campos com:
 
-- O endpoint que deseja consumir; 
+- O endpoint que deseja consumir;
 - Os headers necessários;
 - O body da requisição (caso necessário);
 
-No exemplo abaixo, estamos consumindo o endpoint para criar uma cobrança Pix. Para *quaisquer* endpoints, a chamada deve estar configurada de forma similar.
+No exemplo abaixo, estamos consumindo o endpoint para criar uma cobrança Pix. Para _quaisquer_ endpoints, a chamada deve estar configurada de forma similar.
 
 ![Endpoint call](./__assets__/bubbleio-api-connector-endpoint-call.png)
 
@@ -103,7 +103,7 @@ Nesse caso, se atente aos seguintes pontos:
 
 1. Colocamos o `Use as`, como `Action`. Isso permite que você possa estar acoplando ele ao click de um botão ou alguma outra ação do seu site.
 2. Adicionar um novo header chamado `Content-Type` com valor `application/json`.
-3. Troque o `Body type` para `Raw`. Isso vai impedir do Bubble formatar os valores presentes no  body.
+3. Troque o `Body type` para `Raw`. Isso vai impedir do Bubble formatar os valores presentes no body.
 4. Adicione o body da requisição conforme o JSON esperado pelo endpoint.
 
 Após preencher estes pontos, você pode estar clicando no botão `Initialize call`.
