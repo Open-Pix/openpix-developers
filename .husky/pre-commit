@@ -7,6 +7,4 @@ if [ "$branch" = "main" ]; then
   exit 1
 fi
 
-. "$(dirname "$0")/_/husky.sh"
-
-yarn lint-staged
+pnpm lint-staged
