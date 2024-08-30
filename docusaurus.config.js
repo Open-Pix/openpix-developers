@@ -184,7 +184,11 @@ module.exports = {
         specs: [
           {
             route: '/pix/',
-            spec: './src/swaggers/bacen-pix.yml',
+            spec: './src/swaggers/bacen-pix.yaml',
+          },
+          {
+            route: '/dict/',
+            spec: './src/swaggers/bacen-dict.json',
           },
           {
             route: '/api/',
