@@ -12,16 +12,12 @@ Esta página lista os endereços IP que a plataforma Woovi/OpenPix usa ao enviar
 
 IPs para envio de Webhooks ativos
 ```
+- 189.51.60.8
 - 189.51.60.9
+- 138.97.124.128
 - 138.97.124.129
+- 186.224.206.204
 ```
-
-Também é possível usar FQDN para validar o endereço IP do webhook usand DNS
-```
-- webhook.woovi.com
-```
-
-Favor atentar para o fato que o FQDN irá retornar vários endereços IPs, de vários servidores distintos, seu firewall tem que levar em conta que qualquer IP pode ser usado, inclusive fora de ordem
 
 
 :::warning[**Nota Importante**]
