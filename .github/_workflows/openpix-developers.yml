@@ -15,8 +15,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: yarn
-      - run: yarn build
+      - run: pnpm
+      - run: pnpm build
       - name: Upload to S3 bucket
         uses: zdurham/s3-upload-github-action@master
         with:

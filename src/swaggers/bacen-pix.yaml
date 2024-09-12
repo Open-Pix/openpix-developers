@@ -7892,7 +7892,7 @@ components:
             - $ref: "#/components/schemas/TxId"
             - pattern: "[a-zA-Z0-9]{1,35}"
         valor:
-          type: "string"
+          type: "object"
           title: "Valor do Pix."
           pattern: "\\d{1,10}\\.\\d{2}"
           description: "Valor do Pix."
