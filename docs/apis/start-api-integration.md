@@ -87,13 +87,15 @@ Pode ocorrer de você receber uma resposta com o HTTP Status 401, que está rela
 
 ```json
 {
-	"data": null,
-	"errors": [{
-		"message": "appID inválido"
-	}]
+  "data": null,
+  "errors": [
+    {
+      "message": "appID inválido"
+    }
+  ]
 }
 ```
 
-é retornado esse erro caso seja um appID inválido.
+Caso seja inválido é retornado esse erro caso seja de appID inválido.
 
 Caso você obtenha esse erro, é recomendado gerar um novo appID dá sua aplicação, ou regerar o appID, caso já tenha uma aplicação criada, e adicionar novamente em seu sistema.
