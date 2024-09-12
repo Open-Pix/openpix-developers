@@ -80,3 +80,20 @@ Orientações da API:
 - Não reutilize chaves - Chaves de acessos, você pode gerar várias chaves
 - Apenas gere chaves quando for necessário
 - Desative chaves não utilizadas
+
+## AppID Inválido
+
+Pode ocorrer de você receber uma resposta com o HTTP Status 401, que está relacionado à um appID inválido, sendo passado no header mencionado acima.
+
+```json
+{
+	"data": null,
+	"errors": [{
+		"message": "appID inválido"
+	}]
+}
+```
+
+é retornado esse erro caso seja um appID inválido.
+
+Caso você obtenha esse erro, é recomendado gerar um novo appID dá sua aplicação, ou regerar o appID, caso já tenha uma aplicação criada, e adicionar novamente em seu sistema.
