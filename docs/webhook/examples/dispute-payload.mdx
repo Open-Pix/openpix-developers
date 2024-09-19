@@ -1,0 +1,37 @@
+---
+id: webhook-created-payload
+title: Payload de Disputa criada
+tags:
+  - webhook
+  - header
+  - api
+---
+
+## Disputa (DISPUTE_CREATE)
+
+Os webhooks de `Disputa` enviam objetos com os seguintes campos no seu payload:
+
+- `disputa`: Detalhes da disputa
+
+Disputas criadas podem ter alguns status: `Em revisão` e `Aberta`
+
+Em revisão é uma disputa em análise, essa ainda não foi `Criada`.
+
+Uma disputa `Aberta` é considerada como uma disputa `Criada`
+
+## Exemplo
+
+```json
+{
+  "event": "OPENPIX:DISPUTE_CREATED",
+  "dispute": {
+    "status": "OPENED",
+    "endToEndId": "E3524a995bbd54034b6d07c1c36014557",
+    "name": "Seu jorge",
+    "email": "test@email.com.br",
+    "phoneNumber": "+5519989673846",
+    "value": 1000,
+    "disputeReason": "Golpe"
+  }
+}
+```

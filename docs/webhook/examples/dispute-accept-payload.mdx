@@ -1,0 +1,31 @@
+---
+id: webhook-accepted-payload
+title: Payload de Disputa aceita
+tags:
+  - webhook
+  - header
+  - api
+---
+
+## Disputa (DISPUTE_ACCEPTED)
+
+Os webhooks de `Disputa` enviam objetos com os seguintes campos no seu payload:
+
+- `disputa`: Detalhes da disputa
+
+## Exemplo
+
+```json
+{
+  "event": "OPENPIX:DISPUTE_ACCEPTED",
+  "dispute": {
+    "status": "ACCEPTED",
+    "endToEndId": "E3524a995bbd54034b6d07c1c36014557",
+    "name": "Seu jorge",
+    "email": "test@email.com.br",
+    "phoneNumber": "+5519989673846",
+    "value": 1000,
+    "disputeReason": "Golpe"
+  }
+}
+```
