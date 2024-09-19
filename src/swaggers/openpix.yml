@@ -1224,10 +1224,6 @@ paths:
           name: end
           schema:
             $ref: '#/components/schemas/End'
-        - name: status
-          in: query
-          schema:
-            type: string
       responses:
         '200':
           description: A list of disputes
@@ -3737,11 +3733,10 @@ components:
         status:
           type: string
           enum:
-            - CREATED
+            - IN_REVIEW
             - ACCEPTED
             - REJECTED
             - CANCELED
-            - IN_REVIEW
         name:
           type: string
           description: The name of the payer who created this dispute.
