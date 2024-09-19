@@ -57,3 +57,23 @@ Esse evento é enviado quando um pagamento confirmado falha.
 #### OPENPIX:MOVEMENT_REMOVED
 
 Esse evento é enviado quando um pagamento é removido.
+
+## Eventos de disputa
+
+### OPENPIX:DISPUTE_CREATED
+
+Esse evento é enviado quando uma disputa é criada
+
+### OPENPIX:DISPUTE_ACCEPTED
+
+Esse evento é enviado quando uma disputa é aceita
+
+### OPENPIX:DISPUTE_REJECTED
+
+Esse evento é enviado quando uma disputa é rejeitada
+
+### OPENPIX:DISPUTE_CANCELED
+
+Esse evento é enviado quando uma disputa é cancelada
+
+
