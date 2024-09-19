@@ -5399,11 +5399,10 @@
           "status": {
             "type": "string",
             "enum": [
-              "CREATED",
+              "IN_REVIEW",
               "ACCEPTED",
               "REJECTED",
-              "CANCELED",
-              "IN_REVIEW"
+              "CANCELED"
             ]
           },
           "name": {
