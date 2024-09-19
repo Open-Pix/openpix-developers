@@ -1641,6 +1641,247 @@
         }
       }
     },
+    "/api/v1/dispute/{id}": {
+      "get": {
+        "tags": [
+          "dispute"
+        ],
+        "summary": "Get one dispute",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The id must be the endToEndId of the transaction that originated the Dispute",
+            "example": "Ea9c291526ae54b4cb41d9909bdf6d792"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The dispute retrieve using endToEndId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dispute": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "CREATED",
+                            "ACCEPTED",
+                            "REJECTED",
+                            "CANCELED"
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The name of the payer who created this dispute."
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "The Email of the payer who created this dispute."
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "description": "The phone number of the payer who created this dispute."
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "The value of the dispute."
+                        },
+                        "disputeReason": {
+                          "type": "string",
+                          "description": "Reason provided to justify the dispute."
+                        },
+                        "endToEndId": {
+                          "description": "The endToEndId of the dispute (Is the same of the endToEndId transaction related).",
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "dispute": {
+                    "status": "ACCEPTED",
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "phoneNumber": "+5511999999999",
+                    "value": 10000,
+                    "disputeReason": "Product not received",
+                    "endToEndId": "E7d401907cacd4d7fb9290345b93deac7"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Dispute not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error occurred"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dispute": {
+      "get": {
+        "tags": [
+          "dispute"
+        ],
+        "summary": "Get a list of disputes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start",
+            "schema": {
+              "$ref": "#/components/schemas/Start"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "schema": {
+              "$ref": "#/components/schemas/End"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of disputes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "disputes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Dispute"
+                      }
+                    },
+                    "pageInfo": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "data": {
+                                "type": "object",
+                                "properties": {
+                                  "skip": {
+                                    "type": "number"
+                                  },
+                                  "limit": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "skip": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "totalCount": {
+                          "type": "number"
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean"
+                        },
+                        "hasNextPage": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "pageInfo": {
+                      "skip": 0,
+                      "limit": 10,
+                      "totalCount": 20,
+                      "hasPreviousPage": false,
+                      "hasNextPage": true
+                    },
+                    "disputes": [
+                      {
+                        "disputeReason": "Dispute reason test",
+                        "email": "jorge@test.com",
+                        "name": "Seu Jorge",
+                        "phoneNumber": "+551199999999",
+                        "status": "IN_REVIEW",
+                        "value": 100,
+                        "createdAt": "2021-03-02T17:28:51.882Z",
+                        "updatedAt": "2021-03-02T17:28:51.882Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/partner/application": {
       "post": {
         "tags": [
@@ -5152,6 +5393,100 @@
           }
         }
       },
+      "Dispute": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED",
+              "ACCEPTED",
+              "REJECTED",
+              "CANCELED",
+              "IN_REVIEW"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the payer who created this dispute."
+          },
+          "email": {
+            "type": "string",
+            "description": "The Email of the payer who created this dispute."
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number of the payer who created this dispute."
+          },
+          "value": {
+            "type": "number",
+            "description": "The value of the dispute."
+          },
+          "disputeReason": {
+            "type": "string",
+            "description": "Reason provided to justify the dispute."
+          },
+          "endToEndId": {
+            "type": "string",
+            "description": "The endToEndId of the dispute (Is the same of the endToEndId transaction related)."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DisputePayload": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED",
+              "ACCEPTED",
+              "REJECTED",
+              "CANCELED",
+              "IN_REVIEW"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the payer who created this dispute."
+          },
+          "email": {
+            "type": "string",
+            "description": "The Email of the payer who created this dispute."
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number of the payer who created this dispute."
+          },
+          "value": {
+            "type": "number",
+            "description": "The value of the dispute."
+          },
+          "disputeReason": {
+            "type": "string",
+            "description": "Reason provided to justify the dispute."
+          },
+          "endToEndId": {
+            "type": "string",
+            "description": "The endToEndId of the dispute (Is the same of the endToEndId transaction related)."
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "phoneNumber",
+          "value",
+          "disputeReason",
+          "endToEndId"
+        ]
+      },
       "End": {
         "type": "string",
         "format": "date-time",
@@ -6124,6 +6459,10 @@
     {
       "name": "customer",
       "description": "Endpoint to manage Customer\n"
+    },
+    {
+      "name": "dispute",
+      "description": "Endpoint to manage Dispute\n"
     },
     {
       "name": "partner (request access)",
