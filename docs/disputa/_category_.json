@@ -1,0 +1,13 @@
+{
+  "label": "Disputas",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Disputas visão geral"
+  },
+  "customProps": {
+    "description": "Disputas documentação"
+  }
+}
