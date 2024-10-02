@@ -14,7 +14,7 @@ O ClickPix é um tipo de plugin que permite que você crie cobranças com mais f
 
 ## O que é necessário saber antes de utilizar o ClickPix?
 
-- É necessário entender que para utilizar o ClickPix você precisa ter um AppID válido do tipo plugin, veja como criar [aqui](./app-id).
+- É necessário entender que para utilizar o ClickPix você precisa ter um AppID válido do tipo plugin, veja como criar [aqui](../plugin/app-id).
 
 ### Utilizando o Plugin `ClickPix`
 
