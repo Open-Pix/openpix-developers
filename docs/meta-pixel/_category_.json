@@ -1,0 +1,13 @@
+{
+  "label": "Meta Pixel",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Meta pixel visão geral"
+  },
+  "customProps": {
+    "description": "Meta pixel documentação"
+  }
+}
