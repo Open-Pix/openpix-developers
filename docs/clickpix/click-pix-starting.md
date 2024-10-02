@@ -63,7 +63,7 @@ Após a importação do script, você poderar adicionar as tags para a inicializ
   </head>
   <body>
     <div id="root">
-      <div id="woovi-pay" data-value="888"></div>
+      <div data-clickpix data-value="888"></div>
     </div>
     <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
   </body>
@@ -72,7 +72,7 @@ Após a importação do script, você poderar adicionar as tags para a inicializ
 
 ### Customizando o botão ClickPix
 
-É possível customizar o botão ClickPix adicionando atributos no elemento `div` como `data-customer-fields`, `data-additional-info`, e `data-variant`. Note que o paramêtro de `data-value` é obrigatório.
+É possível customizar o botão ClickPix adicionando atributos no elemento `div` como `data-customer-fields`, `data-additional-info`, e `data-variant`. Note que os paramêtros de `data-clickpix` e `data-value` são obrigatórios.
 
 #### Definindo o valor da cobrança
 
@@ -81,7 +81,7 @@ O valor da cobrança é definido através do atributo `data-value`. O campo `dat
 **Exemplo:**
 
 ```html
-<div id="woovi-pay" data-value="888"></div>
+<div data-clickpix data-value="888"></div>
 ```
 
 No exemplo acima, o botão sempre gerará uma cobrança no valor de R$ 8,88.
@@ -100,7 +100,7 @@ Esses dados serão solicitados após a criação da cobrança pelo o botão Clic
 
 ```html
 <div
-  id="woovi-pay"
+  data-clickpix
   data-value="888"
   data-customer-fields="email,phone,address"
 ></div>
@@ -120,7 +120,7 @@ Sendo cada `key:value` uma informação adicional diferente.
 
 ```html
 <div
-  id="woovi-pay"
+  data-clickpix
   data-value="888"
   data-additional-info="order:1234,product:123"
 ></div>
@@ -141,7 +141,7 @@ Caso não seja informado um valor específico, o botão será exibido como `defa
 **Exemplo:**
 
 ```html
-<div id="woovi-pay" data-value="888" data-variant="purple"></div>
+<div data-clickpix data-value="888" data-variant="purple"></div>
 ```
 
 No exemplo acima o botão será exibido como um botão `purple`.
