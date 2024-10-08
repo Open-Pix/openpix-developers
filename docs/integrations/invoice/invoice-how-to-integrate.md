@@ -1,9 +1,15 @@
 ---
-title: Como ativar a emissão de notas fiscais
+title: Como ativar a emissão de nota fiscal eletrônica de serviço
 tags:
   - invoice
   - integration
 ---
+
+:::info
+
+A integração de nota fiscal eletrônica está disponível apenas por solicitação via chat.
+
+:::
 
 :::caution
 
