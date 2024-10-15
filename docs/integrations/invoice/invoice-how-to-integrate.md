@@ -43,17 +43,21 @@ Após clicar em ativar agora, você será redirecionado para a página de ajuste
 4. **Código de serviço**: Identificador do tipo de serviço prestado, conforme a lista de serviços municipais, para cálculo correto de impostos e tributos..
 5. **Regime tributário**: Categoria tributária da empresa, utilizada para determinar como são calculados os impostos e obrigações tributárias.
 
-Após clicar no botão `Salvar` em cada campo, você deverá fazer o upload do seu certificado digital A1, assim como digitar a senha do documento no campo indicado conforme a imagem abaixo:
+Logo após preencher e salvar as informações fisicais da sua empresa, você deverá verificar se a prefeitura da sua cidade requer credenciais para emitir notas fiscais, você fazer essa verificação entrando no serviço web da sua prefeitura. Caso seja necessário, preencha os campos mostrados abaixo com as devidas credencias e clique em `Salvar`:
+
+![Formulário de credenciais](./__assets__/invoice-credentials.png)
+
+Por fim, você deverá fazer o upload do seu certificado digital A1, assim como digitar a senha do documento no campo indicado conforme a imagem abaixo:
 
 ![Formulário do certificado A1](./__assets__/invoice-a1-certificate.png)
 
 ## 3. Finalizando a configuração
 
-1. Depois de preencher todos os dados e enviar o certificado, o último passo é emitir uma nota fiscal de teste para validar a integração. Então você pode clicar no botão `Testar emissão da NFE`, conforme a imagem abaixo:
+1. Depois de preencher todos os dados e enviar o certificado, o último passo é emitir uma nota fiscal de teste para validar a integração. Então você pode clicar no botão `Emissão de teste`, conforme a imagem abaixo:
 
-![Botão de teste da emissão de nota fiscal](./__assets__/invoice-test-issuing.png)
+![Botão de teste da emissão de nota fiscal](./__assets__/invoice-issue-test.png)
 
-2. Após clicar no botão `Testar emissão da NFE`, você será redirecionado para a página de detalhes da integração e será possível ver os dados enviados assim como o atual estado da integração, que após ser validado pelo nosso provedor de nota fiscal deverá ficar como abaixo:
+2. Após clicar no botão `Emissão de teste`, você será redirecionado para a página de detalhes da integração e será possível ver os dados enviados assim como o atual estado da integração, que após ser validado pelo nosso provedor de nota fiscal deverá ficar como abaixo:
 
 ![Card de detalhes da integração](./__assets__/invoice-integration-details-card.png)
 
