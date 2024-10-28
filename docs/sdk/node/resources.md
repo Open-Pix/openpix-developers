@@ -160,15 +160,15 @@ Delete uma cobrança usando o método `delete` no recurso de cobranças:
 const response = await woovi.charge.delete({ id: 'algum-id' });
 ```
 
-## Extorno de Cobrança
+## Estorno de Cobrança
 
-Chame o método `chargeRefund` seu cliente da API para obter o recurso de extorno de uma cobrança.
+Chame o método `chargeRefund` seu cliente da API para obter o recurso de estorno de uma cobrança.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/charge-refund).
 
-### Obter uma lista de extorno cobranças
+### Obter uma lista de estorno cobranças
 
-Obtenha os extornos de cobrança usando o método `list` no recurso de extorno de cobrança:
+Obtenha os estornos de cobrança usando o método `list` no recurso de estorno de cobrança:
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/charge-refund/paths/~1api~1v1~1charge~1%7Bid%7D~1refund/get).
 
@@ -178,7 +178,7 @@ const response = await woovi.chargeRefund.list({ limit: 10, skip: 0 }); //o obje
 
 ### Crie uma cobrança
 
-Crie um extorno de cobrança usando o método `create` no recurso de extorno cobranças:
+Crie um estorno de cobrança usando o método `create` no recurso de estorno cobranças:
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/charge/paths/~1api~1v1~1charge/get).
 
@@ -436,15 +436,15 @@ const response = await woovi.pixQrCode.create({
 });
 ```
 
-## Extorno
+## Estorno
 
-Chame o método `refund` seu cliente da API para obter o recurso de extorno.
+Chame o método `refund` seu cliente da API para obter o recurso de estorno.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund).
 
-### Obter um extorno
+### Obter um estorno
 
-Obtenha um extorno usando o método `get` no recurso de extorno:
+Obtenha um estorno usando o método `get` no recurso de estorno:
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund/paths/~1api~1v1~1refund~1%7Bid%7D/get).
 
@@ -452,9 +452,9 @@ Obtenha um extorno usando o método `get` no recurso de extorno:
 const response = await woovi.refund.get({ id: 'algum-id' });
 ```
 
-### Obter uma lista de extornos
+### Obter uma lista de estornos
 
-Obtenha uma lista de extornos usando o método `list` no recurso de extorno.
+Obtenha uma lista de estornos usando o método `list` no recurso de estorno.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund/paths/~1api~1v1~1refund/get).
 
@@ -462,9 +462,9 @@ Obtenha uma lista de extornos usando o método `list` no recurso de extorno.
 const response = await woovi.refund.list({ limit: 10, skip: 0 }); //o objeto de paginação é opcional
 ```
 
-### Criar um novo extorno
+### Criar um novo estorno
 
-Para criar um extorno, use o método `create` no recurso de extorno.
+Para criar um estorno, use o método `create` no recurso de estorno.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/refund/paths/~1api~1v1~1refund/post).
 
@@ -485,7 +485,7 @@ Chame o método `subscription` seu cliente da API para obter o recurso de assina
 
 ### Obter uma assinaturas
 
-Obtenha uma assinatura de extornos usando o método `get` no recurso de assinatura.
+Obtenha uma assinatura de estornos usando o método `get` no recurso de assinatura.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/subscription/paths/~1api~1v1~1subscriptions~1%7Bid%7D/get).
 
