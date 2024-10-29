@@ -27,9 +27,7 @@ Para começar a emitir notas fiscais, você deve adicionar a integração de not
   2. Nota fiscal eletrônica;
   3. Clique no botão `Adicionar`;
 
-Após seguir um desses fluxos, você será redirecionado para a página de ativação da integração, conforme a imagem abaixo:
-
-![Tutorial de integração](./__assets__/invoice-how-to-integrate-tutorial.png)
+Após seguir um desses fluxos, você será redirecionado para a página de ativação da integração
 
 ## 2. Configurando a integração
 
