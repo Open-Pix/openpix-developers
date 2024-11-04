@@ -1,0 +1,34 @@
+---
+id: webhook-charge-account-type
+title: Como verificar qual o tipo da conta
+tags:
+  - webhook
+  - header
+  - api
+  - account
+  - testing
+---
+
+## Como verificar qual o tipo da conta que recebi o webhook?
+
+Dentro do webhook de charge mandamos o tipo da conta em `account`, isto é, notificamos para que você veja qual o tipo da conta e recusar ou aceitar aquele webhook.
+
+Caso seja uma conta de teste é retornado `"TESTING"` caso seja uma conta de produção é retornado `"PRODUCTION"`
+
+## Exemplo
+
+```json
+{
+  "event": "OPENPIX:CHARGE_COMPLETED",
+  "charge": {},
+  "pix": {},
+  "company": {
+    "id": "6384cca8cecc7a26b98c49fd",
+    "name": "Eduardo",
+    "taxID": "45036856000155"
+  },
+  "account": {
+    "environment": "TESTING"
+  }
+}
+```
