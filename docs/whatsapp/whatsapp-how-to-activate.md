@@ -26,9 +26,9 @@ Clique em **Ativado** para ativar o WhatsApp
 
 ![Ativar WhatsApp](./__assets__/whatsapp-how-to-activate-activate.png)
 
-## 4. Configure quais notifiações enviar
+## 4. Configure quais notificações enviar
 
-Por padrão, ao ativar o WhatsApp, todas as notifiações de WhatsApp são ativadas, para saber mais sobre cada uma, leia os artigos abaixo:
+Por padrão, ao ativar o WhatsApp, todas as notificações de WhatsApp são ativadas, para saber mais sobre cada uma, leia os artigos abaixo:
 
 - [Como enviar cobranças por WhatsApp](./whatsapp-how-to-send-charges.md)
 - [Como enviar recibos por WhatsApp](./whatsapp-how-to-send-receipts.md)
