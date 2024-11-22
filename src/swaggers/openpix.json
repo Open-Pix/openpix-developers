@@ -531,6 +531,136 @@
           }
         }
       },
+      "patch": {
+        "tags": [
+          "charge"
+        ],
+        "summary": "Edit expiration date of a charge",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "correlation ID. You will need URI encoding if your correlation ID has characters outside the ASCII set or reserved characters (%, \\#, /).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "correlationID": {
+                "value": "fe7834b4060c488a9b0f89811be5f5cf"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Expires date to update charge",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/ChargePatchPayload"
+              },
+              "example": {
+                "expiresDate": "2021-04-01T17:28:51.882Z"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The charge was updated to new expiration date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "the id previously informed to be found and deleted"
+                    },
+                    "expiresDate": {
+                      "type": "string",
+                      "description": "new date to expire specfic charge"
+                    }
+                  },
+                  "example": {
+                    "charge": {
+                      "status": "ACTIVE",
+                      "customer": {
+                        "name": "Dan",
+                        "email": "email0@example.com",
+                        "phone": "5511999999999",
+                        "taxID": {
+                          "taxID": "31324227036",
+                          "type": "BR:CPF"
+                        }
+                      },
+                      "value": 100,
+                      "comment": "good",
+                      "correlationID": "9134e286-6f71-427a-bf00-241681624586",
+                      "paymentLinkID": "7777a23s-6f71-427a-bf00-241681624586",
+                      "paymentLinkUrl": "https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586",
+                      "qrCodeImage": "https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png",
+                      "expiresIn": 2592000,
+                      "expiresDate": "2021-04-01T17:28:51.882Z",
+                      "createdAt": "2021-03-02T17:28:51.882Z",
+                      "updatedAt": "2021-03-02T17:28:51.882Z",
+                      "brCode": "000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao Paulo62360532867ba5173c734202ac659721306b38c963044BCA",
+                      "additionalInfo": [
+                        {
+                          "key": "Product",
+                          "value": "Pencil"
+                        },
+                        {
+                          "key": "Invoice",
+                          "value": "18476"
+                        },
+                        {
+                          "key": "Order",
+                          "value": "302"
+                        }
+                      ],
+                      "paymentMethods": {
+                        "pix": {
+                          "method": "PIX_COB",
+                          "transactionID": "9134e286-6f71-427a-bf00-241681624586",
+                          "identifier": "9134e286-6f71-427a-bf00-241681624586",
+                          "additionalInfo": [],
+                          "fee": 50,
+                          "value": 200,
+                          "status": "ACTIVE",
+                          "txId": "9134e286-6f71-427a-bf00-241681624586",
+                          "brCode": "000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao Paulo62360532867ba5173c734202ac659721306b38c963044BCA",
+                          "qrCodeImage": "https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "charge"
@@ -5071,6 +5201,15 @@
           "correlationID",
           "value"
         ]
+      },
+      "ChargePatchPayload": {
+        "type": "object",
+        "properties": {
+          "expiresDate": {
+            "type": "string",
+            "description": "Expiration date of the charge. Only in ISO 8601 format."
+          }
+        }
       },
       "ChargeRefund": {
         "type": "object",
