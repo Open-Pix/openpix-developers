@@ -3604,6 +3604,25 @@
             "example": "destination@test.com"
           }
         ],
+        "requestBody": {
+          "description": "Data to make a withdraw partial",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/SubAccountWithdrawPayload"
+              },
+              "examples": {
+                "SubAccount": {
+                  "value": {
+                    "value": 1000
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Withdrawal Transaction information",
@@ -6201,6 +6220,15 @@
           "name": {
             "type": "string",
             "description": "Name of the sub account"
+          }
+        }
+      },
+      "SubAccountWithdrawPayload": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "Value of the withdrawal in cents if want to make a partial withdrawal"
           }
         }
       },
