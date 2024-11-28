@@ -981,16 +981,18 @@ paths:
       parameters:
         - name: id
           in: path
-          description: correlation ID
+          description: Correlation ID or Tax ID
           required: true
           schema:
             type: string
           examples:
             correlationID:
               value: fe7834b4060c488a9b0f89811be5f5cf
+            taxID:
+              value: 123456789
       responses:
         '200':
-          description: The customer retrieve using the given ID
+          description: The customer retrieved using the given ID
           content:
             application/json:
               schema:
