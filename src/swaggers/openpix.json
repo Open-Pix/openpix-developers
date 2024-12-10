@@ -1413,7 +1413,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "correlation ID",
+            "description": "Correlation ID or Tax ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -1421,13 +1421,16 @@
             "examples": {
               "correlationID": {
                 "value": "fe7834b4060c488a9b0f89811be5f5cf"
+              },
+              "taxID": {
+                "value": 123456789
               }
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "The customer retrieve using the given ID",
+            "description": "The customer retrieved using the given ID",
             "content": {
               "application/json": {
                 "schema": {
@@ -2333,7 +2336,11 @@
                   "firstName": "John",
                   "lastName": "Doe",
                   "email": "johndoe@examplellc.com",
-                  "phone": "+5511912345678"
+                  "phone": "+5511912345678",
+                  "taxID": {
+                    "taxID": "1111111111",
+                    "type": "BR:CPF"
+                  }
                 }
               }
             }
@@ -5670,7 +5677,8 @@
           "type": {
             "type": "string",
             "enum": [
-              "BR:CNPJ"
+              "BR:CNPJ",
+              "BR:CPF"
             ]
           }
         }
@@ -5693,13 +5701,17 @@
           "phone": {
             "type": "string",
             "description": "The user's phone number, need to be a validated phone number because it'll receive a SMS confirming that is a real person.\nWe're accept only values that matches the E.164 standard, that follows this pattern: [+][country code][local phone number].\n"
+          },
+          "taxID": {
+            "$ref": "#/components/schemas/TaxIDObjectPayload"
           }
         },
         "required": [
           "firstName",
           "lastName",
           "email",
-          "phone"
+          "phone",
+          "taxID"
         ]
       },
       "PreRegistrationObject": {
