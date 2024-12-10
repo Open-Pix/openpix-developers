@@ -40,7 +40,7 @@ Entre em Magento2 Admin -> Stores > Configuration -> Sales -> Payment Method.
 
 Clicando em em `Credentials` no Plugin OpenPix.
 
-- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/getting-started-api.md)
+- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/getting-started-api)
 
 Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 
