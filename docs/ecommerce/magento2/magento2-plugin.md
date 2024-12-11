@@ -8,7 +8,7 @@ tags:
   - ecommerce
 ---
 
-import Magento2Download from './__components__/magento2-install.mdx'
+import Magento2Download from './**components**/magento2-install.mdx'
 
 ## Plugin Pix para Magento2
 
@@ -26,7 +26,7 @@ Caso não tenha acesso à plataforma registre-se [aqui](https://app.openpix.com/
 Este documento detalha passos necessários para conectar a sua plataforma de e-Commerce, baseada no Magento2, na OpenPix. A plataforma OpenPix efetua em tempo real a conciliação entre seu Banco e seu e-Commerce.
 Após conectar a sua conta na OpenPix é possível cobrar clientes em tempo real com QrCodes Pix, enviar Links de Pagamento, gerenciar cobranças incluindo extornos.
 
-> *Nota: Este documento espera que você já tenha um ambiente Magento2 ativo.*
+> _Nota: Este documento espera que você já tenha um ambiente Magento2 ativo._
 
 ## 1. Instale o Plugin OpenPix na sua instância Magento2
 
@@ -40,7 +40,7 @@ Entre em Magento2 Admin -> Stores > Configuration -> Sales -> Payment Method.
 
 Clicando em em `Credentials` no Plugin OpenPix.
 
-- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/getting-started-api)
+- [ ] Cadastre um AppID do tipo Plugin. Crie um appID [aqui](../../apis/getting-started-api.md)
 
 Após adicionar o seu appID, clique em `Configure now with one click` para configurarmos ou criar seu Webhook. O Webhook é necessário para atualizar o status dos Pedidos em tempo real quando a cobrança Pix é paga.
 
@@ -70,7 +70,7 @@ Clicando em `Payment via Pix` no Plugin OpenPix.
 
 Para salvar o cpf/cnpj do customer da order na sua cobrança OpenPix é necessário que seja ativado o campo `TaxVat` em sua loja Magento.
 
-__Obs: Caso você siga sem a configuração deste campo suas cobranças serão salvas sem o cliente da mesma.__
+**Obs: Caso você siga sem a configuração deste campo suas cobranças serão salvas sem o cliente da mesma.**
 
 Entre em Magento2 Admin -> Stores > Configuration -> Customers -> Customer Configuration
 
@@ -130,7 +130,7 @@ Indicamos que a expiração/cancelamento da order no magento possua um tempo sem
 No magento você pode utilizar o lifetime order seguindo a doc abaixo:
 
 - [https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html](https://docs.magento.com/user-guide/v2.3/sales/order-pending-payment-lifetime.html)
-:::
+  :::
 
 ## Atualizando o plugin
 
