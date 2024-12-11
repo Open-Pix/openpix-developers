@@ -1614,6 +1614,9 @@ paths:
                 lastName: Doe
                 email: johndoe@examplellc.com
                 phone: '+5511912345678'
+                taxID:
+                  taxID: '1111111111'
+                  type: BR:CPF
       responses:
         '200':
           description: >
@@ -3944,6 +3947,7 @@ components:
           type: string
           enum:
             - BR:CNPJ
+            - BR:CPF
     PreRegistrationUserObject:
       type: object
       properties:
@@ -3974,11 +3978,14 @@ components:
             it'll receive a SMS confirming that is a real person.
 
             We're accept only values that matches the E.164 standard, that follows this pattern: [+][country code][local phone number].
+        taxID:
+          $ref: '#/components/schemas/TaxIDObjectPayload'
       required:
         - firstName
         - lastName
         - email
         - phone
+        - taxID
     PreRegistrationObject:
       type: object
       properties:
