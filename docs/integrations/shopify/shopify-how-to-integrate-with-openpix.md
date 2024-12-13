@@ -49,6 +49,6 @@ Basta clicar em Ativar, e estará pronto para utilizar.
 
 :::info
 
-Permitimos somente uma integração relacionada com aquela URL de loja. Caso você tente criar uma nova aplicação com a mesma URL de loja, não permitiremos.
+Permitimos somente uma integração por loja.
 
 :::
