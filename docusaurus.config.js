@@ -17,7 +17,7 @@ module.exports = {
   i18n: {
     defaultLocale: 'pt-BR',
     locales,
-    localeConfigs,
+    localeConfigs
   },
   title: 'OpenPix Developers',
   tagline: 'Instant payments Docs, APIs, SDKs',
