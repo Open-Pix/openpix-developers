@@ -2,23 +2,23 @@ import { themes } from 'prism-react-renderer';
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
-// const locales = ['en'];
+const locales = ['pt-BR', 'en'];
 
-// const localeConfigs = {
-//   en: {
-//     label: 'English',
-//   },
-//   'pt-BR': {
-//     label: 'Português',
-//   },
-// };
+const localeConfigs = {
+  en: {
+    label: 'English',
+  },
+  'pt-BR': {
+    label: 'Português',
+  },
+};
 
 module.exports = {
-  // i18n: {
-  //   defaultLocale: 'en',
-  //   locales,
-  //   localeConfigs
-  // },
+  i18n: {
+    defaultLocale: 'pt-BR',
+    locales,
+    localeConfigs
+  },
   title: 'OpenPix Developers',
   tagline: 'Instant payments Docs, APIs, SDKs',
   url: 'https://developers.openpix.com.br',
