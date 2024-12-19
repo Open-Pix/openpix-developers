@@ -1,0 +1,13 @@
+{
+  "label": "Recibos",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Recibos visão geral"
+  },
+  "customProps": {
+    "description": "Recibos documentação"
+  }
+}
