@@ -14,6 +14,18 @@ const localeConfigs = {
 };
 
 module.exports = {
+  future: {
+    // experimental_faster: true,
+    // experimental_faster: {
+    //   swcJsLoader: true,
+    //   swcJsMinimizer: true,
+    //   swcHtmlMinimizer: true,
+    //   lightningCssMinimizer: true,
+    //   rspackBundler: true,
+    //   mdxCrossCompilerCache: true,
+    // },
+    // experimental_faster: false,
+  },
   i18n: {
     defaultLocale: 'pt-BR',
     locales,
@@ -35,7 +47,7 @@ module.exports = {
       '@gracefullight/docusaurus-plugin-microsoft-clarity',
       { projectId: 'j6ihzvjzvu' },
     ],
-    require.resolve('./sitePlugin'),
+    require.resolve('./webpack/sitePlugin'),
     //require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
     [
       '@docusaurus/plugin-client-redirects',
