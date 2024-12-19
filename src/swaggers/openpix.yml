@@ -2479,6 +2479,53 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/v1/receipt/{EndToEndId}':
+    get:
+      tags:
+        - receipt
+      summary:
+        Get a PDF document related to a payment transaction formatted as a
+        receipt.
+      parameters:
+        - name: EndToEndId
+          in: path
+          description: The EndToEndId from the payment transaction to export.
+          required: true
+          schema:
+            type: string
+          examples:
+            endToEndId:
+              value: E12345678202406201221abcdef12345
+      responses:
+        '200':
+          description: Exported transaction as a receipt in PDF format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    description: The name of the exported PDF file.
+                    example: file.pdf
+        '400':
+          description: An error occurred due to a bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: The specified EndToEndId was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   '/api/v1/subaccount/{id}/withdraw':
     post:
       tags:
@@ -4316,6 +4363,13 @@ components:
           type: string
           description: Comment of this refund. Maximum length of 140 characters.
           maximum: 140
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
     Start:
       type: string
       format: date-time
@@ -4700,6 +4754,10 @@ tags:
   - name: refund
     description: |
       Endpoint to manage Refunds
+  - name: receipt
+    description: >
+      Get a pdf document related to a payment transaction formated in a receipt
+      style.
   - name: sub account (request access)
     description: |
       Endpoint to manage sub accounts.
