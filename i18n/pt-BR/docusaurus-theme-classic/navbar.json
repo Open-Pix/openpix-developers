@@ -1,0 +1,30 @@
+{
+    "title": {
+      "message": "OpenPix Developers",
+      "description": "The title in the navbar"
+    },
+    "item.label.Documentação": {
+      "message": "Documentação",
+      "description": "Navbar item with label Documentação"
+    },
+    "item.label.API": {
+      "message": "API",
+      "description": "Navbar item with label API"
+    },
+    "item.label.Plugin": {
+      "message": "Plugin",
+      "description": "Navbar item with label Plugin"
+    },
+    "item.label.Tags": {
+      "message": "Tags",
+      "description": "Navbar item with label Tags"
+    },
+    "item.label.OpenPix": {
+      "message": "OpenPix",
+      "description": "Navbar item with label OpenPix"
+    },
+    "item.label.Github": {
+      "message": "Github",
+      "description": "Navbar item with label Github"
+    }
+}
