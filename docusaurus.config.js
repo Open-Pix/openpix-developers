@@ -48,7 +48,7 @@ module.exports = {
       { projectId: 'j6ihzvjzvu' },
     ],
     require.resolve('./webpack/sitePlugin'),
-    //require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
+    require.resolve('@cmfcmf/docusaurus-search-local', { language: 'pt-BR' }),
     [
       '@docusaurus/plugin-client-redirects',
       {
