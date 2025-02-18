@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fa';
 import { GrOracle } from 'react-icons/gr';
 import {
+  SiVtex,
   SiNodedotjs,
   SiPowershell,
   SiWoo,
@@ -117,8 +118,7 @@ const cards = [
   },
   {
     title: 'Plugin WooCommerce com Pix + Crediário',
-    content:
-      'Conheça o Pix Crediário com WooCommerce, um sistema inovador para gerir crediários próprios cobrados por meio do Pix. Agilidade, simplicidade e segurança se unem para criar uma experiência de venda inovadora.',
+    content: 'Conheça o Pix Crediário com WooCommerce, um sistema inovador para gerir crediários próprios cobrados por meio do Pix. Agilidade, simplicidade e segurança se unem para criar uma experiência de venda inovadora.',
     icon: <SiWoo color={'#945888'} size={30} />,
     docsTo: '/docs/ecommerce/woocommerce/woocommerce-crediary',
   },
@@ -128,6 +128,14 @@ const cards = [
     icon: <FaWhatsapp color="#25d366" size={30} />,
     docsTo: '/docs/whatsapp/whatsapp-how-to-activate',
     to: 'https://app.openpix.com/home/applications/js/add',
+  },
+  {
+    title: 'Plugin VTEX',
+    content:
+      'Pix para VTEX. Gestão de QRCode Pix, integração de ordens e conciliação tempo real.',
+    icon: <SiVtex color={'#ff3464'} size={30} />,
+    docsTo: '/docs/ecommerce/vtex/vtex-integrating',
+    to: 'https://app.openpix.com/home/applications/vtex/add',
   },
   {
     title: 'Shopify',
