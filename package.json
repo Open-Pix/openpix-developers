@@ -56,7 +56,7 @@
     "typescript": "^5.4.4"
   },
   "scripts": {
-    "build": "npm i -g corepack@latest && corepack enable pnpm && corepack install -g pnpm@lastest && docusaurus build",
+    "build": "npm i -g corepack@latest &&  corepack install -g pnpm@latest-10 && docusaurus build",
     "build:en": "docusaurus build --locale en",
     "build:ptbr": "docusaurus build --locale pt-BR",
     "deploy": "docusaurus deploy",
@@ -84,5 +84,6 @@
   },
   "resolutions": {
     "cheerio": "1.0.0-rc.9"
-  }
+  },
+  "packageManager": "pnpm@10.2.0+sha512.0d27364e0139c6aadeed65ada153135e0ca96c8da42123bd50047f961339dc7a758fc2e944b428f52be570d1bd3372455c1c65fa2e7aa0bfbf931190f9552001"
 }
