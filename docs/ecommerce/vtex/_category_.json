@@ -1,0 +1,13 @@
+{
+  "label": "VTEX",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "VTEX visão geral"
+  },
+  "customProps": {
+    "description": "VTEX documentação"
+  }
+}
