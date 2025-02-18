@@ -1,0 +1,13 @@
+{
+  "label": "Boleto",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Boleto visão geral"
+  },
+  "customProps": {
+    "description": "Boleto documentação"
+  }
+}
