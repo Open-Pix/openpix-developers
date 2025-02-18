@@ -199,12 +199,12 @@ module.exports = {
             spec: './src/swaggers/bacen-pix.yaml',
           },
           {
-            route: '/dict/',
-            spec: './src/swaggers/bacen-dict.json',
-          },
-          {
             route: '/api/',
             spec: './src/swaggers/openpix.json',
+          },
+          {
+            route: '/dict/',
+            spec: './src/swaggers/bacen-dict.json',
           },
         ],
       },
