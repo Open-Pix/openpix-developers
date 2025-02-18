@@ -72,6 +72,7 @@
     "write-translations": "docusaurus write-translations",
     "prepare": "husky install"
   },
+  "packageManager": "pnpm@10.2.0",
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "prettier",
