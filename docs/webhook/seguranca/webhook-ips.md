@@ -12,11 +12,7 @@ Esta página lista os endereços IP que a plataforma Woovi/OpenPix usa ao enviar
 
 IPs para envio de Webhooks ativos
 ```
-- 189.51.60.8
-- 189.51.60.9
-- 138.97.124.128
-- 138.97.124.129
-- 186.224.206.204
+Para obter uma lista de IPs usados para envio de mensagens para seu backbone basta entrar em contato com o time de suporte via chat da plataforma
 ```
 
 
