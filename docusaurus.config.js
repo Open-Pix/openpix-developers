@@ -2,12 +2,12 @@ import { themes } from 'prism-react-renderer';
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
-const locales = ['pt-BR'];
+const locales = ['pt-BR', 'en'];
 
 const localeConfigs = {
-  // en: {
-  //   label: 'English',
-  // },
+  en: {
+    label: 'English',
+  },
   'pt-BR': {
     label: 'Português',
   },
