@@ -1,15 +1,16 @@
 ---
 id: cashback-fidelity-apis
-title: APIs de Cashback Fidelidade
+title: APIs de Cashback na próxima compra
 tags:
   - api
   - cashback
   - fidelity
+  - cashback próxima compra
 ---
 
-## Como dar cashback para um cliente via API?
+## Como dar cashback na próxima compra para um cliente via API?
 
-Para dar cashback para um cliente via API, você utiliza o _endpoint_ `/api/v1/cashback-fidelity` da API.
+Para dar um cashback para a próxima compra para um cliente via API, você utiliza o _endpoint_ `/api/v1/cashback-fidelity` da API.
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/cashback-fidelity/paths/~1api~1v1~1cashback-fidelity/post)
 a documentação referente a esse _endpoint_.

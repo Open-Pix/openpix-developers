@@ -4,11 +4,11 @@ sidebar_position: 0
 title: Como dar Cashback pra fidelizar o seu cliente pela plataforma?
 tags:
   - cashback
-  - cashback-fidelidade
+  - cashback-na próxima compra
 ---
 
 :::info
-- Primeiramente certifique se sua empresa já tem o Cashback Fidelidade ativado. Caso não esteja ativado, você pode seguir esse [passo a passo](/docs/cashback-fidelity/cashback-fidelity-how-to-config.md) para fazer a ativação.
+- Primeiramente certifique se sua empresa já tem o Cashback na próxima compra ativado. Caso não esteja ativado, você pode seguir esse [passo a passo](/docs/cashback-fidelity/cashback-fidelity-how-to-config.md) para fazer a ativação.
 :::
 
 Para fidelizar o seu cliente pela plataforma siga os passos abaixo:
@@ -25,7 +25,7 @@ Importante lembrar que o usuário precisa possuir a permissão de admin na plata
 
 - ![](/img/cashback-fidelity/cashback-overview-with-new-cashback-button.png)
 
-### 3. Gere o Cashback Fidelidade
+### 3. Gere o Cashback na próxima compra
 
 Preencha o formulário com o cliente e o valor que você deseja dar esse Cashback
 

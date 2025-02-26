@@ -1,6 +1,6 @@
 ---
 id: cashback-fidelity-apis
-title: APIs de Cashback Fidelidade
+title: APIs de Cashback na próxima compra
 tags:
   - api
   - cashback

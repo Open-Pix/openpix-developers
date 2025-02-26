@@ -1,13 +1,13 @@
 {
-  "label": "Cashback Fidelidade",
+  "label": "Cashback na próxima compra",
   "collapsible": true,
   "collapsed": true,
   "className": "red",
   "link": {
     "type": "generated-index",
-    "title": "Cashback Fidelidade visão geral"
+    "title": "Cashback na próxima compra visão geral"
   },
   "customProps": {
-    "description": "Cashback Fidelidade documentação"
+    "description": "Cashback na próxima compra documentação"
   }
 }
