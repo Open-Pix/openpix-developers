@@ -1,16 +1,16 @@
 ---
 id: cashback-fidelity-how-to-config
 sidebar_position: 3
-title: Como configurar o Cashback Fidelidade
+title: Como configurar o Cashback na próxima compra
 tags:
   - cashback-fidelity
   - configure
   - concept
 ---
 
-Uma vez configurado o Cashback Fidelidade siga os passos abaixo para configurar o Cashback Fidelidade direto em suas configurações.
+Uma vez configurado o Cashback na próxima compra siga os passos abaixo para configurar o Cashback na próxima compra direto em suas configurações.
 
-- Acesse a aba `Settings` em `Cashback Fidelidade`
+- Acesse a aba `Settings` em `Cashback na próxima compra`
 - Selecione ativar, a porcentagem a ser gerada de cashback e o valor minimo da cobrança a gerar cashback
 
 | Campo                    | Descrição                                                                                                                       |

@@ -51,15 +51,15 @@ const response = await woovi.account.withdraw({
 });
 ```
 
-## Fidelidade de cashback
+## na próxima compra de cashback
 
-Chame o método `cashbackFidelity` seu cliente da API para obter o recurso de fidelidade de cashback.
+Chame o método `cashbackFidelity` seu cliente da API para obter o recurso de na próxima compra de cashback.
 
 [Documentação do endpoint para mais detalhes](https://developers.openpix.com.br/api#tag/cashback-fidelity).
 
 ### Pegar a quantidade de cashback que um usuário tem para receber
 
-Chame o método `get` no recurso de fidelidade de cashback passando um taxID:
+Chame o método `get` no recurso de na próxima compra de cashback passando um taxID:
 
 [Documentação do endpoint para mais detalhes](https://developers.woovi.com/api#tag/cashback-fidelity/paths/~1api~1v1~1cashback-fidelity~1balance~1%7BtaxID%7D/get).
 
@@ -67,9 +67,9 @@ Chame o método `get` no recurso de fidelidade de cashback passando um taxID:
 const response = await woovi.cashbackFidelity.get({ taxID: 'algum-tax-id' });
 ```
 
-### Criar(ou pegar) uma fidelidade de cashback pra um cliente
+### Criar(ou pegar) uma na próxima compra de cashback pra um cliente
 
-Crie o recurso chamando o método `create`no recurso de fidelidade de cashback.
+Crie o recurso chamando o método `create`no recurso de na próxima compra de cashback.
 
 [Documentação do endpoint para mais detalhes](https://developers.woovi.com/api#tag/cashback-fidelity/paths/~1api~1v1~1cashback-fidelity/post).
 
