@@ -789,7 +789,7 @@ paths:
                   splits:
                     - value: 10
                       pixKey: 676bd1f8-93cb-4354-b094-5587179d56ad
-                      splitType: SPLIT_SUB_ACCOUINT
+                      splitType: SPLIT_SUB_ACCOUNT
       responses:
         '200':
           description:
