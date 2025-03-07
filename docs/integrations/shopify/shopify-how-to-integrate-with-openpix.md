@@ -4,6 +4,7 @@ tags:
   - shopify
   - integration
 ---
+import Embed from 'react-embed';
 
 :::caution
 
@@ -52,3 +53,7 @@ Basta clicar em Ativar, e estará pronto para utilizar.
 Permitimos somente uma integração por loja.
 
 :::
+
+## Funcionamento do checkout Pix transparente Shopify
+
+<Embed url='https://www.youtube.com/watch?v=KunqUjHkgU4' />
