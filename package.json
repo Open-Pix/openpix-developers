@@ -71,7 +71,7 @@
     "swizzle": "docusaurus swizzle",
     "version": "docusaurus-version",
     "write-translations": "docusaurus write-translations",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
