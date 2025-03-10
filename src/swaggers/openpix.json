@@ -3761,6 +3761,102 @@
       }
     },
     "/api/v1/subaccount/{id}": {
+      "delete": {
+        "tags": [
+          "sub account (request access)"
+        ],
+        "summary": "Delete a Sub Account",
+        "description": "Deletes a Sub Account if it has no remaining balance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pix key registered to the subaccount",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "destination@test.com"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub Account successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "pixKey": {
+                      "type": "string",
+                      "example": "destination@test.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "SubAccountNotFound": {
+                    "value": {
+                      "error": "Subaccount not found: destination@test.com"
+                    }
+                  },
+                  "NonZeroBalance": {
+                    "value": {
+                      "error": "Only subaccount without balance can be removed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden action",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "This feature is not enabled for your company"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "sub account (request access)"
