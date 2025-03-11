@@ -12,22 +12,22 @@ Essa documentação assume que você tenha preenchido alguns requisitos que são
 
 :::
 
-### 1. Primeiro você deve ir em `CADASTROS` depois em `FINANCEIRO`
+### 1. Acesse a seção `CADASTROS` e, em seguida, `FINANCEIRO`
 
 ![Shop9 register page](./__assets__/slide1-shop9.png)
 
-### 2. Em seguida você deve ir até `CONTAS BANCÁRIAS`
+### 2. Navegue até a opção `CONTAS BANCÁRIAS`
 
 ![Shop9 financial page](./__assets__/slide2-shop9.png)
 
-### 3. Selecione a conta Bancária
+### 3. Selecione a conta bancária correspondente
 
-Nesta parte você irá selecionar a conta bancária da Shop9
+Nesta etapa, é necessário selecionar a conta bancária previamente cadastrada na Shop9.
 
 ![Shop9 Banck Account page](./__assets__/slide3-shop9.png)
 
 ### 4. Cadastro do AppID
 
-Aqui você irá até a opção `PIX` no campo `API KEY` irá passar o AppID criado em nossa plataforma e clicar em `GRAVAR`.
+Agora, dirija-se à seção `PIX`, localize o campo `API KEY`, insira o AppID previamente gerado na plataforma OpenPix e finalize clicando em `GRAVAR`.
 
 ![Shop9 pix api page](./__assets__/slide4-shop9.png)
