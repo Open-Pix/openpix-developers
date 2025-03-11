@@ -1,5 +1,5 @@
 ---
-title: Integrando OpenPix com a Shop9
+title: Integrando OpenPix com a Shop Control 9
 tags:
   - integration
 ---
@@ -8,7 +8,7 @@ tags:
 
 Essa documentação assume que você tenha preenchido alguns requisitos que são:
 
-1. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/api-getting-started.md).
+1. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/getting-started-api).
 
 :::
 
@@ -22,7 +22,7 @@ Essa documentação assume que você tenha preenchido alguns requisitos que são
 
 ### 3. Selecione a conta bancária correspondente
 
-Nesta etapa, é necessário selecionar a conta bancária previamente cadastrada na Shop9.
+Nesta etapa, é necessário selecionar a conta bancária previamente cadastrada na Shop Control 9.
 
 ![Shop9 Banck Account page](./__assets__/slide3-shop9.png)
 
