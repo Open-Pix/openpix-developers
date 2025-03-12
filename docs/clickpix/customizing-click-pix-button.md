@@ -1,6 +1,6 @@
 ---
 id: customizing-click-pix-button
-title: Customizando seu proprio botão ClickPix
+title: Customizando seu próprio botão ClickPix
 tags:
   - plugin
   - clickpix
@@ -16,8 +16,8 @@ Leia sobre os passos inicias de como iniciar sua integração com ClickPix
 ```html
 <script src="https://plugin.openpix.com.br/v1/openpix.js" async>
 ```
-2) Crie uma div com as propriedades necessarias para o carregamento do seu botão clickpix e defina um `id` para ela, e oculte este botão utilizando CSS adicionado a propriedade `display: none`
-> Em nosso exemplo estamos utilizando o id `clickpix-product-1` para este botão, que será usado exclusivamente para buscar o elemento na pagina
+2) Crie uma div com as propriedades necessárias para o carregamento do seu botão clickpix e defina um `id` para ela, e oculte este botão utilizando CSS adicionando a propriedade `display: none`
+> Em nosso exemplo estamos utilizando o id `clickpix-product-1` para este botão, que será usado exclusivamente para buscar o elemento na página
 Atributos obrigatórios:
 - data-clickpix
 - data-appid
@@ -32,7 +32,7 @@ Atributos obrigatórios:
   data-value="888"
 ></div>
 ```
-> Para saber se o código do plugin está sendo carregado corretamente, você pode remover a propriedade `style` temporariamente e ver se aparece um botão do `clickpix`, se aparecer é sinal que está está sendo carregado
+> Para saber se o código do plugin está sendo carregado corretamente, você pode remover a propriedade `style` temporariamente e ver se aparece um botão do `clickpix`, se aparecer é sinal que está sendo carregado
 3) Agora você pode criar seu botão customizado e definir um `id` para ele
 > Em nosso exemplo este botão está definido com o id `product-1`
 ```html
@@ -49,7 +49,7 @@ Para alterar o script, basta você ajustar os valores do `document.querySelector
     // Criamos um novo evento de click no nosso botão customizado
     myCustomButton.onclick = () => {
       // Agora, fazemos uma busca no nosso botão utilizando o id do botão do clickpix que definimos anteriormente
-      // E falamos para a consultar avançar um nível na camada DOM para obter o botão de enviar do clickpix
+      // E falamos para a consulta avançar um nível na camada DOM para obter o botão de enviar do clickpix
       const clickpix = document.querySelector('#clickpix-product-1 button')
       // Emitimos um evento de click
       clickpix.click()
@@ -66,7 +66,7 @@ Evite usar o atributo `hidden` do javascript no nosso botão clickpix para garan
 > Resumo: use seu botão personalizado como um gatilho para o botão clickpix e oculte o botão clickpix usando CSS com `display: none`
 
 ## Exemplos
-Aqui você poderá ver um exemplo completo de como você pode fazer a integração do seu proprio botão utilizando o clickpix<br />
+Aqui você poderá ver um exemplo completo de como você pode fazer a integração do seu próprio botão utilizando o clickpix<br />
 Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<YOUR-APPID>` pela seu appID de teste (caso queira testar) ou de produção
 
 ### Usando único botão customizado
@@ -125,7 +125,7 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<Y
 </html>
 ```
 
-## Usando multiplos botões com clickpix
+## Usando múltiplos botões com clickpix
 
 ```html
 <!DOCTYPE html>
