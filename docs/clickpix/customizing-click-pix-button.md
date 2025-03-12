@@ -10,25 +10,66 @@ Leia sobre os passos inicias de como iniciar sua integração com ClickPix
 
 - [Começando com o ClickPix](./click-pix-starting.md)
 
-## Passos
+## Passo a passo da configuração
 
-1) Crie a estrutura HTML e adicione a tag scrit do nosso plugin
+1) Adicione a tag script do nosso plugin no head da página
+```html
+<script src="https://plugin.openpix.com.br/v1/openpix.js" async>
+```
 2) Crie uma div com as propriedades necessarias para o carregamento do seu botão clickpix e defina um `id` para ela, e oculte este botão utilizando CSS adicionado a propriedade `display: none`
-> Em nosso exemplo estamos utilizando o id `clickpix-product-1` para este botão
-3) Crie seu botão customizado e defina um `id` para ele
+> Em nosso exemplo estamos utilizando o id `clickpix-product-1` para este botão, que será usado exclusivamente para buscar o elemento na pagina
+Atributos obrigatórios:
+- data-clickpix
+- data-appid
+- data-value
+
+```html
+<div
+  id="clickpix-product-1"
+  style="display: none;"
+  data-clickpix
+  data-appid="<YOU-APPID>"
+  data-value="888"
+></div>
+```
+> Para saber se o código do plugin está sendo carregado corretamente, você pode remover a propriedade `style` temporariamente e ver se aparece um botão do `clickpix`, se aparecer é sinal que está está sendo carregado
+3) Agora você pode criar seu botão customizado e definir um `id` para ele
 > Em nosso exemplo este botão está definido com o id `product-1`
-4) Crie uma tag script para definir um evento ao seu botão customizado
-5) Utiliza a função `document.querySelector` para pegar o seu botão customizado através do `id`
-6) Defina um evento para ela, e busque o nosso botão do clickpix através do atributo `id` também e garante que será buscado o elemento `button` de dentro de nossa div `clickpix`
+```html
+  <button class="my-custom-button" id="product-1">Buy here $ 8,88</button>
+```
+4) Crie uma tag script para colocar o script de busca e gatilho<br />
+Para alterar o script, basta você ajustar os valores do `document.querySelector` para os id que você definiu
+```html
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Utilizaremos a função `document.querySelector` para pegar o nosso botão customizado através do atributo id
+    const myCustomButton = document.querySelector('#product-1')
+
+    // Criamos um novo evento de click no nosso botão customizado
+    myCustomButton.onclick = () => {
+      // Agora, fazemos uma busca no nosso botão utilizando o id do botão do clickpix que definimos anteriormente
+      // E falamos para a consultar avançar um nível na camada DOM para obter o botão de enviar do clickpix
+      const clickpix = document.querySelector('#clickpix-product-1 button')
+      // Emitimos um evento de click
+      clickpix.click()
+    }
+  })
+</script>
+```
+5) Pronto! Seguindo esses passos seu botão clickpix estará customizado e pronto para ser utilizado
 
 :::info
 Evite usar o atributo `hidden` do javascript no nosso botão clickpix para garantir que ele carregue corretamente
 :::
 
-> Resumo: use seu botão personalizado como um gatilho para o botão clickpix e oculte o botão clickpix usando css com `display: none`
+> Resumo: use seu botão personalizado como um gatilho para o botão clickpix e oculte o botão clickpix usando CSS com `display: none`
 
-## Exemplo com um único botão customizado
+## Exemplos
+Aqui você poderá ver um exemplo completo de como você pode fazer a integração do seu proprio botão utilizando o clickpix<br />
+Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<YOUR-APPID>` pela seu appID de teste (caso queira testar) ou de produção
 
+### Usando único botão customizado
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -84,10 +125,9 @@ Evite usar o atributo `hidden` do javascript no nosso botão clickpix para garan
 </html>
 ```
 
-## Exemplo multiplos botões customizados
+## Usando multiplos botões com clickpix
 
 ```html
-
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -168,7 +208,6 @@ Evite usar o atributo `hidden` do javascript no nosso botão clickpix para garan
   <!-- Plugin Script -->
   <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
   <script>
-    // trigger clickpix button when custom button is clicked
     document.addEventListener('DOMContentLoaded', () => {
       // get all clickpix buttons
       const clickpixButtons = document.querySelectorAll('.clickpix-button')
