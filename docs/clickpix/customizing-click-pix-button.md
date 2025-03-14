@@ -21,14 +21,14 @@ Leia sobre os passos inicias de como iniciar sua integração com ClickPix
 Atributos obrigatórios:
 - data-clickpix
 - data-appid
-- data-value
+- data-value (valor em centavos Ex: 888 = R$ 8,88)
 
 ```html
 <div
   id="clickpix-product-1"
   style="display: none;"
   data-clickpix
-  data-appid="<YOU-APPID>"
+  data-appid="YOUR_APPID"
   data-value="888"
 ></div>
 ```
@@ -67,7 +67,7 @@ Evite usar o atributo `hidden` do javascript no nosso botão clickpix para garan
 
 ## Exemplos
 Aqui você poderá ver um exemplo completo de como você pode fazer a integração do seu próprio botão utilizando o clickpix<br />
-Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<YOUR-APPID>` pela seu appID de teste (caso queira testar) ou de produção
+Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `YOUR_APPID` pelo seu appID de teste (caso queira testar) ou de produção
 
 ### Usando único botão customizado
 ```html
@@ -103,7 +103,7 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<Y
       id="clickpix-product-1"
       style="display: none;"
       data-clickpix
-      data-appid="<YOU-APPID>"
+      data-appid="YOUR_APPID"
       data-value="888"
     ></div>
   </div>
@@ -170,7 +170,7 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<Y
         class="button-action"
         style="display: none;"
         data-clickpix
-        data-appid="<YOUR-APPID>"
+        data-appid="YOUR_APPID"
         data-value="888"
       ></div>
     </div>
@@ -185,7 +185,7 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<Y
         class="button-action"
         style="display: none;"
         data-clickpix
-        data-appid="<YOUR-APPID>"
+        data-appid="YOUR_APPID"
         data-value="1888"
       ></div>
     </div>
@@ -200,7 +200,7 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `<Y
         class="button-action"
         style="display: none;"
         data-clickpix
-        data-appid="<YOUR-APPID>"
+        data-appid="YOUR_APPID"
         data-value="2888"
       ></div>
     </div>
