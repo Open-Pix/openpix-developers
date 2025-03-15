@@ -23,6 +23,10 @@ Atributos obrigatórios:
 - data-appid
 - data-value (valor em centavos Ex: 888 = R$ 8,88)
 - data-customer-fields (campos que o cliente deve preencher Ex: email,phone)
+- data-additional-info (informações adicionais Ex: order:123,product:my-product)
+> As informações adicionais devem ser separadas por virgula caso tenha mais de uma. Seguimos um padrão de chave:valor, onde antes dos `:` é o identificador que chamamos de chave para identificar algum dado e depois do `:` é o valor que você deseja atribuir a um identificador
+
+> Em nosso exemplo estou querendo identificar que esse clickpix é um pedido com id `123` e que é um produto chamado `my-product`
 
 ```html
 <div
@@ -32,6 +36,7 @@ Atributos obrigatórios:
   data-appid="YOUR_APPID"
   data-value="888"
   data-customer-fields="email,phone"
+  data-additional-info="order:123,product:my-product"
 ></div>
 ```
 > Para saber se o código do plugin está sendo carregado corretamente, você pode remover a propriedade `style` temporariamente e ver se aparece um botão do `clickpix`, se aparecer é sinal que está sendo carregado
@@ -93,37 +98,40 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `YO
         font-weight: 800;
       }
     </style>
+
+    <!-- Plugin Script -->
+    <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
   </head>
   <body>
+    <div id="root">
+      <!-- Your custom button -->
+      <button class="my-custom-button" id="product-1">Buy here $ 8,88</button>
 
-  <div id="root">
-    <!-- Your custom button -->
-    <button class="my-custom-button" id="product-1">Buy here $ 8,88</button>
+      <!-- ClickPix button -->
+      <div
+        id="clickpix-product-1"
+        style="display: none;"
+        data-clickpix
+        data-appid="YOUR_APPID"
+        data-value="888"
+        data-customer-fields="email,phone"
+        data-additional-info="order:123,product:my-product"
+      ></div>
+    </div>
 
-    <!-- ClickPix button -->
-    <div
-      id="clickpix-product-1"
-      style="display: none;"
-      data-clickpix
-      data-appid="YOUR_APPID"
-      data-value="888"
-      data-customer-fields="email,phone"
-    ></div>
-  </div>
+    <script>
+      // trigger clickpix button when custom button is clicked
+      document.addEventListener('DOMContentLoaded', () => {
+        // the # is important for you reference to querySelector that you get a element using a id
+        const myCustomButton = document.querySelector('#product-1')
 
-  <!-- Plugin Script -->
-  <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
-  <script>
-    // trigger clickpix button when custom button is clicked
-    document.addEventListener('DOMContentLoaded', () => {
-      const myCustomButton = document.querySelector('#product-1')
-
-      myCustomButton.onclick = () => {
-        const clickpix = document.querySelector('#clickpix-product-1 button')
-        clickpix.click()
-      }
-    })
-  </script>
+        myCustomButton.onclick = () => {
+          const clickPixDivContainer = document.querySelector('#clickpix-product-1')
+          const clickPixSubmitButton = clickPixDivContainer.querySelector('button')
+          clickPixSubmitButton.click()
+        }
+      })
+    </script>
   </body>
 </html>
 ```
@@ -159,78 +167,84 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `YO
         height: 100vh;
       }
     </style>
+
+    <!-- Plugin Script -->
+    <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
   </head>
   <body>
+    <div id="root">
+      <!-- Your wrapper for buttons -->
+      <div class="clickpix-button" id="product-1">
+        <!-- Your custom button -->
+        <button class="my-custom-button">Buy here R$ 8,88</button>
 
-  <div id="root">
-    <!-- Your wrapper for buttons -->
-    <div class="clickpix-button" id="product-1">
-      <!-- Your custom button -->
-      <button class="my-custom-button">Buy here R$ 8,88</button>
+        <!-- ClickPix button -->
+        <div
+          class="button-action"
+          style="display: none;"
+          data-clickpix
+          data-appid="YOUR_APPID"
+          data-value="888"
+          data-customer-fields="email,phone"
+          data-additional-info="order:123,product:my-product"
+        ></div>
+      </div>
 
-      <!-- ClickPix button -->
-      <div
-        class="button-action"
-        style="display: none;"
-        data-clickpix
-        data-appid="YOUR_APPID"
-        data-value="888"
-      ></div>
+      <!-- Your wrapper for buttons -->
+      <div class="clickpix-button" id="product-2">
+        <!-- Your custom button -->
+        <button class="my-custom-button">Buy here R$ 18,88</button>
+
+        <!-- ClickPix button -->
+        <div
+          class="button-action"
+          style="display: none;"
+          data-clickpix
+          data-appid="YOUR_APPID"
+          data-value="1888"
+          data-customer-fields="email,phone"
+          data-additional-info="order:123,product:my-product" 
+        ></div>
+      </div>
+
+      <!-- Your wrapper for buttons -->
+      <div class="clickpix-button" id="product-3">
+        <!-- Your custom button -->
+        <button class="my-custom-button">Buy here R$ 28,88</button>
+
+        <!-- ClickPix button -->
+        <div
+          class="button-action"
+          style="display: none;"
+          data-clickpix
+          data-appid="YOUR_APPID"
+          data-value="2888"
+          data-customer-fields="email,phone"
+          data-additional-info="order:123,product:my-product"
+        ></div>
+      </div>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // get all clickpix buttons
+        const clickpixButtons = document.querySelectorAll('.clickpix-button')
 
-    <!-- Your wrapper for buttons -->
-    <div class="clickpix-button" id="product-2">
-      <!-- Your custom button -->
-      <button class="my-custom-button">Buy here R$ 18,88</button>
+        clickpixButtons.forEach((clickpixButton) => {
+          // get you custom button
+          const customButton = clickpixButton.querySelector('button.my-custom-button')
 
-      <!-- ClickPix button -->
-      <div
-        class="button-action"
-        style="display: none;"
-        data-clickpix
-        data-appid="YOUR_APPID"
-        data-value="1888"
-      ></div>
-    </div>
-
-    <!-- Your wrapper for buttons -->
-    <div class="clickpix-button" id="product-3">
-      <!-- Your custom button -->
-      <button class="my-custom-button">Buy here R$ 28,88</button>
-
-      <!-- ClickPix button -->
-      <div
-        class="button-action"
-        style="display: none;"
-        data-clickpix
-        data-appid="YOUR_APPID"
-        data-value="2888"
-      ></div>
-    </div>
-  </div>
-  <!-- Plugin Script -->
-  <script src="https://plugin.openpix.com.br/v1/openpix.js" async></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // get all clickpix buttons
-      const clickpixButtons = document.querySelectorAll('.clickpix-button')
-
-      clickpixButtons.forEach((clickpixButton) => {
-        // get you custom button
-        const customButton = clickpixButton.querySelector('button.my-custom-button')
-
-        // set a trigger event in your custom button
-        customButton.onclick = () => {
-          // get our clickpix button container
-          const clickpixDivContainer = clickpixButton.querySelector('.button-action')
-          // get our clickpix submit button
-          const clickpixSubmitButton = clickpixDivContainer.querySelector('button')
-          // emit click event
-          clickpixSubmitButton.click()
-        }
+          // set a trigger event in your custom button
+          customButton.onclick = () => {
+            // get our clickpix button container
+            const clickpixDivContainer = clickpixButton.querySelector('.button-action')
+            // get our clickpix submit button
+            const clickpixSubmitButton = clickpixDivContainer.querySelector('button')
+            // emit click event
+            clickpixSubmitButton.click()
+          }
+        })
       })
-    })
-  </script>
+    </script>
   </body>
 </html>
 ```
