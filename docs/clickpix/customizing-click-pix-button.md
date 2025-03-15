@@ -22,6 +22,7 @@ Atributos obrigatórios:
 - data-clickpix
 - data-appid
 - data-value (valor em centavos Ex: 888 = R$ 8,88)
+- data-customer-fields (campos que o cliente deve preencher Ex: email,phone)
 
 ```html
 <div
@@ -30,6 +31,7 @@ Atributos obrigatórios:
   data-clickpix
   data-appid="YOUR_APPID"
   data-value="888"
+  data-customer-fields="email,phone"
 ></div>
 ```
 > Para saber se o código do plugin está sendo carregado corretamente, você pode remover a propriedade `style` temporariamente e ver se aparece um botão do `clickpix`, se aparecer é sinal que está sendo carregado
@@ -105,6 +107,7 @@ Você precisará apenas criar um `index.html`, copiar nosso exemplo e trocar `YO
       data-clickpix
       data-appid="YOUR_APPID"
       data-value="888"
+      data-customer-fields="email,phone"
     ></div>
   </div>
 
