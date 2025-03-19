@@ -151,11 +151,30 @@ window.$openpix.push([
 ]);
 ```
 
-- customer (opcional): cliente selecionado a ser cobrado
-  - name: nome do cliente
-  - email: email do cliente
-  - taxID: CPF ou CNPJ do cliente
-  - phone: telefone do cliente
+### Gerando uma cobrança com Cartão de Crédito
+
+Você pode criar uma nova cobrança com cartão de crédito assim:
+
+```jsx
+window.$openpix.push([
+  'charge',
+  {
+    value: 1000, // R$ 10,00
+    correlationID: 'myCorrelationId',
+    description: 'product A',
+    customer: { // customer opcional
+      name: 'Customer', 
+      email: 'customer@gmail.com',
+      taxID: '098.969.330-90',
+      phone: '+5511940461111',
+    },
+    type: 'CREDIT_CARD'
+  },
+]);
+```
+#### Resultado
+
+![photo-example-plugin-credit-card](/img/plugin/photo-example-plugin-credit-card.png)
 
 ### Gerando uma cobrança Pix com Informações Adicionais
 
