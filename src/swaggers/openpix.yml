@@ -2531,6 +2531,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  '/api/v1/receipt/{receiptType}/{EndToEndId}':
+    get:
+      tags:
+        - receipt
+      summary:
+        Get a PDF document related to a payment transaction formatted as a
+        receipt by type (pix-in, pix-out or pix-refund).
+      parameters:
+        - name: ReceiptType
+          in: path
+          description: The ReceiptType from the payment transaction to export.
+          required: true
+          schema:
+            type: string
+            enum:
+              - pix-in
+              - pix-out
+              - pix-refund
+          examples:
+            pix-in:
+              value: pix-in
+            pix-out:
+              value: pix-out
+            pix-refund:
+              value: pix-refund
+        - name: EndToEndId
+          in: path
+          description: The EndToEndId from the payment transaction to export.
+          required: true
+          schema:
+            type: string
+          examples:
+            endToEndId:
+              value: E12345678202406201221abcdef12345
+      responses:
+        '200':
+          description: Exported transaction as a receipt in PDF format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    description: The name of the exported PDF file.
+                    example: file.pdf
+        '400':
+          description: An error occurred due to a bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: The specified EndToEndId was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   '/api/v1/subaccount/{id}/withdraw':
     post:
       tags:
@@ -2590,66 +2654,6 @@ paths:
                   error:
                     type: string
   '/api/v1/subaccount/{id}':
-    delete:
-      tags:
-        - sub account (request access)
-      summary: Delete a Sub Account
-      description: Deletes a Sub Account if it has no remaining balance
-      parameters:
-        - name: id
-          in: path
-          description: Pix key registered to the subaccount
-          required: true
-          schema:
-            type: string
-          example: destination@test.com
-      responses:
-        '200':
-          description: Sub Account successfully deleted
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: OK
-                  pixKey:
-                    type: string
-                    example: destination@test.com
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              examples:
-                MissingAuthorization:
-                  value:
-                    error: Invalid Authorization header
-                CompanyNotFound:
-                  value:
-                    error: Company not found
-                SubAccountNotFound:
-                  value:
-                    error: 'Subaccount not found: destination@test.com'
-                NonZeroBalance:
-                  value:
-                    error: Only subaccount without balance can be removed
-        '403':
-          description: Forbidden action
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              example:
-                error: This feature is not enabled for your company
     get:
       tags:
         - sub account (request access)
