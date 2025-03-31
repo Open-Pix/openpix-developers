@@ -1,6 +1,6 @@
 ---
 id: get-recipt-with-api
-title: Obter recibos com api
+title: Como obter recibos via API?
 tags:
   - recibo
 ---
