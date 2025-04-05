@@ -12,7 +12,7 @@ tags:
 Nós disponibilizamos o _endpoint_ `/api/openpix/v1/partner/application` para que
 você possa criar uma nova _application_ para a respectiva empresa afiliada.
 
-Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/partner-(request-access)/paths/~1api~1openpix~1v1~1partner~1application/post)
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/partner-(request-access)/paths/~1api~1v1~1partner~1application/post)
 a documentação referente a esse _endpoint_.
 
 Como parte do `body` da requisição, esperamos o envio dos seguintes itens: `application` e `taxID`,
@@ -22,7 +22,7 @@ respectivamente, eles consistem no seguinte:
   O tipo da aplicação pode ser um dos seguintes valores: `API`, `ORACLE` ou `PLUGIN`.
 - **`name`**: O nome da sua `application`, facilita o processo de identificação da nova `application`.
 
-Num exemplo prático, o body da sua requisição seguiria semelhante a este exemplo:
+Em um exemplo prático, o body da sua requisição seguiria semelhante a este exemplo:
 
 ```json
 {
