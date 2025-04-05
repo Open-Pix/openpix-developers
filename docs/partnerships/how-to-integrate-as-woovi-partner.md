@@ -12,25 +12,28 @@ Antes de seguir com a integração como parceiro você precisa solicitar a ativa
 
 ### Dashboard
 
-1) Acesse o nosso dashboard, no lado direito clique em "Minhas Empresas"
-![](./__assets__/how-to-integrate-as-woovi-partner/my-companies.png)
+1) Acesse o nosso dashboard, no menu localizado no lado esquerdo clique em "Minhas Empresas" para visualizar todos seus afiliados
+
+![](./__assets__/how-to-integrate-as-woovi-partner/side-menu-my-companies.png)  
 
 2) Após a acessar a área "Minhas Empreas", você poderá visualizar duas abas e dois botões
+
+
 Abas:
-- Empresas
-> Onde estará todas as empresas que finalizaram o pŕe-cadastro como seu afiliado
-- Pré-registro
-> Onde você verá todas as empresas que iniciaram um pré-cadastro como seu afiliado, porém não completaram a validação e ativação da conta
+- Empresas  
+Onde estará todas as empresas que finalizaram o pŕe-cadastro como seu afiliado
+- Pré-registro  
+Onde você verá todas as empresas que iniciaram um pré-cadastro como seu afiliado, porém não completaram a validação e ativação da conta
 
 Botões:
-- Link de Afiliado
+- Link de Afiliado  
 Onde você poderá usar para copiar o link de pré-cadastro e enviar para algum afiliado seu efetuar um pré-registro de conta
 O link de afiliado é algo parecido com:
 https://app.woovi.com/register?partner=Q29tcGFue23AdDLOK2NhZGVjZTZkMzQ4MTQ3MzEyZDc=
 
-- Nova Empresa
-Onde você pode criar um pré-registro para alguma empresa que deseja se tornar sua afiliada
-Você pode fazer a criação da nova empresa através da nossa API, para saber mais bastar seguir a seção [Como criar um afiliado via API](#como-criar-um-afiliado-via-api)
+- Nova Empresa  
+Onde você pode criar um pré-registro para alguma empresa que deseja se tornar sua afiliada  
+Você pode fazer a criação da nova empresa através da nossa API, para saber mais bastar seguir a seção [como criar um afiliado via API](#como-criar-um-afiliado-via-api)
 
 
 ![](./__assets__/how-to-integrate-as-woovi-partner/afilliate-link-and-new-company.png)
@@ -41,6 +44,8 @@ Você pode fazer a criação da nova empresa através da nossa API, para saber m
 > É importante que o afiliado preenchas todas as informações obrigatorias do formulário, aceite os termos e clique em continuar para seguir com a criação da conta de afiliado
 
 ![](./__assets__/how-to-integrate-as-woovi-partner/create-company-with-affiliate-link.png)
+
+![](./__assets__/how-to-integrate-as-woovi-partner/info-send-email-to-validate-account.png)
 
 Um link de validação será enviado para o email do afiliado cadastrado, após ele acessar o email ele poderá clicar e "Validar cadastro"
 
@@ -57,7 +62,7 @@ Um link de validação será enviado para o email do afiliado cadastrado, após 
 
 4) Você poderá visualizar todas a empresas cadastradas como seu afiliado, também poderá ver quais empresas não completaram seu cadastro após a criação da conta
 
-![](./__assets__/how-to-integrate-as-woovi-partner/list-your-afilliates.png)
+![#pending-data](./__assets__/how-to-integrate-as-woovi-partner/list-your-afilliates.png)
 
 Ao selecionar um afiliado, você terá acesso a todas as informações daquele afiliado como
 
@@ -80,9 +85,10 @@ Caso você não consiga visualizar a aba ajustes em "Minhas Empresas" ou nas sua
 - [O que é taxa customizada?](./custom-fee/what-is.md)
 - [Como customizar a taxa de um afiliado?](./custom-fee/how-to-customize-the-fee-for-a-affiliate)
 
-## Como criar um afiliado via API
-Você também pode criar chaves de APIs e webhooks para suas empresas afiliadas, seguindo a documentação abaixo
+## Como criar uma empresa afiliada via API
+Você também pode um pré-registro como também chaves de APIs e webhooks para suas empresas afiliadas, seguindo a documentação abaixo
 
+- [Como criar uma empresa afiliada via API?](./how-to-create-a-affiliate-company-via-api.md)
 - [Como acessar a API com uma empresa afiliada?](./how-to-access-api-via-affiliated-company.md)
 - [Como criar um webhook para uma empresa afiliada?](./how-to-create-a-webhook-to-affiliated-company.md)
 
@@ -100,7 +106,7 @@ Para saber mais sobre as especificações do nosso endpoint você pode acessar [
 ![](./__assets__/how-to-integrate-as-woovi-partner/postman-get-affilliates.png)
 
 1. Troque `BASE_URL` pela URL de produção `https://api.openpix.com.br`
-3. Adicione um appID ao header authorization da requisição.
+3. Adicione o header `Authorization` da requisição e troque `API_TOKEN` pelo seu `appID`.
 
 Caso ainda não tenha um `appID`, recomenda-mos fortemente você consultar nossa documenta de [começando uma integração](../apis/api-getting-started.md)
 
@@ -113,8 +119,8 @@ Para saber mais sobre as especificações do nosso endpoint você pode acessar [
 
 1. Troque `BASE_URL` pela URL de produção `https://api.openpix.com.br`
 2. Troque os números pelo seu que estão definidos na URL pelo CNPJ do seu afiliado
-3. Adicione um appID ao header authorization da requisição.
+3. Adicione o header `Authorization` da requisição e troque `API_TOKEN` pelo seu `appID`.
 
 :::info
-Caso ainda não tenha um `appID`, recomenda-mos fortemente você consultar nossa documenta de [começando uma integração](../apis/api-getting-started.md)
+Caso ainda não tenha um `appID`, recomenda-mos fortemente você consultar nossa documenta de [começando uma integração API](../apis/api-getting-started.md)
 :::
