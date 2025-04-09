@@ -6,7 +6,11 @@ tags:
 ---
 
 :::info
-Para a utilização dessa funcionalidade é necessário possuir uma conta na OpenPix e a funcionalidade Split, entre em contato com nosso time de suporte para habilitar essa funcionalidade.
+Para a utilização dessa funcionalidade é necessário possuir uma conta na OpenPix e a funcionalidade Split, entre em contato com nosso time de suporte para habilitar essa funcionalidade
+:::
+
+:::info
+Você também precisará de um `appID` também para fazer requisições na nossa API, caso não tenha recomenda-mos fortemente você consultar nossa documenta de [começando uma integração](../apis/api-getting-started.md)
 :::
 
 ## Como lidar com o calculo de split
@@ -28,8 +32,8 @@ const createCharge = () => {
   // calculando o valor que o recebedor deverá receber
   const valueSplitRecipient = calculateSplitPercentage(totalValueCharge, splitPercentageRecipient)
 
-  // agora eu chamo uma abstração de uma chamada para API da OpenPix
-  // informo o valor total da cobrança e o valor split do recebedor (sub-conta)
+  // agora estou chamando uma abstração de uma chamada para API da OpenPix
+  // nessa requisição o valor total da cobrança e o valor split do recebedor (sub-conta) e as demais informações
   fetchOpenPixApi('/api/v1/charge', {
     method: 'POST',
     body: {
@@ -41,6 +45,9 @@ const createCharge = () => {
           "value": valueSplitRecipient
         }
       ]
+    },
+    headers: {
+      Authorization: 'MEU_APP_ID'
     }
   })
 }
