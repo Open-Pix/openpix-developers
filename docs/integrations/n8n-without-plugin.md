@@ -124,6 +124,8 @@ O primeiro passo é adicionar um nó "Webhook" ao seu workflow. Este nó será r
    - OPENPIX:DISPUTE_REJECTED - Disputa Rejeitada
 6. Clique em "Salvar"
 
+![](./__assets__/n8n-without-plugin/webhooks/woovi-create-webhook.png)
+
 Ao receber um webhook da OpenPix, você verá uma saída similar a esta:
 ![](./__assets__/n8n-without-plugin/webhooks/output-webhook.png)
 
