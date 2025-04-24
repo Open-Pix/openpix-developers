@@ -1,0 +1,13 @@
+{
+  "label": "BaaS",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "BAAS visão geral"
+  },
+  "customProps": {
+    "description": "Apis documentação"
+  }
+}
