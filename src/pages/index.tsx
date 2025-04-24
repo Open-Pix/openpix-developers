@@ -46,6 +46,12 @@ const links = [
     href: '/docs/intro/getting-started',
   },
   {
+    title: 'Ambiente de teste',
+    description:
+      'Para você que quer testar os produtos OpenPix fornecemos nosso ambiente de teste.',
+    href: '/docs/intro/test-environment',
+  },
+  {
     title: 'E-commerces',
     description: 'Integre a OpenPix com o seu e-commerce',
     href: '/docs/category/e-commerce',

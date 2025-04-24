@@ -2,13 +2,17 @@
   "openapi": "3.0.3",
   "info": {
     "title": "OpenPix",
-    "description": "A OpenPix é uma Plataforma de Gestão de Pagamentos. Para utilizar nossa API você deve acessar  __[https://api.openpix.com.br/](https://api.openpix.com.br/)__ e somente o mesmo. A OpenPix não aceita subdominios para a API.\n\nVeja como configurar seu acesso a nossa API [aqui](https://developers.openpix.com.br/docs/apis/api-getting-started).",
+    "description": "A OpenPix é uma Plataforma de Gestão de Pagamentos. \n\n Para utilizar nossa API de Produção, utilize exclusivamente o seguinte endpoint: \n\n 👉 __[https://api.openpix.com.br/](https://api.openpix.com.br/)__  \n\n Além disso, oferecemos também um ambiente de sandbox (ambiente de testes), ideal para desenvolvimento e validação de integrações sem impactar dados reais. \n\n 👉 __[https://api.woovi-sandbox.com/](https://api.woovi-sandbox.com/)__ \n\n Veja como configurar seu acesso a nossa API [aqui](https://developers.openpix.com.br/docs/apis/api-getting-started).",
     "version": "1.0.0"
   },
   "servers": [
     {
       "url": "https://api.openpix.com.br",
-      "description": "Production server"
+      "description": "API de Produção"
+    },
+    {
+      "url": "https://api.woovi-sandbox.com",
+      "description": "API de Teste"
     }
   ],
   "security": [
