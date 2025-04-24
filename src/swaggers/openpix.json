@@ -245,6 +245,332 @@
         }
       }
     },
+    "/api/v1/application": {
+      "delete": {
+        "tags": [
+          "application"
+        ],
+        "summary": "Delete an application",
+        "description": "Deactivates an application by setting isActive to false and adding a removedAt timestamp",
+        "requestBody": {
+          "description": "Data identifying the application to delete",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clientId": {
+                    "type": "string",
+                    "description": "The client ID of the application to delete"
+                  }
+                },
+                "required": [
+                  "clientId"
+                ]
+              },
+              "examples": {
+                "Application": {
+                  "value": {
+                    "clientId": "client_123abc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates the operation was successful"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or other client error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "ValidationError": {
+                    "value": {
+                      "error": "Validation error",
+                      "details": [
+                        {
+                          "field": "clientId",
+                          "message": "Application client ID is required"
+                        }
+                      ]
+                    }
+                  },
+                  "CannotDeleteMaster": {
+                    "value": {
+                      "error": "You cannot delete a master application"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Application not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Application not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "application"
+        ],
+        "summary": "Create a new application",
+        "description": "Creates a new application for a company",
+        "requestBody": {
+          "description": "Data to create a new application",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accountId": {
+                    "type": "string",
+                    "description": "The ID of the company bank account"
+                  },
+                  "application": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the application"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Type of the application (API, POS, PLUGIN, CHECKOUT)",
+                        "enum": [
+                          "API",
+                          "POS",
+                          "PLUGIN",
+                          "CHECKOUT"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "accountId",
+                  "application"
+                ]
+              },
+              "examples": {
+                "Application": {
+                  "value": {
+                    "accountId": "60f1e5b0e6b2a30022a1c68f",
+                    "application": {
+                      "name": "My API Application",
+                      "type": "API"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Application successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "application": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the application"
+                        },
+                        "isActive": {
+                          "type": "boolean",
+                          "description": "Whether the application is active"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Type of the application"
+                        },
+                        "clientId": {
+                          "type": "string",
+                          "description": "Client ID for authentication"
+                        },
+                        "clientSecret": {
+                          "type": "string",
+                          "description": "Client secret for authentication"
+                        },
+                        "appID": {
+                          "type": "string",
+                          "description": "Unique application identifier"
+                        },
+                        "companyBankAccount": {
+                          "type": "string",
+                          "description": "ID of the linked company bank account"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "application": {
+                    "name": "My API Application",
+                    "isActive": true,
+                    "type": "API",
+                    "clientId": "client_123abc",
+                    "clientSecret": "secret_456def",
+                    "appID": "app_789ghi",
+                    "companyBankAccount": "60f1e5b0e6b2a30022a1c68f"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or other client error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "ValidationError": {
+                    "value": {
+                      "error": "Validation error",
+                      "details": [
+                        {
+                          "field": "accountId",
+                          "message": "Account ID is required"
+                        }
+                      ]
+                    }
+                  },
+                  "NoMasterApplication": {
+                    "value": {
+                      "error": "Only MASTER application can create other application types"
+                    }
+                  },
+                  "CompanyBankAccountNotFound": {
+                    "value": {
+                      "error": "Company bank account not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cashback-fidelity/balance/{taxID}": {
       "get": {
         "tags": [
@@ -3673,6 +3999,104 @@
         }
       }
     },
+    "/api/v1/receipt/{receiptType}/{EndToEndId}": {
+      "get": {
+        "tags": [
+          "receipt"
+        ],
+        "summary": "Get a PDF document related to a payment transaction formatted as a receipt by type (pix-in, pix-out or pix-refund).",
+        "parameters": [
+          {
+            "name": "ReceiptType",
+            "in": "path",
+            "description": "The ReceiptType from the payment transaction to export.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pix-in",
+                "pix-out",
+                "pix-refund"
+              ]
+            },
+            "examples": {
+              "pix-in": {
+                "value": "pix-in"
+              },
+              "pix-out": {
+                "value": "pix-out"
+              },
+              "pix-refund": {
+                "value": "pix-refund"
+              }
+            }
+          },
+          {
+            "name": "EndToEndId",
+            "in": "path",
+            "description": "The EndToEndId from the payment transaction to export.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "endToEndId": {
+                "value": "E12345678202406201221abcdef12345"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exported transaction as a receipt in PDF format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "description": "The name of the exported PDF file.",
+                      "example": "file.pdf"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error occurred due to a bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified EndToEndId was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/subaccount/{id}/withdraw": {
       "post": {
         "tags": [
@@ -5098,6 +5522,83 @@
           },
           "value": {
             "type": "string"
+          }
+        }
+      },
+      "Application": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the application"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether the application is active"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the application (API, POS, PLUGIN, CHECKOUT)",
+            "enum": [
+              "API",
+              "POS",
+              "PLUGIN",
+              "CHECKOUT",
+              "MASTER"
+            ]
+          },
+          "clientId": {
+            "type": "string",
+            "description": "Client ID for authentication"
+          },
+          "clientSecret": {
+            "type": "string",
+            "description": "Client secret for authentication"
+          },
+          "appID": {
+            "type": "string",
+            "description": "Unique application identifier"
+          },
+          "companyBankAccount": {
+            "type": "string",
+            "description": "ID of the linked company bank account"
+          }
+        }
+      },
+      "ApplicationPayload": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "description": "The ID of the company bank account"
+          },
+          "application": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the application"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of the application (API)",
+                "enum": [
+                  "API",
+                  "POS",
+                  "PLUGIN",
+                  "CHECKOUT"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "ApplicationDeletePayload": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "description": "The client ID of the application to delete"
           }
         }
       },
@@ -6809,6 +7310,10 @@
     {
       "name": "account",
       "description": "Endpoint to manage Accounts\n"
+    },
+    {
+      "name": "application",
+      "description": "Endpoints to manage applications for authentication and API access.\n"
     },
     {
       "name": "cashback-fidelity",
