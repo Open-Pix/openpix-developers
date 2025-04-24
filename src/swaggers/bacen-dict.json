@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "DICT API",
-    "version": "2.2.0",
+    "version": "2.4.3",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
@@ -12,7 +12,7 @@
       "email": "suporte.ti@bcb.gov.br",
       "url": "https://www.bcb.gov.br/estabilidadefinanceira/pagamentosinstantaneos"
     },
-    "description": "\nO Diretório de Identificadores de Contas Transacionais - DICT - é o serviço do arranjo Pix que permite\nbuscar detalhes de contas transacionais com chaves de endereçamento mais convenientes para quem faz\num pagamento. Entre os tipos de chave atualmente disponíveis estão CPF, CNPJ, telefone, e-mail e EVP.\nAs informações retornadas pelo DICT permitem ao pagador confirmar a identidade do recebedor, proporcionando\numa experiência mais fácil e segura. Permitem também ao PSP do pagador criar a mensagem de instrução de\npagamento a ser enviada para o sistema de liquidação com os detalhes de conta do recebedor.\n\nPara informações adicionais, consulte a [página do Pix](https://www.bcb.gov.br/estabilidadefinanceira/pagamentosinstantaneos).\n\n> ### ⚠️ Para perguntas frequentes sobre a versão 2 da API, consulte a [página de dúvidas](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/duvidas_comuns_api_v2.html)\n\n# Segurança\n## Autenticação\nO DICT utiliza autenticação mútua TLS.\n\nAs definições de autenticação para essa API estão especificadas no\n[manual de segurança do Pix](https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Manual_de_Seguranca_PIX.pdf).\n\n## Assinatura digital\nRequisições que incluam ou alterem informações no DICT devem ser assinadas com\n[XML Digital Signature](https://www.w3.org/2000/09/xmldsig) pelo participante que envia a requisição.\nRequisições de consulta não precisam ser assinadas. Respostas retornadas pelo DICT serão assinadas digitalmente.\nAs assinaturas **devem** ser validadas pelos clientes da API.\n\nA assinatura será colocada no elemento `Signature` das requisições e respostas.\nO `Signature` será [envelopado](https://www.w3.org/TR/xmldsig-core1/#def-SignatureEnveloped) pelo XML que está\nsendo assinado (assinatura é um elemento filho).\n\nPara mais detalhes sobre a forma de construir a assinatura, consulte o\n[manual de segurança do Pix](https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Manual_de_Seguranca_PIX.pdf).\n\n## Limitação de requisições\n\nPara preservar a estabilidade do serviço, as operações da API do DICT estão sujeitas a políticas de\nlimitação de requisições. Especificamente para a operação de consulta de vínculo, há também\nlimitação de requisições com a finalidade de prevenir ataques de varredura de dados. O algoritmo\nusado para implementar as políticas de limitação é o [token bucket](https://en.wikipedia.org/wiki/Token_bucket).\n\nUma política de limitação tem associado a ela um escopo, que pode ser o usuário final ou o participante.\nCada política possui uma taxa de reposição de \"fichas\", um tamanho de \"balde\" e uma regra de contagem.\nA tabela abaixo define as políticas aplicáveis a cada operação da API.\n\n|  Política                            | Escopo   | Operações                                                                                            | Taxa de reposição | Tamanho do balde |\n|--------------------------------------|----------|------------------------------------------------------------------------------------------------------|-------------------|------------------|\n| ENTRIES_READ_USER_ANTISCAN           | USER     | getEntry                                                                                             | (*)               |  (*)             |\n| ENTRIES_READ_USER_ANTISCAN_V2        | USER     | getEntry                                                                                             | (*)               |  (*)             |\n| ENTRIES_READ_PARTICIPANT_ANTISCAN    | PSP      | getEntry                                                                                             | (**)              |  (**)            |\n| ENTRIES_STATISTICS_READ              | PSP      | getEntryStatistics                                                                                   | (**)              |  (**)            |\n| ENTRIES_WRITE                        | PSP      | createEntry, deleteEntry                                                                             | 1200/min          |  36000           |\n| ENTRIES_UPDATE                       | PSP      | updateEntry                                                                                          | 600/min           |  600             |\n| CLAIMS_READ                          | PSP      | getClaim                                                                                             | 600/min           |  18000           |\n| CLAIMS_WRITE                         | PSP      | createClaim, acknowledgeClaim, cancelClaim, confirmClaim, completeClaim                              | 1200/min          |  36000           |\n| CLAIMS_LIST_WITH_ROLE                | PSP      | listClaims                                                                                           | 40/min            |  200             |\n| CLAIMS_LIST_WITHOUT_ROLE             | PSP      | listClaims                                                                                           | 10/min            |  50              |\n| SYNC_VERIFICATIONS_WRITE             | PSP      | createSyncVerification                                                                               | 10/min            |  50              |\n| CIDS_FILES_WRITE                     | PSP      | createCidSetFile                                                                                     | 40/dia            |  200             |\n| CIDS_FILES_READ                      | PSP      | getCidSetFile                                                                                        | 10/min            |  50              |\n| CIDS_EVENTS_LIST                     | PSP      | listCidSetEvents                                                                                     | 20/min            |  100             |\n| CIDS_ENTRIES_READ                    | PSP      | getEntryByCid                                                                                        | 1200/min          |  36000           |\n| INFRACTION_REPORTS_READ              | PSP      | getInfractionReport                                                                                  | 600/min           |  18000           |\n| INFRACTION_REPORTS_WRITE             | PSP      | createInfractionReport, acknowledgeInfractionReport, cancelInfractionReport, closeInfractionReport   | 1200/min          |  36000           |\n| INFRACTION_REPORTS_LIST_WITH_ROLE    | PSP      | listInfractionReports                                                                                | 40/min            |  200             |\n| INFRACTION_REPORTS_LIST_WITHOUT_ROLE | PSP      | listInfractionReports                                                                                | 10/min            |  50              |\n| KEYS_CHECK                           | PSP      | checkKeys                                                                                            | 70/min            |  70              |\n| REFUNDS_READ                         | PSP      | getRefund                                                                                            | 1200/min          |  36000           |\n| REFUNDS_WRITE                        | PSP      | createRefund, cancelRefund, closeRefund                                                              | 2400/min          |  72000           |\n| REFUND_LIST_WITH_ROLE                | PSP      | listRefunds                                                                                          | 40/min            |  200             |\n| REFUND_LIST_WITHOUT_ROLE             | PSP      | listRefunds                                                                                          | 10/min            |  50              |\n| FRAUD_MARKERS_READ                   | PSP      | getFraudMarker                                                                                       | 600/min           |  18000           |\n| FRAUD_MARKERS_WRITE                  | PSP      | createFraudMarker, cancelFraudMarker                                                                 | 1200/min          |  36000           |\n| PERSONS_STATISTICS_READ              | PSP      | getPersonStatistics                                                                                  | 12000/min         |  36000           |\n| POLICIES_READ                        | PSP      | getBucketState                                                                                       | 60/min            |  200             |\n| POLICIES_LIST                        | PSP      | listBucketStates                                                                                     | 6/min             |  20              |\n\n\n### Regras de contagem das políticas\n\n- `ENTRIES_READ_USER_ANTISCAN`\n  - Aplicável somente para chaves do tipo EMAIL e PHONE\n  - status 200: subtrai 1\n  - status 404: subtrai 20\n  - ordem de pagamento enviada\n    - adiciona 1 para categoria Pessoa Física (PF)\n    - adiciona 2 para categoria Pessoa Jurídica (PJ)\n\n- `ENTRIES_READ_USER_ANTISCAN_V2`\n  - Aplicável somente para chaves do tipo CPF, CNPJ e EVP\n  - status 200: subtrai 1\n  - status 404: subtrai 20\n  - ordem de pagamento enviada\n    - adiciona 1 para categoria Pessoa Física (PF)\n    - adiciona 2 para categoria Pessoa Jurídica (PJ)\n\n  (*) O tamanho do balde das políticas ENTRIES_READ_USER_ANTISCAN e ENTRIES_READ_USER_ANTISCAN_V2 é categorizado de acordo com o tipo de\n   usuário final realizando a consulta, Pessoa Física (PF) ou Pessoa Jurídica (PJ):\n  |  Categoria   |  Taxa de reposição | Tamanho do balde |\n  |--------------|--------------------|------------------|\n  | PF           | 2/min              | 100              |\n  | PJ           | 20/min             | 1.000            |\n\n- `ENTRIES_READ_PARTICIPANT_ANTISCAN`\n  - Aplicável para todos os tipos de chaves (EMAIL, PHONE, CPF, CNPJ e EVP)\n  - status 200: subtrai 1\n  - status 404: subtrai 3\n  - ordem de pagamento enviada: adiciona 1\n\n  (**) O tamanho do balde nesta política depende da categoria em que se enquadra do participante. As seguintes categorias são possíveis:\n  |  Categoria   | Taxa de reposição | Tamanho do balde |\n  |--------------|-------------------|------------------|\n  | A            | 25.000/min        | 50.000           |\n  | B            | 20.000/min        | 40.000           |\n  | C            | 15.000/min        | 30.000           |\n  | D            | 8.000/min         | 16.000           |\n  | E            | 2.500/min         | 5.000            |\n  | F            | 250/min           | 500              |\n  | G            | 25/min            | 250              |\n  | H            | 2/min             | 50               |\n\n- `CLAIMS_LIST_WITH_ROLE`\n  - Aplicável quando há filtragem por doador/reivindicador\n  - status diferente de 500: subtrai 1\n\n- `CLAIMS_LIST_WITHOUT_ROLE`\n  - Aplicável quando não há filtragem por doador/reivindicador\n  - status diferente de 500: subtrai 1\n\n- `REFUND_LIST_WITH_ROLE`\n  - Aplicável quando há filtragem por requisitante/contestado\n  - status diferente de 500: subtrai 1\n\n- `REFUND_LIST_WITHOUT_ROLE`\n  - Aplicável quando não há filtragem por requisitante/contestado\n  - status diferente de 500: subtrai 1\n\n- Demais políticas\n  - status diferente de 500: subtrai 1\n\n### Violação de limites\n\nCaso o limite de uma política seja excedido, o que acontece quando a quantidade de fichas chega\na zero, será retornada uma resposta de erro com status `429`.\n\n# Recomendações de desempenho\n\nÉ altamente recomendável que as conexões HTTP para a comunicação com a API sejam reutilizadas, pois o custo de\nestabelecimento de uma conexão mTLS é muito alto em termos de latência. O uso de um _pool_ de conexões HTTP\né uma alternativa efetiva para reutilização de conexões. A API retorna o header [`Keep-Alive`](https://tools.ietf.org/html/rfc2068#section-19.7.1.1)\ncom o parâmetro `timeout`. Nele é informado o tempo em segundos que o servidor esperará antes de fechar a conexão caso não ocorram\nrequisições adicionais.\n\nÉ recomendável também que se utilize compressão. Para que as respostas da API utilizem compressão, adicione nas\nrequisições o header `Accept-Encoding: gzip`. O envio de requisições com compressão não é suportado.\n\n# Evolução da API\n\nAs seguintes mudanças são esperadas e consideradas compatíveis:\n\n- Adição de novos recursos na API.\n- Adição de novos parâmetros opcionais a requisições.\n- Adição de novos campos em respostas da API.\n- Alteração da ordem de campos.\n- Adição de novos elementos em enumerações\n\n## Versionamento\n\nA versão da API é composta por 4 elementos: _major_, _minor_, _patch_ e _release candidate_.\n\nA versão que consta no _path_ da URL é o elemento _major_ da versão da API.\n\nA evolução da versão se dá seguinte forma:\n\n- *Major*: alterações incompatíveis, com quebra de contrato (v1.0.0 → v2.0.0)\n- *Minor*: alterações compatíveis, sem quebra de contrato (v1.1.0 → v1.2.0)\n- *Patch*: esclarecimentos às especificações, sem alterações funcionais (v1.1.1 → v1.1.2)\n- *Release candidate*: versões de pré-lançamento de qualquer patch futuro, minor ou major (v1.0.0-rc1 → v1.0.0-rc2)\n\nNão serão feitas mais que uma evolução _major_ em um período de 6 meses, ressalvado motivo de força maior.\nQuando houver uma evolução _major_, a versão anterior ficará disponível por no mínimo 1 mês.\n\nAlterações sem quebra de contrato e esclarecimentos às especificações podem ocorrer a qualquer momento.\nClientes devem estar preparados para lidar com essas mudanças sem quebrar.\n\n## Histórico de Mudanças\n\nOs pontos de alteração em relação a cada versão anterior estão disponíveis no [changelog](changelog.html)\n\n# Tratamento de erros\n\nO DICT retorna códigos de status HTTP para indicar sucesso ou falhas das requisições.\nCódigos 2xx indicam sucesso. Códigos 4xx indicam falhas causadas pelas informações\nenviadas pelo cliente ou pelo estado atual das entidades. Códigos 5xx indicam problemas\nno serviço no lado do DICT.\n\nAs respostas de erro incluem no corpo detalhes do erro seguindo o schema da RFC\n[Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc7807).\nO campo `type` identifica o tipo de erro e no DICT segue o padrão:\n`https://dict.pi.rsfn.net.br/api/v2/error/<TipoErro>`\n\nAbaixo estão listados os tipos de erro do DICT.\n\n<style>\n  #error-definitions td:first-of-type {\n    white-space: nowrap;\n  }\n</style>\n\n<table id=\"error-definitions\">\n    <thead>\n    <tr>\n        <th>Tipo de erro</th>\n        <th>Código</th>\n        <th>Descrição</th>\n    </tr>\n    </thead>\n    <tbody>\n    <tr>\n        <td colspan=\"3\">\n            <em>Geral</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>Forbidden</code>\n        </td>\n        <td>403</td>\n        <td>\n            Requisição de participante autenticado viola alguma regra de autorização\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>BadRequest</code>\n        </td>\n        <td>400</td>\n        <td>\n            Requisição com formato inválido\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>NotFound</code>\n        </td>\n        <td>404</td>\n        <td>\n            Entidade não encontrada\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>Gone</code>\n        </td>\n        <td>410</td>\n        <td>\n            Recurso não está mais disponível\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RateLimited</code>\n        </td>\n        <td>429</td>\n        <td>\n            Limite de requisições foi atingido <br/>\n            Ver seção sobre <a href=\"#section/Seguranca/Limitacao-de-requisicoes\">limitação de requisições</a>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InternalServerError</code>\n        </td>\n        <td>500</td>\n        <td>\n            Condição inesperada ao processar requisição.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ServiceUnavailable</code>\n        </td>\n        <td>503</td>\n        <td>\n            Serviço não está disponível no momento. <br/>\n            Pode estar em manutenção ou fora da janela de funcionamento.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RequestSignatureInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Assinatura digital da requisição enviada é inválida.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RequestIdAlreadyUsed</code>\n        </td>\n        <td>400</td>\n        <td>\n            Requisição foi feita com mesmo `RequestId` de requisição <br/>\n            feita anteriormente, mas com parâmetros diferentes.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InvalidReason</code>\n        </td>\n        <td>400</td>\n        <td>\n            Requisição foi feita com uma razão inválida para a operação\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ParticipantInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            O participante não pode participar na operação solicitada. <br/>\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Vínculo</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar vínculo\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryLimitExceeded</code>\n        </td>\n        <td>400</td>\n        <td>\n            Número de vínculos associados a conta transacional excedeu o limite máximo\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryAlreadyExists</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe vínculo para essa chave com o mesmo participante e dono\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryCannotBeQueriedForBookTransfer</code>\n        </td>\n        <td>400</td>\n        <td>\n            Vínculo consultado está custodiado no mesmo PSP do usuário pagador para quem está sendo feita a consulta.\n            Quando o pagador e o recebedor estão no mesmo PSP, não deve ser feita consulta ao DICT.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryKeyOwnedByDifferentPerson</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe vínculo para essa chave mas ela é possuída por outra pessoa.<br/>\n            Indica-se que seja feita uma reivindicação de posse.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryKeyInCustodyOfDifferentParticipant</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe vínculo para essa chave com o mesmo dono, mas ela encontra-se associada\n            a outro participante. Indica-se que seja feita uma reivindicação de portabilidade.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryLockedByClaim</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existe uma reivindicação com status diferente de concluída ou cancelada para a chave\n            do vínculo. Enquanto estiver nessa situação, o vínculo não pode ser excluído.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryTaxIdNumberByDifferentOwner</code>\n        </td>\n        <td>400</td>\n        <td>\n            CPF/CNPJ do vínculo diferente do CPF/CNPJ do dono da chave\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryBlocked</code>\n        </td>\n        <td>400</td>\n        <td>\n            O vínculo encontra-se bloqueado por ordem judicial e não pode ser consultado\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Reivindicação</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar reivindicação\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimTypeInconsistent</code>\n        </td>\n        <td>400</td>\n        <td>\n            Tipo de reivindicação pedida é inconsistente. Esse erro ocorre nas situações em que\n            se tenta criar a) reivindicação de <em>posse</em>, mas vínculo existente tem como dona a mesma\n            pessoa que reivindica ou b) reinvidicação de <em>portabilidade</em>, mas vínculo existente tem\n            como dona pessoa diferente da que reivindica.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimKeyNotFound</code>\n        </td>\n        <td>404</td>\n        <td>\n            Não existe vínculo registrado com a chave que está sendo reivindicada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimAlreadyExistsForKey</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existe uma reivindicação com status diferente de concluída ou cancelada para a chave reivindicada.\n            Nova reivindicação para a chave só pode ser criada se a atual foi concluída ou cancelada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimResultingEntryAlreadyExists</code>\n        </td>\n        <td>400</td>\n        <td>\n            Vínculo que resultaria ao processar reivindicação já existe, com mesma chave, participante e dono.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimOperationInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Status atual da reivindicação não permite que operação seja feita.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimResolutionPeriodNotEnded</code>\n        </td>\n        <td>400</td>\n        <td>\n            Para reivindicação de posse, PSP doador não pode <em>confirmar</em> antes do término do período resolução.\n            Para portabilidade, PSP doador não pode <em>cancelar</em> por fim de prazo antes do término do período resolução.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimCompletionPeriodNotEnded</code>\n        </td>\n        <td>400</td>\n        <td>\n            Para reivindicação de posse, se PSP reivindicador tenta encerrar antes do término do período encerramento.\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Notificação de infração</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar a notificação de infração.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportOperationInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Status atual da notificação de infração não permite que operação seja feita.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportTransactionNotFound</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na notificação de infração não foi encontrada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportTransactionNotSettled</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na notificação de infração não foi liquidada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportAlreadyBeingProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma notificação de infração em andamento para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportAlreadyProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma notificação de infração fechado para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportPeriodExpired</code>\n        </td>\n        <td>400</td>\n        <td>\n            O prazo para a notificação de infração sobre a transação expirou.\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Marcação de fraude</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>FraudMarkerInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar a marcação de fraude.\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Solicitação de Devolução</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar a solicitação de devolução.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundOperationInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Status atual da solicitação de devolução não permite que operação seja feita.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundTransactionNotFound</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na solicitação de devolução não foi encontrada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundTransactionNotSettled</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na solicitação de devolução não foi liquidada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundAlreadyProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma solicitação de devolução processada para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundAlreadyBeingProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma solicitação de devolução em processamento para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundPeriodExpired</code>\n        </td>\n        <td>400</td>\n        <td>\n            O prazo para solicitar devolução para a transação expirou.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>TransactionNotRefundable</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação informada na requisição não permite devolução.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundInfractionReportNotFound</code>\n        </td>\n        <td>400</td>\n        <td>\n            Uma notificação de infração correspondente à transação informada não foi encontrada.\n        </td>\n    </tr>\n    </tbody>\n</table>"
+    "description": "\nO Diretório de Identificadores de Contas Transacionais - DICT - é o serviço do arranjo Pix que permite\nbuscar detalhes de contas transacionais com chaves de endereçamento mais convenientes para quem faz\num pagamento. Entre os tipos de chave atualmente disponíveis estão CPF, CNPJ, telefone, e-mail e EVP.\nAs informações retornadas pelo DICT permitem ao pagador confirmar a identidade do recebedor, proporcionando\numa experiência mais fácil e segura. Permitem também ao PSP do pagador criar a mensagem de instrução de\npagamento a ser enviada para o sistema de liquidação com os detalhes de conta do recebedor.\n\nPara informações adicionais, consulte a [página do Pix](https://www.bcb.gov.br/estabilidadefinanceira/pagamentosinstantaneos).\n\n# Segurança\n## Autenticação\nO DICT utiliza autenticação mútua TLS.\n\nAs definições de autenticação para essa API estão especificadas no\n[manual de segurança do Pix](https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Manual_de_Seguranca_PIX.pdf).\n\n## Assinatura digital\nRequisições que incluam ou alterem informações no DICT devem ser assinadas com\n[XML Digital Signature](https://www.w3.org/2000/09/xmldsig) pelo participante que envia a requisição.\nRequisições de consulta não precisam ser assinadas. Respostas retornadas pelo DICT serão assinadas digitalmente.\nAs assinaturas **devem** ser validadas pelos clientes da API.\n\nA assinatura será colocada no elemento `Signature` das requisições e respostas.\nO `Signature` será [envelopado](https://www.w3.org/TR/xmldsig-core1/#def-SignatureEnveloped) pelo XML que está\nsendo assinado (assinatura é um elemento filho).\n\nPara mais detalhes sobre a forma de construir a assinatura, consulte o\n[manual de segurança do Pix](https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Manual_de_Seguranca_PIX.pdf).\n\n## Limitação de requisições\n\nPara preservar a estabilidade do serviço, as operações da API do DICT estão sujeitas a políticas de\nlimitação de requisições. Especificamente para a operação de consulta de vínculo, há também\nlimitação de requisições com a finalidade de prevenir ataques de varredura de dados. O algoritmo\nusado para implementar as políticas de limitação é o [token bucket](https://en.wikipedia.org/wiki/Token_bucket).\n\nUma política de limitação tem associado a ela um escopo, que pode ser o usuário final ou o participante.\nCada política possui uma taxa de reposição de \"fichas\", um tamanho de \"balde\" e uma regra de contagem.\nA tabela abaixo define as políticas aplicáveis a cada operação da API.\n\n|  Política                            | Escopo   | Operações                                                                                            | Taxa de reposição | Tamanho do balde |\n|--------------------------------------|----------|------------------------------------------------------------------------------------------------------|-------------------|------------------|\n| ENTRIES_READ_USER_ANTISCAN           | USER     | getEntry                                                                                             | (*)               |  (*)             |\n| ENTRIES_READ_USER_ANTISCAN_V2        | USER     | getEntry                                                                                             | (*)               |  (*)             |\n| ENTRIES_READ_PARTICIPANT_ANTISCAN    | PSP      | getEntry                                                                                             | (**)              |  (**)            |\n| ENTRIES_STATISTICS_READ              | PSP      | getEntryStatistics                                                                                   | (**)              |  (**)            |\n| ENTRIES_WRITE                        | PSP      | createEntry, deleteEntry                                                                             | 1200/min          |  36000           |\n| ENTRIES_UPDATE                       | PSP      | updateEntry                                                                                          | 600/min           |  600             |\n| CLAIMS_READ                          | PSP      | getClaim                                                                                             | 600/min           |  18000           |\n| CLAIMS_WRITE                         | PSP      | createClaim, acknowledgeClaim, cancelClaim, confirmClaim, completeClaim                              | 1200/min          |  36000           |\n| CLAIMS_LIST_WITH_ROLE                | PSP      | listClaims                                                                                           | 40/min            |  200             |\n| CLAIMS_LIST_WITHOUT_ROLE             | PSP      | listClaims                                                                                           | 10/min            |  50              |\n| SYNC_VERIFICATIONS_WRITE             | PSP      | createSyncVerification                                                                               | 10/min            |  50              |\n| CIDS_FILES_WRITE                     | PSP      | createCidSetFile                                                                                     | 40/dia            |  200             |\n| CIDS_FILES_READ                      | PSP      | getCidSetFile                                                                                        | 10/min            |  50              |\n| CIDS_EVENTS_LIST                     | PSP      | listCidSetEvents                                                                                     | 20/min            |  100             |\n| CIDS_ENTRIES_READ                    | PSP      | getEntryByCid                                                                                        | 1200/min          |  36000           |\n| INFRACTION_REPORTS_READ              | PSP      | getInfractionReport                                                                                  | 600/min           |  18000           |\n| INFRACTION_REPORTS_WRITE             | PSP      | createInfractionReport, acknowledgeInfractionReport, cancelInfractionReport, closeInfractionReport   | 1200/min          |  36000           |\n| INFRACTION_REPORTS_LIST_WITH_ROLE    | PSP      | listInfractionReports                                                                                | 40/min            |  200             |\n| INFRACTION_REPORTS_LIST_WITHOUT_ROLE | PSP      | listInfractionReports                                                                                | 10/min            |  50              |\n| KEYS_CHECK                           | PSP      | checkKeys                                                                                            | 70/min            |  70              |\n| REFUNDS_READ                         | PSP      | getRefund                                                                                            | 1200/min          |  36000           |\n| REFUNDS_WRITE                        | PSP      | createRefund, cancelRefund, closeRefund                                                              | 2400/min          |  72000           |\n| REFUND_LIST_WITH_ROLE                | PSP      | listRefunds                                                                                          | 40/min            |  200             |\n| REFUND_LIST_WITHOUT_ROLE             | PSP      | listRefunds                                                                                          | 10/min            |  50              |\n| FRAUD_MARKERS_READ                   | PSP      | getFraudMarker                                                                                       | 600/min           |  18000           |\n| FRAUD_MARKERS_WRITE                  | PSP      | createFraudMarker, cancelFraudMarker                                                                 | 1200/min          |  36000           |\n| FRAUD_MARKERS_LIST                   | PSP      | listPersonFraudMarkers, listEntryFraudMarkers                                                        | 1200/min          |  36000           | \n| PERSONS_STATISTICS_READ              | PSP      | getPersonStatistics                                                                                  | 12000/min         |  36000           |\n| POLICIES_READ                        | PSP      | getBucketState                                                                                       | 60/min            |  200             |\n| POLICIES_LIST                        | PSP      | listBucketStates                                                                                     | 6/min             |  20              |\n\n\n### Regras de contagem das políticas\n\n- `ENTRIES_READ_USER_ANTISCAN`\n  - Aplicável somente para chaves do tipo EMAIL e PHONE\n  - status 200: subtrai 1\n  - status 404: subtrai 20\n  - ordem de pagamento enviada\n    - adiciona 1 para categoria Pessoa Física (PF)\n    - adiciona 2 para categoria Pessoa Jurídica (PJ)\n\n- `ENTRIES_READ_USER_ANTISCAN_V2`\n  - Aplicável somente para chaves do tipo CPF, CNPJ e EVP\n  - status 200: subtrai 1\n  - status 404: subtrai 20\n  - ordem de pagamento enviada\n    - adiciona 1 para categoria Pessoa Física (PF)\n    - adiciona 2 para categoria Pessoa Jurídica (PJ)\n\n  (*) O tamanho do balde das políticas ENTRIES_READ_USER_ANTISCAN e ENTRIES_READ_USER_ANTISCAN_V2 é categorizado de acordo com o tipo de\n   usuário final realizando a consulta, Pessoa Física (PF) ou Pessoa Jurídica (PJ):\n  |  Categoria   |  Taxa de reposição | Tamanho do balde |\n  |--------------|--------------------|------------------|\n  | PF           | 2/min              | 100              |\n  | PJ           | 20/min             | 1.000            |\n\n- `ENTRIES_READ_PARTICIPANT_ANTISCAN`\n  - Aplicável para todos os tipos de chaves (EMAIL, PHONE, CPF, CNPJ e EVP)\n  - status 200: subtrai 1\n  - status 404: subtrai 3\n  - ordem de pagamento enviada: adiciona 1\n\n  (**) O tamanho do balde nesta política depende da categoria em que se enquadra do participante. As seguintes categorias são possíveis:\n  |  Categoria   | Taxa de reposição | Tamanho do balde |\n  |--------------|-------------------|------------------|\n  | A            | 25.000/min        | 50.000           |\n  | B            | 20.000/min        | 40.000           |\n  | C            | 15.000/min        | 30.000           |\n  | D            | 8.000/min         | 16.000           |\n  | E            | 2.500/min         | 5.000            |\n  | F            | 250/min           | 500              |\n  | G            | 25/min            | 250              |\n  | H            | 2/min             | 50               |\n\n- `CLAIMS_LIST_WITH_ROLE`\n  - Aplicável quando há filtragem por doador/reivindicador\n  - status diferente de 500: subtrai 1\n\n- `CLAIMS_LIST_WITHOUT_ROLE`\n  - Aplicável quando não há filtragem por doador/reivindicador\n  - status diferente de 500: subtrai 1\n\n- `REFUND_LIST_WITH_ROLE`\n  - Aplicável quando há filtragem por requisitante/contestado\n  - status diferente de 500: subtrai 1\n\n- `REFUND_LIST_WITHOUT_ROLE`\n  - Aplicável quando não há filtragem por requisitante/contestado\n  - status diferente de 500: subtrai 1\n\n- Demais políticas\n  - status diferente de 500: subtrai 1\n\n### Violação de limites\n\nCaso o limite de uma política seja excedido, o que acontece quando a quantidade de fichas chega\na zero, será retornada uma resposta de erro com status `429`.\n\n# Recomendações de desempenho\n\nÉ altamente recomendável que as conexões HTTP para a comunicação com a API sejam reutilizadas, pois o custo de\nestabelecimento de uma conexão mTLS é muito alto em termos de latência. O uso de um _pool_ de conexões HTTP\né uma alternativa efetiva para reutilização de conexões. A API retorna o header [`Keep-Alive`](https://tools.ietf.org/html/rfc2068#section-19.7.1.1)\ncom o parâmetro `timeout`. Nele é informado o tempo em segundos que o servidor esperará antes de fechar a conexão caso não ocorram\nrequisições adicionais.\n\nÉ recomendável também que se utilize compressão. Para que as respostas da API utilizem compressão, adicione nas\nrequisições o header `Accept-Encoding: gzip`. O envio de requisições com compressão não é suportado.\n\n# Evolução da API\n\nAs seguintes mudanças são esperadas e consideradas compatíveis:\n\n- Adição de novos recursos na API.\n- Adição de novos parâmetros opcionais a requisições.\n- Adição de novos campos em respostas da API.\n- Alteração da ordem de campos.\n- Adição de novos elementos em enumerações\n\n## Versionamento\n\nA versão da API é composta por 4 elementos: _major_, _minor_, _patch_ e _release candidate_.\n\nA versão que consta no _path_ da URL é o elemento _major_ da versão da API.\n\nA evolução da versão se dá seguinte forma:\n\n- *Major*: alterações incompatíveis, com quebra de contrato (v1.0.0 → v2.0.0)\n- *Minor*: alterações compatíveis, sem quebra de contrato (v1.1.0 → v1.2.0)\n- *Patch*: esclarecimentos às especificações, sem alterações funcionais (v1.1.1 → v1.1.2)\n- *Release candidate*: versões de pré-lançamento de qualquer patch futuro, minor ou major (v1.0.0-rc1 → v1.0.0-rc2)\n\nNão serão feitas mais que uma evolução _major_ em um período de 6 meses, ressalvado motivo de força maior.\nQuando houver uma evolução _major_, a versão anterior ficará disponível por no mínimo 1 mês.\n\nAlterações sem quebra de contrato e esclarecimentos às especificações podem ocorrer a qualquer momento.\nClientes devem estar preparados para lidar com essas mudanças sem quebrar.\n\n## Histórico de Mudanças\n\nOs pontos de alteração em relação a cada versão anterior estão disponíveis no [changelog](changelog.html)\n\n# Tratamento de erros\n\nO DICT retorna códigos de status HTTP para indicar sucesso ou falhas das requisições.\nCódigos 2xx indicam sucesso. Códigos 4xx indicam falhas causadas pelas informações\nenviadas pelo cliente ou pelo estado atual das entidades. Códigos 5xx indicam problemas\nno serviço no lado do DICT.\n\nAs respostas de erro incluem no corpo detalhes do erro seguindo o schema da RFC\n[Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc7807).\nO campo `type` identifica o tipo de erro e no DICT segue o padrão:\n`https://dict.pi.rsfn.net.br/api/v2/error/<TipoErro>`\n\nAbaixo estão listados os tipos de erro do DICT.\n\n<style>\n  #error-definitions td:first-of-type {\n    white-space: nowrap;\n  }\n</style>\n\n<table id=\"error-definitions\">\n    <thead>\n    <tr>\n        <th>Tipo de erro</th>\n        <th>Código</th>\n        <th>Descrição</th>\n    </tr>\n    </thead>\n    <tbody>\n    <tr>\n        <td colspan=\"3\">\n            <em>Geral</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>Forbidden</code>\n        </td>\n        <td>403</td>\n        <td>\n            Requisição de participante autenticado viola alguma regra de autorização\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>BadRequest</code>\n        </td>\n        <td>400</td>\n        <td>\n            Requisição com formato inválido\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>NotFound</code>\n        </td>\n        <td>404</td>\n        <td>\n            Entidade não encontrada\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>Gone</code>\n        </td>\n        <td>410</td>\n        <td>\n            Recurso não está mais disponível\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RateLimited</code>\n        </td>\n        <td>429</td>\n        <td>\n            Limite de requisições foi atingido <br/>\n            Ver seção sobre <a href=\"#section/Seguranca/Limitacao-de-requisicoes\">limitação de requisições</a>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InternalServerError</code>\n        </td>\n        <td>500</td>\n        <td>\n            Condição inesperada ao processar requisição.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ServiceUnavailable</code>\n        </td>\n        <td>503</td>\n        <td>\n            Serviço não está disponível no momento. <br/>\n            Pode estar em manutenção ou fora da janela de funcionamento.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RequestSignatureInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Assinatura digital da requisição enviada é inválida.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RequestIdAlreadyUsed</code>\n        </td>\n        <td>400</td>\n        <td>\n            Requisição foi feita com mesmo `RequestId` de requisição <br/>\n            feita anteriormente, mas com parâmetros diferentes.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InvalidReason</code>\n        </td>\n        <td>400</td>\n        <td>\n            Requisição foi feita com uma razão inválida para a operação\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ParticipantInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            O participante não pode participar na operação solicitada. <br/>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>TaxIdNumberBlocked</code>\n        </td>\n        <td>400</td>\n        <td>\n            O CPF/CNPJ encontra-se bloqueado por ordem judicial.<br/>\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Vínculo</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar vínculo\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryLimitExceeded</code>\n        </td>\n        <td>400</td>\n        <td>\n            Número de vínculos associados a conta transacional excedeu o limite máximo\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryAlreadyExists</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe vínculo para essa chave com o mesmo participante e dono\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryCannotBeQueriedForBookTransfer</code>\n        </td>\n        <td>400</td>\n        <td>\n            Vínculo consultado está custodiado no mesmo PSP do usuário pagador para quem está sendo feita a consulta.\n            Quando o pagador e o recebedor estão no mesmo PSP, não deve ser feita consulta ao DICT.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryKeyOwnedByDifferentPerson</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe vínculo para essa chave mas ela é possuída por outra pessoa.<br/>\n            Indica-se que seja feita uma reivindicação de posse.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryKeyInCustodyOfDifferentParticipant</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe vínculo para essa chave com o mesmo dono, mas ela encontra-se associada\n            a outro participante. Indica-se que seja feita uma reivindicação de portabilidade.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryLockedByClaim</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existe uma reivindicação com status diferente de concluída ou cancelada para a chave\n            do vínculo. Enquanto estiver nessa situação, o vínculo não pode ser excluído.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryTaxIdNumberByDifferentOwner</code>\n        </td>\n        <td>400</td>\n        <td>\n            CPF/CNPJ do vínculo diferente do CPF/CNPJ do dono da chave\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>EntryBlocked</code>\n        </td>\n        <td>400</td>\n        <td>\n            O vínculo encontra-se bloqueado por ordem judicial e não pode ser consultado\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Reivindicação</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar reivindicação\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimTypeInconsistent</code>\n        </td>\n        <td>400</td>\n        <td>\n            Tipo de reivindicação pedida é inconsistente. Esse erro ocorre nas situações em que\n            se tenta criar a) reivindicação de <em>posse</em>, mas vínculo existente tem como dona a mesma\n            pessoa que reivindica ou b) reinvidicação de <em>portabilidade</em>, mas vínculo existente tem\n            como dona pessoa diferente da que reivindica.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimKeyNotFound</code>\n        </td>\n        <td>404</td>\n        <td>\n            Não existe vínculo registrado com a chave que está sendo reivindicada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimAlreadyExistsForKey</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existe uma reivindicação com status diferente de concluída ou cancelada para a chave reivindicada.\n            Nova reivindicação para a chave só pode ser criada se a atual foi concluída ou cancelada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimResultingEntryAlreadyExists</code>\n        </td>\n        <td>400</td>\n        <td>\n            Vínculo que resultaria ao processar reivindicação já existe, com mesma chave, participante e dono.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimOperationInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Status atual da reivindicação não permite que operação seja feita.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimResolutionPeriodNotEnded</code>\n        </td>\n        <td>400</td>\n        <td>\n            Para reivindicação de posse, PSP doador não pode <em>confirmar</em> antes do término do período resolução.\n            Para portabilidade, PSP doador não pode <em>cancelar</em> por fim de prazo antes do término do período resolução.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>ClaimCompletionPeriodNotEnded</code>\n        </td>\n        <td>400</td>\n        <td>\n            Para reivindicação de posse, se PSP reivindicador tenta encerrar antes do término do período encerramento.\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Notificação de infração</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar a notificação de infração.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportOperationInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Status atual da notificação de infração não permite que operação seja feita.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportTransactionNotFound</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na notificação de infração não foi encontrada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportTransactionNotSettled</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na notificação de infração não foi liquidada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportAlreadyBeingProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma notificação de infração em andamento para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportAlreadyProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma notificação de infração fechado para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>InfractionReportPeriodExpired</code>\n        </td>\n        <td>400</td>\n        <td>\n            O prazo para a notificação de infração sobre a transação expirou.\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Marcação de fraude</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>FraudMarkerInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar a marcação de fraude.\n        </td>\n    </tr>\n    <tr>\n        <td colspan=\"3\">\n            <em>Solicitação de Devolução</em>\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Existem campos inválidos ao tentar criar ou atualizar a solicitação de devolução.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundOperationInvalid</code>\n        </td>\n        <td>400</td>\n        <td>\n            Status atual da solicitação de devolução não permite que operação seja feita.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundTransactionNotFound</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na solicitação de devolução não foi encontrada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundTransactionNotSettled</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação definida na solicitação de devolução não foi liquidada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundAlreadyProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma solicitação de devolução processada para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundAlreadyBeingProcessedForTransaction</code>\n        </td>\n        <td>400</td>\n        <td>\n            Já existe uma solicitação de devolução em processamento para a transação informada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundPeriodExpired</code>\n        </td>\n        <td>400</td>\n        <td>\n            O prazo para solicitar devolução para a transação expirou.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>TransactionNotRefundable</code>\n        </td>\n        <td>400</td>\n        <td>\n            A transação informada na requisição não permite devolução.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>RefundInfractionReportNotFound</code>\n        </td>\n        <td>400</td>\n        <td>\n            Uma notificação de infração correspondente à transação informada não foi encontrada.\n        </td>\n    </tr>\n    <tr>\n        <td>\n            <code>TransactionRefundable</code>\n        </td>\n        <td>400</td>\n        <td>\n          Transação informada permite devolução.<br/>\n        </td>\n    </tr>\n    </tbody>\n</table>"
   },
   "servers": [
     {
@@ -38,7 +38,7 @@
     {
       "name": "Claim",
       "x-displayName": "Reivindicação",
-      "description": "Conforme as chaves mudem de dono ou os usuários finais criem contas transacionais em outros PSPs,\nos seguintes cenários precisarão ser tratados:\n\n1. Houve troca de posse de uma chave (telefone ou email) e o novo dono deseja\ncriar um vínculo para uma conta sua mas o dono anterior já possui vínculo registrado\nno DICT com essa chave.\n2. Um usuário deseja mudar a vinculação de uma chave sua para outra conta, que\nestá domiciliada em um participante diferente do atual.\n\nPara o cenário 1, deve ser criada uma _reivindicação de posse_. Já para o cenário 2,\numa _portabilidade_. Em ambos cenários existirá a figura do PSP que irá ceder a chave (PSP Doador),\ne o PSP que irá receber a chave (PSP Reivindicador). No cenário de _reivindicação de posse_, o PSP\ndoador e o reivindicador podem ser o mesmo.\n\nNessa especificação, _reivindicação_ sem qualificador é usado como termo mais genérico para se referir\ntanto à reivindicação de posse quanto à (reivindicação de) portabilidade.\n\nOs processos de reivindicação são sempre iniciados pelo PSP reivindicador.\nUma reivindicação tem as seguintes situações:\n  - `OPEN` - Aberta pelo reivindicador, mas ainda não recebida pelo doador.\n  - `WAITING_RESOLUTION` - Já foi recebida pelo doador e está aguardando a resolução. Os critérios confirmação\n  ou cancelamento da reivindicação seguem normas específicas a depender do tipo (posse ou portabilidade).\n  - `CONFIRMED` - O doador confirmou a reivindicação. Isso implica a remoção da chave do DICT e da base interna\n  do PSP doador. Está aguardando o reivindicador encerrar o processo.\n  - `CANCELLED` - O doador ou reivindicador cancelou a reivindicação.\n  - `COMPLETED` - Tanto o DICT quanto o reivindicador atualizaram suas bases com o novo vínculo.\n\n**Diagrama de estados**\n\n```\n( OPEN )------->( WAITING_RESOLUTION )------->( CONFIRMED )------->( COMPLETED )\n    \\                      |                       /\n     \\                     |                      /\n      \\                    |                     /\n       \\                   |                    /\n        \\                  v                   /\n         v---------->( CANCELLED )<-----------v\n```\n\n**Importante!**\nOs participantes deverão monitorar as reivindicações fazendo _polling_ períodico no _endpoint_\nde [listar reivindicações](#operation/listClaims). A periodicidade adequada dependerá\ndas definições de nível de serviço. Consulte o **Manual de Tempos do Pix**."
+      "description": "Conforme as chaves mudem de dono ou os usuários finais criem contas transacionais em outros PSPs,\nos seguintes cenários precisarão ser tratados:\n\n1. Houve troca de posse de uma chave (telefone, por exemplo) e o novo dono deseja\ncriar um vínculo para uma conta sua mas o dono anterior já possui vínculo registrado\nno DICT com essa chave.\n2. Um usuário deseja mudar a vinculação de uma chave sua para outra conta, que\nestá domiciliada em um participante diferente do atual.\n\nPara o cenário 1, deve ser criada uma _reivindicação de posse_. Já para o cenário 2,\numa _portabilidade_. Em ambos cenários existirá a figura do PSP que irá ceder a chave (PSP Doador),\ne o PSP que irá receber a chave (PSP Reivindicador). No cenário de _reivindicação de posse_, o PSP\ndoador e o reivindicador podem ser o mesmo.\n\nNessa especificação, _reivindicação_ sem qualificador é usado como termo mais genérico para se referir\ntanto à reivindicação de posse quanto à (reivindicação de) portabilidade.\n\nOs processos de reivindicação são sempre iniciados pelo PSP reivindicador.\nUma reivindicação tem as seguintes situações:\n  - `OPEN` - Aberta pelo reivindicador, mas ainda não recebida pelo doador.\n  - `WAITING_RESOLUTION` - Já foi recebida pelo doador e está aguardando a resolução. Os critérios confirmação\n  ou cancelamento da reivindicação seguem normas específicas a depender do tipo (posse ou portabilidade).\n  - `CONFIRMED` - O doador confirmou a reivindicação. Isso implica a remoção da chave do DICT e da base interna\n  do PSP doador. Está aguardando o reivindicador encerrar o processo.\n  - `CANCELLED` - O doador ou reivindicador cancelou a reivindicação.\n  - `COMPLETED` - Tanto o DICT quanto o reivindicador atualizaram suas bases com o novo vínculo.\n\n**Diagrama de estados**\n\n```\n( OPEN )------->( WAITING_RESOLUTION )------->( CONFIRMED )------->( COMPLETED )\n    \\                      |                       /\n     \\                     |                      /\n      \\                    |                     /\n       \\                   |                    /\n        \\                  v                   /\n         v---------->( CANCELLED )<-----------v\n```\n\n**Importante!**\nOs participantes deverão monitorar as reivindicações fazendo _polling_ períodico no _endpoint_\nde [listar reivindicações](#operation/listClaims). A periodicidade adequada dependerá\ndas definições de nível de serviço. Consulte o **Manual de Tempos do Pix**."
     },
     {
       "name": "Reconciliation",
@@ -196,6 +196,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
@@ -209,7 +212,7 @@
         "tags": [
           "Directory"
         ],
-        "description": "Atualiza um vínculo.\n\nA ser utilizado no cenário de atualização da informação da conta, nome e nome fantasia de um cliente, permanecendo este no mesmo PSP.\nSomente podem ser atualizadas as informações de conta do vínculo, nome e nome fantasia do cliente. Outras atualizações do vínculo\ndevem ser feitas por exclusão/inclusão do vínculo, portabilidade ou reivindicação de posse, a depender da situação.\n\n### Restrições\nAs seguintes restrições devem ser obedecidas na atualização de vínculo, de acordo com o tipo de chave:\n  - Chaves `EVP` (aleatórias) - É permitida a alteração, porém, apenas com os motivos `BRANCH_TRANSFER` ou `RECONCILIATION`.\n  - Demais chaves - É permitida a alteração com os motivos `USER_REQUESTED`, `BRANCH_TRANSFER` ou `RECONCILIATION`.",
+        "description": "Atualiza um vínculo.\n\nA ser utilizado no cenário de atualização da informação da conta, nome e nome fantasia de um cliente, permanecendo este no mesmo PSP.\nSomente podem ser atualizadas as informações de conta do vínculo, nome e nome fantasia do cliente. Outras atualizações do vínculo\ndevem ser feitas por exclusão/inclusão do vínculo, portabilidade ou reivindicação de posse, a depender da situação.\n\n### Restrições\nAs seguintes restrições devem ser obedecidas na atualização de vínculo, de acordo com o tipo de chave:\n  - Chaves `EVP` (aleatórias) - Não é permitida a alteração.\n  - Demais chaves - É permitida a alteração com os motivos `USER_REQUESTED`, `BRANCH_TRANSFER` ou `RECONCILIATION`.",
         "operationId": "updateEntry",
         "requestBody": {
           "content": {
@@ -304,6 +307,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -376,7 +382,7 @@
     "/claims/": {
       "post": {
         "summary": "Criar Reivindicação",
-        "description": "Cria uma nova reivindicação.\n\nEssa operação é feita pelo participante reivindicador a pedido do usuário final.\nO vínculo atual permanece inalterado, até que haja a confirmação pelo PSP doador.\n\nNem todo tipo de chave pode ser reivindicado ou portado. A tabela abaixo define as possibilidades:\n\n  |  compatível?  | OWNERSHIP  | PORTABILITY  |\n  |---------------|:----------:|:------------:|\n  | CPF           |            |      ✓       |\n  | CNPJ          |            |      ✓       |\n  | PHONE         |     ✓      |      ✓       |\n  | EMAIL         |     ✓      |      ✓       |\n  | EVP           |            |              |",
+        "description": "Cria uma nova reivindicação.\n\nEssa operação é feita pelo participante reivindicador a pedido do usuário final.\nO vínculo atual permanece inalterado, até que haja a confirmação pelo PSP doador.\n\nNem todo tipo de chave pode ser reivindicado ou portado. A tabela abaixo define as possibilidades:\n\n  |  compatível?  | OWNERSHIP  | PORTABILITY  |\n  |---------------|:----------:|:------------:|\n  | CPF           |            |      ✓       |\n  | CNPJ          |            |      ✓       |\n  | PHONE         |     ✓      |      ✓       |\n  | EMAIL         |            |      ✓       |\n  | EVP           |            |              |",
         "operationId": "createClaim",
         "tags": [
           "Claim"
@@ -1155,7 +1161,7 @@
               },
               "examples": {
                 "SPI": {
-                  "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CreateInfractionReportRequest>\n    <Signature></Signature>\n    <Participant>99999010</Participant>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n    </InfractionReport>\n</CreateInfractionReportRequest>"
+                  "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CreateInfractionReportRequest>\n    <Signature></Signature>\n    <Participant>99999010</Participant>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <ContactInformation>\n            <Email>abc@pix.br</Email>\n            <Phone>+5561988887777</Phone>\n        </ContactInformation>\n    </InfractionReport>\n</CreateInfractionReportRequest>"
                 }
               }
             }
@@ -1171,7 +1177,7 @@
                 },
                 "examples": {
                   "SPI": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CreateInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>OPEN</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</CreateInfractionReportResponse>\n"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CreateInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>OPEN</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <ContactInformation>\n            <Email>abc@pix.br</Email>\n            <Phone>+5561988887777</Phone>\n        </ContactInformation>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</CreateInfractionReportResponse>\n"
                   }
                 }
               }
@@ -1298,7 +1304,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<ListInfractionReportsResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <HasMoreElements>true</HasMoreElements>\n    <InfractionReports>\n        <InfractionReport>\n            <TransactionId>E9999901012341234123412345678900</TransactionId>\n            <Reason>REFUND_REQUEST</Reason>\n            <SituationType>SCAM</SituationType>\n            <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n            <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n            <Status>CLOSED</Status>\n            <ReporterParticipant>99999010</ReporterParticipant>\n            <CounterpartyParticipant>99999011</CounterpartyParticipant>\n            <FraudMarkerId>91d65e98-97c0-4b0f-b577-73625da1f9fc</FraudMarkerId>\n            <AnalysisResult>AGREED</AnalysisResult>\n            <AnalysisDetails>\n                Valor bloqueado. Para mais informações, contactar central antifraude em \n                11 3000-00000, informando ID 9999.\n            </AnalysisDetails>\n            <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n            <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n        </InfractionReport>\n    </InfractionReports>\n</ListInfractionReportsResponse>"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<ListInfractionReportsResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <HasMoreElements>true</HasMoreElements>\n    <InfractionReports>\n        <InfractionReport>\n            <TransactionId>E9999901012341234123412345678900</TransactionId>\n            <Reason>REFUND_REQUEST</Reason>\n            <SituationType>SCAM</SituationType>\n            <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n            <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n            <Status>CLOSED</Status>\n            <ReporterParticipant>99999010</ReporterParticipant>\n            <CounterpartyParticipant>99999011</CounterpartyParticipant>\n            <FraudMarkerId>91d65e98-97c0-4b0f-b577-73625da1f9fc</FraudMarkerId>\n            <AnalysisResult>AGREED</AnalysisResult>\n            <AnalysisDetails>\n                Valor bloqueado. Para mais informações, contactar central antifraude em \n                11 3000-00000, informando ID 9999.\n            </AnalysisDetails>\n            <ContactInformation>\n                <Email>abc@pix.br</Email>\n                <Phone>+5561988887777</Phone>\n            </ContactInformation>\n            <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n            <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n        </InfractionReport>\n    </InfractionReports>\n</ListInfractionReportsResponse>"
                   }
                 }
               }
@@ -1355,7 +1361,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<GetInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>ACKNOWLEDGED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</GetInfractionReportResponse>\n"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<GetInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>ACKNOWLEDGED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <ContactInformation>\n            <Email>abc@pix.br</Email>\n            <Phone>+5561988887777</Phone>\n        </ContactInformation>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</GetInfractionReportResponse>\n"
                   }
                 }
               }
@@ -1410,7 +1416,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<AcknowledgeInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CLOSED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</AcknowledgeInfractionReportResponse>\n"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<AcknowledgeInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CLOSED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <ContactInformation>\n            <Email>abc@pix.br</Email>\n            <Phone>+5561988887777</Phone>\n        </ContactInformation>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</AcknowledgeInfractionReportResponse>\n"
                   }
                 }
               }
@@ -1471,7 +1477,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CancelInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CANCELLED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</CancelInfractionReportResponse>\n"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CancelInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CANCELLED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <ContactInformation>\n            <Email>abc@pix.br</Email>\n            <Phone>+5561988887777</Phone>\n        </ContactInformation>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </InfractionReport>\n</CancelInfractionReportResponse>\n"
                   }
                 }
               }
@@ -1532,7 +1538,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CloseInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CLOSED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <FraudMarkerId>91d65e98-97c0-4b0f-b577-73625da1f9fc</FraudMarkerId>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n        <AnalysisResult>AGREED</AnalysisResult>\n        <AnalysisDetails>\n            Valor bloqueado. Para mais informações, contactar central antifraude em \n            11 3000-00000, informando ID 9999.\n        </AnalysisDetails>\n    </InfractionReport>\n</CloseInfractionReportResponse>"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CloseInfractionReportResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <InfractionReport>\n        <TransactionId>E9999901012341234123412345678900</TransactionId>\n        <Reason>REFUND_REQUEST</Reason>\n        <SituationType>SCAM</SituationType>\n        <ReportDetails>Transação feita através de QR Code falso em boleto</ReportDetails>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CLOSED</Status>\n        <ReporterParticipant>99999010</ReporterParticipant>\n        <CounterpartyParticipant>99999011</CounterpartyParticipant>\n        <FraudMarkerId>91d65e98-97c0-4b0f-b577-73625da1f9fc</FraudMarkerId>\n        <ContactInformation>\n            <Email>abc@pix.br</Email>\n            <Phone>+5561988887777</Phone>\n        </ContactInformation>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n        <AnalysisResult>AGREED</AnalysisResult>\n        <AnalysisDetails>\n            Valor bloqueado. Para mais informações, contactar central antifraude em \n            11 3000-00000, informando ID 9999.\n        </AnalysisDetails>\n    </InfractionReport>\n</CloseInfractionReportResponse>"
                   }
                 }
               }
@@ -1642,7 +1648,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<GetFraudMarkerResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <FraudMarker>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>REGISTERED</Status>\n        <TaxIdNumber>01234567890</TaxIdNumber>\n        <FraudType>MULE_ACCOUNT</FraudType>\n        <Key>abc@pix.br</Key>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n    </FraudMarker>\n</GetFraudMarkerResponse>\n"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<GetFraudMarkerResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <FraudMarker>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>REGISTERED</Status>\n        <TaxIdNumber>01234567890</TaxIdNumber>\n        <FraudType>MULE_ACCOUNT</FraudType>\n        <Key>abc@pix.br</Key>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2020-01-17T10:00:00.000Z</LastModified>\n        <InfractionReport>\n            <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n            <ReporterParticipant>99999010</ReporterParticipant>\n        </InfractionReport>\n    </FraudMarker>\n</GetFraudMarkerResponse>\n"
                   }
                 }
               }
@@ -1697,7 +1703,7 @@
                 },
                 "examples": {
                   "example": {
-                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CancelFraudMarkerResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <FraudMarker>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CANCELLED</Status>\n        <TaxIdNumber>01234567890</TaxIdNumber>\n        <FraudType>MULE_ACCOUNT</FraudType>\n        <Key>abc@pix.br</Key>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2023-01-17T10:00:00.000Z</LastModified>\n    </FraudMarker>\n</CancelFraudMarkerResponse>\n"
+                    "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<CancelFraudMarkerResponse>\n    <Signature></Signature>\n    <ResponseTime>2020-01-10T10:00:00.000Z</ResponseTime>\n    <CorrelationId>a9f13566e19f5ca51329479a5bae60c5</CorrelationId>\n    <FraudMarker>\n        <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n        <Status>CANCELLED</Status>\n        <TaxIdNumber>01234567890</TaxIdNumber>\n        <FraudType>MULE_ACCOUNT</FraudType>\n        <Key>abc@pix.br</Key>\n        <CreationTime>2020-01-17T10:00:00.000Z</CreationTime>\n        <LastModified>2023-01-17T10:00:00.000Z</LastModified>\n        <InfractionReport>\n            <Id>91d65e98-97c0-4b0f-b577-73625da1f9fc</Id>\n            <ReporterParticipant>99999010</ReporterParticipant>\n        </InfractionReport>\n    </FraudMarker>\n</CancelFraudMarkerResponse>\n"
                   }
                 }
               }
@@ -2467,7 +2473,8 @@
           "ACCOUNT_CLOSURE",
           "BRANCH_TRANSFER",
           "RECONCILIATION",
-          "FRAUD"
+          "FRAUD",
+          "RFB_VALIDATION"
         ]
       },
       "ClaimStatus": {
@@ -3193,7 +3200,7 @@
         ]
       },
       "AnalysisDetails": {
-        "description": "Detalhes da análise da notificação de infração.",
+        "description": "Detalhes da análise da notificação de infração. Obrigatório caso FraudType=OTHER",
         "maxLength": 2000
       },
       "InfractionReport": {
@@ -3219,6 +3226,36 @@
               }
             ]
           },
+          "ContactInformation": {
+            "type": "object",
+            "description": "Informações de contato do participante criador da notificação de infração.",
+            "properties": {
+              "Email": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Email"
+                  },
+                  {
+                    "description": "Email para contato."
+                  }
+                ]
+              },
+              "Phone": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Phone"
+                  },
+                  {
+                    "description": "Telefone para contato."
+                  }
+                ]
+              }
+            },
+            "required": [
+              "Email",
+              "Phone"
+            ]
+          },
           "ReportDetails": {
             "description": "Detalhes que possam ajudar o PSP contraparte na análise. Obrigatório caso SituationType=OTHER",
             "maxLength": 2000
@@ -3227,8 +3264,17 @@
         "required": [
           "TransactionId",
           "SituationType",
-          "Reason"
+          "Reason",
+          "ContactInformation"
         ]
+      },
+      "Email": {
+        "type": "string",
+        "pattern": "^[a-z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*$"
+      },
+      "Phone": {
+        "type": "string",
+        "pattern": "^\\+[0-9]\\d{1,14}$"
       },
       "FraudMarker": {
         "type": "object",
@@ -3304,6 +3350,16 @@
                 "type": "string",
                 "format": "date-time",
                 "description": "Data-hora da última atualização de status"
+              },
+              "InfrationReport": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SummarizedInfractionReport"
+                  },
+                  {
+                    "description": "Notificação de infração que gerou a marcação de fraude."
+                  }
+                ]
               }
             },
             "required": [
@@ -3392,6 +3448,56 @@
           }
         ]
       },
+      "SummarizedInfractionReport": {
+        "xml": {
+          "name": "InfractionReport"
+        },
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ReporterParticipant": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISPB"
+              },
+              {
+                "description": "Identificador SPB do participante que criou a notificação de infração."
+              }
+            ]
+          }
+        },
+        "required": [
+          "Id",
+          "ReporterParticipant"
+        ]
+      },
+      "SummarizedFraudMarker": {
+        "xml": {
+          "name": "FraudMarker"
+        },
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "RegistrantParticipant": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISPB"
+              },
+              {
+                "description": "Identificador SPB do participante que registrou a marcação de fraude."
+              }
+            ]
+          }
+        },
+        "required": [
+          "Id",
+          "RegistrantParticipant"
+        ]
+      },
       "Person": {
         "type": "object",
         "description": "Dados de pessoa física ou jurídica",
@@ -3415,7 +3521,7 @@
                 "type": "string",
                 "description": "Nome completo",
                 "example": "João Silva",
-                "maxLength": 120,
+                "maxLength": 150,
                 "pattern": "^([A-Za-zÀ-ÖØ-öø-ÿ' -]+)$"
               }
             },
@@ -3443,7 +3549,7 @@
               "Name": {
                 "type": "string",
                 "description": "Razão social.",
-                "maxLength": 120,
+                "maxLength": 150,
                 "example": "Padaria Tres Irmãos Ltda",
                 "pattern": "^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\\\$%\\d' -]+)$"
               },
@@ -3483,7 +3589,7 @@
             "example": "100.00"
           },
           "RefundDetails": {
-            "description": "Breve descrição do motivo da solicitação de devolução.",
+            "description": "Breve descrição do motivo da solicitação de devolução. Obrigatório se RefundReason for `OPERATIONAL_FLAW`.",
             "maxLength": 2000
           }
         },
@@ -3553,7 +3659,14 @@
                 "$ref": "#/components/schemas/RefundAnalysisDetails"
               },
               "RefundRejectionReason": {
-                "$ref": "#/components/schemas/RefundRejectionReason"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RefundRejectionReason"
+                  },
+                  {
+                    "description": "Razão da rejeição da solicitação de devolução."
+                  }
+                ]
               },
               "RefundTransactionId": {
                 "type": "string",
@@ -3609,9 +3722,9 @@
         "enum": [
           "NO_BALANCE",
           "ACCOUNT_CLOSURE",
+          "INVALID_REQUEST",
           "OTHER"
-        ],
-        "description": "Razão da rejeição da solicitação de devolução."
+        ]
       },
       "Policy": {
         "type": "object",
@@ -4323,7 +4436,7 @@
                 "$ref": "#/components/schemas/EntryOperationReason"
               },
               {
-                "description": "Valores válidos: `USER_REQUESTED`, `BRANCH_TRANSFER` e `RECONCILIATION`"
+                "description": "Valores válidos: `USER_REQUESTED`, `BRANCH_TRANSFER`, `RECONCILIATION` e `RFB_VALIDATION`"
               }
             ]
           }
@@ -4416,7 +4529,7 @@
                 "$ref": "#/components/schemas/EntryOperationReason"
               },
               {
-                "description": "Valores válidos: `USER_REQUESTED`, `ACCOUNT_CLOSURE`, `RECONCILIATION` e `FRAUD`"
+                "description": "Valores válidos: `USER_REQUESTED`, `ACCOUNT_CLOSURE`, `RECONCILIATION`, `FRAUD` e `RFB_VALIDATION`"
               }
             ]
           }
@@ -4984,6 +5097,85 @@
           "FraudMarker"
         ]
       },
+      "ListPersonFraudMarkersResponse": {
+        "type": "object",
+        "properties": {
+          "Signature": {
+            "type": "object",
+            "xml": {
+              "prefix": "ds",
+              "namespace": "http://www.w3.org/2000/09/xmldsig#"
+            }
+          },
+          "ResponseTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CorrelationId": {
+            "$ref": "#/components/schemas/CorrelationId"
+          },
+          "TaxIdNumber": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaxIdNumber"
+              },
+              {
+                "description": "CPF ou CNPJ do usuário final"
+              }
+            ]
+          },
+          "PersonFraudMarkers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SummarizedFraudMarker"
+            }
+          }
+        },
+        "required": [
+          "ResponseTime",
+          "CorrelationId",
+          "TaxIdNumber"
+        ]
+      },
+      "ListEntryFraudMarkersResponse": {
+        "type": "object",
+        "properties": {
+          "Signature": {
+            "type": "object",
+            "xml": {
+              "prefix": "ds",
+              "namespace": "http://www.w3.org/2000/09/xmldsig#"
+            }
+          },
+          "ResponseTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CorrelationId": {
+            "$ref": "#/components/schemas/CorrelationId"
+          },
+          "Key": {
+            "$ref": "#/components/schemas/Key"
+          },
+          "OwnerFraudMarkers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SummarizedFraudMarker"
+            }
+          },
+          "KeyFraudMarkers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SummarizedFraudMarker"
+            }
+          }
+        },
+        "required": [
+          "ResponseTime",
+          "CorrelationId",
+          "Key"
+        ]
+      },
       "CreateRefundRequest": {
         "type": "object",
         "properties": {
@@ -5188,10 +5380,24 @@
             "$ref": "#/components/schemas/RefundAnalysisResult"
           },
           "RefundAnalysisDetails": {
-            "$ref": "#/components/schemas/RefundAnalysisDetails"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RefundAnalysisDetails"
+              },
+              {
+                "description": "Obrigatório quando RefundAnalysisResult=REJECT e RefundRejectionReason=INVALID_REQUEST"
+              }
+            ]
           },
           "RefundRejectionReason": {
-            "$ref": "#/components/schemas/RefundRejectionReason"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RefundRejectionReason"
+              },
+              {
+                "description": "Razão da rejeição da solicitação de devolução. `INVALID_REQUEST` só pode ser usada quando RefundReason for `OPERATIONAL_FLAW` ."
+              }
+            ]
           },
           "RefundTransactionId": {
             "type": "string",
