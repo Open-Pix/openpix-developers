@@ -263,34 +263,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                accountId:
-                  type: string
-                  description: The ID of the company bank account
-                application:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: Name of the application
-                    type:
-                      type: string
-                      description: Type of the application (API, POS, PLUGIN, CHECKOUT)
-                      enum:
-                        - API
-                        - POS
-                        - PLUGIN
-                        - CHECKOUT
-              required:
-                - accountId
-                - application
+              $ref: '#/components/schemas/ApplicationPayload'
             examples:
               Application:
                 value:
-                  accountId: 60f1e5b0e6b2a30022a1c68f
+                  accountId: 507f1f77bcf86cd799439011
                   application:
-                    name: My API Application
+                    name: Test API
                     type: API
       responses:
         '201':
@@ -301,38 +280,16 @@ paths:
                 type: object
                 properties:
                   application:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        description: Name of the application
-                      isActive:
-                        type: boolean
-                        description: Whether the application is active
-                      type:
-                        type: string
-                        description: Type of the application
-                      clientId:
-                        type: string
-                        description: Client ID for authentication
-                      clientSecret:
-                        type: string
-                        description: Client secret for authentication
-                      appID:
-                        type: string
-                        description: Unique application identifier
-                      companyBankAccount:
-                        type: string
-                        description: ID of the linked company bank account
+                    $ref: '#/components/schemas/Application'
               example:
                 application:
-                  name: My API Application
+                  name: Test API
                   isActive: true
                   type: API
                   clientId: client_123abc
                   clientSecret: secret_456def
                   appID: app_789ghi
-                  companyBankAccount: 60f1e5b0e6b2a30022a1c68f
+                  companyBankAccount: 507f1f77bcf86cd799439011
         '400':
           description: Validation error or other client error
           content:
@@ -357,13 +314,21 @@ paths:
                     error: Validation error
                     details:
                       - field: accountId
-                        message: Account ID is required
+                        message: Company bank account ID is required
                 NoMasterApplication:
                   value:
                     error: Only MASTER application can create other application types
-                CompanyBankAccountNotFound:
-                  value:
-                    error: Company bank account not found
+        '403':
+          description: Forbidden - Missing required feature
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: You need feature BAAS to access this endpoint
         '500':
           description: Server error
           content:
@@ -2867,7 +2832,7 @@ paths:
   '/api/v1/subaccount/{id}':
     delete:
       tags:
-        - sub account (request access)
+        - sub account
       summary: Delete a Sub Account
       description: Deletes a Sub Account if it has no remaining balance
       parameters:
@@ -2927,7 +2892,7 @@ paths:
                 error: This feature is not enabled for your company
     get:
       tags:
-        - sub account (request access)
+        - sub account
       summary: Get subaccount details
       parameters:
         - name: id
@@ -3037,7 +3002,7 @@ paths:
                     type: string
     post:
       tags:
-        - sub account (request access)
+        - sub account
       summary: Create a subaccount
       requestBody:
         description: Data to create a new subAccount or retrieve existing one
@@ -3817,9 +3782,6 @@ components:
               description: Type of the application (API)
               enum:
                 - API
-                - POS
-                - PLUGIN
-                - CHECKOUT
     ApplicationDeletePayload:
       type: object
       properties:
@@ -5157,7 +5119,7 @@ tags:
     description: >
       Get a pdf document related to a payment transaction formated in a receipt
       style.
-  - name: sub account (request access)
+  - name: sub account
     description: |
       Endpoint to manage sub accounts.
   - name: subscription

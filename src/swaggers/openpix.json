@@ -2,17 +2,13 @@
   "openapi": "3.0.3",
   "info": {
     "title": "OpenPix",
-    "description": "A OpenPix é uma Plataforma de Gestão de Pagamentos. \n\n Para utilizar nossa API de Produção, utilize exclusivamente o seguinte endpoint: \n\n 👉 __[https://api.openpix.com.br/](https://api.openpix.com.br/)__  \n\n Além disso, oferecemos também um ambiente de sandbox (ambiente de testes), ideal para desenvolvimento e validação de integrações sem impactar dados reais. \n\n 👉 __[https://api.woovi-sandbox.com/](https://api.woovi-sandbox.com/)__ \n\n Veja como configurar seu acesso a nossa API [aqui](https://developers.openpix.com.br/docs/apis/api-getting-started).",
+    "description": "A OpenPix é uma Plataforma de Gestão de Pagamentos. Para utilizar nossa API você deve acessar  __[https://api.openpix.com.br/](https://api.openpix.com.br/)__ e somente o mesmo. A OpenPix não aceita subdominios para a API.\n\nVeja como configurar seu acesso a nossa API [aqui](https://developers.openpix.com.br/docs/apis/api-getting-started).",
     "version": "1.0.0"
   },
   "servers": [
     {
       "url": "https://api.openpix.com.br",
-      "description": "API de Produção"
-    },
-    {
-      "url": "https://api.woovi-sandbox.com",
-      "description": "API de Teste"
+      "description": "Production server"
     }
   ],
   "security": [
@@ -400,43 +396,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "accountId": {
-                    "type": "string",
-                    "description": "The ID of the company bank account"
-                  },
-                  "application": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "description": "Name of the application"
-                      },
-                      "type": {
-                        "type": "string",
-                        "description": "Type of the application (API, POS, PLUGIN, CHECKOUT)",
-                        "enum": [
-                          "API",
-                          "POS",
-                          "PLUGIN",
-                          "CHECKOUT"
-                        ]
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "accountId",
-                  "application"
-                ]
+                "$ref": "#/components/schemas/ApplicationPayload"
               },
               "examples": {
                 "Application": {
                   "value": {
-                    "accountId": "60f1e5b0e6b2a30022a1c68f",
+                    "accountId": "507f1f77bcf86cd799439011",
                     "application": {
-                      "name": "My API Application",
+                      "name": "Test API",
                       "type": "API"
                     }
                   }
@@ -454,49 +421,19 @@
                   "type": "object",
                   "properties": {
                     "application": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "description": "Name of the application"
-                        },
-                        "isActive": {
-                          "type": "boolean",
-                          "description": "Whether the application is active"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "Type of the application"
-                        },
-                        "clientId": {
-                          "type": "string",
-                          "description": "Client ID for authentication"
-                        },
-                        "clientSecret": {
-                          "type": "string",
-                          "description": "Client secret for authentication"
-                        },
-                        "appID": {
-                          "type": "string",
-                          "description": "Unique application identifier"
-                        },
-                        "companyBankAccount": {
-                          "type": "string",
-                          "description": "ID of the linked company bank account"
-                        }
-                      }
+                      "$ref": "#/components/schemas/Application"
                     }
                   }
                 },
                 "example": {
                   "application": {
-                    "name": "My API Application",
+                    "name": "Test API",
                     "isActive": true,
                     "type": "API",
                     "clientId": "client_123abc",
                     "clientSecret": "secret_456def",
                     "appID": "app_789ghi",
-                    "companyBankAccount": "60f1e5b0e6b2a30022a1c68f"
+                    "companyBankAccount": "507f1f77bcf86cd799439011"
                   }
                 }
               }
@@ -535,7 +472,7 @@
                       "details": [
                         {
                           "field": "accountId",
-                          "message": "Account ID is required"
+                          "message": "Company bank account ID is required"
                         }
                       ]
                     }
@@ -544,12 +481,25 @@
                     "value": {
                       "error": "Only MASTER application can create other application types"
                     }
-                  },
-                  "CompanyBankAccountNotFound": {
-                    "value": {
-                      "error": "Company bank account not found"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Missing required feature",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     }
                   }
+                },
+                "example": {
+                  "error": "You need feature BAAS to access this endpoint"
                 }
               }
             }
@@ -4191,7 +4141,7 @@
     "/api/v1/subaccount/{id}": {
       "delete": {
         "tags": [
-          "sub account (request access)"
+          "sub account"
         ],
         "summary": "Delete a Sub Account",
         "description": "Deletes a Sub Account if it has no remaining balance",
@@ -4287,7 +4237,7 @@
       },
       "get": {
         "tags": [
-          "sub account (request access)"
+          "sub account"
         ],
         "summary": "Get subaccount details",
         "parameters": [
@@ -4461,7 +4411,7 @@
       },
       "post": {
         "tags": [
-          "sub account (request access)"
+          "sub account"
         ],
         "summary": "Create a subaccount",
         "requestBody": {
@@ -5587,10 +5537,7 @@
                 "type": "string",
                 "description": "Type of the application (API)",
                 "enum": [
-                  "API",
-                  "POS",
-                  "PLUGIN",
-                  "CHECKOUT"
+                  "API"
                 ]
               }
             }
@@ -7364,7 +7311,7 @@
       "description": "Get a pdf document related to a payment transaction formated in a receipt style.\n"
     },
     {
-      "name": "sub account (request access)",
+      "name": "sub account",
       "description": "Endpoint to manage sub accounts.\n"
     },
     {
