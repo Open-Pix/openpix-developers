@@ -33,7 +33,7 @@ import 'core-js/stable';
 import 'core-js/stable';
 import { useState } from 'react';
 import { useOpenPix } from '@openpix/react';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 
 const App = () => {
   const [charge, setCharge] = useState(null);
@@ -67,12 +67,14 @@ const App = () => {
 
   if (charge) {
     return (
-      <QRCode
-        size={200}
-        renderAs={'svg'}
-        value={brCode}
-        includeMargin={false}
-      />
+      <div>
+        <h3>QR Code:</h3>
+        <QRCodeSVG
+          size={200}
+          value={brCode}
+          includeMargin={false}
+        />
+      </div>
     );
   }
 
