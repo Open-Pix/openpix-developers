@@ -529,6 +529,77 @@
         }
       }
     },
+    "/api/v1/validate-token": {
+      "get": {
+        "tags": [
+          "token"
+        ],
+        "summary": "Validate token",
+        "description": "Validate your token to use all available features",
+        "responses": {
+          "200": {
+            "description": "Token is valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "description": "Indicates the operation was successful"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Token is valid"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "data": null,
+                  "errors": [
+                    {
+                      "message": "appID Inválido"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cashback-fidelity/balance/{taxID}": {
       "get": {
         "tags": [
@@ -7329,6 +7400,10 @@
     {
       "name": "webhook",
       "description": "Endpoint to manage Webhooks\n"
+    },
+    {
+      "name": "token",
+      "description": "Endpoint to validate token\n"
     }
   ]
 }
