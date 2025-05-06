@@ -16,7 +16,9 @@ info:
   version: 1.0.0
 servers:
   - url: https://api.openpix.com.br
-    description: Production server
+    description: API de Produção
+  - url: https://api.woovi-sandbox.com
+    description: API de Testes
 security:
   - AppID: []
 paths:
@@ -591,14 +593,14 @@ paths:
                     comment: good
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     expiresIn: 2592000
                     expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                     additionalInfo:
                       - key: Product
@@ -618,9 +620,9 @@ paths:
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
-                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                           Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                        qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -670,11 +672,11 @@ paths:
                     comment: good
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     paymentLinkID: 7777-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
+                    paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
                     globalID: Q2hhcmdlOjcxOTFmMWIwMjA0NmJmNWY1M2RjZmEwYg==
-                    qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                     additionalInfo:
                       - key: Product
@@ -698,9 +700,9 @@ paths:
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
-                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                           Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                        qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -801,10 +803,10 @@ paths:
                     comment: good
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                     additionalInfo:
                       - key: Product
@@ -828,9 +830,9 @@ paths:
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
-                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                           Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                        qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -1005,14 +1007,14 @@ paths:
                     comment: good
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     expiresIn: 2592000
                     expiresDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                     additionalInfo:
                       - key: Product
@@ -1032,9 +1034,9 @@ paths:
                         status: ACTIVE
                         txId: 9134e286-6f71-427a-bf00-241681624586
                         brCode:
-                          000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                          000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                           Paulo62360532867ba5173c734202ac659721306b38c963044BCA
-                        qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                        qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
         '400':
           description: An error message
           content:
@@ -2076,7 +2078,7 @@ paths:
               qrCode:
                 summary: QR Code
                 value:
-                  qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009SaoPaulo62360532867ba5173c734202ac659721306b38c963044BCA
+                  qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009SaoPaulo62360532867ba5173c734202ac659721306b38c963044BCA
                   comment: payment comment
                   correlationID: payment1
       responses:
@@ -2109,7 +2111,7 @@ paths:
                       destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
                       destinationAliasType: RANDOM
                       qrCode:
-                        000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                        000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                         Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                       comment: payment comment
                       correlationID: payment1
@@ -2160,10 +2162,10 @@ paths:
                     correlationID: fe7834b4060c488a9b0f89811be5f5cf
                     identifier: zr7833b4060c488a9b0f89811
                     paymentLinkID: 7777-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/fe7834b4060c488a9b0f89811be5f5cf
-                    qrCodeImage: https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png
+                    paymentLinkUrl: https://woovi.com/pay/fe7834b4060c488a9b0f89811be5f5cf
+                    qrCodeImage: https://api.woovi.com/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
@@ -2234,10 +2236,10 @@ paths:
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     identifier: zr7833b4060c488a9b0f89811
                     paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.com.br/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.woovi.com/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
@@ -2291,12 +2293,12 @@ paths:
                     correlationID: 9134e286-6f71-427a-bf00-241681624586
                     identifier: zr7833b4060c488a9b0f89811
                     paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                    paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                    qrCodeImage: https://api.openpix.com.br/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                    paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
+                    qrCodeImage: https://api.woovi.com/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
                     brCode:
-                      000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                      000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                       Paulo62360532867ba5173c734202ac659721306b38c963044BCA
         '400':
           description: An error message
@@ -3491,7 +3493,7 @@ paths:
                           correlationID: 9134e286-6f71-427a-bf00-241681624586
                           transactionID: 9134e2866f71427abf00241681624586
                           brCode:
-                            000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                            000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                             Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                           createdAt: 2021-03-03T20:49:23.605Z
                           updatedAt: 2021-03-03T20:49:23.668Z
@@ -3502,7 +3504,7 @@ paths:
                             customer: 604002035cce3b60132343cb
                             correlationID: 9134e286-6f71-427a-bf00-241681624586
                             brCode:
-                              000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                              000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                               Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                             createdAt: 2021-03-03T21:39:15.831Z
                             updatedAt: 2021-03-03T21:39:15.896Z
@@ -3666,12 +3668,12 @@ paths:
                             correlationID: 9134e286-6f71-427a-bf00-241681624586
                             identifier: 9134e2866f71427abf00241681624586
                             paymentLinkID: 7777a23s-6f71-427a-bf00-241681624586
-                            paymentLinkUrl: https://openpix.com.br/pay/9134e286-6f71-427a-bf00-241681624586
-                            qrCodeImage: https://api.openpix.com.br/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
+                            paymentLinkUrl: https://woovi.com/pay/9134e286-6f71-427a-bf00-241681624586
+                            qrCodeImage: https://api.woovi.com/openpix/pixQrCode/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                             createdAt: 2021-03-02T17:28:51.882Z
                             updatedAt: 2021-03-02T17:28:51.882Z
                             brCode:
-                              000201010212261060014br.gov.bcb.pix2584https://api.openpix.com.br/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
+                              000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao
                               Paulo62360532867ba5173c734202ac659721306b38c963044BCA
                           customer: null
                           time: 2020-09-09T20:15:00.358Z
