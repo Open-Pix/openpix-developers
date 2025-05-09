@@ -20,11 +20,27 @@ E deve ser utilizado quando a cobrança ainda precisa ser criada na OpenPix.
 
 ### Criando o Plugin de `Widget`
 
+
 A primeira coisa é incluir a tag de script do plugin OpenPix na parte inferior do arquivo html
 
+:::info
+Utilize essa tag no ambiente de produção
 ```html
 <script src="https://plugin.openpix.com.br/v1/openpix.js" async>
 ```
+:::
+
+:::caution
+
+Utilize essa tag no ambiente de testes
+
+```html
+<script src="https://plugin.woovi-sandbox.com/v1/openpix.js" async>
+
+```
+:::
+
+
 
 O script pode ser importado dentro de um arquivo `.html`. Por exemplo, se seu aplicativo for um aplicativo em React, o script do Plugin OpenPix será importado dentro de `index.html`.
 
@@ -174,7 +190,20 @@ window.$openpix.push([
 ```
 #### Resultado
 
-![photo-example-plugin-credit-card](/img/plugin/photo-example-plugin-credit-card.png)
+![photo-example-plugin-credit-card](/img/plugin/credit-card-steps-example-0.png)
+
+## Simulando pagamento com cartão de crédito
+
+| Número do cartão     | Cenário                                                                 |
+|----------------------|-------------------------------------------------------------------------|
+| 4000000000000010     | Cartão de sucesso. Qualquer operação com esse cartão é realizada com sucesso. |
+| 4000000000000028     | Cartão de falha. Qualquer transação retorna como "não autorizada".      |
+
+Crie uma nova cobrança de cartão de crédito e simule com dados de cartões de crédito de teste
+
+![photo-example-plugin-credit-card](/img/plugin/credit-card-steps-example-1.png)
+
+![photo-example-plugin-credit-card](/img/plugin/credit-card-steps-example-2.png)
 
 ### Gerando uma cobrança Pix com Informações Adicionais
 
