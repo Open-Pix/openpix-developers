@@ -529,77 +529,6 @@
         }
       }
     },
-    "/api/v1/validate-token": {
-      "get": {
-        "tags": [
-          "token"
-        ],
-        "summary": "Validate token",
-        "description": "Validate your token to use all available features",
-        "responses": {
-          "200": {
-            "description": "Token is valid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "string",
-                      "description": "Indicates the operation was successful"
-                    }
-                  }
-                },
-                "example": {
-                  "message": "Token is valid"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Token is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "data": null,
-                  "errors": [
-                    {
-                      "message": "appID Inválido"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "Internal server error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/cashback-fidelity/balance/{taxID}": {
       "get": {
         "tags": [
@@ -4550,6 +4479,153 @@
         }
       }
     },
+    "/api/v1/subaccount/{id}/debit": {
+      "post": {
+        "tags": [
+          "sub account"
+        ],
+        "summary": "Debit from a Sub Account and send to the main account",
+        "description": "Transfers the amount from the subaccount to the main account.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pix key registered to the subaccount",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "subaccount@test.com"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "description": "Amount to debit from the account"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Optional description for the debit operation"
+                  }
+                },
+                "required": [
+                  "value"
+                ]
+              },
+              "examples": {
+                "ValidDebit": {
+                  "value": {
+                    "value": 50,
+                    "description": "Monthly payment"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sub Account successfully debited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pixKey": {
+                      "type": "string",
+                      "example": "subaccount@test.com"
+                    },
+                    "value": {
+                      "type": "number",
+                      "example": 50
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Monthly payment"
+                    },
+                    "success": {
+                      "type": "string",
+                      "example": "Sub-account withdrawal has been successfully debited, 50"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "SubAccountNotFound": {
+                    "value": {
+                      "error": "Subaccount not found: subaccount@test.com"
+                    }
+                  },
+                  "ZeroBalance": {
+                    "value": {
+                      "error": "Transfer just work with subaccount with balance"
+                    }
+                  },
+                  "NegativeValue": {
+                    "value": {
+                      "error": "Value must be positive"
+                    }
+                  },
+                  "InsufficientBalance": {
+                    "value": {
+                      "error": "Account does not have enough balance to complete the operation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden action",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "This feature is not enabled for your company"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/subaccount/transfer": {
       "post": {
         "tags": [
@@ -7400,10 +7476,6 @@
     {
       "name": "webhook",
       "description": "Endpoint to manage Webhooks\n"
-    },
-    {
-      "name": "token",
-      "description": "Endpoint to validate token\n"
     }
   ]
 }
