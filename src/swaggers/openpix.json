@@ -150,6 +150,178 @@
         }
       }
     },
+    "/api/v1/account-register": {
+      "post": {
+        "tags": [
+          "account register"
+        ],
+        "summary": "Register a new account",
+        "description": "Creates a new account registration with the provided details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "officialName": {
+                    "type": "string",
+                    "description": "Official name of the company"
+                  },
+                  "tradeName": {
+                    "type": "string",
+                    "description": "Trade name of the company"
+                  },
+                  "taxID": {
+                    "type": "string",
+                    "description": "Tax ID of the company"
+                  },
+                  "annualRevenue": {
+                    "type": "number",
+                    "description": "Annual revenue of the company"
+                  }
+                },
+                "required": [
+                  "officialName",
+                  "tradeName",
+                  "taxID",
+                  "annualRevenue"
+                ]
+              },
+              "examples": {
+                "ValidAccountRegister": {
+                  "value": {
+                    "officialName": "Company Official Name",
+                    "tradeName": "Company Trade Name",
+                    "taxID": "12345678901234",
+                    "annualRevenue": 1000000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "officialName": {
+                      "type": "string",
+                      "example": "Company Official Name"
+                    },
+                    "tradeName": {
+                      "type": "string",
+                      "example": "Company Trade Name"
+                    },
+                    "taxID": {
+                      "type": "object",
+                      "properties": {
+                        "taxID": {
+                          "type": "string",
+                          "example": "12345678901234"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "BR_CNPJ"
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "PENDING"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "ValidationError": {
+                    "value": {
+                      "error": [
+                        {
+                          "code": "too_small",
+                          "minimum": 1,
+                          "type": "string",
+                          "inclusive": true,
+                          "exact": false,
+                          "message": "Official name is required",
+                          "path": [
+                            "officialName"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden action",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "This feature is not enabled for your company. Contact us to active."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/account/{accountId}/withdraw": {
       "post": {
         "tags": [
@@ -5630,6 +5802,117 @@
           }
         }
       },
+      "AccountRegister": {
+        "type": "object",
+        "properties": {
+          "officialName": {
+            "type": "string",
+            "description": "Official name of the company"
+          },
+          "tradeName": {
+            "type": "string",
+            "description": "Trade name of the company"
+          },
+          "taxID": {
+            "type": "object",
+            "properties": {
+              "taxID": {
+                "type": "string",
+                "description": "The tax ID value"
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of tax ID"
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the account registration"
+          },
+          "annualRevenue": {
+            "type": "number",
+            "description": "Annual revenue of the company"
+          }
+        }
+      },
+      "AccountRegisterPayload": {
+        "type": "object",
+        "required": [
+          "officialName",
+          "tradeName",
+          "taxID",
+          "annualRevenue"
+        ],
+        "properties": {
+          "officialName": {
+            "type": "string",
+            "description": "Official name of the company"
+          },
+          "tradeName": {
+            "type": "string",
+            "description": "Trade name of the company"
+          },
+          "taxID": {
+            "type": "string",
+            "description": "Tax ID of the company"
+          },
+          "annualRevenue": {
+            "type": "number",
+            "description": "Annual revenue of the company"
+          }
+        }
+      },
+      "AccountRegisterResponse": {
+        "type": "object",
+        "properties": {
+          "officialName": {
+            "type": "string",
+            "description": "Official name of the company"
+          },
+          "tradeName": {
+            "type": "string",
+            "description": "Trade name of the company"
+          },
+          "taxID": {
+            "type": "object",
+            "properties": {
+              "taxID": {
+                "type": "string",
+                "description": "The tax ID value"
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of tax ID"
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the account registration"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Error message"
+              },
+              {
+                "type": "array",
+                "description": "Validation errors",
+                "items": {
+                  "type": "object"
+                }
+              }
+            ]
+          }
+        }
+      },
       "Application": {
         "type": "object",
         "properties": {
@@ -7412,6 +7695,10 @@
     {
       "name": "account",
       "description": "Endpoint to manage Accounts\n"
+    },
+    {
+      "name": "account register",
+      "description": "Endpoint to manage account registrations."
     },
     {
       "name": "application",
