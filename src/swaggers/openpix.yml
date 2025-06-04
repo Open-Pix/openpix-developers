@@ -104,6 +104,101 @@ paths:
                   error:
                     type: string
   /api/v1/account-register:
+    get:
+      tags:
+        - account register
+      summary: Get account register by Tax ID
+      description: Retrieves an existing account registration by Tax ID
+      parameters:
+        - name: taxID
+          in: query
+          required: true
+          description: Tax ID of the company to retrieve
+          schema:
+            type: string
+            example: '12345678901234'
+      responses:
+        '200':
+          description: Account register found and returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  officialName:
+                    type: string
+                    example: Company Official Name
+                  tradeName:
+                    type: string
+                    example: Company Trade Name
+                  type:
+                    type: string
+                    example: BAAS
+                  taxID:
+                    type: object
+                    properties:
+                      taxID:
+                        type: string
+                        example: '12345678901234'
+                      type:
+                        type: string
+                        example: BR_CNPJ
+                  status:
+                    type: string
+                    example: PENDING
+        '400':
+          description: Bad request - validation error or missing authorization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    oneOf:
+                      - type: string
+                      - type: array
+                        items:
+                          type: object
+              examples:
+                MissingAuthorization:
+                  value:
+                    error: Invalid Authorization header
+                CompanyNotFound:
+                  value:
+                    error: Company not found
+                ValidationError:
+                  value:
+                    error:
+                      - code: too_small
+                        minimum: 1
+                        type: string
+                        inclusive: true
+                        exact: false
+                        message: Tax ID is required
+                        path:
+                          - taxID
+        '404':
+          description: Account register not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Account register not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal server error
     post:
       tags:
         - account register
@@ -119,27 +214,197 @@ paths:
                 officialName:
                   type: string
                   description: Official name of the company
+                  minLength: 1
                 tradeName:
                   type: string
                   description: Trade name of the company
+                  minLength: 1
                 taxID:
                   type: string
                   description: Tax ID of the company
-                annualRevenue:
-                  type: number
-                  description: Annual revenue of the company
+                  minLength: 1
+                documents:
+                  type: array
+                  description: Company documents
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        description: Document URL
+                        minLength: 1
+                      type:
+                        type: string
+                        enum:
+                          - SOCIAL_CONTRACT
+                          - ATA
+                          - BYLAWS
+                representatives:
+                  type: array
+                  description: Company representatives (sócio)
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - birthDate
+                      - email
+                      - taxID
+                      - address
+                    properties:
+                      name:
+                        type: string
+                        description: Representative name
+                        minLength: 1
+                      documents:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - url
+                            - type
+                          properties:
+                            url:
+                              type: string
+                              description: Document URL
+                              minLength: 1
+                            type:
+                              type: string
+                              enum:
+                                - IDENTITY_FRONT
+                                - IDENTITY_BACK
+                                - CNH_FRONT
+                                - CNH_BACK
+                                - PICTURE
+                      birthDate:
+                        type: string
+                        description: Representative birth date
+                        minLength: 1
+                      email:
+                        type: string
+                        description: Representative email
+                        format: email
+                      type:
+                        type: string
+                        enum:
+                          - ADMIN
+                      taxID:
+                        type: string
+                        description: Representative tax ID
+                        minLength: 1
+                      address:
+                        type: object
+                        required:
+                          - zipCode
+                          - street
+                          - number
+                          - neighborhood
+                          - city
+                          - state
+                          - taxID
+                        properties:
+                          zipCode:
+                            type: string
+                            description: Address zip code
+                            minLength: 1
+                          street:
+                            type: string
+                            description: Street name
+                            minLength: 1
+                          number:
+                            type: string
+                            description: Street number
+                            minLength: 1
+                          neighborhood:
+                            type: string
+                            description: Neighborhood
+                            minLength: 1
+                          city:
+                            type: string
+                            description: City
+                            minLength: 1
+                          state:
+                            type: string
+                            description: State
+                            minLength: 1
+                          complement:
+                            type: string
+                            description: Address complement
+                          taxID:
+                            type: object
+                            required:
+                              - taxID
+                              - type
+                            properties:
+                              taxID:
+                                type: string
+                                description: Tax ID
+                                minLength: 1
+                              type:
+                                type: string
+                                enum:
+                                  - BR_CPF
+                billingAddress:
+                  type: object
+                  required:
+                    - zipCode
+                    - street
+                    - number
+                    - neighborhood
+                    - city
+                  properties:
+                    zipCode:
+                      type: string
+                      description: Billing address zip code
+                      minLength: 1
+                    street:
+                      type: string
+                      description: Street name
+                      minLength: 1
+                    number:
+                      type: string
+                      description: Street number
+                      minLength: 1
+                    neighborhood:
+                      type: string
+                      description: Neighborhood
+                      minLength: 1
+                    city:
+                      type: string
+                      description: City
+                      minLength: 1
               required:
                 - officialName
                 - tradeName
                 - taxID
-                - annualRevenue
+                - billingAddress
             examples:
               ValidAccountRegister:
                 value:
                   officialName: Company Official Name
                   tradeName: Company Trade Name
                   taxID: '12345678901234'
-                  annualRevenue: 1000000
+                  billingAddress:
+                    zipCode: '12345678'
+                    street: Test Street
+                    number: '123'
+                    neighborhood: Test Neighborhood
+                    city: Test City
+                  representatives:
+                    - name: John Doe
+                      birthDate: 1990-01-01
+                      email: john@example.com
+                      taxID: '12345678901'
+                      type: ADMIN
+                      address:
+                        zipCode: '12345678'
+                        street: Test Street
+                        number: '123'
+                        neighborhood: Test Neighborhood
+                        city: Test City
+                        state: ST
+                        taxID:
+                          taxID: '12345678901'
+                          type: BR_CPF
       responses:
         '200':
           description: Account successfully registered
@@ -166,6 +431,12 @@ paths:
                   status:
                     type: string
                     example: PENDING
+                  requestedDocuments:
+                    type: array
+                    items:
+                      type: string
+                  missingDocumentsDescription:
+                    type: string
         '400':
           description: An error message
           content:
@@ -174,7 +445,20 @@ paths:
                 type: object
                 properties:
                   error:
-                    type: string
+                    oneOf:
+                      - type: string
+                      - type: array
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                            message:
+                              type: string
+                            path:
+                              type: array
+                              items:
+                                type: string
               examples:
                 MissingAuthorization:
                   value:
@@ -189,7 +473,6 @@ paths:
                         minimum: 1
                         type: string
                         inclusive: true
-                        exact: false
                         message: Official name is required
                         path:
                           - officialName
@@ -2236,6 +2519,78 @@ paths:
                 properties:
                   error:
                     type: string
+  '/api/v1/pix-keys/{pixKey}':
+    delete:
+      tags:
+        - pixkey
+      summary: Delete a Pix key
+      description: Deletes a specific Pix key
+      parameters:
+        - name: pixKey
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The Pix key to delete
+      responses:
+        '204':
+          description: Pix key deleted successfully
+        '400':
+          description: You need to link a Bank Account to this API
+        '401':
+          description: Your IP is not in the allowed list
+        '403':
+          description: Your Authorization APP_ID must be configured to be MASTER or API
+        '404':
+          description: Pix key not found
+  /api/v1/pix-keys:
+    get:
+      tags:
+        - pixkey
+      summary: Get all Pix keys
+      description: Retrieves a list of all Pix keys
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pixKeys:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PixKey'
+        '400':
+          description: You need to link a Bank Account to this API
+        '401':
+          description: Your IP is not in the allowed list
+        '403':
+          description: Your Authorization APP_ID must be configured to be MASTER or API
+    post:
+      tags:
+        - pixkey
+      summary: Create a new Pix key
+      description: Creates a new Pix key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PixKeyCreate'
+      responses:
+        '201':
+          description: Pix key created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixKey'
+        '400':
+          description: You need to link a Bank Account to this API
+        '401':
+          description: Your IP is not in the allowed list
+        '403':
+          description: Your Authorization APP_ID must be configured to be MASTER or API
   '/api/v1/qrcode-static/{id}':
     get:
       tags:
@@ -4867,6 +5222,32 @@ components:
         account:
           type: string
           description: the payment destination bank account
+    PixKey:
+      type: object
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+            - CPF
+            - CNPJ
+            - EMAIL
+            - PHONE
+            - EVP
+    PixKeyCreate:
+      type: object
+      required:
+        - key
+        - type
+      properties:
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+            - CNPJ
+            - EVP
     PixQrCode:
       type: object
       properties:
@@ -5395,6 +5776,9 @@ tags:
   - name: payment (request access)
     description: |
       Endpoint to init a payment using a Pix Key.
+  - name: pixkey
+    description: |
+      Endpoint to manage Pix Keys
   - name: pixQrCode
     description: |
       Endpoint to manage static QRCodes
