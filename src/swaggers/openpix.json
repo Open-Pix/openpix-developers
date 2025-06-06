@@ -150,6 +150,96 @@
         }
       }
     },
+    "/api/v1/account": {
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Create a new Account",
+        "description": "Creates a new bank account for the company. Requires the bank account feature to be enabled.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyBankAccount": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/CompanyBankAccount"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The created Account information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/CompanyBankAccount"
+                    }
+                  }
+                },
+                "example": {
+                  "account": {
+                    "accountId": "6290ccfd42831958a405debc",
+                    "isDefault": true,
+                    "balance": {
+                      "total": 129430,
+                      "blocked": 0,
+                      "available": 129430
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Bank account feature is not enabled"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Wrong API type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Wrong API type"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/account-register": {
       "get": {
         "tags": [
@@ -422,7 +512,7 @@
                         "address": {
                           "type": "object",
                           "required": [
-                            "zipCode",
+                            "zipcode",
                             "street",
                             "number",
                             "neighborhood",
@@ -431,7 +521,7 @@
                             "taxID"
                           ],
                           "properties": {
-                            "zipCode": {
+                            "zipcode": {
                               "type": "string",
                               "description": "Address zip code",
                               "minLength": 1
@@ -466,24 +556,9 @@
                               "description": "Address complement"
                             },
                             "taxID": {
-                              "type": "object",
-                              "required": [
-                                "taxID",
-                                "type"
-                              ],
-                              "properties": {
-                                "taxID": {
-                                  "type": "string",
-                                  "description": "Tax ID",
-                                  "minLength": 1
-                                },
-                                "type": {
-                                  "type": "string",
-                                  "enum": [
-                                    "BR_CPF"
-                                  ]
-                                }
-                              }
+                              "type": "string",
+                              "description": "Tax ID",
+                              "minLength": 1
                             }
                           }
                         }
@@ -493,14 +568,14 @@
                   "billingAddress": {
                     "type": "object",
                     "required": [
-                      "zipCode",
+                      "zipcode",
                       "street",
                       "number",
                       "neighborhood",
                       "city"
                     ],
                     "properties": {
-                      "zipCode": {
+                      "zipcode": {
                         "type": "string",
                         "description": "Billing address zip code",
                         "minLength": 1
@@ -542,7 +617,7 @@
                     "tradeName": "Company Trade Name",
                     "taxID": "12345678901234",
                     "billingAddress": {
-                      "zipCode": "12345678",
+                      "zipcode": "12345678",
                       "street": "Test Street",
                       "number": "123",
                       "neighborhood": "Test Neighborhood",
@@ -556,7 +631,7 @@
                         "taxID": "12345678901",
                         "type": "ADMIN",
                         "address": {
-                          "zipCode": "12345678",
+                          "zipcode": "12345678",
                           "street": "Test Street",
                           "number": "123",
                           "neighborhood": "Test Neighborhood",
@@ -597,10 +672,6 @@
                         "taxID": {
                           "type": "string",
                           "example": "12345678901234"
-                        },
-                        "type": {
-                          "type": "string",
-                          "example": "BR_CNPJ"
                         }
                       }
                     },
@@ -1318,6 +1389,107 @@
                   "properties": {
                     "error": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/image/qrcode/base64/{:id}": {
+      "get": {
+        "tags": [
+          "charge"
+        ],
+        "summary": "Get a base64 encoded QR Code image from a Charge",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "charge ID, payment link ID, or QR code ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "paymentLinkID": {
+                "value": "fe7834b4060c488a9b0f89811be5f5cf"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "size",
+            "description": "Size for the image. This size should be between 600 and 4096. If the size parameter is not passed, the default value will be 1024.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "size": {
+                "value": 768
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The QR Code image as base64 string",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "imageBase64": {
+                      "type": "string",
+                      "description": "Base64 encoded PNG image with data URL format",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Failed to generate QR code"
                     }
                   }
                 }
@@ -3739,6 +3911,10 @@
                       "items": {
                         "$ref": "#/components/schemas/PixKey"
                       }
+                    },
+                    "account": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/CompanyBankAccount"
                     }
                   }
                 }
