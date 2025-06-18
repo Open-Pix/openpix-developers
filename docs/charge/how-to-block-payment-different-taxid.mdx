@@ -1,8 +1,7 @@
 ---
-title: Como bloquear pagamentos de CPF/CNPJ diferente do cliente (ensureSameTaxID)
+title: Como bloquear pagamentos de CPF/CNPJ diferente do cliente
 description: Saiba como usar o campo ensureSameTaxID na criação de cobranças para garantir que o pagador seja o mesmo cliente previamente cadastrado.
 ---
-import { CodeBlock } from '@site/src/components/CodeBlock'
 
 # Bloquear pagamento para CPF/CNPJ diferente do cliente
 
@@ -16,10 +15,10 @@ Ao criar uma cobrança (charge) via API, você pode utilizar o campo `ensureSame
 
 ## :rocket: Exemplo de uso com curl
 
-<CodeBlock language="bash">
-{`curl -X POST "https://api.woovi.com/api/v1/application" \\
--H "Authorization: {APP_ID}" \\
--H "Content-Type: application/json" \\
+```bash
+curl -X POST "https://api.woovi.com/api/v1/application" \
+-H "Authorization: {APP_ID}" \
+-H "Content-Type: application/json" \
 -d '{
   "ensureSameTaxID": true,
   "customer": {
@@ -27,8 +26,8 @@ Ao criar uma cobrança (charge) via API, você pode utilizar o campo `ensureSame
     "email": "joao@gmail.com",
     "taxID": "45784409158"
   }
-}'`}
-</CodeBlock>
+}'
+```
 
 ## :white_check_mark: O que acontece na prática?
 
@@ -42,4 +41,4 @@ Com essa configuração ativada:
 
 A funcionalidade `ensureSameTaxID` é uma camada adicional de segurança que permite que você valide automaticamente a identidade do pagador e evite recebimentos indevidos. Recomendamos seu uso em operações com alto valor ou maior risco de chargeback via Pix (MEDs).
 
-:blue_book: Consulte nossa [documentação da API de cobrança](https://developers.openpix.com.br/api#tag/chargeQRCode) para mais detalhes sobre todos os campos disponíveis. 
+:blue_book: Consulte nossa [documentação da API de cobrança](https://developers.openpix.com.br/api#tag/chargeQRCode) para mais detalhes sobre todos os campos disponíveis.
