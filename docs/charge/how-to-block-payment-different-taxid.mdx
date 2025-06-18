@@ -1,0 +1,45 @@
+---
+title: Como bloquear pagamentos de CPF/CNPJ diferente do cliente (ensureSameTaxID)
+description: Saiba como usar o campo ensureSameTaxID na criação de cobranças para garantir que o pagador seja o mesmo cliente previamente cadastrado.
+---
+import { CodeBlock } from '@site/src/components/CodeBlock'
+
+# Bloquear pagamento para CPF/CNPJ diferente do cliente
+
+Em algumas operações, especialmente em setores com risco de fraude, é essencial garantir que o pagamento de uma cobrança Pix seja feito exclusivamente pelo CPF ou CNPJ previamente cadastrado como cliente.
+
+Para atender a esse cenário, a Woovi oferece o campo `ensureSameTaxID` no endpoint de criação de cobrança.
+
+## :hammer_and_wrench: Como funciona?
+
+Ao criar uma cobrança (charge) via API, você pode utilizar o campo `ensureSameTaxID`. Esse campo, quando ativado, impede que o pagamento seja aceito caso o CPF/CNPJ do pagador seja diferente do informado no campo `customer`.
+
+## :rocket: Exemplo de uso com curl
+
+<CodeBlock language="bash">
+{`curl -X POST "https://api.woovi.com/api/v1/application" \\
+-H "Authorization: {APP_ID}" \\
+-H "Content-Type: application/json" \\
+-d '{
+  "ensureSameTaxID": true,
+  "customer": {
+    "name": "João",
+    "email": "joao@gmail.com",
+    "taxID": "45784409158"
+  }
+}'`}
+</CodeBlock>
+
+## :white_check_mark: O que acontece na prática?
+
+Com essa configuração ativada:
+
+- Se o pagador tentar concluir a cobrança com um CPF/CNPJ diferente daquele informado no campo `customer.taxID`, o pagamento será recusado.
+- A Woovi valida em tempo real o CPF/CNPJ de quem está tentando pagar com o do cliente registrado.
+- Ideal para prevenir fraudes e proteger operações sensíveis.
+
+## :brain: Conclusão
+
+A funcionalidade `ensureSameTaxID` é uma camada adicional de segurança que permite que você valide automaticamente a identidade do pagador e evite recebimentos indevidos. Recomendamos seu uso em operações com alto valor ou maior risco de chargeback via Pix (MEDs).
+
+:blue_book: Consulte nossa [documentação da API de cobrança](https://developers.openpix.com.br/api#tag/chargeQRCode) para mais detalhes sobre todos os campos disponíveis. 

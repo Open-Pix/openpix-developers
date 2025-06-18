@@ -23,6 +23,8 @@ Os campos obrigatórios para criar uma subconta são os seguintes:
 - **`name`**: O nome de identificação da subconta.
 - **`pixKey`**: A chave PIX da subconta (Não precisa ser necessariamente atrelada a uma conta da OpenPix).
 
+A chave PIX será checada antes de criar a subconta. Caso a chave não exista, a subconta não será criada e uma mensagem de erro será retornada.
+
 ### Exemplos em código
 
 <Tabs>
