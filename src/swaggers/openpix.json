@@ -2445,6 +2445,68 @@
         }
       }
     },
+    "/api/v1/company": {
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Get a Company",
+        "responses": {
+          "200": {
+            "description": "The Company retrieved from the application ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "company": {
+                      "type": "object",
+                      "properties": {
+                        "officialName": {
+                          "type": "string"
+                        },
+                        "tradeName": {
+                          "type": "string"
+                        },
+                        "taxID": {
+                          "type": "string"
+                        },
+                        "correlationID": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "company": {
+                    "officialName": "Company Official Name",
+                    "tradeName": "Company Trade Name",
+                    "taxID": "12345678901234",
+                    "correlationID": "corr-123456"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/customer/{id}": {
       "get": {
         "tags": [
@@ -3854,13 +3916,152 @@
         }
       }
     },
+    "/api/v1/pix-keys/{pixKey}/check": {
+      "get": {
+        "tags": [
+          "pixKey"
+        ],
+        "summary": "Check data from a Pix key",
+        "description": "Get data from a Pix key if it exists",
+        "parameters": [
+          {
+            "name": "pixKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Pix key to check"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixKeyCheck"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You need to link a Bank Account to this API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Your account does not have the permission to use this endpoint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pix key does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests, you had too many 404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pix-keys/:pixKey/default": {
+      "post": {
+        "tags": [
+          "pixKey"
+        ],
+        "summary": "Set a pix key as default",
+        "description": "Set a pix key as default",
+        "parameters": [
+          {
+            "name": "pixKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The pix key to set as default"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pix key set as default successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixKey"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/pix-keys/{pixKey}": {
       "delete": {
         "tags": [
-          "pixkey"
+          "pixKey"
         ],
         "summary": "Delete a Pix key",
-        "description": "Deletes a specific Pix key",
+        "description": "Deletes a specific Pix key, you cannot delete the default pix key",
         "parameters": [
           {
             "name": "pixKey",
@@ -3894,7 +4095,7 @@
     "/api/v1/pix-keys": {
       "get": {
         "tags": [
-          "pixkey"
+          "pixKey"
         ],
         "summary": "Get all Pix keys",
         "description": "Retrieves a list of all Pix keys",
@@ -3934,7 +4135,7 @@
       },
       "post": {
         "tags": [
-          "pixkey"
+          "pixKey"
         ],
         "summary": "Create a new Pix key",
         "description": "Creates a new Pix key",
@@ -4915,6 +5116,146 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statement": {
+      "get": {
+        "tags": [
+          "statement"
+        ],
+        "summary": "Get statement by company",
+        "description": "Retrieves the statement/ledger entries for a company's bank account",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statement retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the ledger entry",
+                        "example": "507f1f77bcf86cd799439011"
+                      },
+                      "time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date and time of the transaction",
+                        "example": "2023-12-01T10:30:00.000Z"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the transaction",
+                        "example": "Payment received from customer"
+                      },
+                      "balance": {
+                        "type": "number",
+                        "description": "Account balance after this transaction",
+                        "example": 1500.5
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Transaction amount",
+                        "example": 100
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Type of transaction",
+                        "example": "CREDIT"
+                      },
+                      "transactionId": {
+                        "type": "string",
+                        "description": "Transaction tracking ID",
+                        "example": "txn_123456789"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - validation error or missing authorization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "CompanyBankAccountNotFound": {
+                    "value": {
+                      "error": "Company bank account not found"
+                    }
+                  },
+                  "NotWooviAccount": {
+                    "value": {
+                      "error": "Company bank account not woovi account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid or missing authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
                 }
               }
             }
@@ -6604,7 +6945,9 @@
                   "type": "object"
                 }
               }
-            ]
+            ],
+            "type": "string",
+            "description": "Error message"
           }
         }
       },
@@ -6862,6 +7205,10 @@
             "type": "object",
             "$ref": "#/components/schemas/CustomerPayload"
           },
+          "ensureSameTaxID": {
+            "type": "boolean",
+            "description": "true to ensure that the payer taxID must be the same as the customer taxID."
+          },
           "daysForDueDate": {
             "type": "number",
             "description": "Time in days until the charge hits the deadline so fines and interests start applying. This property is only considered for charges of type OVERDUE"
@@ -7048,6 +7395,35 @@
         "required": [
           "correlationID"
         ]
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "officialName": {
+            "type": "string",
+            "description": "Official name of the company"
+          },
+          "tradeName": {
+            "type": "string",
+            "description": "Trade name of the company"
+          },
+          "taxID": {
+            "type": "string",
+            "description": "Tax ID of the company"
+          },
+          "correlationID": {
+            "type": "string",
+            "description": "Correlation ID of the company"
+          }
+        }
+      },
+      "CompanyResponse": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/Company"
+          }
+        }
       },
       "Customer": {
         "type": "object",
@@ -7745,6 +8121,9 @@
               "PHONE",
               "EVP"
             ]
+          },
+          "isDefault": {
+            "type": "boolean"
           }
         }
       },
@@ -7764,6 +8143,35 @@
               "CNPJ",
               "EVP"
             ]
+          }
+        }
+      },
+      "PixKeyCheck": {
+        "type": "object",
+        "properties": {
+          "pixKey": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CPF",
+              "CNPJ",
+              "EMAIL",
+              "PHONE",
+              "EVP"
+            ]
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "taxID": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -7793,6 +8201,10 @@
           },
           "paymentLinkUrl": {
             "description": "Payment Link URL to be shared with customers"
+          },
+          "pixKey": {
+            "type": "string",
+            "description": "The pix key that this qrcode is associated with"
           },
           "qrCodeImage": {
             "description": "QRCode image link URL"
@@ -8449,6 +8861,10 @@
       "description": "Endpoint to manage charge refunds\n"
     },
     {
+      "name": "company",
+      "description": "Endpoint to manage Company information\n"
+    },
+    {
       "name": "customer",
       "description": "Endpoint to manage Customer\n"
     },
@@ -8465,7 +8881,7 @@
       "description": "Endpoint to init a payment using a Pix Key.\n"
     },
     {
-      "name": "pixkey",
+      "name": "pixKey",
       "description": "Endpoint to manage Pix Keys\n"
     },
     {
