@@ -65,7 +65,7 @@
     "publish-gh-pages": "docusaurus-publish",
     "rename-version": "docusaurus-rename-version",
     "serve": "docusaurus serve",
-    "start": "docusaurus start",
+    "start": "docusaurus start --host 0.0.0.0",
     "start:en": "docusaurus start --locale en",
     "start:ptbr": "docusaurus start --locale pt-BR",
     "swizzle": "docusaurus swizzle",
