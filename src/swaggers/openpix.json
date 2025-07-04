@@ -3865,6 +3865,10 @@
                       "account": "00000000000000000981",
                       "branch": "0001",
                       "accountType": "TRAN"
+                    },
+                    "psp": {
+                      "id": "54811417",
+                      "name": "WOOVI INSTITUICAO DE PAGAMENTO"
                     }
                   }
                 }
@@ -3931,6 +3935,10 @@
                           "account": "00000000000000000981",
                           "branch": "0001",
                           "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "54811417",
+                          "name": "WOOVI INSTITUICAO DE PAGAMENTO"
                         }
                       }
                     }
