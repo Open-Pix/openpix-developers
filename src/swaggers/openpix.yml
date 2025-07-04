@@ -2641,6 +2641,9 @@ paths:
                     account: '00000000000000000981'
                     branch: '0001'
                     accountType: TRAN
+                  psp:
+                    id: '54811417'
+                    name: WOOVI INSTITUICAO DE PAGAMENTO
       responses:
         '200':
           description: Payment destination account information
@@ -2691,6 +2694,9 @@ paths:
                         account: '00000000000000000981'
                         branch: '0001'
                         accountType: TRAN
+                      psp:
+                        id: '54811417'
+                        name: WOOVI INSTITUICAO DE PAGAMENTO
         '400':
           description: An error message
           content:
