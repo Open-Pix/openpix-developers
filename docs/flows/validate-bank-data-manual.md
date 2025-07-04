@@ -1,5 +1,5 @@
 ---
-id: validate-bank-data
+id: validate-bank-data-manual
 title: Como validar Dados bancários Usando agência e conta
 tags:
   - api
@@ -44,6 +44,14 @@ Representa os dados da conta bancária do beneficiário.
 | account | Número da conta bancária (ex: "00000000000000000981") |
 | accountType | Tipo da conta (ex: "TRAN" para conta corrente) |
 
+### psp (Provedor de Serviço de Pagamento)
+Representa a instituição financeira que processará o pagamento.
+
+| Campo | Descrição |
+|-------|-----------|
+| id | Identificador único do PSP |
+| name | Nome da instituição financeira (ex: "WOOVI IP") |
+
 ```json
 curl --location 'https://api.woovi.com/api/v1/payment' \
 --header 'Content-Type: application/json' \
@@ -57,6 +65,10 @@ curl --location 'https://api.woovi.com/api/v1/payment' \
       "type": "BR:CNPJ",
       "taxID": "202********158"
     }
+  },
+   "psp": {
+    "id": "54811417",
+    "name": "WOOVI IP LTDA"
   },
   "account": {
     "account": "000********0981",
