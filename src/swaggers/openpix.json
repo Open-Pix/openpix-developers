@@ -3848,6 +3848,25 @@
                     "comment": "payment comment",
                     "correlationID": "payment1"
                   }
+                },
+                "manual": {
+                  "summary": "Manual Payment",
+                  "value": {
+                    "value": 100,
+                    "correlationID": "manual-payment-26",
+                    "holder": {
+                      "name": "Hodlis 3",
+                      "taxID": {
+                        "type": "BR:CNPJ",
+                        "taxID": "20244827000158"
+                      }
+                    },
+                    "account": {
+                      "account": "00000000000000000981",
+                      "branch": "0001",
+                      "accountType": "TRAN"
+                    }
+                  }
                 }
               }
             }
@@ -3891,6 +3910,28 @@
                         "qrCode": "000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao Paulo62360532867ba5173c734202ac659721306b38c963044BCA",
                         "comment": "payment comment",
                         "correlationID": "payment1"
+                      }
+                    }
+                  },
+                  "manual": {
+                    "summary": "Manual Payment",
+                    "value": {
+                      "payment": {
+                        "value": 100,
+                        "status": "CREATED",
+                        "correlationID": "manual-payment-1",
+                        "holder": {
+                          "name": "teste",
+                          "taxID": {
+                            "type": "BR:CNPJ",
+                            "taxID": "20244827000158"
+                          }
+                        },
+                        "account": {
+                          "account": "00000000000000000981",
+                          "branch": "0001",
+                          "accountType": "TRAN"
+                        }
                       }
                     }
                   }
@@ -8009,6 +8050,78 @@
               "comment": {
                 "type": "string",
                 "description": "the comment that will be send alongisde your payment"
+              }
+            }
+          },
+          {
+            "title": "Manual",
+            "type": "object",
+            "required": [
+              "value",
+              "correlationID",
+              "holder",
+              "account"
+            ],
+            "properties": {
+              "value": {
+                "type": "number",
+                "description": "value of the requested payment in cents"
+              },
+              "correlationID": {
+                "type": "string",
+                "description": "an unique identifier for your payment"
+              },
+              "holder": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "taxID"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "name of the account holder"
+                  },
+                  "taxID": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "taxID"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "type of the tax ID (e.g., BR:CNPJ)"
+                      },
+                      "taxID": {
+                        "type": "string",
+                        "description": "tax ID number"
+                      }
+                    }
+                  }
+                }
+              },
+              "account": {
+                "type": "object",
+                "required": [
+                  "account",
+                  "branch",
+                  "accountType"
+                ],
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "description": "account number"
+                  },
+                  "branch": {
+                    "type": "string",
+                    "description": "branch number"
+                  },
+                  "accountType": {
+                    "type": "string",
+                    "description": "type of the account (e.g., TRAN)"
+                  }
+                }
               }
             }
           }
