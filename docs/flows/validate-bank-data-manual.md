@@ -66,6 +66,10 @@ curl --location 'https://api.woovi.com/api/v1/payment' \
       "taxID": "202********158"
     }
   },
+   "psp": {
+    "id": "54811417",
+    "name": "WOOVI IP LTDA"
+  },
   "account": {
     "account": "000********0981",
     "branch": "00**",
