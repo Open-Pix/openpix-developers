@@ -44,6 +44,15 @@ Representa os dados da conta bancária do beneficiário.
 | account | Número da conta bancária (ex: "00000000000000000981") |
 | accountType | Tipo da conta (ex: "TRAN" para conta corrente) |
 
+### Tipos de Conta (accountType)
+
+| Código | Descrição |
+|--------|-----------|
+| CACC | Current Account (Conta Corrente) |
+| SLRY | Salary Account (Conta Salário) |
+| SVGS | Savings Account (Conta Poupança) |
+| TRAN | Transacting Account (Conta Transacional) |
+
 ### psp (Provedor de Serviço de Pagamento)
 Representa a instituição financeira que processará o pagamento.
 
