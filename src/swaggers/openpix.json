@@ -8068,7 +8068,8 @@
               "value",
               "correlationID",
               "holder",
-              "account"
+              "account",
+              "psp"
             ],
             "properties": {
               "value": {
@@ -8078,6 +8079,10 @@
               "correlationID": {
                 "type": "string",
                 "description": "an unique identifier for your payment"
+              },
+              "psp": {
+                "type": "string",
+                "description": "the PSP (Payment Service Provider) identifier"
               },
               "holder": {
                 "type": "object",

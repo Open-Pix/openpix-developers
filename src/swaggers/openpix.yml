@@ -5554,6 +5554,7 @@ components:
             - correlationID
             - holder
             - account
+            - psp
           properties:
             value:
               type: number
@@ -5561,6 +5562,9 @@ components:
             correlationID:
               type: string
               description: an unique identifier for your payment
+            psp:
+              type: string
+              description: the PSP (Payment Service Provider) identifier
             holder:
               type: object
               required:
