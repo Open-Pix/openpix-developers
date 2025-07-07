@@ -7,9 +7,9 @@ tags:
 
 ## 1. É necessario que você tenha uma API MASTER
 
-Caso você não tenha, temos essa documentação que lhe ensina como criar uma [API MASTER](../apis/api-master.md).
+Caso você não tenha, temos essa documentação que lhe ensina como criar uma [API](https://developers.openpix.com.br/en/docs/apis/getting-started-api).
 
-Após criar a API MASTER basta seguir o passo a passo.
+Após criar a API basta seguir o passo a passo.
 
 ### Crie um pagamento de 1 centavo:
 
@@ -22,7 +22,7 @@ Após isso você irá criar um pagamento para a chave-pix que deseja saber os da
 ![sequencial](./__assets__/payment-flow.png)
 
 # 1. Crie o pagamento:
-Nesta etapa você irá criar o pagamento seguindo os parâmetros de nosso endPoint: [Create Payment request](http://localhost:3000/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)
+Nesta etapa você irá criar o pagamento seguindo os parâmetros de nosso endPoint: [Create Payment request](https:///developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)
 
 ## Campos do Pagamento Manual
 
@@ -80,7 +80,7 @@ curl --location 'https://api.woovi.com/api/v1/payment' \
 ![creat](./__assets__/request.png)
 
 # 2. Confirme o pagamento:
-Nesta etapa será necessário que você aprove o pagamento que criou seguindo o endpoint: [Approve a Payment Request](http://localhost:3000/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post)
+Nesta etapa será necessário que você aprove o pagamento que criou seguindo o endpoint: [Approve a Payment Request](https:///developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post)
 
 Após a confirmação do pagamento irá gerar um payload com os dados bancários da chave-pix que fez o pagamento
 
