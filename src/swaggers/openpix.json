@@ -8004,12 +8004,20 @@
             "title": "Pix key",
             "type": "object",
             "required": [
+              "type",
               "value",
               "destinationAlias",
               "destinationAliasType",
               "correlationID"
             ],
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "PIX_KEY"
+                ],
+                "description": "type of the payment"
+              },
               "value": {
                 "type": "number",
                 "description": "value of the requested payment in cents"
@@ -8043,10 +8051,18 @@
             "title": "QR Code",
             "type": "object",
             "required": [
+              "type",
               "qrCode",
               "correlationID"
             ],
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "QR_CODE"
+                ],
+                "description": "type of the payment"
+              },
               "qrCode": {
                 "type": "string",
                 "description": "the QR Code to be paid"
@@ -8065,6 +8081,7 @@
             "title": "Manual",
             "type": "object",
             "required": [
+              "type",
               "value",
               "correlationID",
               "holder",
@@ -8072,6 +8089,13 @@
               "psp"
             ],
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MANUAL"
+                ],
+                "description": "type of the payment"
+              },
               "value": {
                 "type": "number",
                 "description": "value of the requested payment in cents"
@@ -8143,6 +8167,15 @@
       "Payment": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "PIX_KEY",
+              "QR_CODE",
+              "MANUAL"
+            ],
+            "description": "type of the payment"
+          },
           "value": {
             "type": "number",
             "description": "value of the requested payment in cents"
