@@ -5020,6 +5020,16 @@
           },
           {
             "in": "query",
+            "name": "name",
+            "description": "Filter PSPs by name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "brasil"
+          },
+          {
+            "in": "query",
             "name": "compe",
             "description": "Filter PSPs by COMPE code",
             "required": false,
@@ -8455,9 +8465,21 @@
               "EVP"
             ]
           },
+          "pixKeyEndToEndId": {
+            "type": "string"
+          },
           "owner": {
             "type": "object",
             "properties": {
+              "account": {
+                "type": "string"
+              },
+              "branch": {
+                "type": "string"
+              },
+              "psp": {
+                "type": "string"
+              },
               "name": {
                 "type": "string"
               },
