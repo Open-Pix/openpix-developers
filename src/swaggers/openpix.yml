@@ -5826,9 +5826,17 @@ components:
             - EMAIL
             - PHONE
             - EVP
+        pixKeyEndToEndId:
+          type: string
         owner:
           type: object
           properties:
+            account:
+              type: string
+            branch:
+              type: string
+            psp:
+              type: string
             name:
               type: string
             taxID:
