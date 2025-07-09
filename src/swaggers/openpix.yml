@@ -3408,6 +3408,96 @@ paths:
                 properties:
                   error:
                     type: string
+  /api/v1/psp:
+    get:
+      tags:
+        - psp
+      summary: Get a list of PSPs (Payment Service Providers)
+      parameters:
+        - in: query
+          name: ispb
+          description: Filter PSPs by ISPB code
+          required: false
+          schema:
+            type: string
+          example: '3030310'
+        - in: query
+          name: compe
+          description: Filter PSPs by COMPE code
+          required: false
+          schema:
+            type: string
+          example: '001'
+      responses:
+        '200':
+          description: A list of PSPs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  psps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name of the PSP
+                          example: BCO DO BRASIL S.A.
+                        ispb:
+                          type: string
+                          description: The ISPB code of the PSP
+                          example: '00000000'
+                        code:
+                          type: string
+                          description: The code of the PSP
+                          example: '00000000'
+                        compe:
+                          type: string
+                          nullable: true
+                          description: The COMPE code of the PSP
+                          example: '001'
+              example:
+                success: true
+                psps:
+                  - name: BCO DO BRASIL S.A.
+                    ispb: '00000000'
+                    code: '00000000'
+                    compe: '001'
+                  - name: CAIXA ECONOMICA FEDERAL
+                    ispb: '00360305'
+                    code: '00360305'
+                    compe: '104'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: Invalid query parameters
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: Internal server error
   '/api/v1/receipt/{EndToEndId}':
     get:
       tags:
