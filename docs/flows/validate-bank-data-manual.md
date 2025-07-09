@@ -5,7 +5,7 @@ tags:
   - api
 ---
 
-## 1. É necessario que você tenha uma API MASTER
+## 1. É necessario que você tenha uma API
 
 Caso você não tenha, temos essa documentação que lhe ensina como criar uma [API](https://developers.openpix.com.br/en/docs/apis/getting-started-api).
 
@@ -61,6 +61,10 @@ Representa a instituição financeira que processará o pagamento.
 | id | Identificador único do PSP |
 | name | Nome da instituição financeira (ex: "WOOVI IP") |
 
+Para verificar o id do psp, acesse o endpoint: [PSPs](https:///developers.openpix.com.br/api#tag/psp/paths/~1api~1v1~1psp/get)
+
+e adicione o ispb no psp.id
+
 ```json
 curl --location 'https://api.woovi.com/api/v1/payment' \
 --header 'Content-Type: application/json' \
@@ -114,6 +118,59 @@ curl --location 'https://api.woovi.com/api/v1/payment/approve' \
 }
 ```
 ![confirm](./__assets__/confirm-payment.png)
+
+# 3. Webhooks
+
+Após a criação e confirmação do pagamento, você receberá webhooks com o status da transação. Aqui estão exemplos dos possíveis webhooks:
+
+## Webhook de Falha (MOVEMENT_FAILED)
+
+```json
+{
+  "event": "OPENPIX:MOVEMENT_FAILED",
+  "payment": {
+    "value": 1,
+    "status": "FAILED",
+    "correlationID": "manual-payment-0009"
+  },
+  "transaction": {
+    "value": 1,
+    "endToEndId": "E54811417202507081527dYr4Cp2gfAp",
+    "time": "2025-07-08T15:27:19.687Z",
+    "providerRejectedReason": "AC03 - Pagamento rejeitado pelo PSP do recebedor"
+  }
+}
+```
+
+## Webhook de Confirmação (MOVEMENT_CONFIRMED)
+
+```json
+{
+  "event": "OPENPIX:MOVEMENT_CONFIRMED",
+  "payment": {
+    "status": "APPROVED",
+    "value": 1,
+    "correlationID": "manual-payment-0009",
+    "sourceAccountId": "6823414a524ed520d3518dd6"
+  },
+  "transaction": {
+    "value": 1,
+    "time": "2025-07-08T15:27:19.687Z",
+    "endToEndId": "E54811417202507081527dYr4Cp2gfAp"
+  },
+  "destination": {
+    "name": "Thiago Mota",
+    "taxID": "54508095810",
+    "bank": "Mercado pago",
+    "branch": "0001",
+    "account": "49033976342"
+  }
+}
+```
+
+Se não souber como configurar o webhook, acesse: [Criando um webhook para interceptar um Pix e chamar uma API](https://developers.openpix.com.br/docs/webhook/platform/webhook-platform-api)
+
+
 
 
  
