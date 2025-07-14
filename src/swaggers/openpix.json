@@ -3838,7 +3838,12 @@
                     "destinationAlias": "c4249323-b4ca-43f2-8139-8232aab09b93",
                     "destinationAliasType": "RANDOM",
                     "comment": "payment comment",
-                    "correlationID": "payment1"
+                    "correlationID": "payment1",
+                    "metadata": {
+                      "orderId": "order-123",
+                      "userId": "user-456",
+                      "source": "mobile-app"
+                    }
                   }
                 },
                 "qrCode": {
@@ -3846,7 +3851,11 @@
                   "value": {
                     "qrCode": "000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009SaoPaulo62360532867ba5173c734202ac659721306b38c963044BCA",
                     "comment": "payment comment",
-                    "correlationID": "payment1"
+                    "correlationID": "payment1",
+                    "metadata": {
+                      "qrCodeSource": "store-terminal",
+                      "storeId": "store-789"
+                    }
                   }
                 },
                 "manual": {
@@ -3869,6 +3878,11 @@
                     "psp": {
                       "id": "54811417",
                       "name": "WOOVI INSTITUICAO DE PAGAMENTO"
+                    },
+                    "metadata": {
+                      "businessUnit": "finance",
+                      "approver": "manager-001",
+                      "priority": "high"
                     }
                   }
                 }
@@ -5517,6 +5531,7 @@
                   "transaction": {
                     "status": "CREATED",
                     "value": 100,
+                    "endToEndId": "ENDTOENDID_1234567890",
                     "correlationID": "TESTING1323",
                     "destinationAlias": "pixKeyTest@test.com",
                     "comment": "testing-transaction"
@@ -6296,7 +6311,8 @@
               "example": {
                 "value": 100,
                 "fromPixKey": "from@openpix.com.br",
-                "toPixKey": "to@openpix.com.br"
+                "toPixKey": "to@openpix.com.br",
+                "correlationID": "123e4567-e89b-12d3-a456-426614174000"
               }
             }
           }
@@ -8188,6 +8204,11 @@
               "comment": {
                 "type": "string",
                 "description": "the comment that will be send alongisde your payment"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "additional metadata for the payment (max 30 keys)"
               }
             }
           },
@@ -8218,6 +8239,11 @@
               "comment": {
                 "type": "string",
                 "description": "the comment that will be send alongisde your payment"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "additional metadata for the payment (max 30 keys)"
               }
             }
           },
@@ -8303,6 +8329,11 @@
                     "description": "type of the account (e.g., TRAN)"
                   }
                 }
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "additional metadata for the payment (max 30 keys)"
               }
             }
           }
@@ -9055,6 +9086,10 @@
           "toPixKey": {
             "type": "string",
             "description": "the pix key of the account the value of the transfer will go to"
+          },
+          "correlationID": {
+            "type": "string",
+            "description": "your correlation ID to keep track of this transfer"
           }
         }
       },
