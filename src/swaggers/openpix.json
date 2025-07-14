@@ -8726,6 +8726,27 @@
           }
         }
       },
+      "PSP": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the PSP",
+            "example": "BCO DO BRASIL S.A."
+          },
+          "ispb": {
+            "type": "string",
+            "description": "The ISPB code of the PSP (8 digits)",
+            "example": "00000000"
+          },
+          "compe": {
+            "type": "string",
+            "nullable": true,
+            "description": "The COMPE code of the PSP (3 digits)",
+            "example": "001"
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
@@ -9245,6 +9266,10 @@
     {
       "name": "refund",
       "description": "Endpoint to manage Refunds\n"
+    },
+    {
+      "name": "psp",
+      "description": "Endpoints to manage Payment Service Providers (PSPs) in the PIX ecosystem.\n\nPSPs are financial institutions that can process PIX payments. Each PSP has unique \nidentifiers like ISPB and COMPE codes used for identification and validation.\n"
     },
     {
       "name": "receipt",
