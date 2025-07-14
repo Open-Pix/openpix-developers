@@ -142,7 +142,4 @@ Quando um pagamento PIX falha, o webhook `MOVEMENT_FAILED` retorna informações
 - **`providerErrorCode`**: Contém apenas o código (ex: "BE17")
 - **`providerRejectedReason`**: Contém o código e a descrição detalhada (ex: "BE17 - QR Code rejeitado pelo banco recebedor")
 
-### Conformidade Regulatória
-- Estes códigos seguem rigorosamente o padrão estabelecido pelo Banco Central do Brasil para o sistema PIX
-- Os códigos são baseados nas especificações ISO 20022 adaptadas para o contexto brasileiro
-- Cada erro inclui informação sobre qual participante do sistema é responsável pela geração do erro
+
