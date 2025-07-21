@@ -2621,6 +2621,7 @@ paths:
                   destinationAliasType: RANDOM
                   comment: payment comment
                   correlationID: payment1
+                  pixKeyEndToEndId: E1234567890
                   metadata:
                     orderId: order-123
                     userId: user-456
@@ -2631,6 +2632,7 @@ paths:
                   qrCode: 000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009SaoPaulo62360532867ba5173c734202ac659721306b38c963044BCA
                   comment: payment comment
                   correlationID: payment1
+                  pixKeyEndToEndId: E1234567890
                   metadata:
                     qrCodeSource: store-terminal
                     storeId: store-789
@@ -2638,6 +2640,7 @@ paths:
                 summary: Manual Payment
                 value:
                   value: 100
+                  pixKeyEndToEndId: E1234567890
                   correlationID: manual-payment-26
                   holder:
                     name: Hodlis 3
@@ -2877,7 +2880,20 @@ paths:
           description: Your IP is not in the allowed list
         '403':
           description: Your Authorization APP_ID must be configured to be MASTER or API
-  '/api/v1/qrcode-static/{id}':
+  /api/v1/pix-keys/tokens:
+    get:
+      tags:
+        - pixKey
+      summary: Get tokens data
+      description: Get tokens data
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PixKeyTokens"
+  "/api/v1/qrcode-static/{id}":
     get:
       tags:
         - pixQrCode
@@ -3124,7 +3140,33 @@ paths:
                   type: PAYMENT
                   endToEndId: E18236120202012032010s0133872GZA
                   globalID: UGl4VHJhbnNhY3Rpb246NzE5MWYxYjAyMDQ2YmY1ZjUzZGNmYTBi
-        '400':
+                  creditParty:
+                    account:
+                      account: "00000000000005469660"
+                      accountType: CACC
+                      branch: "8615"
+                    holder:
+                      name: CREDIT PARTY NAME
+                      nameFriendly: CREDIT PARTY NAME FRIENDLY
+                      taxID:
+                        taxID: "28613271892"
+                        type: BR:CPF
+                    psp:
+                      id: "00000001"
+                      name: BCO DO BRASIL S.A.
+                  debitParty:
+                    account:
+                      account: "1235678"
+                      accountType: TRAN
+                      branch: "1"
+                    holder:
+                      name: Awesome Company 1
+                      nameFriendly: Call me Awesome
+                    psp:
+                      code: "54811417"
+                      id: FROZEN-ID
+                      name: WOOVI IP LTDA
+        "400":
           description: An error message
           content:
             application/json:
@@ -5620,6 +5662,7 @@ components:
             - value
             - destinationAlias
             - destinationAliasType
+            - pixKeyEndToEndId
             - correlationID
           properties:
             type:
@@ -5645,6 +5688,10 @@ components:
             correlationID:
               type: string
               description: an unique identifier for your payment
+            pixKeyEndToEndId:
+              type: string
+              description: the end to end id of the pix key used for track pix key
+                consultations
             comment:
               type: string
               description: the comment that will be send alongisde your payment
@@ -5658,6 +5705,7 @@ components:
             - type
             - qrCode
             - correlationID
+            - pixKeyEndToEndId
           properties:
             type:
               type: string
@@ -5670,6 +5718,10 @@ components:
             correlationID:
               type: string
               description: an unique identifier for your payment
+            pixKeyEndToEndId:
+              type: string
+              description: the end to end id of the pix key used for track pix key
+                consultations
             comment:
               type: string
               description: the comment that will be send alongisde your payment
@@ -5683,6 +5735,7 @@ components:
             - type
             - value
             - correlationID
+            - pixKeyEndToEndId
             - holder
             - account
             - psp
@@ -5698,6 +5751,10 @@ components:
             correlationID:
               type: string
               description: an unique identifier for your payment
+            pixKeyEndToEndId:
+              type: string
+              description: the end to end id of the pix key used for track pix key
+                consultations
             psp:
               type: string
               description: the PSP (Payment Service Provider) identifier
@@ -5832,6 +5889,19 @@ components:
             - EVP
         isDefault:
           type: boolean
+    PixKeyTokens:
+      type: object
+      properties:
+        tokens:
+          type: number
+        maxTokens:
+          type: number
+        nextRefresh:
+          type: string
+        tokensAfterRefresh:
+          type: number
+        refreshRate:
+          type: number
     PixKeyCreate:
       type: object
       required:
@@ -6027,12 +6097,12 @@ components:
         ispb:
           type: string
           description: The ISPB code of the PSP (8 digits)
-          example: '00000000'
+          example: "00000000"
         compe:
           type: string
           nullable: true
           description: The COMPE code of the PSP (3 digits)
-          example: '001'
+          example: "001"
     Error:
       type: object
       properties:
