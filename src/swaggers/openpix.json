@@ -6937,7 +6937,7 @@
     "/api/v1/subaccount/{id}/withdraw": {
       "post": {
         "tags": [
-          "sub account (request access)"
+          "subaccount"
         ],
         "summary": "Withdraw from a Sub Account",
         "description": "Withdraw from a Sub Account and return the withdrawal transaction information",
@@ -7055,7 +7055,7 @@
     "/api/v1/subaccount/{id}": {
       "delete": {
         "tags": [
-          "sub account"
+          "subaccount"
         ],
         "summary": "Delete a Sub Account",
         "description": "Deletes a Sub Account if it has no remaining balance",
@@ -7181,7 +7181,7 @@
       },
       "get": {
         "tags": [
-          "sub account"
+          "subaccount"
         ],
         "summary": "Get subaccount details",
         "parameters": [
@@ -7275,7 +7275,7 @@
     "/api/v1/subaccount": {
       "get": {
         "tags": [
-          "sub account (request access)"
+          "subaccount"
         ],
         "summary": "Get a list of subaccounts",
         "responses": {
@@ -7415,7 +7415,7 @@
       },
       "post": {
         "tags": [
-          "sub account"
+          "subaccount"
         ],
         "summary": "Create a subaccount",
         "requestBody": {
@@ -7512,7 +7512,7 @@
     "/api/v1/subaccount/{id}/debit": {
       "post": {
         "tags": [
-          "sub account"
+          "subaccount"
         ],
         "summary": "Debit from a Sub Account and send to the main account",
         "description": "Transfers the amount from the subaccount to the main account.",
@@ -7689,7 +7689,7 @@
     "/api/v1/subaccount/transfer": {
       "post": {
         "tags": [
-          "sub account (request access)"
+          "subaccount"
         ],
         "summary": "Transfer between subaccounts",
         "description": "Transfer between subaccounts",
@@ -11195,7 +11195,7 @@
       "description": "Get a pdf document related to a payment transaction formated in a receipt style.\n"
     },
     {
-      "name": "sub account",
+      "name": "subaccount",
       "description": "Endpoint to manage sub accounts.\n"
     },
     {
