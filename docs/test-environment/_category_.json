@@ -1,0 +1,14 @@
+{
+  "label": "Ambiente de Teste",
+  "collapsible": true,
+  "collapsed": true,
+  "position": 2,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Ambiente de Teste visão geral"
+  },
+  "customProps": {
+    "description": "Ambiente de Teste documentação"
+  }
+}

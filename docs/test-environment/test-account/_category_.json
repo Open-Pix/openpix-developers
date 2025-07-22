@@ -1,0 +1,13 @@
+{
+  "label": "Conta de Teste",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Conta de Teste visão geral"
+  },
+  "customProps": {
+    "description": "Conta de Teste documentação"
+  }
+}
