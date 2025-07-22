@@ -1,0 +1,13 @@
+{
+  "label": "openpix Parcelado",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "openpix Parcelado visão geral"
+  },
+  "customProps": {
+    "description": "openpix Parcelado documentação"
+  }
+}

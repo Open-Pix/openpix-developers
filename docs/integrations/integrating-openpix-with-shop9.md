@@ -1,5 +1,5 @@
 ---
-title: Integrando OpenPix com a Shop Control 9
+title: Integrando a openpix com a Shop Control 9
 tags:
   - integration
 ---
@@ -8,7 +8,7 @@ tags:
 
 Essa documentação assume que você tenha preenchido alguns requisitos que são:
 
-1. Ter uma aplicação criada na OpenPix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/getting-started-api).
+1. Ter uma aplicação criada na openpix. Caso ainda não tenha feito, você pode criar uma seguindo [este tutorial](../apis/api-getting-started.md).
 
 :::
 
@@ -28,6 +28,6 @@ Nesta etapa, é necessário selecionar a conta bancária previamente cadastrada 
 
 ### 4. Cadastro do AppID
 
-Agora, dirija-se à seção `PIX`, localize o campo `API KEY`, insira o AppID previamente gerado na plataforma OpenPix e finalize clicando em `GRAVAR`.
+Agora, dirija-se à seção `PIX`, localize o campo `API KEY`, insira o AppID previamente gerado na plataforma openpix e finalize clicando em `GRAVAR`.
 
 ![Shop9 pix api page](./__assets__/slide4-shop9.png)
