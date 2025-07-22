@@ -44,4 +44,4 @@ Uma cobrança com vencimento (cobv), ao passar de sua data de expiração, ainda
 
 Cobranças com vencimento em nossas APIs são representadas pelo tipo `OVERDUE`.
 
-Para mais informações a repsieot de como você pode criar uma cobrança com vencimento usando nossa API, veja [Como usar a API para criar uma cobrança com vencimento (cobv)?](./charge/how-to-create-cobv-using-api)
+Para mais informações a respeito de como você pode criar uma cobrança com vencimento usando nossa API, veja [Como usar a API para criar uma cobrança com vencimento (cobv)?](./charge/how-to-create-cobv-using-api)
