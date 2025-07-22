@@ -9895,7 +9895,7 @@ paths:
   /api/v1/subaccount/{id}/withdraw:
     post:
       tags:
-        - sub account (request access)
+        - subaccount
       summary: Withdraw from a Sub Account
       description: >-
         Withdraw from a Sub Account and return the withdrawal transaction
@@ -10097,7 +10097,7 @@ paths:
   /api/v1/subaccount/{id}:
     delete:
       tags:
-        - sub account
+        - subaccount
       summary: Delete a Sub Account
       description: Deletes a Sub Account if it has no remaining balance
       parameters:
@@ -10278,7 +10278,7 @@ paths:
             puts response.read_body
     get:
       tags:
-        - sub account
+        - subaccount
       summary: Get subaccount details
       parameters:
         - name: id
@@ -10440,7 +10440,7 @@ paths:
   /api/v1/subaccount:
     get:
       tags:
-        - sub account (request access)
+        - subaccount
       summary: Get a list of subaccounts
       responses:
         '200':
@@ -10615,7 +10615,7 @@ paths:
             puts response.read_body
     post:
       tags:
-        - sub account
+        - subaccount
       summary: Create a subaccount
       requestBody:
         description: Data to create a new subAccount or retrieve existing one
@@ -10785,7 +10785,7 @@ paths:
   /api/v1/subaccount/{id}/debit:
     post:
       tags:
-        - sub account
+        - subaccount
       summary: Debit from a Sub Account and send to the main account
       description: Transfers the amount from the subaccount to the main account.
       parameters:
@@ -11027,7 +11027,7 @@ paths:
   /api/v1/subaccount/transfer:
     post:
       tags:
-        - sub account (request access)
+        - subaccount
       summary: Transfer between subaccounts
       description: Transfer between subaccounts
       requestBody:
@@ -14576,7 +14576,7 @@ tags:
     description: >
       Get a pdf document related to a payment transaction formated in a receipt
       style.
-  - name: sub account
+  - name: subaccount
     description: |
       Endpoint to manage sub accounts.
   - name: subscription
