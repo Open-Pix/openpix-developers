@@ -1271,6 +1271,274 @@ paths:
             response = http.request(request)
 
             puts response.read_body
+  /api/v1/account-register/{id}:
+    patch:
+      tags:
+        - account register
+      summary: Update an existing account registration
+      description: >-
+        Updates documents and representatives for an existing account
+        registration in PENDING status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Tax ID of the account register to update
+          schema:
+            type: string
+            minLength: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documents:
+                  type: array
+                  description: Company documents to update
+                  items:
+                    type: object
+                    required:
+                      - url
+                    properties:
+                      url:
+                        type: string
+                        description: Document URL
+                        minLength: 1
+                      type:
+                        type: string
+                        enum:
+                          - SOCIAL_CONTRACT
+                          - ATA
+                          - BYLAWS
+                representatives:
+                  type: array
+                  description: Company representatives to update
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - birthDate
+                      - email
+                      - taxID
+                      - address
+                    properties:
+                      name:
+                        type: string
+                        description: Representative name
+                        minLength: 1
+                      documents:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - url
+                            - type
+                          properties:
+                            url:
+                              type: string
+                              description: Document URL
+                              minLength: 1
+                            type:
+                              type: string
+                              enum:
+                                - IDENTITY_FRONT
+                                - IDENTITY_BACK
+                                - CNH_FRONT
+                                - CNH_BACK
+                                - PICTURE
+                      birthDate:
+                        type: string
+                        description: Representative birth date
+                        minLength: 1
+                      email:
+                        type: string
+                        description: Representative email
+                        format: email
+                      type:
+                        type: string
+                        enum:
+                          - ADMIN
+                      taxID:
+                        type: string
+                        description: Representative tax ID
+                        minLength: 1
+                      address:
+                        type: object
+                        required:
+                          - zipcode
+                          - street
+                          - number
+                          - neighborhood
+                          - city
+                          - state
+                          - taxID
+                        properties:
+                          zipcode:
+                            type: string
+                            description: Address zip code
+                            minLength: 1
+                          street:
+                            type: string
+                            description: Street name
+                            minLength: 1
+                          number:
+                            type: string
+                            description: Street number
+                            minLength: 1
+                          neighborhood:
+                            type: string
+                            description: Neighborhood
+                            minLength: 1
+                          city:
+                            type: string
+                            description: City
+                            minLength: 1
+                          state:
+                            type: string
+                            description: State
+                            minLength: 1
+                          complement:
+                            type: string
+                            description: Address complement
+                          taxID:
+                            type: string
+                            description: Tax ID
+                            minLength: 1
+            examples:
+              ValidAccountRegisterPatch:
+                value:
+                  documents:
+                    - url: https://example.com/social-contract.pdf
+                      type: SOCIAL_CONTRACT
+                  representatives:
+                    - name: Jane Smith
+                      birthDate: 1985-05-15T00:00:00.000Z
+                      email: jane@example.com
+                      taxID: '98765432100'
+                      type: ADMIN
+                      documents:
+                        - url: https://example.com/identity-front.jpg
+                          type: IDENTITY_FRONT
+                        - url: https://example.com/identity-back.jpg
+                          type: IDENTITY_BACK
+                      address:
+                        zipcode: '87654321'
+                        street: Updated Street
+                        number: '456'
+                        neighborhood: Updated Neighborhood
+                        city: Updated City
+                        state: SP
+                        taxID: '98765432100'
+      responses:
+        '200':
+          description: Account register successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  officialName:
+                    type: string
+                    example: Company Official Name
+                  tradeName:
+                    type: string
+                    example: Company Trade Name
+                  taxID:
+                    type: object
+                    properties:
+                      taxID:
+                        type: string
+                        example: '12345678901234'
+                  status:
+                    type: string
+                    example: PENDING
+                  requestedDocuments:
+                    type: array
+                    items:
+                      type: string
+                  missingDocumentsDescription:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    oneOf:
+                      - type: string
+                      - type: array
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                            message:
+                              type: string
+                            path:
+                              type: array
+                              items:
+                                type: string
+              examples:
+                MissingAuthorization:
+                  value:
+                    error: Invalid Authorization header
+                AccountRegisterIDRequired:
+                  value:
+                    error: Account register ID is required
+                CannotUpdateStatus:
+                  value:
+                    error: Cannot update account register in current status
+                ProtectedFields:
+                  value:
+                    error: >-
+                      Cannot update fields: officialName, tradeName, taxID,
+                      billingAddress
+                ValidationError:
+                  value:
+                    error:
+                      - code: invalid_type
+                        expected: string
+                        received: undefined
+                        message: Representative name is required
+                        path:
+                          - representatives
+                          - 0
+                          - name
+        '404':
+          description: Account register not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                CompanyNotFound:
+                  value:
+                    error: Company not found
+                AccountRegisterNotFound:
+                  value:
+                    error: Account register not found
+                UpdateFailed:
+                  value:
+                    error: Failed to update account register
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal server error
+      x-codeSamples: []
   /api/v1/account/{accountId}/withdraw:
     post:
       tags:
