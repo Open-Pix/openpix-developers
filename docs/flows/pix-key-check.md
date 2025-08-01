@@ -181,4 +181,6 @@ O único problema ocorre quando você recebe um 404 em uma chave Pix. Após algu
 
 - **CPF**: CPF de pessoa física brasileira
 - **CNPJ**: CNPJ de pessoa jurídica brasileira
+- **EMAIL**: Endereço de email
+- **PHONE**: Número de telefone
 - **RANDOM**: Chave alfanumérica aleatória
