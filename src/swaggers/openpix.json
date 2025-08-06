@@ -23,7 +23,9 @@
   "paths": {
     "/api/v1/account/{accountId}": {
       "get": {
-        "tags": ["account"],
+        "tags": [
+          "account"
+        ],
         "summary": "Get an Account",
         "parameters": [
           {
@@ -115,7 +117,9 @@
     },
     "/api/v1/account/": {
       "get": {
-        "tags": ["account"],
+        "tags": [
+          "account"
+        ],
         "summary": "Get a list of Accounts",
         "responses": {
           "200": {
@@ -208,7 +212,9 @@
     },
     "/api/v1/account": {
       "post": {
-        "tags": ["account"],
+        "tags": [
+          "account"
+        ],
         "summary": "Create a new Account",
         "description": "Creates a new bank account for the company. Requires the bank account feature to be enabled.",
         "requestBody": {
@@ -324,59 +330,40 @@
         ]
       }
     },
-    "/api/v1/account-register": {
-      "get": {
-        "tags": ["account register"],
-        "summary": "Get account register by Tax ID",
-        "description": "Retrieves an existing account registration by Tax ID",
+    "/api/v1/account-register/{id}": {
+      "delete": {
+        "tags": [
+          "account register"
+        ],
+        "summary": "Delete an account registration",
+        "description": "Deletes an account registration that is in PENDING status",
         "parameters": [
           {
-            "name": "taxID",
-            "in": "query",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "description": "Tax ID of the company to retrieve",
+            "description": "Tax ID of the account register to delete",
             "schema": {
               "type": "string",
-              "example": "12345678901234"
+              "minLength": 1
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Account register found and returned successfully",
+            "description": "Account register successfully deleted",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "officialName": {
+                    "message": {
                       "type": "string",
-                      "example": "Company Official Name"
+                      "example": "Account register successfully deleted"
                     },
-                    "tradeName": {
+                    "accountRegisterId": {
                       "type": "string",
-                      "example": "Company Trade Name"
-                    },
-                    "type": {
-                      "type": "string",
-                      "example": "BAAS"
-                    },
-                    "taxID": {
-                      "type": "object",
-                      "properties": {
-                        "taxID": {
-                          "type": "string",
-                          "example": "12345678901234"
-                        },
-                        "type": {
-                          "type": "string",
-                          "example": "BR_CNPJ"
-                        }
-                      }
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "PENDING"
+                      "example": "12345678901234"
                     }
                   }
                 }
@@ -384,24 +371,14 @@
             }
           },
           "400": {
-            "description": "Bad request - validation error or missing authorization",
+            "description": "Bad request",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "error": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          }
-                        }
-                      ]
+                      "type": "string"
                     }
                   }
                 },
@@ -416,19 +393,14 @@
                       "error": "Company not found"
                     }
                   },
-                  "ValidationError": {
+                  "AccountRegisterIDRequired": {
                     "value": {
-                      "error": [
-                        {
-                          "code": "too_small",
-                          "minimum": 1,
-                          "type": "string",
-                          "inclusive": true,
-                          "exact": false,
-                          "message": "Tax ID is required",
-                          "path": ["taxID"]
-                        }
-                      ]
+                      "error": "Account register ID is required"
+                    }
+                  },
+                  "InvalidStatus": {
+                    "value": {
+                      "error": "Only account registers in PENDING status can be deleted"
                     }
                   }
                 }
@@ -447,430 +419,17 @@
                     }
                   }
                 },
-                "example": {
-                  "error": "Account register not found"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "Internal server error"
-                }
-              }
-            }
-          }
-        },
-        "x-codeSamples": [
-          {
-            "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account-register?taxID=12345678901234',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
-          },
-          {
-            "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
-          },
-          {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/account-register?taxID=12345678901234\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
-          },
-          {
-            "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-          },
-          {
-            "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
-          },
-          {
-            "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
-          }
-        ]
-      },
-      "post": {
-        "tags": ["account register"],
-        "summary": "Register a new account",
-        "description": "Creates a new account registration with the provided details",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "officialName": {
-                    "type": "string",
-                    "description": "Official name of the company",
-                    "minLength": 1
-                  },
-                  "tradeName": {
-                    "type": "string",
-                    "description": "Trade name of the company",
-                    "minLength": 1
-                  },
-                  "taxID": {
-                    "type": "string",
-                    "description": "Tax ID of the company",
-                    "minLength": 1
-                  },
-                  "documents": {
-                    "type": "array",
-                    "description": "Company documents",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string",
-                          "description": "Document URL",
-                          "minLength": 1
-                        },
-                        "type": {
-                          "type": "string",
-                          "enum": ["SOCIAL_CONTRACT", "ATA", "BYLAWS"]
-                        }
-                      }
-                    }
-                  },
-                  "representatives": {
-                    "type": "array",
-                    "description": "Company representatives (sócio)",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "name",
-                        "birthDate",
-                        "email",
-                        "taxID",
-                        "address"
-                      ],
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "description": "Representative name",
-                          "minLength": 1
-                        },
-                        "documents": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "required": ["url", "type"],
-                            "properties": {
-                              "url": {
-                                "type": "string",
-                                "description": "Document URL",
-                                "minLength": 1
-                              },
-                              "type": {
-                                "type": "string",
-                                "enum": [
-                                  "IDENTITY_FRONT",
-                                  "IDENTITY_BACK",
-                                  "CNH_FRONT",
-                                  "CNH_BACK",
-                                  "PICTURE"
-                                ]
-                              }
-                            }
-                          }
-                        },
-                        "birthDate": {
-                          "type": "string",
-                          "description": "Representative birth date",
-                          "minLength": 1
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "Representative email",
-                          "format": "email"
-                        },
-                        "type": {
-                          "type": "string",
-                          "enum": ["ADMIN"]
-                        },
-                        "taxID": {
-                          "type": "string",
-                          "description": "Representative tax ID",
-                          "minLength": 1
-                        },
-                        "address": {
-                          "type": "object",
-                          "required": [
-                            "zipcode",
-                            "street",
-                            "number",
-                            "neighborhood",
-                            "city",
-                            "state",
-                            "taxID"
-                          ],
-                          "properties": {
-                            "zipcode": {
-                              "type": "string",
-                              "description": "Address zip code",
-                              "minLength": 1
-                            },
-                            "street": {
-                              "type": "string",
-                              "description": "Street name",
-                              "minLength": 1
-                            },
-                            "number": {
-                              "type": "string",
-                              "description": "Street number",
-                              "minLength": 1
-                            },
-                            "neighborhood": {
-                              "type": "string",
-                              "description": "Neighborhood",
-                              "minLength": 1
-                            },
-                            "city": {
-                              "type": "string",
-                              "description": "City",
-                              "minLength": 1
-                            },
-                            "state": {
-                              "type": "string",
-                              "description": "State",
-                              "minLength": 1
-                            },
-                            "complement": {
-                              "type": "string",
-                              "description": "Address complement"
-                            },
-                            "taxID": {
-                              "type": "string",
-                              "description": "Tax ID",
-                              "minLength": 1
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "billingAddress": {
-                    "type": "object",
-                    "required": [
-                      "zipcode",
-                      "street",
-                      "number",
-                      "neighborhood",
-                      "city"
-                    ],
-                    "properties": {
-                      "zipcode": {
-                        "type": "string",
-                        "description": "Billing address zip code",
-                        "minLength": 1
-                      },
-                      "street": {
-                        "type": "string",
-                        "description": "Street name",
-                        "minLength": 1
-                      },
-                      "number": {
-                        "type": "string",
-                        "description": "Street number",
-                        "minLength": 1
-                      },
-                      "neighborhood": {
-                        "type": "string",
-                        "description": "Neighborhood",
-                        "minLength": 1
-                      },
-                      "city": {
-                        "type": "string",
-                        "description": "City",
-                        "minLength": 1
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "officialName",
-                  "tradeName",
-                  "taxID",
-                  "billingAddress"
-                ]
-              },
-              "examples": {
-                "ValidAccountRegister": {
-                  "value": {
-                    "officialName": "Company Official Name",
-                    "tradeName": "Company Trade Name",
-                    "taxID": "12345678901234",
-                    "billingAddress": {
-                      "zipcode": "12345678",
-                      "street": "Test Street",
-                      "number": "123",
-                      "neighborhood": "Test Neighborhood",
-                      "city": "Test City"
-                    },
-                    "representatives": [
-                      {
-                        "name": "John Doe",
-                        "birthDate": "1990-01-01",
-                        "email": "john@example.com",
-                        "taxID": "12345678901",
-                        "type": "ADMIN",
-                        "address": {
-                          "zipcode": "12345678",
-                          "street": "Test Street",
-                          "number": "123",
-                          "neighborhood": "Test Neighborhood",
-                          "city": "Test City",
-                          "state": "ST",
-                          "taxID": {
-                            "taxID": "12345678901",
-                            "type": "BR_CPF"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Account successfully registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "officialName": {
-                      "type": "string",
-                      "example": "Company Official Name"
-                    },
-                    "tradeName": {
-                      "type": "string",
-                      "example": "Company Trade Name"
-                    },
-                    "taxID": {
-                      "type": "object",
-                      "properties": {
-                        "taxID": {
-                          "type": "string",
-                          "example": "12345678901234"
-                        }
-                      }
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "PENDING"
-                    },
-                    "requestedDocuments": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "missingDocumentsDescription": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "An error message",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "code": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              },
-                              "path": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
                 "examples": {
-                  "MissingAuthorization": {
+                  "AccountRegisterNotFound": {
                     "value": {
-                      "error": "Invalid Authorization header"
+                      "error": "Account register not found"
                     }
                   },
-                  "CompanyNotFound": {
+                  "DeleteFailed": {
                     "value": {
-                      "error": "Company not found"
-                    }
-                  },
-                  "ValidationError": {
-                    "value": {
-                      "error": [
-                        {
-                          "code": "too_small",
-                          "minimum": 1,
-                          "type": "string",
-                          "inclusive": true,
-                          "message": "Official name is required",
-                          "path": ["officialName"]
-                        }
-                      ]
+                      "error": "Failed to delete account register"
                     }
                   }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden action",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "error": "This feature is not enabled for your company. Contact us to active."
                 }
               }
             }
@@ -894,41 +453,12 @@
             }
           }
         },
-        "x-codeSamples": [
-          {
-            "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account-register',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  officialName: 'string',\n  tradeName: 'string',\n  taxID: 'string',\n  documents: [{url: 'string', type: 'SOCIAL_CONTRACT'}],\n  representatives: [\n    {\n      name: 'string',\n      documents: [{url: 'string', type: 'IDENTITY_FRONT'}],\n      birthDate: 'string',\n      email: 'user@example.com',\n      type: 'ADMIN',\n      taxID: 'string',\n      address: {\n        zipcode: 'string',\n        street: 'string',\n        number: 'string',\n        neighborhood: 'string',\n        city: 'string',\n        state: 'string',\n        complement: 'string',\n        taxID: 'string'\n      }\n    }\n  ],\n  billingAddress: {\n    zipcode: 'string',\n    street: 'string',\n    number: 'string',\n    neighborhood: 'string',\n    city: 'string'\n  }\n}));\nreq.end();"
-          },
-          {
-            "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/account-register \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"}}'"
-          },
-          {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account-register\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'officialName' => 'string',\n    'tradeName' => 'string',\n    'taxID' => 'string',\n    'documents' => [\n        [\n                'url' => 'string',\n                'type' => 'SOCIAL_CONTRACT'\n        ]\n    ],\n    'representatives' => [\n        [\n                'name' => 'string',\n                'documents' => [\n                                [\n                                                                'url' => 'string',\n                                                                'type' => 'IDENTITY_FRONT'\n                                ]\n                ],\n                'birthDate' => 'string',\n                'email' => 'user@example.com',\n                'type' => 'ADMIN',\n                'taxID' => 'string',\n                'address' => [\n                                'zipcode' => 'string',\n                                'street' => 'string',\n                                'number' => 'string',\n                                'neighborhood' => 'string',\n                                'city' => 'string',\n                                'state' => 'string',\n                                'complement' => 'string',\n                                'taxID' => 'string'\n                ]\n        ]\n    ],\n    'billingAddress' => [\n        'zipcode' => 'string',\n        'street' => 'string',\n        'number' => 'string',\n        'neighborhood' => 'string',\n        'city' => 'string'\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/account-register\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
-          },
-          {
-            "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-          },
-          {
-            "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account-register\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
-          },
-          {
-            "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account-register\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"}}\"\n\nresponse = http.request(request)\nputs response.read_body"
-          }
-        ]
-      }
-    },
-    "/api/v1/account-register/{id}": {
+        "x-codeSamples": []
+      },
       "patch": {
-        "tags": ["account register"],
+        "tags": [
+          "account register"
+        ],
         "summary": "Update an existing account registration",
         "description": "Updates documents and representatives for an existing account registration in PENDING status",
         "parameters": [
@@ -955,7 +485,9 @@
                     "description": "Company documents to update",
                     "items": {
                       "type": "object",
-                      "required": ["url"],
+                      "required": [
+                        "url"
+                      ],
                       "properties": {
                         "url": {
                           "type": "string",
@@ -964,7 +496,11 @@
                         },
                         "type": {
                           "type": "string",
-                          "enum": ["SOCIAL_CONTRACT", "ATA", "BYLAWS"]
+                          "enum": [
+                            "SOCIAL_CONTRACT",
+                            "ATA",
+                            "BYLAWS"
+                          ]
                         }
                       }
                     }
@@ -991,7 +527,10 @@
                           "type": "array",
                           "items": {
                             "type": "object",
-                            "required": ["url", "type"],
+                            "required": [
+                              "url",
+                              "type"
+                            ],
                             "properties": {
                               "url": {
                                 "type": "string",
@@ -1023,7 +562,9 @@
                         },
                         "type": {
                           "type": "string",
-                          "enum": ["ADMIN"]
+                          "enum": [
+                            "ADMIN"
+                          ]
                         },
                         "taxID": {
                           "type": "string",
@@ -1085,6 +626,22 @@
                         }
                       }
                     }
+                  },
+                  "businessDescription": {
+                    "type": "string",
+                    "description": "Business segment/industry"
+                  },
+                  "businessProduct": {
+                    "type": "string",
+                    "description": "Services the company provides"
+                  },
+                  "businessLifetime": {
+                    "type": "string",
+                    "description": "How long the company has been operating in the market"
+                  },
+                  "businessGoal": {
+                    "type": "string",
+                    "description": "Objective when using Woovi"
                   }
                 }
               },
@@ -1097,6 +654,10 @@
                         "type": "SOCIAL_CONTRACT"
                       }
                     ],
+                    "businessDescription": "Updated Technology and Financial Services",
+                    "businessProduct": "Updated digital payment solutions and banking services",
+                    "businessLifetime": "5 years",
+                    "businessGoal": "Updated goal to expand digital payment capabilities",
                     "representatives": [
                       {
                         "name": "Jane Smith",
@@ -1239,7 +800,11 @@
                           "expected": "string",
                           "received": "undefined",
                           "message": "Representative name is required",
-                          "path": ["representatives", 0, "name"]
+                          "path": [
+                            "representatives",
+                            0,
+                            "name"
+                          ]
                         }
                       ]
                     }
@@ -1302,9 +867,650 @@
         "x-codeSamples": []
       }
     },
+    "/api/v1/account-register": {
+      "get": {
+        "tags": [
+          "account register"
+        ],
+        "summary": "Get account register by Tax ID",
+        "description": "Retrieves an existing account registration by Tax ID",
+        "parameters": [
+          {
+            "name": "taxID",
+            "in": "query",
+            "required": true,
+            "description": "Tax ID of the company to retrieve",
+            "schema": {
+              "type": "string",
+              "example": "12345678901234"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account register found and returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "officialName": {
+                      "type": "string",
+                      "example": "Company Official Name"
+                    },
+                    "tradeName": {
+                      "type": "string",
+                      "example": "Company Trade Name"
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "BAAS"
+                    },
+                    "taxID": {
+                      "type": "object",
+                      "properties": {
+                        "taxID": {
+                          "type": "string",
+                          "example": "12345678901234"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "BR_CNPJ"
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "PENDING"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - validation error or missing authorization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "ValidationError": {
+                    "value": {
+                      "error": [
+                        {
+                          "code": "too_small",
+                          "minimum": 1,
+                          "type": "string",
+                          "inclusive": true,
+                          "exact": false,
+                          "message": "Tax ID is required",
+                          "path": [
+                            "taxID"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account register not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Account register not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account-register?taxID=12345678901234',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/account-register?taxID=12345678901234\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account-register?taxID=12345678901234\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "account register"
+        ],
+        "summary": "Register a new account",
+        "description": "Creates a new account registration with the provided details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "officialName": {
+                    "type": "string",
+                    "description": "Official name of the company",
+                    "minLength": 1
+                  },
+                  "tradeName": {
+                    "type": "string",
+                    "description": "Trade name of the company",
+                    "minLength": 1
+                  },
+                  "taxID": {
+                    "type": "string",
+                    "description": "Tax ID of the company",
+                    "minLength": 1
+                  },
+                  "documents": {
+                    "type": "array",
+                    "description": "Company documents",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "description": "Document URL",
+                          "minLength": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "SOCIAL_CONTRACT",
+                            "ATA",
+                            "BYLAWS"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "representatives": {
+                    "type": "array",
+                    "description": "Company representatives (sócio)",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "birthDate",
+                        "email",
+                        "taxID",
+                        "address"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Representative name",
+                          "minLength": 1
+                        },
+                        "documents": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "url",
+                              "type"
+                            ],
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "Document URL",
+                                "minLength": 1
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "IDENTITY_FRONT",
+                                  "IDENTITY_BACK",
+                                  "CNH_FRONT",
+                                  "CNH_BACK",
+                                  "PICTURE"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "birthDate": {
+                          "type": "string",
+                          "description": "Representative birth date",
+                          "minLength": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "Representative email",
+                          "format": "email"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "ADMIN"
+                          ]
+                        },
+                        "taxID": {
+                          "type": "string",
+                          "description": "Representative tax ID",
+                          "minLength": 1
+                        },
+                        "address": {
+                          "type": "object",
+                          "required": [
+                            "zipcode",
+                            "street",
+                            "number",
+                            "neighborhood",
+                            "city",
+                            "state",
+                            "taxID"
+                          ],
+                          "properties": {
+                            "zipcode": {
+                              "type": "string",
+                              "description": "Address zip code",
+                              "minLength": 1
+                            },
+                            "street": {
+                              "type": "string",
+                              "description": "Street name",
+                              "minLength": 1
+                            },
+                            "number": {
+                              "type": "string",
+                              "description": "Street number",
+                              "minLength": 1
+                            },
+                            "neighborhood": {
+                              "type": "string",
+                              "description": "Neighborhood",
+                              "minLength": 1
+                            },
+                            "city": {
+                              "type": "string",
+                              "description": "City",
+                              "minLength": 1
+                            },
+                            "state": {
+                              "type": "string",
+                              "description": "State",
+                              "minLength": 1
+                            },
+                            "complement": {
+                              "type": "string",
+                              "description": "Address complement"
+                            },
+                            "taxID": {
+                              "type": "string",
+                              "description": "Tax ID",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "billingAddress": {
+                    "type": "object",
+                    "required": [
+                      "zipcode",
+                      "street",
+                      "number",
+                      "neighborhood",
+                      "city"
+                    ],
+                    "properties": {
+                      "zipcode": {
+                        "type": "string",
+                        "description": "Billing address zip code",
+                        "minLength": 1
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "Street name",
+                        "minLength": 1
+                      },
+                      "number": {
+                        "type": "string",
+                        "description": "Street number",
+                        "minLength": 1
+                      },
+                      "neighborhood": {
+                        "type": "string",
+                        "description": "Neighborhood",
+                        "minLength": 1
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "businessDescription": {
+                    "type": "string",
+                    "description": "Business segment/industry"
+                  },
+                  "businessProduct": {
+                    "type": "string",
+                    "description": "Services the company provides"
+                  },
+                  "businessLifetime": {
+                    "type": "string",
+                    "description": "How long the company has been operating in the market"
+                  },
+                  "businessGoal": {
+                    "type": "string",
+                    "description": "Objective when using Woovi"
+                  }
+                },
+                "required": [
+                  "officialName",
+                  "tradeName",
+                  "taxID",
+                  "billingAddress"
+                ]
+              },
+              "examples": {
+                "ValidAccountRegister": {
+                  "value": {
+                    "officialName": "Company Official Name",
+                    "tradeName": "Company Trade Name",
+                    "taxID": "12345678901234",
+                    "billingAddress": {
+                      "zipcode": "12345678",
+                      "street": "Test Street",
+                      "number": "123",
+                      "neighborhood": "Test Neighborhood",
+                      "city": "Test City"
+                    },
+                    "businessDescription": "Technology and Financial Services",
+                    "businessProduct": "Digital payment solutions and banking services",
+                    "businessLifetime": "3 years",
+                    "businessGoal": "To expand digital payment capabilities and improve customer experience",
+                    "representatives": [
+                      {
+                        "name": "John Doe",
+                        "birthDate": "1990-01-01",
+                        "email": "john@example.com",
+                        "taxID": "12345678901",
+                        "type": "ADMIN",
+                        "address": {
+                          "zipcode": "12345678",
+                          "street": "Test Street",
+                          "number": "123",
+                          "neighborhood": "Test Neighborhood",
+                          "city": "Test City",
+                          "state": "ST",
+                          "taxID": {
+                            "taxID": "12345678901",
+                            "type": "BR_CPF"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "officialName": {
+                      "type": "string",
+                      "example": "Company Official Name"
+                    },
+                    "tradeName": {
+                      "type": "string",
+                      "example": "Company Trade Name"
+                    },
+                    "taxID": {
+                      "type": "object",
+                      "properties": {
+                        "taxID": {
+                          "type": "string",
+                          "example": "12345678901234"
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "PENDING"
+                    },
+                    "requestedDocuments": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "missingDocumentsDescription": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "ValidationError": {
+                    "value": {
+                      "error": [
+                        {
+                          "code": "too_small",
+                          "minimum": 1,
+                          "type": "string",
+                          "inclusive": true,
+                          "message": "Official name is required",
+                          "path": [
+                            "officialName"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden action",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "This feature is not enabled for your company. Contact us to active."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account-register',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  officialName: 'string',\n  tradeName: 'string',\n  taxID: 'string',\n  documents: [{url: 'string', type: 'SOCIAL_CONTRACT'}],\n  representatives: [\n    {\n      name: 'string',\n      documents: [{url: 'string', type: 'IDENTITY_FRONT'}],\n      birthDate: 'string',\n      email: 'user@example.com',\n      type: 'ADMIN',\n      taxID: 'string',\n      address: {\n        zipcode: 'string',\n        street: 'string',\n        number: 'string',\n        neighborhood: 'string',\n        city: 'string',\n        state: 'string',\n        complement: 'string',\n        taxID: 'string'\n      }\n    }\n  ],\n  billingAddress: {\n    zipcode: 'string',\n    street: 'string',\n    number: 'string',\n    neighborhood: 'string',\n    city: 'string'\n  },\n  businessDescription: 'string',\n  businessProduct: 'string',\n  businessLifetime: 'string',\n  businessGoal: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/account-register \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account-register\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'officialName' => 'string',\n    'tradeName' => 'string',\n    'taxID' => 'string',\n    'documents' => [\n        [\n                'url' => 'string',\n                'type' => 'SOCIAL_CONTRACT'\n        ]\n    ],\n    'representatives' => [\n        [\n                'name' => 'string',\n                'documents' => [\n                                [\n                                                                'url' => 'string',\n                                                                'type' => 'IDENTITY_FRONT'\n                                ]\n                ],\n                'birthDate' => 'string',\n                'email' => 'user@example.com',\n                'type' => 'ADMIN',\n                'taxID' => 'string',\n                'address' => [\n                                'zipcode' => 'string',\n                                'street' => 'string',\n                                'number' => 'string',\n                                'neighborhood' => 'string',\n                                'city' => 'string',\n                                'state' => 'string',\n                                'complement' => 'string',\n                                'taxID' => 'string'\n                ]\n        ]\n    ],\n    'billingAddress' => [\n        'zipcode' => 'string',\n        'street' => 'string',\n        'number' => 'string',\n        'neighborhood' => 'string',\n        'city' => 'string'\n    ],\n    'businessDescription' => 'string',\n    'businessProduct' => 'string',\n    'businessLifetime' => 'string',\n    'businessGoal' => 'string'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/account-register\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account-register\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account-register\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
     "/api/v1/account/{accountId}/withdraw": {
       "post": {
-        "tags": ["account"],
+        "tags": [
+          "account"
+        ],
         "summary": "Withdraw from an Account",
         "description": "An additional fee may be charged depending on the minimum free withdrawal amount. See more about at https://developers.openpix.com.br/docs/FAQ/faq-virtual-account/#onde-posso-consultar-as-taxas-da-minha-conta-virtual",
         "parameters": [
@@ -1431,7 +1637,9 @@
     },
     "/api/v1/application": {
       "delete": {
-        "tags": ["application"],
+        "tags": [
+          "application"
+        ],
         "summary": "Delete an application",
         "description": "Deactivates an application by setting isActive to false and adding a removedAt timestamp",
         "requestBody": {
@@ -1447,7 +1655,9 @@
                     "description": "The client ID of the application to delete"
                   }
                 },
-                "required": ["clientId"]
+                "required": [
+                  "clientId"
+                ]
               },
               "examples": {
                 "Application": {
@@ -1595,7 +1805,9 @@
         ]
       },
       "post": {
-        "tags": ["application"],
+        "tags": [
+          "application"
+        ],
         "summary": "Create a new application",
         "description": "Creates a new application for a company",
         "requestBody": {
@@ -1765,7 +1977,9 @@
     },
     "/api/v1/cashback-fidelity/balance/{taxID}": {
       "get": {
-        "tags": ["cashback-fidelity"],
+        "tags": [
+          "cashback-fidelity"
+        ],
         "summary": "Get the exclusive cashback amount an user still has to receive by taxID.",
         "parameters": [
           {
@@ -1852,7 +2066,9 @@
     },
     "/api/v1/cashback-fidelity": {
       "post": {
-        "tags": ["cashback-fidelity"],
+        "tags": [
+          "cashback-fidelity"
+        ],
         "summary": "Get or create cashback for a customer.",
         "description": "Create a new cashback exclusive for the customer with a given taxID. If the customer already has a pending excluisve cashback, this endpoint will return it instead.",
         "requestBody": {
@@ -1983,7 +2199,9 @@
     },
     "/openpix/charge/brcode/image/{:id}.png?size=1024": {
       "get": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Get an image of Qr Code from a Charge",
         "parameters": [
           {
@@ -2040,7 +2258,9 @@
     },
     "/api/image/qrcode/base64/{:id}": {
       "get": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Get a base64 encoded QR Code image from a Charge",
         "parameters": [
           {
@@ -2140,13 +2360,15 @@
     },
     "/api/v1/charge/{id}": {
       "delete": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Delete a charge",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "charge ID, correlation ID or identifier ID. You will need URI encoding if your correlation ID has characters outside the ASCII set or reserved characters (%, \\#, /).",
+            "description": "charge ID or correlation ID. You will need URI encoding if your correlation ID has characters outside the ASCII set or reserved characters (%, \\#, /).",
             "required": true,
             "schema": {
               "type": "string"
@@ -2157,9 +2379,6 @@
               },
               "correlationID": {
                 "value": "fe7834b4060c488a9b0f89811be5f5cf"
-              },
-              "identifierID": {
-                "value": "15487ffa08754484838a471046de2045"
               }
             }
           }
@@ -2236,7 +2455,9 @@
         ]
       },
       "patch": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Edit expiration date of a charge",
         "parameters": [
           {
@@ -2394,7 +2615,9 @@
         ]
       },
       "get": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Get one charge",
         "parameters": [
           {
@@ -2529,7 +2752,9 @@
     },
     "/api/v1/charge": {
       "get": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Get a list of charges",
         "parameters": [
           {
@@ -2559,7 +2784,11 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["ACTIVE", "COMPLETED", "EXPIRED"]
+              "enum": [
+                "ACTIVE",
+                "COMPLETED",
+                "EXPIRED"
+              ]
             }
           },
           {
@@ -2748,7 +2977,9 @@
         ]
       },
       "post": {
-        "tags": ["charge"],
+        "tags": [
+          "charge"
+        ],
         "summary": "Create a new Charge",
         "parameters": [
           {
@@ -3066,7 +3297,9 @@
     },
     "/api/v1/charge/{id}/refund": {
       "get": {
-        "tags": ["charge refund"],
+        "tags": [
+          "charge refund"
+        ],
         "summary": "Get all refunds of a charge",
         "description": "Endpoint to get all refunds of a charge",
         "parameters": [
@@ -3174,7 +3407,9 @@
         ]
       },
       "post": {
-        "tags": ["charge refund"],
+        "tags": [
+          "charge refund"
+        ],
         "summary": "Create a new refund for a charge",
         "description": "Endpoint to create a new refund for a charge",
         "parameters": [
@@ -3289,7 +3524,9 @@
     },
     "/api/v1/company": {
       "get": {
-        "tags": ["company"],
+        "tags": [
+          "company"
+        ],
         "summary": "Get a Company",
         "responses": {
           "200": {
@@ -3379,7 +3616,9 @@
     },
     "/api/v1/customer/{id}": {
       "get": {
-        "tags": ["customer"],
+        "tags": [
+          "customer"
+        ],
         "summary": "Get one customer",
         "parameters": [
           {
@@ -3479,7 +3718,9 @@
     },
     "/api/v1/customer": {
       "get": {
-        "tags": ["customer"],
+        "tags": [
+          "customer"
+        ],
         "summary": "Get a list of customers",
         "responses": {
           "200": {
@@ -3610,7 +3851,9 @@
         ]
       },
       "post": {
-        "tags": ["customer"],
+        "tags": [
+          "customer"
+        ],
         "summary": "Create a new Customer",
         "description": "Endpoint to create a new Customer",
         "requestBody": {
@@ -3729,7 +3972,9 @@
     },
     "/api/v1/customer/{correlationID}": {
       "patch": {
-        "tags": ["customer"],
+        "tags": [
+          "customer"
+        ],
         "summary": "Update a Customer",
         "parameters": [
           {
@@ -3862,7 +4107,9 @@
     },
     "/api/v1/dispute/{id}": {
       "get": {
-        "tags": ["dispute"],
+        "tags": [
+          "dispute"
+        ],
         "summary": "Get one dispute",
         "parameters": [
           {
@@ -4009,7 +4256,9 @@
     },
     "/api/v1/dispute": {
       "get": {
-        "tags": ["dispute"],
+        "tags": [
+          "dispute"
+        ],
         "summary": "Get a list of disputes",
         "parameters": [
           {
@@ -4167,7 +4416,9 @@
     },
     "/api/v1/partner/application": {
       "post": {
-        "tags": ["partner (request access)"],
+        "tags": [
+          "partner (request access)"
+        ],
         "summary": "Create a new application to some of your preregistration's company.",
         "description": "As a partner company, you can create a new application to some of your companies.\nThe application should give access to our API to this companies, so they can use\nit too.\n",
         "requestBody": {
@@ -4189,11 +4440,17 @@
                         "$ref": "#/components/schemas/ApplicationEnumTypePayload"
                       }
                     },
-                    "required": ["name", "type"]
+                    "required": [
+                      "name",
+                      "type"
+                    ]
                   },
                   "taxID": {
                     "$ref": "#/components/schemas/TaxIDObjectPayload",
-                    "required": ["taxID", "type"]
+                    "required": [
+                      "taxID",
+                      "type"
+                    ]
                   }
                 }
               },
@@ -4306,7 +4563,9 @@
     },
     "/api/v1/partner/company/{taxID}": {
       "get": {
-        "tags": ["partner (request access)"],
+        "tags": [
+          "partner (request access)"
+        ],
         "summary": "Get an specific preregistration via taxID param.",
         "parameters": [
           {
@@ -4348,7 +4607,10 @@
                           "$ref": "#/components/schemas/AccountObjectPayload"
                         }
                       },
-                      "required": ["preRegistration", "user"]
+                      "required": [
+                        "preRegistration",
+                        "user"
+                      ]
                     }
                   }
                 }
@@ -4405,7 +4667,9 @@
     },
     "/api/v1/partner/company": {
       "get": {
-        "tags": ["partner (request access)"],
+        "tags": [
+          "partner (request access)"
+        ],
         "summary": "Get every preregistration that is managed by you.",
         "responses": {
           "200": {
@@ -4433,7 +4697,10 @@
                             "$ref": "#/components/schemas/AccountObjectPayload"
                           }
                         },
-                        "required": ["preRegistration", "user"]
+                        "required": [
+                          "preRegistration",
+                          "user"
+                        ]
                       }
                     },
                     "pageInfo": {
@@ -4531,7 +4798,9 @@
         ]
       },
       "post": {
-        "tags": ["partner (request access)"],
+        "tags": [
+          "partner (request access)"
+        ],
         "summary": "Create a pre registration with a partner reference (your company)",
         "description": "As a partner company, you can create a new pre registration referencing your\ncompany as a partner.\n",
         "requestBody": {
@@ -4652,7 +4921,9 @@
     },
     "/api/v1/payment/approve": {
       "post": {
-        "tags": ["payment (request access)"],
+        "tags": [
+          "payment (request access)"
+        ],
         "summary": "Approve a Payment Request",
         "description": "Endpoint to approve a payment",
         "requestBody": {
@@ -4767,7 +5038,9 @@
     },
     "/api/v1/payment/{id}": {
       "get": {
-        "tags": ["payment (request access)"],
+        "tags": [
+          "payment (request access)"
+        ],
         "summary": "Get one Payment",
         "parameters": [
           {
@@ -4886,7 +5159,9 @@
     },
     "/api/v1/payment": {
       "get": {
-        "tags": ["payment (request access)"],
+        "tags": [
+          "payment (request access)"
+        ],
         "summary": "Get a list of payments",
         "responses": {
           "200": {
@@ -5046,7 +5321,9 @@
         ]
       },
       "post": {
-        "tags": ["payment (request access)"],
+        "tags": [
+          "payment (request access)"
+        ],
         "summary": "Create a Payment Request",
         "description": "Endpoint to request a payment",
         "requestBody": {
@@ -5242,7 +5519,9 @@
     },
     "/api/v1/pix-keys/{pixKey}/check": {
       "get": {
-        "tags": ["pixKey"],
+        "tags": [
+          "pixKey"
+        ],
         "summary": "Check data from a Pix key",
         "description": "Get data from a Pix key if it exists",
         "parameters": [
@@ -5348,7 +5627,9 @@
     },
     "/api/v1/pix-keys/:pixKey/default": {
       "post": {
-        "tags": ["pixKey"],
+        "tags": [
+          "pixKey"
+        ],
         "summary": "Set a pix key as default",
         "description": "Set a pix key as default",
         "parameters": [
@@ -5408,7 +5689,9 @@
     },
     "/api/v1/pix-keys/{pixKey}": {
       "delete": {
-        "tags": ["pixKey"],
+        "tags": [
+          "pixKey"
+        ],
         "summary": "Delete a Pix key",
         "description": "Deletes a specific Pix key, you cannot delete the default pix key",
         "parameters": [
@@ -5444,7 +5727,9 @@
     },
     "/api/v1/pix-keys": {
       "get": {
-        "tags": ["pixKey"],
+        "tags": [
+          "pixKey"
+        ],
         "summary": "Get all Pix keys",
         "description": "Retrieves a list of all Pix keys",
         "responses": {
@@ -5512,7 +5797,9 @@
         ]
       },
       "post": {
-        "tags": ["pixKey"],
+        "tags": [
+          "pixKey"
+        ],
         "summary": "Create a new Pix key",
         "description": "Creates a new Pix key",
         "requestBody": {
@@ -5580,7 +5867,9 @@
     },
     "/api/v1/pix-keys/tokens": {
       "get": {
-        "tags": ["pixKey"],
+        "tags": [
+          "pixKey"
+        ],
         "summary": "Get tokens data",
         "description": "Get tokens data",
         "responses": {
@@ -5629,7 +5918,9 @@
     },
     "/api/v1/qrcode-static/{id}": {
       "get": {
-        "tags": ["pixQrCode"],
+        "tags": [
+          "pixQrCode"
+        ],
         "summary": "Get one Pix QrCode",
         "parameters": [
           {
@@ -5735,7 +6026,9 @@
     },
     "/api/v1/qrcode-static": {
       "get": {
-        "tags": ["pixQrCode"],
+        "tags": [
+          "pixQrCode"
+        ],
         "summary": "Get a list of Pix QrCodes",
         "responses": {
           "200": {
@@ -5868,7 +6161,9 @@
         ]
       },
       "post": {
-        "tags": ["pixQrCode"],
+        "tags": [
+          "pixQrCode"
+        ],
         "summary": "Create a new Pix QrCode Static",
         "description": "Endpoint to create a new Pix QrCode Static",
         "requestBody": {
@@ -5975,7 +6270,9 @@
     },
     "/api/v1/transaction/{id}": {
       "get": {
-        "tags": ["transactions"],
+        "tags": [
+          "transactions"
+        ],
         "summary": "Get a Transaction",
         "parameters": [
           {
@@ -6157,7 +6454,9 @@
         }
       ],
       "get": {
-        "tags": ["transactions"],
+        "tags": [
+          "transactions"
+        ],
         "summary": "Get a list of transactions",
         "responses": {
           "200": {
@@ -6323,7 +6622,9 @@
     },
     "/api/v1/refund/{id}": {
       "get": {
-        "tags": ["refund"],
+        "tags": [
+          "refund"
+        ],
         "summary": "Get one refund",
         "parameters": [
           {
@@ -6420,7 +6721,9 @@
     },
     "/api/v1/refund": {
       "get": {
-        "tags": ["refund"],
+        "tags": [
+          "refund"
+        ],
         "summary": "Get a list of refunds",
         "responses": {
           "200": {
@@ -6550,7 +6853,9 @@
         ]
       },
       "post": {
-        "tags": ["refund"],
+        "tags": [
+          "refund"
+        ],
         "summary": "Create a new refund",
         "description": "Endpoint to create a new refund for a customer",
         "requestBody": {
@@ -6647,7 +6952,9 @@
     },
     "/api/v1/psp": {
       "get": {
-        "tags": ["psp"],
+        "tags": [
+          "psp"
+        ],
         "summary": "Get a list of PSPs (Payment Service Providers)",
         "parameters": [
           {
@@ -6817,10 +7124,114 @@
         ]
       }
     },
-
+    "/api/v1/receipt/{EndToEndId}": {
+      "get": {
+        "tags": [
+          "receipt"
+        ],
+        "summary": "Get a PDF document related to a payment transaction formatted as a receipt.",
+        "parameters": [
+          {
+            "name": "EndToEndId",
+            "in": "path",
+            "description": "The EndToEndId from the payment transaction to export.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "endToEndId": {
+                "value": "E12345678202406201221abcdef12345"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exported transaction as a receipt in PDF format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "description": "The name of the exported PDF file.",
+                      "example": "file.pdf"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error occurred due to a bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified EndToEndId was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/receipt/E12345678202406201221abcdef12345',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345 \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/receipt/E12345678202406201221abcdef12345\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
     "/api/v1/receipt/{receiptType}/{EndToEndId}": {
       "get": {
-        "tags": ["receipt"],
+        "tags": [
+          "receipt"
+        ],
         "summary": "Get a PDF document related to a payment transaction formatted as a receipt by type (pix-in, pix-out or pix-refund).",
         "parameters": [
           {
@@ -6830,7 +7241,11 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["pix-in", "pix-out", "pix-refund"]
+              "enum": [
+                "pix-in",
+                "pix-out",
+                "pix-refund"
+              ]
             },
             "examples": {
               "pix-in": {
@@ -6913,9 +7328,54 @@
     },
     "/api/v1/statement": {
       "get": {
-        "tags": ["statement"],
+        "tags": [
+          "statement"
+        ],
         "summary": "Get statement by company",
         "description": "Retrieves the statement/ledger entries for a company's bank account",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Start date for filtering transactions",
+              "example": "2023-12-01T00:00:00.000Z"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "End date for filtering transactions",
+              "example": "2023-12-31T23:59:59.999Z"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of records to skip for pagination",
+              "example": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Maximum number of records to return",
+              "example": 20
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Statement retrieved successfully",
@@ -7045,38 +7505,40 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/statement',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/statement \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/statement\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/statement\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/statement\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/statement\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
     },
     "/api/v1/subaccount/{id}/withdraw": {
       "post": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Withdraw from a Sub Account",
         "description": "Withdraw from a Sub Account and return the withdrawal transaction information",
         "parameters": [
@@ -7192,7 +7654,9 @@
     },
     "/api/v1/subaccount/{id}": {
       "delete": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Delete a Sub Account",
         "description": "Deletes a Sub Account if it has no remaining balance",
         "parameters": [
@@ -7316,7 +7780,9 @@
         ]
       },
       "get": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Get subaccount details",
         "parameters": [
           {
@@ -7408,7 +7874,9 @@
     },
     "/api/v1/subaccount": {
       "get": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Get a list of subaccounts",
         "responses": {
           "200": {
@@ -7546,7 +8014,9 @@
         ]
       },
       "post": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Create a subaccount",
         "requestBody": {
           "description": "Data to create a new subAccount or retrieve existing one",
@@ -7641,7 +8111,9 @@
     },
     "/api/v1/subaccount/{id}/debit": {
       "post": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Debit from a Sub Account and send to the main account",
         "description": "Transfers the amount from the subaccount to the main account.",
         "parameters": [
@@ -7672,7 +8144,9 @@
                     "description": "Optional description for the debit operation"
                   }
                 },
-                "required": ["value"]
+                "required": [
+                  "value"
+                ]
               },
               "examples": {
                 "ValidDebit": {
@@ -7814,7 +8288,9 @@
     },
     "/api/v1/subaccount/transfer": {
       "post": {
-        "tags": ["subaccount"],
+        "tags": [
+          "subaccount"
+        ],
         "summary": "Transfer between subaccounts",
         "description": "Transfer between subaccounts",
         "requestBody": {
@@ -7915,7 +8391,9 @@
     },
     "/api/v1/subscriptions/{id}": {
       "get": {
-        "tags": ["subscription"],
+        "tags": [
+          "subscription"
+        ],
         "summary": "Get one subscription",
         "parameters": [
           {
@@ -8014,7 +8492,9 @@
     },
     "/api/v1/subscriptions": {
       "post": {
-        "tags": ["subscription"],
+        "tags": [
+          "subscription"
+        ],
         "summary": "Create a new Subscription",
         "description": "Endpoint to create a new Subcription",
         "requestBody": {
@@ -8148,7 +8628,9 @@
     },
     "/api/v1/transfer": {
       "post": {
-        "tags": ["transfer (request access)"],
+        "tags": [
+          "transfer (request access)"
+        ],
         "summary": "Create a Transfer",
         "description": "Endpoint to to transfer values between accounts",
         "requestBody": {
@@ -8242,7 +8724,9 @@
     },
     "/api/v1/webhook/{id}": {
       "delete": {
-        "tags": ["webhook"],
+        "tags": [
+          "webhook"
+        ],
         "summary": "Delete a Webhook",
         "description": "Endpoint to delete a Webhook",
         "parameters": [
@@ -8344,7 +8828,9 @@
             "example": "https://mycompany.com.br/webhook"
           }
         ],
-        "tags": ["webhook"],
+        "tags": [
+          "webhook"
+        ],
         "summary": "Get a list of webhooks",
         "responses": {
           "200": {
@@ -8471,7 +8957,9 @@
         ]
       },
       "post": {
-        "tags": ["webhook"],
+        "tags": [
+          "webhook"
+        ],
         "summary": "Create a new Webhook",
         "description": "Endpoint to create a new Webhook",
         "requestBody": {
@@ -8936,7 +9424,9 @@
     },
     "/api/v1/webhook/ips": {
       "get": {
-        "tags": ["webhook"],
+        "tags": [
+          "webhook"
+        ],
         "summary": "Get a list of webhook IPs",
         "responses": {
           "200": {
@@ -8954,7 +9444,11 @@
                     }
                   },
                   "example": {
-                    "ips": ["189.51.60.9", "138.97.124.129", "177.71.136.66"]
+                    "ips": [
+                      "189.51.60.9",
+                      "138.97.124.129",
+                      "177.71.136.66"
+                    ]
                   }
                 }
               }
@@ -9073,7 +9567,12 @@
       },
       "AccountRegisterPayload": {
         "type": "object",
-        "required": ["officialName", "tradeName", "taxID", "annualRevenue"],
+        "required": [
+          "officialName",
+          "tradeName",
+          "taxID",
+          "annualRevenue"
+        ],
         "properties": {
           "officialName": {
             "type": "string",
@@ -9159,7 +9658,13 @@
           "type": {
             "type": "string",
             "description": "Type of the application (API, POS, PLUGIN, CHECKOUT)",
-            "enum": ["API", "POS", "PLUGIN", "CHECKOUT", "MASTER"]
+            "enum": [
+              "API",
+              "POS",
+              "PLUGIN",
+              "CHECKOUT",
+              "MASTER"
+            ]
           },
           "clientId": {
             "type": "string",
@@ -9196,7 +9701,9 @@
               "type": {
                 "type": "string",
                 "description": "Type of the application (API)",
-                "enum": ["API"]
+                "enum": [
+                  "API"
+                ]
               }
             }
           }
@@ -9223,7 +9730,11 @@
           },
           "type": {
             "type": "string",
-            "enum": ["DYNAMIC", "OVERDUE", "BOLETO"],
+            "enum": [
+              "DYNAMIC",
+              "OVERDUE",
+              "BOLETO"
+            ],
             "description": "Charge type is used to determine whether a charge will have a deadline, fines and interests"
           },
           "comment": {
@@ -9235,7 +9746,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["ACTIVE", "COMPLETED", "EXPIRED"]
+            "enum": [
+              "ACTIVE",
+              "COMPLETED",
+              "EXPIRED"
+            ]
           },
           "correlationID": {
             "type": "string",
@@ -9361,7 +9876,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["DYNAMIC", "OVERDUE"],
+            "enum": [
+              "DYNAMIC",
+              "OVERDUE"
+            ],
             "description": "Charge type is used to determine whether a charge will have a deadline, fines and interests"
           },
           "comment": {
@@ -9496,11 +10014,17 @@
                   ]
                 }
               },
-              "required": ["value", "pixKey"]
+              "required": [
+                "value",
+                "pixKey"
+              ]
             }
           }
         },
-        "required": ["correlationID", "value"]
+        "required": [
+          "correlationID",
+          "value"
+        ]
       },
       "ChargePatchPayload": {
         "type": "object",
@@ -9520,7 +10044,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["IN_PROCESSING", "CONFIRMED", "REJECTED"]
+            "enum": [
+              "IN_PROCESSING",
+              "CONFIRMED",
+              "REJECTED"
+            ]
           },
           "correlationID": {
             "type": "string",
@@ -9557,7 +10085,9 @@
             "maximum": 140
           }
         },
-        "required": ["correlationID"]
+        "required": [
+          "correlationID"
+        ]
       },
       "Company": {
         "type": "object",
@@ -9696,7 +10226,10 @@
                 }
               }
             },
-            "required": ["name", "taxID"]
+            "required": [
+              "name",
+              "taxID"
+            ]
           },
           {
             "type": "object",
@@ -9746,7 +10279,10 @@
                 }
               }
             },
-            "required": ["name", "email"]
+            "required": [
+              "name",
+              "email"
+            ]
           },
           {
             "type": "object",
@@ -9796,7 +10332,10 @@
                 }
               }
             },
-            "required": ["name", "phone"]
+            "required": [
+              "name",
+              "phone"
+            ]
           }
         ]
       },
@@ -9851,7 +10390,12 @@
         "properties": {
           "status": {
             "type": "string",
-            "enum": ["IN_REVIEW", "ACCEPTED", "REJECTED", "CANCELED"]
+            "enum": [
+              "IN_REVIEW",
+              "ACCEPTED",
+              "REJECTED",
+              "CANCELED"
+            ]
           },
           "name": {
             "type": "string",
@@ -9892,7 +10436,13 @@
         "properties": {
           "status": {
             "type": "string",
-            "enum": ["CREATED", "ACCEPTED", "REJECTED", "CANCELED", "IN_REVIEW"]
+            "enum": [
+              "CREATED",
+              "ACCEPTED",
+              "REJECTED",
+              "CANCELED",
+              "IN_REVIEW"
+            ]
           },
           "name": {
             "type": "string",
@@ -9938,7 +10488,11 @@
       "ApplicationEnumTypePayload": {
         "type": "string",
         "description": "Type of the application that you want to register. Each of this has some kind of permissions.",
-        "enum": ["API", "PLUGIN", "ORACLE"]
+        "enum": [
+          "API",
+          "PLUGIN",
+          "ORACLE"
+        ]
       },
       "TaxIDObjectPayload": {
         "type": "object",
@@ -9949,7 +10503,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["BR:CNPJ", "BR:CPF"]
+            "enum": [
+              "BR:CNPJ",
+              "BR:CPF"
+            ]
           }
         }
       },
@@ -9976,7 +10533,13 @@
             "$ref": "#/components/schemas/TaxIDObjectPayload"
           }
         },
-        "required": ["firstName", "lastName", "email", "phone", "taxID"]
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "taxID"
+        ]
       },
       "PreRegistrationObject": {
         "type": "object",
@@ -9993,7 +10556,10 @@
             "$ref": "#/components/schemas/TaxIDObjectPayload"
           }
         },
-        "required": ["name", "taxID"]
+        "required": [
+          "name",
+          "taxID"
+        ]
       },
       "PreRegistrationPayloadObject": {
         "type": "object",
@@ -10092,7 +10658,9 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["PIX_KEY"],
+                "enum": [
+                  "PIX_KEY"
+                ],
                 "description": "type of the payment"
               },
               "value": {
@@ -10105,7 +10673,13 @@
               },
               "destinationAliasType": {
                 "type": "string",
-                "enum": ["CPF", "CNPJ", "EMAIL", "PHONE", "RANDOM"],
+                "enum": [
+                  "CPF",
+                  "CNPJ",
+                  "EMAIL",
+                  "PHONE",
+                  "RANDOM"
+                ],
                 "description": "the type of the pix key the payment should be sent to"
               },
               "correlationID": {
@@ -10130,11 +10704,18 @@
           {
             "title": "QR Code",
             "type": "object",
-            "required": ["type", "qrCode", "correlationID", "pixKeyEndToEndId"],
+            "required": [
+              "type",
+              "qrCode",
+              "correlationID",
+              "pixKeyEndToEndId"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["QR_CODE"],
+                "enum": [
+                  "QR_CODE"
+                ],
                 "description": "type of the payment"
               },
               "qrCode": {
@@ -10175,7 +10756,9 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["MANUAL"],
+                "enum": [
+                  "MANUAL"
+                ],
                 "description": "type of the payment"
               },
               "value": {
@@ -10196,7 +10779,10 @@
               },
               "holder": {
                 "type": "object",
-                "required": ["name", "taxID"],
+                "required": [
+                  "name",
+                  "taxID"
+                ],
                 "properties": {
                   "name": {
                     "type": "string",
@@ -10204,7 +10790,10 @@
                   },
                   "taxID": {
                     "type": "object",
-                    "required": ["type", "taxID"],
+                    "required": [
+                      "type",
+                      "taxID"
+                    ],
                     "properties": {
                       "type": {
                         "type": "string",
@@ -10220,7 +10809,11 @@
               },
               "account": {
                 "type": "object",
-                "required": ["account", "branch", "accountType"],
+                "required": [
+                  "account",
+                  "branch",
+                  "accountType"
+                ],
                 "properties": {
                   "account": {
                     "type": "string",
@@ -10250,7 +10843,11 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["PIX_KEY", "QR_CODE", "MANUAL"],
+            "enum": [
+              "PIX_KEY",
+              "QR_CODE",
+              "MANUAL"
+            ],
             "description": "type of the payment"
           },
           "value": {
@@ -10263,7 +10860,13 @@
           },
           "destinationAliasType": {
             "type": "string",
-            "enum": ["CPF", "CNPJ", "EMAIL", "PHONE", "RANDOM"],
+            "enum": [
+              "CPF",
+              "CNPJ",
+              "EMAIL",
+              "PHONE",
+              "RANDOM"
+            ],
             "description": "the type of the pix key the payment should be sent to"
           },
           "qrCode": {
@@ -10281,7 +10884,12 @@
           "status": {
             "type": "string",
             "description": "payment status",
-            "enum": ["CREATED", "FAILED", "CONFIRMED", "DENIED"]
+            "enum": [
+              "CREATED",
+              "FAILED",
+              "CONFIRMED",
+              "DENIED"
+            ]
           }
         }
       },
@@ -10339,7 +10947,13 @@
           },
           "type": {
             "type": "string",
-            "enum": ["CPF", "CNPJ", "EMAIL", "PHONE", "EVP"]
+            "enum": [
+              "CPF",
+              "CNPJ",
+              "EMAIL",
+              "PHONE",
+              "EVP"
+            ]
           },
           "isDefault": {
             "type": "boolean"
@@ -10368,14 +10982,20 @@
       },
       "PixKeyCreate": {
         "type": "object",
-        "required": ["key", "type"],
+        "required": [
+          "key",
+          "type"
+        ],
         "properties": {
           "key": {
             "type": "string"
           },
           "type": {
             "type": "string",
-            "enum": ["CNPJ", "EVP"]
+            "enum": [
+              "CNPJ",
+              "EVP"
+            ]
           }
         }
       },
@@ -10387,7 +11007,13 @@
           },
           "type": {
             "type": "string",
-            "enum": ["CPF", "CNPJ", "EMAIL", "PHONE", "EVP"]
+            "enum": [
+              "CPF",
+              "CNPJ",
+              "EMAIL",
+              "PHONE",
+              "EVP"
+            ]
           },
           "pixKeyEndToEndId": {
             "type": "string"
@@ -10476,7 +11102,9 @@
             "description": "Comment to be added in infoPagador"
           }
         },
-        "required": ["name"]
+        "required": [
+          "name"
+        ]
       },
       "Transaction": {
         "type": "object",
@@ -10518,7 +11146,12 @@
           "type": {
             "type": "string",
             "description": "Pix Transaction type",
-            "enum": ["PAYMENT", "WITHDRAW", "REFUND", "FEE"]
+            "enum": [
+              "PAYMENT",
+              "WITHDRAW",
+              "REFUND",
+              "FEE"
+            ]
           },
           "globalID": {
             "description": "External ID of this transaction"
@@ -10567,7 +11200,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["IN_PROCESSING", "REFUNDED", "NOT_ACCOMPLISHED"]
+            "enum": [
+              "IN_PROCESSING",
+              "REFUNDED",
+              "NOT_ACCOMPLISHED"
+            ]
           },
           "correlationID": {
             "type": "string",
@@ -10636,7 +11273,9 @@
             "type": "string"
           }
         },
-        "required": ["error"]
+        "required": [
+          "error"
+        ]
       },
       "Start": {
         "type": "string",
@@ -10729,7 +11368,13 @@
           "fromPixKeyType": {
             "type": "string",
             "description": "The transfer origin pix key type",
-            "enum": ["CPF", "CNPJ", "EMAIL", "PHONE", "RANDOM"]
+            "enum": [
+              "CPF",
+              "CNPJ",
+              "EMAIL",
+              "PHONE",
+              "RANDOM"
+            ]
           },
           "toPixKey": {
             "type": "string",
@@ -10738,7 +11383,13 @@
           "toPixKeyType": {
             "type": "string",
             "description": "The transfer destination pix key type",
-            "enum": ["CPF", "CNPJ", "EMAIL", "PHONE", "RANDOM"]
+            "enum": [
+              "CPF",
+              "CNPJ",
+              "EMAIL",
+              "PHONE",
+              "RANDOM"
+            ]
           },
           "correlationID": {
             "type": "string",
@@ -10824,7 +11475,12 @@
           },
           "status": {
             "type": "string",
-            "enum": ["ACTIVE", "OVERDUE", "COMPLETED", "EXPIRED"]
+            "enum": [
+              "ACTIVE",
+              "OVERDUE",
+              "COMPLETED",
+              "EXPIRED"
+            ]
           },
           "correlationID": {
             "type": "string",
@@ -10932,7 +11588,10 @@
           },
           "chargeType": {
             "type": "string",
-            "enum": ["DYNAMIC", "OVERDUE"],
+            "enum": [
+              "DYNAMIC",
+              "OVERDUE"
+            ],
             "description": "The charge type is used to determine whether charges generated by the subscription will have fines and interests",
             "default": "DYNAMIC"
           },
@@ -10947,7 +11606,11 @@
             "description": "Your correlation ID to keep track of this subscription"
           }
         },
-        "required": ["customer", "value", "correlationID"]
+        "required": [
+          "customer",
+          "value",
+          "correlationID"
+        ]
       },
       "TransferCreatePayload": {
         "type": "object",

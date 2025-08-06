@@ -548,6 +548,367 @@ paths:
             response = http.request(request)
 
             puts response.read_body
+  /api/v1/account-register/{id}:
+    delete:
+      tags:
+        - account register
+      summary: Delete an account registration
+      description: Deletes an account registration that is in PENDING status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Tax ID of the account register to delete
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Account register successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Account register successfully deleted
+                  accountRegisterId:
+                    type: string
+                    example: '12345678901234'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                MissingAuthorization:
+                  value:
+                    error: Invalid Authorization header
+                CompanyNotFound:
+                  value:
+                    error: Company not found
+                AccountRegisterIDRequired:
+                  value:
+                    error: Account register ID is required
+                InvalidStatus:
+                  value:
+                    error: Only account registers in PENDING status can be deleted
+        '404':
+          description: Account register not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                AccountRegisterNotFound:
+                  value:
+                    error: Account register not found
+                DeleteFailed:
+                  value:
+                    error: Failed to delete account register
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal server error
+      x-codeSamples: []
+    patch:
+      tags:
+        - account register
+      summary: Update an existing account registration
+      description: >-
+        Updates documents and representatives for an existing account
+        registration in PENDING status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Tax ID of the account register to update
+          schema:
+            type: string
+            minLength: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documents:
+                  type: array
+                  description: Company documents to update
+                  items:
+                    type: object
+                    required:
+                      - url
+                    properties:
+                      url:
+                        type: string
+                        description: Document URL
+                        minLength: 1
+                      type:
+                        type: string
+                        enum:
+                          - SOCIAL_CONTRACT
+                          - ATA
+                          - BYLAWS
+                representatives:
+                  type: array
+                  description: Company representatives to update
+                  items:
+                    type: object
+                    required:
+                      - name
+                      - birthDate
+                      - email
+                      - taxID
+                      - address
+                    properties:
+                      name:
+                        type: string
+                        description: Representative name
+                        minLength: 1
+                      documents:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - url
+                            - type
+                          properties:
+                            url:
+                              type: string
+                              description: Document URL
+                              minLength: 1
+                            type:
+                              type: string
+                              enum:
+                                - IDENTITY_FRONT
+                                - IDENTITY_BACK
+                                - CNH_FRONT
+                                - CNH_BACK
+                                - PICTURE
+                      birthDate:
+                        type: string
+                        description: Representative birth date
+                        minLength: 1
+                      email:
+                        type: string
+                        description: Representative email
+                        format: email
+                      type:
+                        type: string
+                        enum:
+                          - ADMIN
+                      taxID:
+                        type: string
+                        description: Representative tax ID
+                        minLength: 1
+                      address:
+                        type: object
+                        required:
+                          - zipcode
+                          - street
+                          - number
+                          - neighborhood
+                          - city
+                          - state
+                          - taxID
+                        properties:
+                          zipcode:
+                            type: string
+                            description: Address zip code
+                            minLength: 1
+                          street:
+                            type: string
+                            description: Street name
+                            minLength: 1
+                          number:
+                            type: string
+                            description: Street number
+                            minLength: 1
+                          neighborhood:
+                            type: string
+                            description: Neighborhood
+                            minLength: 1
+                          city:
+                            type: string
+                            description: City
+                            minLength: 1
+                          state:
+                            type: string
+                            description: State
+                            minLength: 1
+                          complement:
+                            type: string
+                            description: Address complement
+                          taxID:
+                            type: string
+                            description: Tax ID
+                            minLength: 1
+                businessDescription:
+                  type: string
+                  description: Business segment/industry
+                businessProduct:
+                  type: string
+                  description: Services the company provides
+                businessLifetime:
+                  type: string
+                  description: How long the company has been operating in the market
+                businessGoal:
+                  type: string
+                  description: Objective when using Woovi
+            examples:
+              ValidAccountRegisterPatch:
+                value:
+                  documents:
+                    - url: https://example.com/social-contract.pdf
+                      type: SOCIAL_CONTRACT
+                  businessDescription: Updated Technology and Financial Services
+                  businessProduct: Updated digital payment solutions and banking services
+                  businessLifetime: 5 years
+                  businessGoal: Updated goal to expand digital payment capabilities
+                  representatives:
+                    - name: Jane Smith
+                      birthDate: 1985-05-15T00:00:00.000Z
+                      email: jane@example.com
+                      taxID: '98765432100'
+                      type: ADMIN
+                      documents:
+                        - url: https://example.com/identity-front.jpg
+                          type: IDENTITY_FRONT
+                        - url: https://example.com/identity-back.jpg
+                          type: IDENTITY_BACK
+                      address:
+                        zipcode: '87654321'
+                        street: Updated Street
+                        number: '456'
+                        neighborhood: Updated Neighborhood
+                        city: Updated City
+                        state: SP
+                        taxID: '98765432100'
+      responses:
+        '200':
+          description: Account register successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  officialName:
+                    type: string
+                    example: Company Official Name
+                  tradeName:
+                    type: string
+                    example: Company Trade Name
+                  taxID:
+                    type: object
+                    properties:
+                      taxID:
+                        type: string
+                        example: '12345678901234'
+                  status:
+                    type: string
+                    example: PENDING
+                  requestedDocuments:
+                    type: array
+                    items:
+                      type: string
+                  missingDocumentsDescription:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    oneOf:
+                      - type: string
+                      - type: array
+                        items:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                            message:
+                              type: string
+                            path:
+                              type: array
+                              items:
+                                type: string
+              examples:
+                MissingAuthorization:
+                  value:
+                    error: Invalid Authorization header
+                AccountRegisterIDRequired:
+                  value:
+                    error: Account register ID is required
+                CannotUpdateStatus:
+                  value:
+                    error: Cannot update account register in current status
+                ProtectedFields:
+                  value:
+                    error: >-
+                      Cannot update fields: officialName, tradeName, taxID,
+                      billingAddress
+                ValidationError:
+                  value:
+                    error:
+                      - code: invalid_type
+                        expected: string
+                        received: undefined
+                        message: Representative name is required
+                        path:
+                          - representatives
+                          - 0
+                          - name
+        '404':
+          description: Account register not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                CompanyNotFound:
+                  value:
+                    error: Company not found
+                AccountRegisterNotFound:
+                  value:
+                    error: Account register not found
+                UpdateFailed:
+                  value:
+                    error: Failed to update account register
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal server error
+      x-codeSamples: []
   /api/v1/account-register:
     get:
       tags:
@@ -928,6 +1289,18 @@ paths:
                       type: string
                       description: City
                       minLength: 1
+                businessDescription:
+                  type: string
+                  description: Business segment/industry
+                businessProduct:
+                  type: string
+                  description: Services the company provides
+                businessLifetime:
+                  type: string
+                  description: How long the company has been operating in the market
+                businessGoal:
+                  type: string
+                  description: Objective when using Woovi
               required:
                 - officialName
                 - tradeName
@@ -945,6 +1318,12 @@ paths:
                     number: '123'
                     neighborhood: Test Neighborhood
                     city: Test City
+                  businessDescription: Technology and Financial Services
+                  businessProduct: Digital payment solutions and banking services
+                  businessLifetime: 3 years
+                  businessGoal: >-
+                    To expand digital payment capabilities and improve customer
+                    experience
                   representatives:
                     - name: John Doe
                       birthDate: 1990-01-01T00:00:00.000Z
@@ -1113,7 +1492,11 @@ paths:
                 number: 'string',
                 neighborhood: 'string',
                 city: 'string'
-              }
+              },
+              businessDescription: 'string',
+              businessProduct: 'string',
+              businessLifetime: 'string',
+              businessGoal: 'string'
             }));
             req.end();
         - lang: Shell + Curl
@@ -1122,7 +1505,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/account-register \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"officialName":"string","tradeName":"string","taxID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string"}}'
+              --data '{"officialName":"string","tradeName":"string","taxID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string"},"businessDescription":"string","businessProduct":"string","businessLifetime":"string","businessGoal":"string"}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -1178,7 +1561,11 @@ paths:
                     'number' => 'string',
                     'neighborhood' => 'string',
                     'city' => 'string'
-                ]
+                ],
+                'businessDescription' => 'string',
+                'businessProduct' => 'string',
+                'businessLifetime' => 'string',
+                'businessGoal' => 'string'
               ]),
               CURLOPT_HTTPHEADER => [
                 "Authorization: REPLACE_KEY_VALUE",
@@ -1205,7 +1592,7 @@ paths:
 
 
             payload =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"}}"
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
 
 
             headers = {
@@ -1224,7 +1611,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -1233,7 +1620,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"}}");
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/account-register")
@@ -1265,280 +1652,12 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"}}"
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
 
 
             response = http.request(request)
 
             puts response.read_body
-  /api/v1/account-register/{id}:
-    patch:
-      tags:
-        - account register
-      summary: Update an existing account registration
-      description: >-
-        Updates documents and representatives for an existing account
-        registration in PENDING status
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Tax ID of the account register to update
-          schema:
-            type: string
-            minLength: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                documents:
-                  type: array
-                  description: Company documents to update
-                  items:
-                    type: object
-                    required:
-                      - url
-                    properties:
-                      url:
-                        type: string
-                        description: Document URL
-                        minLength: 1
-                      type:
-                        type: string
-                        enum:
-                          - SOCIAL_CONTRACT
-                          - ATA
-                          - BYLAWS
-                representatives:
-                  type: array
-                  description: Company representatives to update
-                  items:
-                    type: object
-                    required:
-                      - name
-                      - birthDate
-                      - email
-                      - taxID
-                      - address
-                    properties:
-                      name:
-                        type: string
-                        description: Representative name
-                        minLength: 1
-                      documents:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - url
-                            - type
-                          properties:
-                            url:
-                              type: string
-                              description: Document URL
-                              minLength: 1
-                            type:
-                              type: string
-                              enum:
-                                - IDENTITY_FRONT
-                                - IDENTITY_BACK
-                                - CNH_FRONT
-                                - CNH_BACK
-                                - PICTURE
-                      birthDate:
-                        type: string
-                        description: Representative birth date
-                        minLength: 1
-                      email:
-                        type: string
-                        description: Representative email
-                        format: email
-                      type:
-                        type: string
-                        enum:
-                          - ADMIN
-                      taxID:
-                        type: string
-                        description: Representative tax ID
-                        minLength: 1
-                      address:
-                        type: object
-                        required:
-                          - zipcode
-                          - street
-                          - number
-                          - neighborhood
-                          - city
-                          - state
-                          - taxID
-                        properties:
-                          zipcode:
-                            type: string
-                            description: Address zip code
-                            minLength: 1
-                          street:
-                            type: string
-                            description: Street name
-                            minLength: 1
-                          number:
-                            type: string
-                            description: Street number
-                            minLength: 1
-                          neighborhood:
-                            type: string
-                            description: Neighborhood
-                            minLength: 1
-                          city:
-                            type: string
-                            description: City
-                            minLength: 1
-                          state:
-                            type: string
-                            description: State
-                            minLength: 1
-                          complement:
-                            type: string
-                            description: Address complement
-                          taxID:
-                            type: string
-                            description: Tax ID
-                            minLength: 1
-            examples:
-              ValidAccountRegisterPatch:
-                value:
-                  documents:
-                    - url: https://example.com/social-contract.pdf
-                      type: SOCIAL_CONTRACT
-                  representatives:
-                    - name: Jane Smith
-                      birthDate: 1985-05-15T00:00:00.000Z
-                      email: jane@example.com
-                      taxID: '98765432100'
-                      type: ADMIN
-                      documents:
-                        - url: https://example.com/identity-front.jpg
-                          type: IDENTITY_FRONT
-                        - url: https://example.com/identity-back.jpg
-                          type: IDENTITY_BACK
-                      address:
-                        zipcode: '87654321'
-                        street: Updated Street
-                        number: '456'
-                        neighborhood: Updated Neighborhood
-                        city: Updated City
-                        state: SP
-                        taxID: '98765432100'
-      responses:
-        '200':
-          description: Account register successfully updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  officialName:
-                    type: string
-                    example: Company Official Name
-                  tradeName:
-                    type: string
-                    example: Company Trade Name
-                  taxID:
-                    type: object
-                    properties:
-                      taxID:
-                        type: string
-                        example: '12345678901234'
-                  status:
-                    type: string
-                    example: PENDING
-                  requestedDocuments:
-                    type: array
-                    items:
-                      type: string
-                  missingDocumentsDescription:
-                    type: string
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    oneOf:
-                      - type: string
-                      - type: array
-                        items:
-                          type: object
-                          properties:
-                            code:
-                              type: string
-                            message:
-                              type: string
-                            path:
-                              type: array
-                              items:
-                                type: string
-              examples:
-                MissingAuthorization:
-                  value:
-                    error: Invalid Authorization header
-                AccountRegisterIDRequired:
-                  value:
-                    error: Account register ID is required
-                CannotUpdateStatus:
-                  value:
-                    error: Cannot update account register in current status
-                ProtectedFields:
-                  value:
-                    error: >-
-                      Cannot update fields: officialName, tradeName, taxID,
-                      billingAddress
-                ValidationError:
-                  value:
-                    error:
-                      - code: invalid_type
-                        expected: string
-                        received: undefined
-                        message: Representative name is required
-                        path:
-                          - representatives
-                          - 0
-                          - name
-        '404':
-          description: Account register not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              examples:
-                CompanyNotFound:
-                  value:
-                    error: Company not found
-                AccountRegisterNotFound:
-                  value:
-                    error: Account register not found
-                UpdateFailed:
-                  value:
-                    error: Failed to update account register
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              example:
-                error: Internal server error
-      x-codeSamples: []
   /api/v1/account/{accountId}/withdraw:
     post:
       tags:
@@ -9972,6 +10091,36 @@ paths:
         - statement
       summary: Get statement by company
       description: Retrieves the statement/ledger entries for a company's bank account
+      parameters:
+        - in: query
+          name: start
+          schema:
+            type: string
+            format: date-time
+            description: Start date for filtering transactions
+            example: 2023-12-01T00:00:00.000Z
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: date-time
+            description: End date for filtering transactions
+            example: 2023-12-31T23:59:59.999Z
+        - in: query
+          name: skip
+          schema:
+            type: integer
+            minimum: 0
+            description: Number of records to skip for pagination
+            example: 0
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            description: Maximum number of records to return
+            example: 20
       responses:
         '200':
           description: Statement retrieved successfully
@@ -10064,7 +10213,7 @@ paths:
               method: 'GET',
               hostname: 'api.openpix.com.br',
               port: null,
-              path: '/api/v1/statement',
+              path: '/api/v1/statement?skip=0&limit=20',
               headers: {
                 Authorization: 'REPLACE_KEY_VALUE'
               }
@@ -10087,7 +10236,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url https://api.openpix.com.br/api/v1/statement \
+              --url 'https://api.openpix.com.br/api/v1/statement?skip=0&limit=20' \
               --header 'Authorization: REPLACE_KEY_VALUE'
         - lang: Php + Curl
           source: |-
@@ -10096,7 +10245,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/statement",
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/statement?skip=0&limit=20",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -10119,46 +10268,62 @@ paths:
               echo $response;
             }
         - lang: Python + Python3
-          source: |-
+          source: >-
             import http.client
+
 
             conn = http.client.HTTPSConnection("api.openpix.com.br")
 
+
             headers = { 'Authorization': "REPLACE_KEY_VALUE" }
 
-            conn.request("GET", "/api/v1/statement", headers=headers)
+
+            conn.request("GET", "/api/v1/statement?skip=0&limit=20",
+            headers=headers)
+
 
             res = conn.getresponse()
+
             data = res.read()
+
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement?skip=0&limit=20\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/statement")
+              .url("https://api.openpix.com.br/api/v1/statement?skip=0&limit=20")
               .get()
               .addHeader("Authorization", "REPLACE_KEY_VALUE")
               .build();
 
             Response response = client.newCall(request).execute();
         - lang: Ruby + Native
-          source: |-
+          source: >-
             require 'uri'
+
             require 'net/http'
 
-            url = URI("https://api.openpix.com.br/api/v1/statement")
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/statement?skip=0&limit=20")
+
 
             http = Net::HTTP.new(url.host, url.port)
+
             http.use_ssl = true
 
+
             request = Net::HTTP::Get.new(url)
+
             request["Authorization"] = 'REPLACE_KEY_VALUE'
 
+
             response = http.request(request)
+
             puts response.read_body
   /api/v1/subaccount/{id}/withdraw:
     post:
