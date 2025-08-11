@@ -226,7 +226,7 @@
                 "properties": {
                   "companyBankAccount": {
                     "type": "object",
-                    "$ref": "#/components/schemas/CompanyBankAccount"
+                    "$ref": "#/components/schemas/PayloadAccount"
                   }
                 }
               }
@@ -301,31 +301,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  companyBankAccount: {\n    accountId: 'string',\n    isDefault: true,\n    balance: {total: 0, blocked: 0, available: 0}\n  }\n}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({companyBankAccount: {accountId: 'string', isDefault: true}}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/account \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true,\"balance\":{\"total\":0,\"blocked\":0,\"available\":0}}}'"
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/account \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'companyBankAccount' => [\n        'accountId' => 'string',\n        'isDefault' => null,\n        'balance' => [\n                'total' => 0,\n                'blocked' => 0,\n                'available' => 0\n        ]\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'companyBankAccount' => [\n        'accountId' => 'string',\n        'isDefault' => null\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true,\\\"balance\\\":{\\\"total\\\":0,\\\"blocked\\\":0,\\\"available\\\":0}}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/account\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/account\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account\"\n\n\tpayload := strings.NewReader(\"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true,\\\"balance\\\":{\\\"total\\\":0,\\\"blocked\\\":0,\\\"available\\\":0}}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account\"\n\n\tpayload := strings.NewReader(\"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true,\\\"balance\\\":{\\\"total\\\":0,\\\"blocked\\\":0,\\\"available\\\":0}}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true,\\\"balance\\\":{\\\"total\\\":0,\\\"blocked\\\":0,\\\"available\\\":0}}}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true}}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -7124,109 +7124,6 @@
         ]
       }
     },
-    "/api/v1/receipt/{EndToEndId}": {
-      "get": {
-        "tags": [
-          "receipt"
-        ],
-        "summary": "Get a PDF document related to a payment transaction formatted as a receipt.",
-        "parameters": [
-          {
-            "name": "EndToEndId",
-            "in": "path",
-            "description": "The EndToEndId from the payment transaction to export.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "endToEndId": {
-                "value": "E12345678202406201221abcdef12345"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Exported transaction as a receipt in PDF format.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "file": {
-                      "type": "string",
-                      "description": "The name of the exported PDF file.",
-                      "example": "file.pdf"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "An error occurred due to a bad request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized access.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "The specified EndToEndId was not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "x-codeSamples": [
-          {
-            "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/receipt/E12345678202406201221abcdef12345',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
-          },
-          {
-            "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345 \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
-          },
-          {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/receipt/E12345678202406201221abcdef12345\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
-          },
-          {
-            "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-          },
-          {
-            "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
-          },
-          {
-            "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
-          }
-        ]
-      }
-    },
     "/api/v1/receipt/{receiptType}/{EndToEndId}": {
       "get": {
         "tags": [
@@ -7278,16 +7175,10 @@
           "200": {
             "description": "Exported transaction as a receipt in PDF format.",
             "content": {
-              "application/json": {
+              "application/pdf": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "file": {
-                      "type": "string",
-                      "description": "The name of the exported PDF file.",
-                      "example": "file.pdf"
-                    }
-                  }
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -7340,8 +7231,9 @@
             "schema": {
               "type": "string",
               "format": "date-time",
-              "description": "Start date for filtering transactions",
-              "example": "2023-12-01T00:00:00.000Z"
+              "title": "Start Date",
+              "description": "Start date used in the query. Complies with RFC 3339.",
+              "example": "2020-01-01T00:00:00Z"
             }
           },
           {
@@ -7350,29 +7242,23 @@
             "schema": {
               "type": "string",
               "format": "date-time",
-              "description": "End date for filtering transactions",
-              "example": "2023-12-31T23:59:59.999Z"
+              "title": "End Date",
+              "description": "End date used in the query. Complies with RFC 3339.",
+              "example": "2020-12-01T17:00:00Z"
             }
           },
           {
             "in": "query",
             "name": "skip",
             "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "description": "Number of records to skip for pagination",
-              "example": 0
+              "type": "number"
             }
           },
           {
             "in": "query",
             "name": "limit",
             "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "description": "Maximum number of records to return",
-              "example": 20
+              "type": "number"
             }
           }
         ],
@@ -7505,31 +7391,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/statement?start=2023-12-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z&skip=0&limit=20\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/statement?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -9490,6 +9376,18 @@
   },
   "components": {
     "schemas": {
+      "PayloadAccount": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "description": "ID of the Account"
+          },
+          "isDefault": {
+            "type": "boolean"
+          }
+        }
+      },
       "CompanyBankAccount": {
         "type": "object",
         "properties": {
@@ -10652,7 +10550,6 @@
               "value",
               "destinationAlias",
               "destinationAliasType",
-              "pixKeyEndToEndId",
               "correlationID"
             ],
             "properties": {
@@ -10707,8 +10604,7 @@
             "required": [
               "type",
               "qrCode",
-              "correlationID",
-              "pixKeyEndToEndId"
+              "correlationID"
             ],
             "properties": {
               "type": {
@@ -10748,7 +10644,6 @@
               "type",
               "value",
               "correlationID",
-              "pixKeyEndToEndId",
               "holder",
               "account",
               "psp"

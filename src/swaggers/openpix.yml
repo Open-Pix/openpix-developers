@@ -346,7 +346,7 @@ paths:
               properties:
                 companyBankAccount:
                   type: object
-                  $ref: '#/components/schemas/CompanyBankAccount'
+                  $ref: '#/components/schemas/PayloadAccount'
       responses:
         '200':
           description: The created Account information
@@ -390,8 +390,9 @@ paths:
                 error: Wrong API type
       x-codeSamples:
         - lang: Node + Native
-          source: |-
+          source: >-
             const http = require('https');
+
 
             const options = {
               method: 'POST',
@@ -403,6 +404,7 @@ paths:
                 'content-type': 'application/json'
               }
             };
+
 
             const req = http.request(options, function (res) {
               const chunks = [];
@@ -417,13 +419,10 @@ paths:
               });
             });
 
-            req.write(JSON.stringify({
-              companyBankAccount: {
-                accountId: 'string',
-                isDefault: true,
-                balance: {total: 0, blocked: 0, available: 0}
-              }
-            }));
+
+            req.write(JSON.stringify({companyBankAccount: {accountId: 'string',
+            isDefault: true}}));
+
             req.end();
         - lang: Shell + Curl
           source: |-
@@ -431,7 +430,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/account \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"companyBankAccount":{"accountId":"string","isDefault":true,"balance":{"total":0,"blocked":0,"available":0}}}'
+              --data '{"companyBankAccount":{"accountId":"string","isDefault":true}}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -449,12 +448,7 @@ paths:
               CURLOPT_POSTFIELDS => json_encode([
                 'companyBankAccount' => [
                     'accountId' => 'string',
-                    'isDefault' => null,
-                    'balance' => [
-                            'total' => 0,
-                            'blocked' => 0,
-                            'available' => 0
-                    ]
+                    'isDefault' => null
                 ]
               ]),
               CURLOPT_HTTPHEADER => [
@@ -482,7 +476,7 @@ paths:
 
 
             payload =
-            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true,\"balance\":{\"total\":0,\"blocked\":0,\"available\":0}}}"
+            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}"
 
 
             headers = {
@@ -501,7 +495,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account\"\n\n\tpayload := strings.NewReader(\"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true,\\\"balance\\\":{\\\"total\\\":0,\\\"blocked\\\":0,\\\"available\\\":0}}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account\"\n\n\tpayload := strings.NewReader(\"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -510,7 +504,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true,\"balance\":{\"total\":0,\"blocked\":0,\"available\":0}}}");
+            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/account")
@@ -542,7 +536,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true,\"balance\":{\"total\":0,\"blocked\":0,\"available\":0}}}"
+            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}"
 
 
             response = http.request(request)
@@ -9852,174 +9846,6 @@ paths:
             response = http.request(request)
 
             puts response.read_body
-  /api/v1/receipt/{EndToEndId}:
-    get:
-      tags:
-        - receipt
-      summary: >-
-        Get a PDF document related to a payment transaction formatted as a
-        receipt.
-      parameters:
-        - name: EndToEndId
-          in: path
-          description: The EndToEndId from the payment transaction to export.
-          required: true
-          schema:
-            type: string
-          examples:
-            endToEndId:
-              value: E12345678202406201221abcdef12345
-      responses:
-        '200':
-          description: Exported transaction as a receipt in PDF format.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  file:
-                    type: string
-                    description: The name of the exported PDF file.
-                    example: file.pdf
-        '400':
-          description: An error occurred due to a bad request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '401':
-          description: Unauthorized access.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '404':
-          description: The specified EndToEndId was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      x-codeSamples:
-        - lang: Node + Native
-          source: |-
-            const http = require('https');
-
-            const options = {
-              method: 'GET',
-              hostname: 'api.openpix.com.br',
-              port: null,
-              path: '/api/v1/receipt/E12345678202406201221abcdef12345',
-              headers: {
-                Authorization: 'REPLACE_KEY_VALUE'
-              }
-            };
-
-            const req = http.request(options, function (res) {
-              const chunks = [];
-
-              res.on('data', function (chunk) {
-                chunks.push(chunk);
-              });
-
-              res.on('end', function () {
-                const body = Buffer.concat(chunks);
-                console.log(body.toString());
-              });
-            });
-
-            req.end();
-        - lang: Shell + Curl
-          source: |-
-            curl --request GET \
-              --url https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345 \
-              --header 'Authorization: REPLACE_KEY_VALUE'
-        - lang: Php + Curl
-          source: |-
-            <?php
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "GET",
-              CURLOPT_HTTPHEADER => [
-                "Authorization: REPLACE_KEY_VALUE"
-              ],
-            ]);
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-
-            if ($err) {
-              echo "cURL Error #:" . $err;
-            } else {
-              echo $response;
-            }
-        - lang: Python + Python3
-          source: >-
-            import http.client
-
-
-            conn = http.client.HTTPSConnection("api.openpix.com.br")
-
-
-            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
-
-
-            conn.request("GET",
-            "/api/v1/receipt/E12345678202406201221abcdef12345", headers=headers)
-
-
-            res = conn.getresponse()
-
-            data = res.read()
-
-
-            print(data.decode("utf-8"))
-        - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-        - lang: Java + Okhttp
-          source: |-
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345")
-              .get()
-              .addHeader("Authorization", "REPLACE_KEY_VALUE")
-              .build();
-
-            Response response = client.newCall(request).execute();
-        - lang: Ruby + Native
-          source: >-
-            require 'uri'
-
-            require 'net/http'
-
-
-            url =
-            URI("https://api.openpix.com.br/api/v1/receipt/E12345678202406201221abcdef12345")
-
-
-            http = Net::HTTP.new(url.host, url.port)
-
-            http.use_ssl = true
-
-
-            request = Net::HTTP::Get.new(url)
-
-            request["Authorization"] = 'REPLACE_KEY_VALUE'
-
-
-            response = http.request(request)
-
-            puts response.read_body
   /api/v1/receipt/{receiptType}/{EndToEndId}:
     get:
       tags:
@@ -10058,14 +9884,10 @@ paths:
         '200':
           description: Exported transaction as a receipt in PDF format.
           content:
-            application/json:
+            application/pdf:
               schema:
-                type: object
-                properties:
-                  file:
-                    type: string
-                    description: The name of the exported PDF file.
-                    example: file.pdf
+                type: string
+                format: binary
         '400':
           description: An error occurred due to a bad request.
           content:
@@ -10094,33 +9916,18 @@ paths:
       parameters:
         - in: query
           name: start
-          schema:
-            type: string
-            format: date-time
-            description: Start date for filtering transactions
-            example: 2023-12-01T00:00:00.000Z
+          schema: *ref_0
         - in: query
           name: end
-          schema:
-            type: string
-            format: date-time
-            description: End date for filtering transactions
-            example: 2023-12-31T23:59:59.999Z
+          schema: *ref_1
         - in: query
           name: skip
           schema:
-            type: integer
-            minimum: 0
-            description: Number of records to skip for pagination
-            example: 0
+            type: number
         - in: query
           name: limit
           schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-            description: Maximum number of records to return
-            example: 20
+            type: number
       responses:
         '200':
           description: Statement retrieved successfully
@@ -10213,7 +10020,7 @@ paths:
               method: 'GET',
               hostname: 'api.openpix.com.br',
               port: null,
-              path: '/api/v1/statement?skip=0&limit=20',
+              path: '/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE',
               headers: {
                 Authorization: 'REPLACE_KEY_VALUE'
               }
@@ -10236,7 +10043,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url 'https://api.openpix.com.br/api/v1/statement?skip=0&limit=20' \
+              --url 'https://api.openpix.com.br/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE' \
               --header 'Authorization: REPLACE_KEY_VALUE'
         - lang: Php + Curl
           source: |-
@@ -10245,7 +10052,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/statement?skip=0&limit=20",
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -10278,7 +10085,8 @@ paths:
             headers = { 'Authorization': "REPLACE_KEY_VALUE" }
 
 
-            conn.request("GET", "/api/v1/statement?skip=0&limit=20",
+            conn.request("GET",
+            "/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE",
             headers=headers)
 
 
@@ -10289,13 +10097,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement?skip=0&limit=20\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/statement?skip=0&limit=20")
+              .url("https://api.openpix.com.br/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE")
               .get()
               .addHeader("Authorization", "REPLACE_KEY_VALUE")
               .build();
@@ -10309,7 +10117,7 @@ paths:
 
 
             url =
-            URI("https://api.openpix.com.br/api/v1/statement?skip=0&limit=20")
+            URI("https://api.openpix.com.br/api/v1/statement?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -13271,6 +13079,14 @@ paths:
             puts response.read_body
 components:
   schemas:
+    PayloadAccount:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: ID of the Account
+        isDefault:
+          type: boolean
     CompanyBankAccount:
       type: object
       properties:
@@ -14144,7 +13960,6 @@ components:
             - value
             - destinationAlias
             - destinationAliasType
-            - pixKeyEndToEndId
             - correlationID
           properties:
             type:
@@ -14188,7 +14003,6 @@ components:
             - type
             - qrCode
             - correlationID
-            - pixKeyEndToEndId
           properties:
             type:
               type: string
@@ -14219,7 +14033,6 @@ components:
             - type
             - value
             - correlationID
-            - pixKeyEndToEndId
             - holder
             - account
             - psp
