@@ -5475,6 +5475,230 @@ paths:
             response = http.request(request)
 
             puts response.read_body
+  /api/v1/dispute/:id/evidence:
+    post:
+      tags:
+        - dispute
+        - evidence
+      summary: Upload new evidence
+      description: Upload evidence files for dispute/med.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documents:
+                  type: array
+                  description: documents for upload
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        description: Document url
+                        minLength: 1
+                      correlationID:
+                        type: string
+                        description: Id used by the client
+                      description:
+                        type: string
+      responses:
+        '200':
+          description: The created Account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  documents:
+                    type: array
+                    description: documents for upload
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: http://www.url.com
+                          description: Document url
+                          minLength: 1
+                        correlationID:
+                          type: string
+                          example: id123456789
+                          description: Id used by the client
+                        description:
+                          type: string
+                          example: description for my document
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: You cannot send a evidence for a accepted dispute
+      x-codeSamples:
+        - lang: Node + Native
+          source: >-
+            const http = require('https');
+
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/dispute/:id/evidence',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE',
+                'content-type': 'application/json'
+              }
+            };
+
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+
+            req.write(JSON.stringify({documents: [{url: 'string', correlationID:
+            'string', description: 'string'}]}));
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/dispute/:id/evidence \
+              --header 'Authorization: REPLACE_KEY_VALUE' \
+              --header 'content-type: application/json' \
+              --data '{"documents":[{"url":"string","correlationID":"string","description":"string"}]}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/dispute/:id/evidence",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'documents' => [
+                    [
+                            'url' => 'string',
+                            'correlationID' => 'string',
+                            'description' => 'string'
+                    ]
+                ]
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload =
+            "{\"documents\":[{\"url\":\"string\",\"correlationID\":\"string\",\"description\":\"string\"}]}"
+
+
+            headers = {
+                'Authorization': "REPLACE_KEY_VALUE",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST", "/api/v1/dispute/:id/evidence", payload,
+            headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/dispute/:id/evidence\"\n\n\tpayload := strings.NewReader(\"{\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"description\\\":\\\"string\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"documents\":[{\"url\":\"string\",\"correlationID\":\"string\",\"description\":\"string\"}]}");
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/dispute/:id/evidence")
+              .post(body)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url = URI("https://api.openpix.com.br/api/v1/dispute/:id/evidence")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"documents\":[{\"url\":\"string\",\"correlationID\":\"string\",\"description\":\"string\"}]}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/dispute/{id}:
     get:
       tags:
