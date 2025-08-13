@@ -4108,8 +4108,7 @@
     "/api/v1/dispute/:id/evidence": {
       "post": {
         "tags": [
-          "dispute",
-          "evidence"
+          "dispute"
         ],
         "summary": "Upload new evidence",
         "description": "Upload evidence files for dispute/med.",

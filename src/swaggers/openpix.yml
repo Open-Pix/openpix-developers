@@ -5479,7 +5479,6 @@ paths:
     post:
       tags:
         - dispute
-        - evidence
       summary: Upload new evidence
       description: Upload evidence files for dispute/med.
       requestBody:
