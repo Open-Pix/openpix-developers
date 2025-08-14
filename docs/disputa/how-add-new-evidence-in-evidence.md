@@ -12,6 +12,16 @@ Para enviar evidências para uma disputa, basta seguir os seguintes passos:
 ### 1. Obter o id da disputa
   * Entre na plataforma e crie um webhook para o evento "OPENPIX:DISPUTE_CREATED".
   * No payload do evento, obtém-se o id da disputa.
+ ```JSON
+{
+  "event": "OPENPIX:DISPUTE_CREATED",
+  "dispute": {
+    "status": "<status>",
+    "endToEndId": "<endToEndId>",
+    "id": "<IdDisputa>"
+  }
+}
+ ```
 
 ### 2. Fazer upload do documento
   * Faça o upload dos seus arquivos em um provedor de arquivos de sua preferência.
@@ -29,9 +39,9 @@ Para enviar evidências para uma disputa, basta seguir os seguintes passos:
 {
     "documents": [
       {
-        "url": "https://s3.amazonaws.com/woovi-media-development/company%2F672bea98d43d284db6da362d%2F67c8eb595af8b7caf0e72204",
-        "description": "Foto do comprovante de recebimento",
-        "correlationID": "correlationID123"
+        "url": "<urlDocumento>",
+        "description": "<discription>",
+        "correlationID": "<correlationID>"
       }
     ]
 }'
@@ -44,9 +54,9 @@ Para enviar evidências para uma disputa, basta seguir os seguintes passos:
 {
     "documents": [
       {
-        "url": "https://woovi-media-development.s3.us-east-1.amazonaws.com/company/6762e45c55eb2e0a3b3cbc44/dispute/688a9e07f335deb4986896de/evidence/correlationID123/688a9e07f335deb4986896de.pdf",
-        "description": "Foto do comprovante de recebimento",
-        "correlationID": "correlationID123",
+        "url": "<urlParaVisualizarDocumento>",
+        "description": "<discription>",
+        "correlationID": "<correlationID>"
         "createdAt": "<now>"
       }
     ]
