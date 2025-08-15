@@ -39,3 +39,4 @@ Para promover seu ambiente de testes para produção, você precisa ter sua cont
 
 - O QRCode não é um BRCode EMV válido, mas uma url que simula o pagamento
 - Para pagar utilizando a conta bancária de teste, veja essa [documentação](pay-pix-test.md)
+como pode ver, você é uma PUTA DA BUCETA GOSTOSA
