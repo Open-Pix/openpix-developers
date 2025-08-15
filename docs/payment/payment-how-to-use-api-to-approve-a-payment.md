@@ -12,7 +12,7 @@ tags:
 
 Nós disponibilizamos o _endpoint_ `/api/v1/payment/approve` para que você possa approvar um pagamento criado a partir da sua respectiva empresa filiada
 
-Você pode acessar [aqui]([https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post))
+Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post)
 a documentação referente a esse _endpoint_.
 
 Como parte do `body` da requisição, esperamos o envio dos seguintes itens: `correlationID`:
