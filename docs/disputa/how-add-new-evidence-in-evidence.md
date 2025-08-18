@@ -32,15 +32,15 @@ Para enviar evidências para uma disputa, basta seguir os seguintes passos:
   * Utilize a chave de API para autenticar a requisição.
   * Faça a requisição.
  ```JSON
-    curl -X POST "https://api.woovi.com/api/v1/dispute/:IdDisputa/evidence \
-      -H "Authorization: <apiKey>" \
-      -H "Content-Type: application/json" 
-        --data-raw '
+curl -X POST "https://api.woovi.com/api/v1/dispute/:IdDisputa/evidence \
+  -H "Authorization: <apiKey>" \
+  -H "Content-Type: application/json" 
+    --data-raw '
 {
     "documents": [
       {
         "url": "<urlDocumento>",
-        "description": "<discription>",
+        "description": "<description>",
         "correlationID": "<correlationID>"
       }
     ]
@@ -55,7 +55,7 @@ Para enviar evidências para uma disputa, basta seguir os seguintes passos:
     "documents": [
       {
         "url": "<urlParaVisualizarDocumento>",
-        "description": "<discription>",
+        "description": "<description>",
         "correlationID": "<correlationID>"
         "createdAt": "<now>"
       }
