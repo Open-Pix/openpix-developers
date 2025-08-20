@@ -1642,33 +1642,6 @@
         ],
         "summary": "Delete an application",
         "description": "Deactivates an application by setting isActive to false and adding a removedAt timestamp",
-        "requestBody": {
-          "description": "Data identifying the application to delete",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "clientId": {
-                    "type": "string",
-                    "description": "The client ID of the application to delete"
-                  }
-                },
-                "required": [
-                  "clientId"
-                ]
-              },
-              "examples": {
-                "Application": {
-                  "value": {
-                    "clientId": "client_123abc"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Application successfully deleted",
@@ -1776,31 +1749,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'DELETE',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/application',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({clientId: 'string'}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'DELETE',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/application',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request DELETE \\\n  --url https://api.openpix.com.br/api/v1/application \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"clientId\":\"string\"}'"
+            "source": "curl --request DELETE \\\n  --url https://api.openpix.com.br/api/v1/application \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/application\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'clientId' => 'string'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/application\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"clientId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"DELETE\", \"/api/v1/application\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"DELETE\", \"/api/v1/application\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/application\"\n\n\tpayload := strings.NewReader(\"{\\\"clientId\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"DELETE\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/application\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"clientId\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/application\")\n  .delete(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/application\")\n  .delete(null)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/application\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"clientId\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/application\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       },
@@ -2197,7 +2170,7 @@
         ]
       }
     },
-    "/openpix/charge/brcode/image/{:id}.png?size=1024": {
+    "/openpix/charge/brcode/image/{id}.png": {
       "get": {
         "tags": [
           "charge"
@@ -2253,10 +2226,39 @@
             }
           }
         },
-        "x-codeSamples": []
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
       }
     },
-    "/api/image/qrcode/base64/{:id}": {
+    "/api/image/qrcode/base64/{id}": {
       "get": {
         "tags": [
           "charge"
@@ -2355,7 +2357,36 @@
             }
           }
         },
-        "x-codeSamples": []
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768' \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
       }
     },
     "/api/v1/charge/{id}": {
@@ -5753,7 +5784,7 @@
         "x-codeSamples": []
       }
     },
-    "/api/v1/pix-keys/:pixKey/default": {
+    "/api/v1/pix-keys/{pixKey}/default": {
       "post": {
         "tags": [
           "pixKey"
@@ -5783,36 +5814,7 @@
             }
           }
         },
-        "x-codeSamples": [
-          {
-            "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/pix-keys/:pixKey/default',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
-          },
-          {
-            "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
-          },
-          {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"POST\", \"/api/v1/pix-keys/:pixKey/default\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
-          },
-          {
-            "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default\"\n\n\treq, _ := http.NewRequest(\"POST\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-          },
-          {
-            "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default\")\n  .post(null)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
-          },
-          {
-            "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
-          }
-        ]
+        "x-codeSamples": []
       }
     },
     "/api/v1/pix-keys/{pixKey}": {
@@ -5848,6 +5850,208 @@
           },
           "404": {
             "description": "Pix key not found"
+          }
+        },
+        "x-codeSamples": []
+      }
+    },
+    "/api/v1/pix-keys/{pixKey}/fraud-validation": {
+      "get": {
+        "tags": [
+          "pixKey"
+        ],
+        "summary": "Validate fraud markers for a Pix key",
+        "description": "Charges the FRAUD_VALIDATE_FEE from the linked account and queries DICT (BACEN) to obtain fraud marker statistics for the provided Pix key, returning a parsed summary. Requires a linked Woovi bank account and valid token.\n",
+        "operationId": "getPixKeyFraudValidation",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pixKey",
+            "in": "path",
+            "required": true,
+            "description": "Pix key to be verified (email, phone, EVP, CPF/CNPJ etc.)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixKeyFraudValidationResponse"
+                },
+                "examples": {
+                  "ok": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "keyStatistics": {
+                          "fraudMarkers": {
+                            "watermark": "2025-08-04T17:18:21.716Z",
+                            "applicationFrauds": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            },
+                            "muleAccounts": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "scammerAccounts": {
+                              "d90": "11",
+                              "m12": "10",
+                              "m60": "10"
+                            },
+                            "otherFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "unknownFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "totalFraudTransactionAmount": {
+                              "d90": "723",
+                              "m12": "723",
+                              "m60": "723"
+                            },
+                            "distinctFraudReporters": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            }
+                          },
+                          "infractionReports": {
+                            "watermark": "2025-08-04T17:18:21.756Z",
+                            "openReports": "2",
+                            "openReportsDistinctReporters": "1",
+                            "rejectedReports": {
+                              "d90": "3",
+                              "m12": "3",
+                              "m60": "3"
+                            }
+                          }
+                        },
+                        "ownerStatistics": {
+                          "fraudMarkers": {
+                            "watermark": "2025-08-04T17:18:21.716Z",
+                            "applicationFrauds": {
+                              "d90": "1",
+                              "m12": "5",
+                              "m60": "5"
+                            },
+                            "muleAccounts": {
+                              "d90": "0",
+                              "m12": "1",
+                              "m60": "1"
+                            },
+                            "scammerAccounts": {
+                              "d90": "15",
+                              "m12": "21",
+                              "m60": "21"
+                            },
+                            "otherFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "unknownFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "totalFraudTransactionAmount": {
+                              "d90": "1023",
+                              "m12": "1517",
+                              "m60": "1517"
+                            },
+                            "distinctFraudReporters": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            }
+                          },
+                          "infractionReports": {
+                            "watermark": "2025-08-04T17:18:21.756Z",
+                            "openReports": "2",
+                            "openReportsDistinctReporters": "1",
+                            "rejectedReports": {
+                              "d90": "3",
+                              "m12": "32",
+                              "m60": "32"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (business rule / validation failed)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingBankAccount": {
+                    "value": {
+                      "success": false,
+                      "error": "You need to link a Bank Account to this API"
+                    }
+                  },
+                  "invalidBankCode": {
+                    "value": {
+                      "success": false,
+                      "error": "Invalid bank code"
+                    }
+                  },
+                  "missingMediator": {
+                    "value": {
+                      "success": false,
+                      "error": "Missing mediator"
+                    }
+                  },
+                  "missingFee": {
+                    "value": {
+                      "success": false,
+                      "error": "Missing fraud validation fee"
+                    }
+                  },
+                  "notFound": {
+                    "value": {
+                      "success": false,
+                      "error": "Pix key not found"
+                    }
+                  },
+                  "dictError": {
+                    "value": {
+                      "success": false,
+                      "error": "Error getting pix key fraud"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Your Authorization APP_ID must be configured to be MASTER or API"
           }
         },
         "x-codeSamples": []
@@ -7252,7 +7456,7 @@
         ]
       }
     },
-    "/api/v1/receipt/{receiptType}/{EndToEndId}": {
+    "/api/v1/receipt/{ReceiptType}/{EndToEndId}": {
       "get": {
         "tags": [
           "receipt"
@@ -7342,7 +7546,36 @@
             }
           }
         },
-        "x-codeSamples": []
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/receipt/pix-in/E12345678202406201221abcdef12345',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345 \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/receipt/pix-in/E12345678202406201221abcdef12345\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
       }
     },
     "/api/v1/statement": {
@@ -8505,6 +8738,128 @@
       }
     },
     "/api/v1/subscriptions": {
+      "get": {
+        "tags": [
+          "subscription"
+        ],
+        "summary": "Get a list of subscriptions",
+        "responses": {
+          "200": {
+            "description": "A list of subscriptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refunds": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Refund"
+                      }
+                    },
+                    "pageInfo": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "data": {
+                                "type": "object",
+                                "properties": {
+                                  "skip": {
+                                    "type": "number"
+                                  },
+                                  "limit": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "skip": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "totalCount": {
+                          "type": "number"
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean"
+                        },
+                        "hasNextPage": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "pageInfo": {
+                      "skip": 0,
+                      "limit": 10,
+                      "totalCount": 20,
+                      "hasPreviousPage": false,
+                      "hasNextPage": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/subscriptions\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      },
       "post": {
         "tags": [
           "subscription"
@@ -9667,6 +10022,10 @@
             ],
             "type": "string",
             "description": "Error message"
+          },
+          "success": {
+            "type": "boolean",
+            "example": false
           }
         }
       },
@@ -11063,6 +11422,109 @@
           }
         }
       },
+      "NumericWindow": {
+        "type": "object",
+        "description": "Numeric window with 90 days, 12 months, and 60 months (values are numeric strings).",
+        "properties": {
+          "d90": {
+            "type": "string",
+            "example": "1"
+          },
+          "m12": {
+            "type": "string",
+            "example": "10"
+          },
+          "m60": {
+            "type": "string",
+            "example": "21"
+          }
+        }
+      },
+      "FraudMarkers": {
+        "type": "object",
+        "properties": {
+          "watermark": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-08-04T17:18:21.716Z"
+          },
+          "applicationFrauds": {
+            "$ref": "#/components/schemas/NumericWindow"
+          },
+          "muleAccounts": {
+            "$ref": "#/components/schemas/NumericWindow"
+          },
+          "scammerAccounts": {
+            "$ref": "#/components/schemas/NumericWindow"
+          },
+          "otherFrauds": {
+            "$ref": "#/components/schemas/NumericWindow"
+          },
+          "unknownFrauds": {
+            "$ref": "#/components/schemas/NumericWindow"
+          },
+          "totalFraudTransactionAmount": {
+            "$ref": "#/components/schemas/NumericWindow"
+          },
+          "distinctFraudReporters": {
+            "$ref": "#/components/schemas/NumericWindow"
+          }
+        }
+      },
+      "InfractionReports": {
+        "type": "object",
+        "properties": {
+          "watermark": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-08-04T17:18:21.756Z"
+          },
+          "openReports": {
+            "type": "string",
+            "example": "2"
+          },
+          "openReportsDistinctReporters": {
+            "type": "string",
+            "example": "1"
+          },
+          "rejectedReports": {
+            "$ref": "#/components/schemas/NumericWindow"
+          }
+        }
+      },
+      "KeyOrOwnerStatistics": {
+        "type": "object",
+        "properties": {
+          "fraudMarkers": {
+            "$ref": "#/components/schemas/FraudMarkers"
+          },
+          "infractionReports": {
+            "$ref": "#/components/schemas/InfractionReports"
+          }
+        }
+      },
+      "PixKeyFraudValidationData": {
+        "type": "object",
+        "properties": {
+          "keyStatistics": {
+            "$ref": "#/components/schemas/KeyOrOwnerStatistics"
+          },
+          "ownerStatistics": {
+            "$ref": "#/components/schemas/KeyOrOwnerStatistics"
+          }
+        }
+      },
+      "PixKeyFraudValidationResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PixKeyFraudValidationData"
+          }
+        }
+      },
       "PixQrCode": {
         "type": "object",
         "properties": {
@@ -11745,6 +12207,11 @@
         "type": "apiKey",
         "in": "header",
         "name": "Authorization"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
