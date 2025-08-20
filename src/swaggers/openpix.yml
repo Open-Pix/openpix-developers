@@ -1870,23 +1870,6 @@ paths:
       description: >-
         Deactivates an application by setting isActive to false and adding a
         removedAt timestamp
-      requestBody:
-        description: Data identifying the application to delete
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                clientId:
-                  type: string
-                  description: The client ID of the application to delete
-              required:
-                - clientId
-            examples:
-              Application:
-                value:
-                  clientId: client_123abc
       responses:
         '200':
           description: Application successfully deleted
@@ -1961,8 +1944,7 @@ paths:
               port: null,
               path: '/api/v1/application',
               headers: {
-                Authorization: 'REPLACE_KEY_VALUE',
-                'content-type': 'application/json'
+                Authorization: 'REPLACE_KEY_VALUE'
               }
             };
 
@@ -1979,15 +1961,12 @@ paths:
               });
             });
 
-            req.write(JSON.stringify({clientId: 'string'}));
             req.end();
         - lang: Shell + Curl
           source: |-
             curl --request DELETE \
               --url https://api.openpix.com.br/api/v1/application \
-              --header 'Authorization: REPLACE_KEY_VALUE' \
-              --header 'content-type: application/json' \
-              --data '{"clientId":"string"}'
+              --header 'Authorization: REPLACE_KEY_VALUE'
         - lang: Php + Curl
           source: |-
             <?php
@@ -2002,12 +1981,8 @@ paths:
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "DELETE",
-              CURLOPT_POSTFIELDS => json_encode([
-                'clientId' => 'string'
-              ]),
               CURLOPT_HTTPHEADER => [
-                "Authorization: REPLACE_KEY_VALUE",
-                "content-type: application/json"
+                "Authorization: REPLACE_KEY_VALUE"
               ],
             ]);
 
@@ -2027,36 +2002,24 @@ paths:
 
             conn = http.client.HTTPSConnection("api.openpix.com.br")
 
-            payload = "{\"clientId\":\"string\"}"
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
 
-            headers = {
-                'Authorization': "REPLACE_KEY_VALUE",
-                'content-type': "application/json"
-            }
-
-            conn.request("DELETE", "/api/v1/application", payload, headers)
+            conn.request("DELETE", "/api/v1/application", headers=headers)
 
             res = conn.getresponse()
             data = res.read()
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/application\"\n\n\tpayload := strings.NewReader(\"{\\\"clientId\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"DELETE\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/application\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
-          source: >-
+          source: |-
             OkHttpClient client = new OkHttpClient();
-
-
-            MediaType mediaType = MediaType.parse("application/json");
-
-            RequestBody body = RequestBody.create(mediaType,
-            "{\"clientId\":\"string\"}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/application")
-              .delete(body)
+              .delete(null)
               .addHeader("Authorization", "REPLACE_KEY_VALUE")
-              .addHeader("content-type", "application/json")
               .build();
 
             Response response = client.newCall(request).execute();
@@ -2072,8 +2035,6 @@ paths:
 
             request = Net::HTTP::Delete.new(url)
             request["Authorization"] = 'REPLACE_KEY_VALUE'
-            request["content-type"] = 'application/json'
-            request.body = "{\"clientId\":\"string\"}"
 
             response = http.request(request)
             puts response.read_body
@@ -2677,7 +2638,7 @@ paths:
 
             response = http.request(request)
             puts response.read_body
-  /openpix/charge/brcode/image/{:id}.png?size=1024:
+  /openpix/charge/brcode/image/{id}.png:
     get:
       tags:
         - charge
@@ -2715,8 +2676,129 @@ paths:
                 properties:
                   error:
                     type: string
-      x-codeSamples: []
-  /api/image/qrcode/base64/{:id}:
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url 'https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768' \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+
+            conn.request("GET",
+            "/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768")
+              .get()
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/openpix/charge/brcode/image/fe7834b4060c488a9b0f89811be5f5cf.png?size=768")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /api/image/qrcode/base64/{id}:
     get:
       tags:
         - charge
@@ -2783,7 +2865,128 @@ paths:
                   error:
                     type: string
                     example: Failed to generate QR code
-      x-codeSamples: []
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url 'https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768' \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+
+            conn.request("GET",
+            "/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768")
+              .get()
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/image/qrcode/base64/fe7834b4060c488a9b0f89811be5f5cf?size=768")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/charge/{id}:
     delete:
       tags:
@@ -7830,7 +8033,7 @@ paths:
                   error:
                     type: string
       x-codeSamples: []
-  /api/v1/pix-keys/:pixKey/default:
+  /api/v1/pix-keys/{pixKey}/default:
     post:
       tags:
         - pixKey
@@ -7850,127 +8053,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixKey'
-      x-codeSamples:
-        - lang: Node + Native
-          source: |-
-            const http = require('https');
-
-            const options = {
-              method: 'POST',
-              hostname: 'api.openpix.com.br',
-              port: null,
-              path: '/api/v1/pix-keys/:pixKey/default',
-              headers: {
-                Authorization: 'REPLACE_KEY_VALUE'
-              }
-            };
-
-            const req = http.request(options, function (res) {
-              const chunks = [];
-
-              res.on('data', function (chunk) {
-                chunks.push(chunk);
-              });
-
-              res.on('end', function () {
-                const body = Buffer.concat(chunks);
-                console.log(body.toString());
-              });
-            });
-
-            req.end();
-        - lang: Shell + Curl
-          source: |-
-            curl --request POST \
-              --url https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default \
-              --header 'Authorization: REPLACE_KEY_VALUE'
-        - lang: Php + Curl
-          source: |-
-            <?php
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_HTTPHEADER => [
-                "Authorization: REPLACE_KEY_VALUE"
-              ],
-            ]);
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-
-            if ($err) {
-              echo "cURL Error #:" . $err;
-            } else {
-              echo $response;
-            }
-        - lang: Python + Python3
-          source: >-
-            import http.client
-
-
-            conn = http.client.HTTPSConnection("api.openpix.com.br")
-
-
-            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
-
-
-            conn.request("POST", "/api/v1/pix-keys/:pixKey/default",
-            headers=headers)
-
-
-            res = conn.getresponse()
-
-            data = res.read()
-
-
-            print(data.decode("utf-8"))
-        - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default\"\n\n\treq, _ := http.NewRequest(\"POST\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-        - lang: Java + Okhttp
-          source: |-
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default")
-              .post(null)
-              .addHeader("Authorization", "REPLACE_KEY_VALUE")
-              .build();
-
-            Response response = client.newCall(request).execute();
-        - lang: Ruby + Native
-          source: >-
-            require 'uri'
-
-            require 'net/http'
-
-
-            url =
-            URI("https://api.openpix.com.br/api/v1/pix-keys/:pixKey/default")
-
-
-            http = Net::HTTP.new(url.host, url.port)
-
-            http.use_ssl = true
-
-
-            request = Net::HTTP::Post.new(url)
-
-            request["Authorization"] = 'REPLACE_KEY_VALUE'
-
-
-            response = http.request(request)
-
-            puts response.read_body
+      x-codeSamples: []
   /api/v1/pix-keys/{pixKey}:
     delete:
       tags:
@@ -7995,6 +8078,152 @@ paths:
           description: Your Authorization APP_ID must be configured to be MASTER or API
         '404':
           description: Pix key not found
+      x-codeSamples: []
+  /api/v1/pix-keys/{pixKey}/fraud-validation:
+    get:
+      tags:
+        - pixKey
+      summary: Validate fraud markers for a Pix key
+      description: >
+        Charges the FRAUD_VALIDATE_FEE from the linked account and queries DICT
+        (BACEN) to obtain fraud marker statistics for the provided Pix key,
+        returning a parsed summary. Requires a linked Woovi bank account and
+        valid token.
+      operationId: getPixKeyFraudValidation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pixKey
+          in: path
+          required: true
+          description: Pix key to be verified (email, phone, EVP, CPF/CNPJ etc.)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixKeyFraudValidationResponse'
+              examples:
+                ok:
+                  value:
+                    success: true
+                    data:
+                      keyStatistics:
+                        fraudMarkers:
+                          watermark: 2025-08-04T17:18:21.716Z
+                          applicationFrauds:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                          muleAccounts:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          scammerAccounts:
+                            d90: '11'
+                            m12: '10'
+                            m60: '10'
+                          otherFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          unknownFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          totalFraudTransactionAmount:
+                            d90: '723'
+                            m12: '723'
+                            m60: '723'
+                          distinctFraudReporters:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                        infractionReports:
+                          watermark: 2025-08-04T17:18:21.756Z
+                          openReports: '2'
+                          openReportsDistinctReporters: '1'
+                          rejectedReports:
+                            d90: '3'
+                            m12: '3'
+                            m60: '3'
+                      ownerStatistics:
+                        fraudMarkers:
+                          watermark: 2025-08-04T17:18:21.716Z
+                          applicationFrauds:
+                            d90: '1'
+                            m12: '5'
+                            m60: '5'
+                          muleAccounts:
+                            d90: '0'
+                            m12: '1'
+                            m60: '1'
+                          scammerAccounts:
+                            d90: '15'
+                            m12: '21'
+                            m60: '21'
+                          otherFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          unknownFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          totalFraudTransactionAmount:
+                            d90: '1023'
+                            m12: '1517'
+                            m60: '1517'
+                          distinctFraudReporters:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                        infractionReports:
+                          watermark: 2025-08-04T17:18:21.756Z
+                          openReports: '2'
+                          openReportsDistinctReporters: '1'
+                          rejectedReports:
+                            d90: '3'
+                            m12: '32'
+                            m60: '32'
+        '400':
+          description: Bad request (business rule / validation failed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingBankAccount:
+                  value:
+                    success: false
+                    error: You need to link a Bank Account to this API
+                invalidBankCode:
+                  value:
+                    success: false
+                    error: Invalid bank code
+                missingMediator:
+                  value:
+                    success: false
+                    error: Missing mediator
+                missingFee:
+                  value:
+                    success: false
+                    error: Missing fraud validation fee
+                notFound:
+                  value:
+                    success: false
+                    error: Pix key not found
+                dictError:
+                  value:
+                    success: false
+                    error: Error getting pix key fraud
+        '401':
+          description: Your IP is not in the allowed list
+        '403':
+          description: Your Authorization APP_ID must be configured to be MASTER or API
       x-codeSamples: []
   /api/v1/pix-keys:
     get:
@@ -10069,7 +10298,7 @@ paths:
             response = http.request(request)
 
             puts response.read_body
-  /api/v1/receipt/{receiptType}/{EndToEndId}:
+  /api/v1/receipt/{ReceiptType}/{EndToEndId}:
     get:
       tags:
         - receipt
@@ -10129,7 +10358,128 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-codeSamples: []
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/receipt/pix-in/E12345678202406201221abcdef12345',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345 \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+
+            conn.request("GET",
+            "/api/v1/receipt/pix-in/E12345678202406201221abcdef12345",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345")
+              .get()
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/receipt/pix-in/E12345678202406201221abcdef12345")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/statement:
     get:
       tags:
@@ -11867,6 +12217,170 @@ paths:
 
             puts response.read_body
   /api/v1/subscriptions:
+    get:
+      tags:
+        - subscription
+      summary: Get a list of subscriptions
+      responses:
+        '200':
+          description: A list of subscriptions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refunds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Refund'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+                example:
+                  pageInfo:
+                    skip: 0
+                    limit: 10
+                    totalCount: 20
+                    hasPreviousPage: false
+                    hasNextPage: true
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/subscriptions',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url https://api.openpix.com.br/api/v1/subscriptions \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subscriptions",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: |-
+            import http.client
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+            conn.request("GET", "/api/v1/subscriptions", headers=headers)
+
+            res = conn.getresponse()
+            data = res.read()
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/subscriptions")
+              .get()
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: |-
+            require 'uri'
+            require 'net/http'
+
+            url = URI("https://api.openpix.com.br/api/v1/subscriptions")
+
+            http = Net::HTTP.new(url.host, url.port)
+            http.use_ssl = true
+
+            request = Net::HTTP::Get.new(url)
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+            response = http.request(request)
+            puts response.read_body
     post:
       tags:
         - subscription
@@ -13416,6 +13930,9 @@ components:
                 type: object
           type: string
           description: Error message
+        success:
+          type: boolean
+          example: false
     Application:
       type: object
       properties:
@@ -14464,6 +14981,78 @@ components:
               type: string
             taxID:
               type: string
+    NumericWindow:
+      type: object
+      description: >-
+        Numeric window with 90 days, 12 months, and 60 months (values are
+        numeric strings).
+      properties:
+        d90:
+          type: string
+          example: '1'
+        m12:
+          type: string
+          example: '10'
+        m60:
+          type: string
+          example: '21'
+    FraudMarkers:
+      type: object
+      properties:
+        watermark:
+          type: string
+          format: date-time
+          example: 2025-08-04T17:18:21.716Z
+        applicationFrauds:
+          $ref: '#/components/schemas/NumericWindow'
+        muleAccounts:
+          $ref: '#/components/schemas/NumericWindow'
+        scammerAccounts:
+          $ref: '#/components/schemas/NumericWindow'
+        otherFrauds:
+          $ref: '#/components/schemas/NumericWindow'
+        unknownFrauds:
+          $ref: '#/components/schemas/NumericWindow'
+        totalFraudTransactionAmount:
+          $ref: '#/components/schemas/NumericWindow'
+        distinctFraudReporters:
+          $ref: '#/components/schemas/NumericWindow'
+    InfractionReports:
+      type: object
+      properties:
+        watermark:
+          type: string
+          format: date-time
+          example: 2025-08-04T17:18:21.756Z
+        openReports:
+          type: string
+          example: '2'
+        openReportsDistinctReporters:
+          type: string
+          example: '1'
+        rejectedReports:
+          $ref: '#/components/schemas/NumericWindow'
+    KeyOrOwnerStatistics:
+      type: object
+      properties:
+        fraudMarkers:
+          $ref: '#/components/schemas/FraudMarkers'
+        infractionReports:
+          $ref: '#/components/schemas/InfractionReports'
+    PixKeyFraudValidationData:
+      type: object
+      properties:
+        keyStatistics:
+          $ref: '#/components/schemas/KeyOrOwnerStatistics'
+        ownerStatistics:
+          $ref: '#/components/schemas/KeyOrOwnerStatistics'
+    PixKeyFraudValidationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/PixKeyFraudValidationData'
     PixQrCode:
       type: object
       properties:
@@ -14985,6 +15574,10 @@ components:
       type: apiKey
       in: header
       name: Authorization
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 tags:
   - name: account
     description: |
