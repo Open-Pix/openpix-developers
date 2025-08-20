@@ -1,6 +1,6 @@
 ---
-id: payment-flux
-title: Fluxo Básico de Pagamento
+id: payment-flow
+title: Fluxo de Pagamento consultando chave pix
 tags:
   - api
 ---
