@@ -4573,6 +4573,369 @@
         ]
       }
     },
+    "/api/v1/installments/{id}": {
+      "get": {
+        "tags": [
+          "subscription"
+        ],
+        "summary": "Get one installment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The globalID of the installment.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM="
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The installment retrieved using the given ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "installment": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Installment"
+                    }
+                  },
+                  "example": {
+                    "installment": {
+                      "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
+                      "dateGenerateCharge": "date",
+                      "expiration": 1400,
+                      "installmentNumber": 1,
+                      "value": 5,
+                      "status": "CREATED",
+                      "createdAt": "date",
+                      "cobr": {
+                        "identifierId": "Dan",
+                        "recurrencyId": "email0@example.com",
+                        "installmentId": "5511999999999",
+                        "rejectCode": "DTED",
+                        "status": "CREATED",
+                        "value": 5,
+                        "createdAt": "subscription#1",
+                        "paymentDate": "date",
+                        "description": "description"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM= \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
+    "/api/v1/subscriptions": {
+      "get": {
+        "tags": [
+          "subscription"
+        ],
+        "summary": "Get a list of subscriptions",
+        "responses": {
+          "200": {
+            "description": "A list of subscriptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refunds": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Refund"
+                      }
+                    },
+                    "pageInfo": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "data": {
+                                "type": "object",
+                                "properties": {
+                                  "skip": {
+                                    "type": "number"
+                                  },
+                                  "limit": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "skip": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "totalCount": {
+                          "type": "number"
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean"
+                        },
+                        "hasNextPage": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "pageInfo": {
+                      "skip": 0,
+                      "limit": 10,
+                      "totalCount": 20,
+                      "hasPreviousPage": false,
+                      "hasNextPage": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/subscriptions\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "subscription"
+        ],
+        "summary": "Create a new Subscription",
+        "description": "Endpoint to create a new Subcription",
+        "requestBody": {
+          "description": "Data to create a new Subscription",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/SubscriptionPayload"
+              },
+              "examples": {
+                "Subscription": {
+                  "value": {
+                    "value": 100,
+                    "customer": {
+                      "name": "Dan",
+                      "taxID": "31324227036",
+                      "email": "email0@example.com",
+                      "phone": "5511999999999"
+                    },
+                    "dayGenerateCharge": 15
+                  }
+                },
+                "Subscription with Interests and Fines": {
+                  "value": {
+                    "value": 100,
+                    "customer": {
+                      "name": "Dan",
+                      "taxID": "31324227036",
+                      "email": "email0@example.com",
+                      "phone": "5511999999999",
+                      "address": {
+                        "zipcode": "30421322",
+                        "street": "Street",
+                        "number": "100",
+                        "neighborhood": "Neighborhood",
+                        "city": "Belo Horizonte",
+                        "state": "MG",
+                        "complement": "APTO",
+                        "country": "BR"
+                      }
+                    },
+                    "dayGenerateCharge": 15,
+                    "chargeType": "OVERDUE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The subscription created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/components/schemas/Subscription"
+                    }
+                  },
+                  "example": {
+                    "subscription": {
+                      "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
+                      "customer": {
+                        "name": "Dan",
+                        "email": "email0@example.com",
+                        "phone": "5511999999999",
+                        "taxID": {
+                          "taxID": "31324227036",
+                          "type": "BR:CPF"
+                        }
+                      },
+                      "value": 100,
+                      "dayGenerateCharge": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  customer: {\n    name: 'string',\n    email: 'string',\n    phone: 'string',\n    taxID: 'string',\n    address: {\n      zipcode: 'string',\n      street: 'string',\n      number: 'string',\n      neighborhood: 'string',\n      city: 'string',\n      state: 'string',\n      complement: 'string',\n      country: 'string'\n    }\n  },\n  value: 0,\n  comment: 'string',\n  additionalInfo: [{key: 'string', value: 'string'}],\n  dayGenerateCharge: 5,\n  frequency: 'WEEKLY',\n  chargeType: 'DYNAMIC',\n  dayDue: 7,\n  correlationID: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'customer' => [\n        'name' => 'string',\n        'email' => 'string',\n        'phone' => 'string',\n        'taxID' => 'string',\n        'address' => [\n                'zipcode' => 'string',\n                'street' => 'string',\n                'number' => 'string',\n                'neighborhood' => 'string',\n                'city' => 'string',\n                'state' => 'string',\n                'complement' => 'string',\n                'country' => 'string'\n        ]\n    ],\n    'value' => 0,\n    'comment' => 'string',\n    'additionalInfo' => [\n        [\n                'key' => 'string',\n                'value' => 'string'\n        ]\n    ],\n    'dayGenerateCharge' => 5,\n    'frequency' => 'WEEKLY',\n    'chargeType' => 'DYNAMIC',\n    'dayDue' => 7,\n    'correlationID' => 'string'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/subscriptions\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
     "/api/v1/partner/application": {
       "post": {
         "tags": [
@@ -8733,264 +9096,6 @@
           {
             "lang": "Ruby + Native",
             "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
-          }
-        ]
-      }
-    },
-    "/api/v1/subscriptions": {
-      "get": {
-        "tags": [
-          "subscription"
-        ],
-        "summary": "Get a list of subscriptions",
-        "responses": {
-          "200": {
-            "description": "A list of subscriptions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "refunds": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Refund"
-                      }
-                    },
-                    "pageInfo": {
-                      "type": "object",
-                      "properties": {
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "message": {
-                                "type": "string"
-                              },
-                              "data": {
-                                "type": "object",
-                                "properties": {
-                                  "skip": {
-                                    "type": "number"
-                                  },
-                                  "limit": {
-                                    "type": "number"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "skip": {
-                          "type": "number"
-                        },
-                        "limit": {
-                          "type": "number"
-                        },
-                        "totalCount": {
-                          "type": "number"
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean"
-                        },
-                        "hasNextPage": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  },
-                  "example": {
-                    "pageInfo": {
-                      "skip": 0,
-                      "limit": 10,
-                      "totalCount": 20,
-                      "hasPreviousPage": false,
-                      "hasNextPage": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "An error message",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-codeSamples": [
-          {
-            "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
-          },
-          {
-            "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE'"
-          },
-          {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"REPLACE_KEY_VALUE\" }\n\nconn.request(\"GET\", \"/api/v1/subscriptions\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
-          },
-          {
-            "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-          },
-          {
-            "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .get()\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
-          },
-          {
-            "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\n\nresponse = http.request(request)\nputs response.read_body"
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "subscription"
-        ],
-        "summary": "Create a new Subscription",
-        "description": "Endpoint to create a new Subcription",
-        "requestBody": {
-          "description": "Data to create a new Subscription",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "$ref": "#/components/schemas/SubscriptionPayload"
-              },
-              "examples": {
-                "Subscription": {
-                  "value": {
-                    "value": 100,
-                    "customer": {
-                      "name": "Dan",
-                      "taxID": "31324227036",
-                      "email": "email0@example.com",
-                      "phone": "5511999999999"
-                    },
-                    "dayGenerateCharge": 15
-                  }
-                },
-                "Subscription with Interests and Fines": {
-                  "value": {
-                    "value": 100,
-                    "customer": {
-                      "name": "Dan",
-                      "taxID": "31324227036",
-                      "email": "email0@example.com",
-                      "phone": "5511999999999",
-                      "address": {
-                        "zipcode": "30421322",
-                        "street": "Street",
-                        "number": "100",
-                        "neighborhood": "Neighborhood",
-                        "city": "Belo Horizonte",
-                        "state": "MG",
-                        "complement": "APTO",
-                        "country": "BR"
-                      }
-                    },
-                    "dayGenerateCharge": 15,
-                    "chargeType": "OVERDUE"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The subscription created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "subscription": {
-                      "$ref": "#/components/schemas/Subscription"
-                    }
-                  },
-                  "example": {
-                    "subscription": {
-                      "globalID": "UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=",
-                      "customer": {
-                        "name": "Dan",
-                        "email": "email0@example.com",
-                        "phone": "5511999999999",
-                        "taxID": {
-                          "taxID": "31324227036",
-                          "type": "BR:CPF"
-                        }
-                      },
-                      "value": 100,
-                      "dayGenerateCharge": 5
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "An error message",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-codeSamples": [
-          {
-            "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  customer: {\n    name: 'string',\n    email: 'string',\n    phone: 'string',\n    taxID: 'string',\n    address: {\n      zipcode: 'string',\n      street: 'string',\n      number: 'string',\n      neighborhood: 'string',\n      city: 'string',\n      state: 'string',\n      complement: 'string',\n      country: 'string'\n    }\n  },\n  value: 0,\n  comment: 'string',\n  additionalInfo: [{key: 'string', value: 'string'}],\n  dayGenerateCharge: 5,\n  frequency: 'WEEKLY',\n  chargeType: 'DYNAMIC',\n  dayDue: 7,\n  correlationID: 'string'\n}));\nreq.end();"
-          },
-          {
-            "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}'"
-          },
-          {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'customer' => [\n        'name' => 'string',\n        'email' => 'string',\n        'phone' => 'string',\n        'taxID' => 'string',\n        'address' => [\n                'zipcode' => 'string',\n                'street' => 'string',\n                'number' => 'string',\n                'neighborhood' => 'string',\n                'city' => 'string',\n                'state' => 'string',\n                'complement' => 'string',\n                'country' => 'string'\n        ]\n    ],\n    'value' => 0,\n    'comment' => 'string',\n    'additionalInfo' => [\n        [\n                'key' => 'string',\n                'value' => 'string'\n        ]\n    ],\n    'dayGenerateCharge' => 5,\n    'frequency' => 'WEEKLY',\n    'chargeType' => 'DYNAMIC',\n    'dayDue' => 7,\n    'correlationID' => 'string'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/subscriptions\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
-          },
-          {
-            "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-          },
-          {
-            "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
-          },
-          {
-            "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
