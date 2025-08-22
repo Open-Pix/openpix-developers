@@ -16,19 +16,22 @@ Esta API retorna estatísticas de fraude e indicadores de risco que ajudam insti
 - **Estatísticas do Proprietário**: Informações relacionadas ao proprietário da chave consultada
 - **Estatísticas da Chave**: Informações específicas da chave PIX em si
 
-## Endpoint da API
+## API Endpoint
 
 ```
-GET /pix-key-fraud-statistic
+GET /api/v1/pix-keys/:pixkey/fraud-validation
 ```
+
+**📖 [Ver documentação completa da API](https://developers.openpix.com.br/en/api#tag/pixKey/operation/getPixKeyFraudValidation)**
+
 
 ## Parâmetros da Requisição
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 |-----------|------|-------------|-----------|
-| `pixKey` | string | Sim | A chave PIX a ser consultada (CPF, CNPJ, email, telefone ou chave aleatória) |
+| `pixkey` | string | Sim | A chave PIX a ser consultada (CPF, CNPJ, email, telefone ou chave aleatória) |
 
-## Estrutura da Resposta
+## Estrutura da resposta
 
 A resposta da API contém estatísticas abrangentes de fraude organizadas em duas seções principais:
 
@@ -125,6 +128,14 @@ A API utiliza os seguintes indicadores de período:
 - **d90**: Últimos 90 dias
 - **m12**: Últimos 12 meses
 - **m60**: Últimos 60 meses (5 anos)
+
+## Exemplo de Requisição
+
+### cURL
+```bash
+curl -X GET "https://api.openpix.com.br/api/v1/pix-keys/12345678901/fraud-validation" \
+  -H "Authorization: SEU_APP_ID_AQUI"
+```
 
 ## Exemplo de Resposta
 
@@ -290,4 +301,5 @@ A API retornará respostas de erro apropriadas para requisições inválidas ou 
 - Formato de chave PIX inválido
 - Chave PIX não encontrada
 - Erros de autenticação/autorização
-- Limite de taxa excedido
+- rate limit
+
