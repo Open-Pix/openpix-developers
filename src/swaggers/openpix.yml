@@ -6312,28 +6312,7 @@ paths:
                 type: object
                 properties:
                   installment:
-                    type: object
                     $ref: '#/components/schemas/Installment'
-                example:
-                  installment:
-                    globalID: >-
-                      UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
-                    dateGenerateCharge: date
-                    expiration: 1400
-                    installmentNumber: 1
-                    value: 5
-                    status: CREATED
-                    createdAt: date
-                    cobr:
-                      identifierId: Dan
-                      recurrencyId: email0@example.com
-                      installmentId: '5511999999999'
-                      rejectCode: DTED
-                      status: CREATED
-                      value: 5
-                      createdAt: subscription#1
-                      paymentDate: date
-                      description: description
         '400':
           description: An error message
           content:
@@ -6465,57 +6444,23 @@ paths:
             response = http.request(request)
 
             puts response.read_body
-  /api/v1/subscriptions:
+  /api/v1/subscriptions/{id}/installments:
     get:
       tags:
         - subscription
-      summary: Get a list of subscriptions
+      summary: Get a list of installments by subscription
       responses:
         '200':
-          description: A list of subscriptions
+          description: A list of installments
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  refunds:
+                  installments:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Refund'
-                  pageInfo:
-                    type: object
-                    properties:
-                      errors:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            message:
-                              type: string
-                            data:
-                              type: object
-                              properties:
-                                skip:
-                                  type: number
-                                limit:
-                                  type: number
-                      skip:
-                        type: number
-                      limit:
-                        type: number
-                      totalCount:
-                        type: number
-                      hasPreviousPage:
-                        type: boolean
-                      hasNextPage:
-                        type: boolean
-                example:
-                  pageInfo:
-                    skip: 0
-                    limit: 10
-                    totalCount: 20
-                    hasPreviousPage: false
-                    hasNextPage: true
+                      $ref: '#/components/schemas/Installment'
         '400':
           description: An error message
           content:
@@ -6525,384 +6470,7 @@ paths:
                 properties:
                   error:
                     type: string
-      x-codeSamples:
-        - lang: Node + Native
-          source: |-
-            const http = require('https');
-
-            const options = {
-              method: 'GET',
-              hostname: 'api.openpix.com.br',
-              port: null,
-              path: '/api/v1/subscriptions',
-              headers: {
-                Authorization: 'REPLACE_KEY_VALUE'
-              }
-            };
-
-            const req = http.request(options, function (res) {
-              const chunks = [];
-
-              res.on('data', function (chunk) {
-                chunks.push(chunk);
-              });
-
-              res.on('end', function () {
-                const body = Buffer.concat(chunks);
-                console.log(body.toString());
-              });
-            });
-
-            req.end();
-        - lang: Shell + Curl
-          source: |-
-            curl --request GET \
-              --url https://api.openpix.com.br/api/v1/subscriptions \
-              --header 'Authorization: REPLACE_KEY_VALUE'
-        - lang: Php + Curl
-          source: |-
-            <?php
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subscriptions",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "GET",
-              CURLOPT_HTTPHEADER => [
-                "Authorization: REPLACE_KEY_VALUE"
-              ],
-            ]);
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-
-            if ($err) {
-              echo "cURL Error #:" . $err;
-            } else {
-              echo $response;
-            }
-        - lang: Python + Python3
-          source: |-
-            import http.client
-
-            conn = http.client.HTTPSConnection("api.openpix.com.br")
-
-            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
-
-            conn.request("GET", "/api/v1/subscriptions", headers=headers)
-
-            res = conn.getresponse()
-            data = res.read()
-
-            print(data.decode("utf-8"))
-        - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-        - lang: Java + Okhttp
-          source: |-
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/subscriptions")
-              .get()
-              .addHeader("Authorization", "REPLACE_KEY_VALUE")
-              .build();
-
-            Response response = client.newCall(request).execute();
-        - lang: Ruby + Native
-          source: |-
-            require 'uri'
-            require 'net/http'
-
-            url = URI("https://api.openpix.com.br/api/v1/subscriptions")
-
-            http = Net::HTTP.new(url.host, url.port)
-            http.use_ssl = true
-
-            request = Net::HTTP::Get.new(url)
-            request["Authorization"] = 'REPLACE_KEY_VALUE'
-
-            response = http.request(request)
-            puts response.read_body
-    post:
-      tags:
-        - subscription
-      summary: Create a new Subscription
-      description: Endpoint to create a new Subcription
-      requestBody:
-        description: Data to create a new Subscription
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: '#/components/schemas/SubscriptionPayload'
-            examples:
-              Subscription:
-                value:
-                  value: 100
-                  customer:
-                    name: Dan
-                    taxID: '31324227036'
-                    email: email0@example.com
-                    phone: '5511999999999'
-                  dayGenerateCharge: 15
-              Subscription with Interests and Fines:
-                value:
-                  value: 100
-                  customer:
-                    name: Dan
-                    taxID: '31324227036'
-                    email: email0@example.com
-                    phone: '5511999999999'
-                    address:
-                      zipcode: '30421322'
-                      street: Street
-                      number: '100'
-                      neighborhood: Neighborhood
-                      city: Belo Horizonte
-                      state: MG
-                      complement: APTO
-                      country: BR
-                  dayGenerateCharge: 15
-                  chargeType: OVERDUE
-      responses:
-        '200':
-          description: The subscription created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  subscription:
-                    $ref: '#/components/schemas/Subscription'
-                example:
-                  subscription:
-                    globalID: >-
-                      UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
-                    customer:
-                      name: Dan
-                      email: email0@example.com
-                      phone: '5511999999999'
-                      taxID:
-                        taxID: '31324227036'
-                        type: BR:CPF
-                    value: 100
-                    dayGenerateCharge: 5
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-      x-codeSamples:
-        - lang: Node + Native
-          source: |-
-            const http = require('https');
-
-            const options = {
-              method: 'POST',
-              hostname: 'api.openpix.com.br',
-              port: null,
-              path: '/api/v1/subscriptions',
-              headers: {
-                Authorization: 'REPLACE_KEY_VALUE',
-                'content-type': 'application/json'
-              }
-            };
-
-            const req = http.request(options, function (res) {
-              const chunks = [];
-
-              res.on('data', function (chunk) {
-                chunks.push(chunk);
-              });
-
-              res.on('end', function () {
-                const body = Buffer.concat(chunks);
-                console.log(body.toString());
-              });
-            });
-
-            req.write(JSON.stringify({
-              customer: {
-                name: 'string',
-                email: 'string',
-                phone: 'string',
-                taxID: 'string',
-                address: {
-                  zipcode: 'string',
-                  street: 'string',
-                  number: 'string',
-                  neighborhood: 'string',
-                  city: 'string',
-                  state: 'string',
-                  complement: 'string',
-                  country: 'string'
-                }
-              },
-              value: 0,
-              comment: 'string',
-              additionalInfo: [{key: 'string', value: 'string'}],
-              dayGenerateCharge: 5,
-              frequency: 'WEEKLY',
-              chargeType: 'DYNAMIC',
-              dayDue: 7,
-              correlationID: 'string'
-            }));
-            req.end();
-        - lang: Shell + Curl
-          source: |-
-            curl --request POST \
-              --url https://api.openpix.com.br/api/v1/subscriptions \
-              --header 'Authorization: REPLACE_KEY_VALUE' \
-              --header 'content-type: application/json' \
-              --data '{"customer":{"name":"string","email":"string","phone":"string","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"value":0,"comment":"string","additionalInfo":[{"key":"string","value":"string"}],"dayGenerateCharge":5,"frequency":"WEEKLY","chargeType":"DYNAMIC","dayDue":7,"correlationID":"string"}'
-        - lang: Php + Curl
-          source: |-
-            <?php
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subscriptions",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => json_encode([
-                'customer' => [
-                    'name' => 'string',
-                    'email' => 'string',
-                    'phone' => 'string',
-                    'taxID' => 'string',
-                    'address' => [
-                            'zipcode' => 'string',
-                            'street' => 'string',
-                            'number' => 'string',
-                            'neighborhood' => 'string',
-                            'city' => 'string',
-                            'state' => 'string',
-                            'complement' => 'string',
-                            'country' => 'string'
-                    ]
-                ],
-                'value' => 0,
-                'comment' => 'string',
-                'additionalInfo' => [
-                    [
-                            'key' => 'string',
-                            'value' => 'string'
-                    ]
-                ],
-                'dayGenerateCharge' => 5,
-                'frequency' => 'WEEKLY',
-                'chargeType' => 'DYNAMIC',
-                'dayDue' => 7,
-                'correlationID' => 'string'
-              ]),
-              CURLOPT_HTTPHEADER => [
-                "Authorization: REPLACE_KEY_VALUE",
-                "content-type: application/json"
-              ],
-            ]);
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-
-            if ($err) {
-              echo "cURL Error #:" . $err;
-            } else {
-              echo $response;
-            }
-        - lang: Python + Python3
-          source: >-
-            import http.client
-
-
-            conn = http.client.HTTPSConnection("api.openpix.com.br")
-
-
-            payload =
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}"
-
-
-            headers = {
-                'Authorization': "REPLACE_KEY_VALUE",
-                'content-type': "application/json"
-            }
-
-
-            conn.request("POST", "/api/v1/subscriptions", payload, headers)
-
-
-            res = conn.getresponse()
-
-            data = res.read()
-
-
-            print(data.decode("utf-8"))
-        - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-        - lang: Java + Okhttp
-          source: >-
-            OkHttpClient client = new OkHttpClient();
-
-
-            MediaType mediaType = MediaType.parse("application/json");
-
-            RequestBody body = RequestBody.create(mediaType,
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}");
-
-            Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/subscriptions")
-              .post(body)
-              .addHeader("Authorization", "REPLACE_KEY_VALUE")
-              .addHeader("content-type", "application/json")
-              .build();
-
-            Response response = client.newCall(request).execute();
-        - lang: Ruby + Native
-          source: >-
-            require 'uri'
-
-            require 'net/http'
-
-
-            url = URI("https://api.openpix.com.br/api/v1/subscriptions")
-
-
-            http = Net::HTTP.new(url.host, url.port)
-
-            http.use_ssl = true
-
-
-            request = Net::HTTP::Post.new(url)
-
-            request["Authorization"] = 'REPLACE_KEY_VALUE'
-
-            request["content-type"] = 'application/json'
-
-            request.body =
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}"
-
-
-            response = http.request(request)
-
-            puts response.read_body
+      x-codeSamples: []
   /api/v1/partner/application:
     post:
       tags:
@@ -12829,6 +12397,444 @@ paths:
             response = http.request(request)
 
             puts response.read_body
+  /api/v1/subscriptions:
+    get:
+      tags:
+        - subscription
+      summary: Get a list of subscriptions
+      responses:
+        '200':
+          description: A list of subscriptions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refunds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Refund'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+                example:
+                  pageInfo:
+                    skip: 0
+                    limit: 10
+                    totalCount: 20
+                    hasPreviousPage: false
+                    hasNextPage: true
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/subscriptions',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url https://api.openpix.com.br/api/v1/subscriptions \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subscriptions",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: |-
+            import http.client
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+            conn.request("GET", "/api/v1/subscriptions", headers=headers)
+
+            res = conn.getresponse()
+            data = res.read()
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/subscriptions")
+              .get()
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: |-
+            require 'uri'
+            require 'net/http'
+
+            url = URI("https://api.openpix.com.br/api/v1/subscriptions")
+
+            http = Net::HTTP.new(url.host, url.port)
+            http.use_ssl = true
+
+            request = Net::HTTP::Get.new(url)
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+            response = http.request(request)
+            puts response.read_body
+    post:
+      tags:
+        - subscription
+      summary: Create a new Subscription
+      description: Endpoint to create a new Subcription
+      requestBody:
+        description: Data to create a new Subscription
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/SubscriptionPayload'
+            examples:
+              Subscription:
+                value:
+                  value: 100
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                  dayGenerateCharge: 15
+              Subscription with Interests and Fines:
+                value:
+                  value: 100
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                    address:
+                      zipcode: '30421322'
+                      street: Street
+                      number: '100'
+                      neighborhood: Neighborhood
+                      city: Belo Horizonte
+                      state: MG
+                      complement: APTO
+                      country: BR
+                  dayGenerateCharge: 15
+                  chargeType: OVERDUE
+      responses:
+        '200':
+          description: The subscription created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    $ref: '#/components/schemas/Subscription'
+                example:
+                  subscription:
+                    globalID: >-
+                      UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+                    customer:
+                      name: Dan
+                      email: email0@example.com
+                      phone: '5511999999999'
+                      taxID:
+                        taxID: '31324227036'
+                        type: BR:CPF
+                    value: 100
+                    dayGenerateCharge: 5
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/subscriptions',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE',
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({
+              customer: {
+                name: 'string',
+                email: 'string',
+                phone: 'string',
+                taxID: 'string',
+                address: {
+                  zipcode: 'string',
+                  street: 'string',
+                  number: 'string',
+                  neighborhood: 'string',
+                  city: 'string',
+                  state: 'string',
+                  complement: 'string',
+                  country: 'string'
+                }
+              },
+              value: 0,
+              comment: 'string',
+              additionalInfo: [{key: 'string', value: 'string'}],
+              dayGenerateCharge: 5,
+              frequency: 'WEEKLY',
+              chargeType: 'DYNAMIC',
+              dayDue: 7,
+              correlationID: 'string'
+            }));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/subscriptions \
+              --header 'Authorization: REPLACE_KEY_VALUE' \
+              --header 'content-type: application/json' \
+              --data '{"customer":{"name":"string","email":"string","phone":"string","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"value":0,"comment":"string","additionalInfo":[{"key":"string","value":"string"}],"dayGenerateCharge":5,"frequency":"WEEKLY","chargeType":"DYNAMIC","dayDue":7,"correlationID":"string"}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subscriptions",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'customer' => [
+                    'name' => 'string',
+                    'email' => 'string',
+                    'phone' => 'string',
+                    'taxID' => 'string',
+                    'address' => [
+                            'zipcode' => 'string',
+                            'street' => 'string',
+                            'number' => 'string',
+                            'neighborhood' => 'string',
+                            'city' => 'string',
+                            'state' => 'string',
+                            'complement' => 'string',
+                            'country' => 'string'
+                    ]
+                ],
+                'value' => 0,
+                'comment' => 'string',
+                'additionalInfo' => [
+                    [
+                            'key' => 'string',
+                            'value' => 'string'
+                    ]
+                ],
+                'dayGenerateCharge' => 5,
+                'frequency' => 'WEEKLY',
+                'chargeType' => 'DYNAMIC',
+                'dayDue' => 7,
+                'correlationID' => 'string'
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload =
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}"
+
+
+            headers = {
+                'Authorization': "REPLACE_KEY_VALUE",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST", "/api/v1/subscriptions", payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"chargeType\\\":\\\"DYNAMIC\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}");
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/subscriptions")
+              .post(body)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url = URI("https://api.openpix.com.br/api/v1/subscriptions")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"chargeType\":\"DYNAMIC\",\"dayDue\":7,\"correlationID\":\"string\"}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/transfer:
     post:
       tags:
@@ -14726,6 +14732,86 @@ components:
         - disputeReason
         - endToEndId
     End: *ref_1
+    Installment:
+      type: object
+      properties:
+        dateGenerateCharge:
+          type: string
+          format: date-time
+        expiration:
+          type: number
+        installmentNumber:
+          type: number
+        value:
+          type: number
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        cobr:
+          type: object
+          nullable: true
+          properties:
+            identifierId:
+              type: string
+            recurrencyId:
+              type: string
+            installmentId:
+              type: string
+            rejectCode:
+              type: string
+            status:
+              type: string
+            value:
+              type: number
+            createdAt:
+              type: string
+            paymentDate:
+              type: string
+            description:
+              type: string
+        globalID:
+          type: string
+        pageInfo:
+          type: object
+          properties:
+            skip:
+              type: number
+            limit:
+              type: number
+            totalCount:
+              type: number
+            hasPreviousPage:
+              type: boolean
+            hasNextPage:
+              type: boolean
+      example:
+        installments:
+          - dateGenerateCharge: 2025-08-25T19:43:20.013Z
+            expiration: 259200
+            installmentNumber: 1
+            value: 100
+            status: COMPLETED
+            createdAt: 2025-08-25T19:43:20.015Z
+            cobr: null
+            globalID: >-
+              UGF5bWVudFN1YnNjcmlwdGlvbkluc3RhbGxtZW50OjY4YWNiY2Q4YTk1NjUzZWYyNDNiNjZmYQ==
+          - dateGenerateCharge: 2025-09-01T19:43:16.030Z
+            expiration: 259200
+            installmentNumber: 2
+            value: 100
+            status: SCHEDULED
+            createdAt: 2025-08-25T19:43:24.089Z
+            cobr: null
+            globalID: >-
+              UGF5bWVudFN1YnNjcmlwdGlvbkluc3RhbGxtZW50OjY4YWNiY2RjYTk1NjUzZWYyNDNiNjczMA==
+        pageInfo:
+          skip: 0
+          limit: 100
+          totalCount: 2
+          hasPreviousPage: false
+          hasNextPage: false
     ApplicationEnumTypePayload:
       type: string
       description: >-
