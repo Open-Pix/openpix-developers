@@ -4573,6 +4573,346 @@
         ]
       }
     },
+    "/api/v1/fraud-validation/{pixKey}/pix-key": {
+      "get": {
+        "tags": [
+          "pixKey"
+        ],
+        "summary": "Validate fraud markers for a Pix key",
+        "parameters": [
+          {
+            "name": "pixKey",
+            "in": "path",
+            "required": true,
+            "description": "Pix key to be verified (email, phone, EVP, CPF/CNPJ etc.)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixKeyFraudValidationResponse"
+                },
+                "examples": {
+                  "ok": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "keyStatistics": {
+                          "fraudMarkers": {
+                            "watermark": "2025-08-04T17:18:21.716Z",
+                            "applicationFrauds": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            },
+                            "muleAccounts": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "scammerAccounts": {
+                              "d90": "11",
+                              "m12": "10",
+                              "m60": "10"
+                            },
+                            "otherFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "unknownFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "totalFraudTransactionAmount": {
+                              "d90": "723",
+                              "m12": "723",
+                              "m60": "723"
+                            },
+                            "distinctFraudReporters": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            }
+                          },
+                          "infractionReports": {
+                            "watermark": "2025-08-04T17:18:21.756Z",
+                            "openReports": "2",
+                            "openReportsDistinctReporters": "1",
+                            "rejectedReports": {
+                              "d90": "3",
+                              "m12": "3",
+                              "m60": "3"
+                            }
+                          }
+                        },
+                        "ownerStatistics": {
+                          "fraudMarkers": {
+                            "watermark": "2025-08-04T17:18:21.716Z",
+                            "applicationFrauds": {
+                              "d90": "1",
+                              "m12": "5",
+                              "m60": "5"
+                            },
+                            "muleAccounts": {
+                              "d90": "0",
+                              "m12": "1",
+                              "m60": "1"
+                            },
+                            "scammerAccounts": {
+                              "d90": "15",
+                              "m12": "21",
+                              "m60": "21"
+                            },
+                            "otherFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "unknownFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "totalFraudTransactionAmount": {
+                              "d90": "1023",
+                              "m12": "1517",
+                              "m60": "1517"
+                            },
+                            "distinctFraudReporters": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            }
+                          },
+                          "infractionReports": {
+                            "watermark": "2025-08-04T17:18:21.756Z",
+                            "openReports": "2",
+                            "openReportsDistinctReporters": "1",
+                            "rejectedReports": {
+                              "d90": "3",
+                              "m12": "32",
+                              "m60": "32"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (business rule / validation failed)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingBankAccount": {
+                    "value": {
+                      "success": false,
+                      "error": "You need to link a Bank Account to this API"
+                    }
+                  },
+                  "invalidBankCode": {
+                    "value": {
+                      "success": false,
+                      "error": "Invalid bank code"
+                    }
+                  },
+                  "missingMediator": {
+                    "value": {
+                      "success": false,
+                      "error": "Missing mediator"
+                    }
+                  },
+                  "missingFee": {
+                    "value": {
+                      "success": false,
+                      "error": "Missing fraud validation fee"
+                    }
+                  },
+                  "notFound": {
+                    "value": {
+                      "success": false,
+                      "error": "Pix key not found"
+                    }
+                  },
+                  "dictError": {
+                    "value": {
+                      "success": false,
+                      "error": "Error getting pix key fraud"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Your Authorization APP_ID must be configured to be MASTER or API"
+          }
+        },
+        "x-codeSamples": []
+      }
+    },
+    "/api/v1/fraud-validation/{taxId}/taxId": {
+      "get": {
+        "tags": [
+          "taxId"
+        ],
+        "summary": "Validate fraud markers for a Tax ID",
+        "parameters": [
+          {
+            "name": "taxId",
+            "in": "path",
+            "required": true,
+            "description": "Tax ID to be verified (CPF/CNPJ)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixKeyFraudValidationResponse"
+                },
+                "examples": {
+                  "ok": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "ownerStatistics": {
+                          "fraudMarkers": {
+                            "watermark": "2025-08-04T17:18:21.716Z",
+                            "applicationFrauds": {
+                              "d90": "1",
+                              "m12": "5",
+                              "m60": "5"
+                            },
+                            "muleAccounts": {
+                              "d90": "0",
+                              "m12": "1",
+                              "m60": "1"
+                            },
+                            "scammerAccounts": {
+                              "d90": "15",
+                              "m12": "21",
+                              "m60": "21"
+                            },
+                            "otherFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "unknownFrauds": {
+                              "d90": "0",
+                              "m12": "0",
+                              "m60": "0"
+                            },
+                            "totalFraudTransactionAmount": {
+                              "d90": "1023",
+                              "m12": "1517",
+                              "m60": "1517"
+                            },
+                            "distinctFraudReporters": {
+                              "d90": "1",
+                              "m12": "1",
+                              "m60": "1"
+                            }
+                          },
+                          "infractionReports": {
+                            "watermark": "2025-08-04T17:18:21.756Z",
+                            "openReports": "2",
+                            "openReportsDistinctReporters": "1",
+                            "rejectedReports": {
+                              "d90": "3",
+                              "m12": "32",
+                              "m60": "32"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (business rule / validation failed)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingBankAccount": {
+                    "value": {
+                      "success": false,
+                      "error": "You need to link a Bank Account to this API"
+                    }
+                  },
+                  "invalidBankCode": {
+                    "value": {
+                      "success": false,
+                      "error": "Invalid bank code"
+                    }
+                  },
+                  "missingMediator": {
+                    "value": {
+                      "success": false,
+                      "error": "Missing mediator"
+                    }
+                  },
+                  "missingFee": {
+                    "value": {
+                      "success": false,
+                      "error": "Missing fraud validation fee"
+                    }
+                  },
+                  "notFound": {
+                    "value": {
+                      "success": false,
+                      "error": "Pix key not found"
+                    }
+                  },
+                  "dictError": {
+                    "value": {
+                      "success": false,
+                      "error": "Error getting pix key fraud"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Your Authorization APP_ID must be configured to be MASTER or API"
+          }
+        },
+        "x-codeSamples": []
+      }
+    },
     "/api/v1/installments/{id}": {
       "get": {
         "tags": [
@@ -5980,208 +6320,6 @@
           },
           "404": {
             "description": "Pix key not found"
-          }
-        },
-        "x-codeSamples": []
-      }
-    },
-    "/api/v1/pix-keys/{pixKey}/fraud-validation": {
-      "get": {
-        "tags": [
-          "pixKey"
-        ],
-        "summary": "Validate fraud markers for a Pix key",
-        "description": "Charges the FRAUD_VALIDATE_FEE from the linked account and queries DICT (BACEN) to obtain fraud marker statistics for the provided Pix key, returning a parsed summary. Requires a linked Woovi bank account and valid token.\n",
-        "operationId": "getPixKeyFraudValidation",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "pixKey",
-            "in": "path",
-            "required": true,
-            "description": "Pix key to be verified (email, phone, EVP, CPF/CNPJ etc.)",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PixKeyFraudValidationResponse"
-                },
-                "examples": {
-                  "ok": {
-                    "value": {
-                      "success": true,
-                      "data": {
-                        "keyStatistics": {
-                          "fraudMarkers": {
-                            "watermark": "2025-08-04T17:18:21.716Z",
-                            "applicationFrauds": {
-                              "d90": "1",
-                              "m12": "1",
-                              "m60": "1"
-                            },
-                            "muleAccounts": {
-                              "d90": "0",
-                              "m12": "0",
-                              "m60": "0"
-                            },
-                            "scammerAccounts": {
-                              "d90": "11",
-                              "m12": "10",
-                              "m60": "10"
-                            },
-                            "otherFrauds": {
-                              "d90": "0",
-                              "m12": "0",
-                              "m60": "0"
-                            },
-                            "unknownFrauds": {
-                              "d90": "0",
-                              "m12": "0",
-                              "m60": "0"
-                            },
-                            "totalFraudTransactionAmount": {
-                              "d90": "723",
-                              "m12": "723",
-                              "m60": "723"
-                            },
-                            "distinctFraudReporters": {
-                              "d90": "1",
-                              "m12": "1",
-                              "m60": "1"
-                            }
-                          },
-                          "infractionReports": {
-                            "watermark": "2025-08-04T17:18:21.756Z",
-                            "openReports": "2",
-                            "openReportsDistinctReporters": "1",
-                            "rejectedReports": {
-                              "d90": "3",
-                              "m12": "3",
-                              "m60": "3"
-                            }
-                          }
-                        },
-                        "ownerStatistics": {
-                          "fraudMarkers": {
-                            "watermark": "2025-08-04T17:18:21.716Z",
-                            "applicationFrauds": {
-                              "d90": "1",
-                              "m12": "5",
-                              "m60": "5"
-                            },
-                            "muleAccounts": {
-                              "d90": "0",
-                              "m12": "1",
-                              "m60": "1"
-                            },
-                            "scammerAccounts": {
-                              "d90": "15",
-                              "m12": "21",
-                              "m60": "21"
-                            },
-                            "otherFrauds": {
-                              "d90": "0",
-                              "m12": "0",
-                              "m60": "0"
-                            },
-                            "unknownFrauds": {
-                              "d90": "0",
-                              "m12": "0",
-                              "m60": "0"
-                            },
-                            "totalFraudTransactionAmount": {
-                              "d90": "1023",
-                              "m12": "1517",
-                              "m60": "1517"
-                            },
-                            "distinctFraudReporters": {
-                              "d90": "1",
-                              "m12": "1",
-                              "m60": "1"
-                            }
-                          },
-                          "infractionReports": {
-                            "watermark": "2025-08-04T17:18:21.756Z",
-                            "openReports": "2",
-                            "openReportsDistinctReporters": "1",
-                            "rejectedReports": {
-                              "d90": "3",
-                              "m12": "32",
-                              "m60": "32"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (business rule / validation failed)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                },
-                "examples": {
-                  "missingBankAccount": {
-                    "value": {
-                      "success": false,
-                      "error": "You need to link a Bank Account to this API"
-                    }
-                  },
-                  "invalidBankCode": {
-                    "value": {
-                      "success": false,
-                      "error": "Invalid bank code"
-                    }
-                  },
-                  "missingMediator": {
-                    "value": {
-                      "success": false,
-                      "error": "Missing mediator"
-                    }
-                  },
-                  "missingFee": {
-                    "value": {
-                      "success": false,
-                      "error": "Missing fraud validation fee"
-                    }
-                  },
-                  "notFound": {
-                    "value": {
-                      "success": false,
-                      "error": "Pix key not found"
-                    }
-                  },
-                  "dictError": {
-                    "value": {
-                      "success": false,
-                      "error": "Error getting pix key fraud"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Your IP is not in the allowed list"
-          },
-          "403": {
-            "description": "Your Authorization APP_ID must be configured to be MASTER or API"
           }
         },
         "x-codeSamples": []
@@ -8889,45 +9027,7 @@
                     },
                     "pageInfo": {
                       "type": "object",
-                      "properties": {
-                        "errors": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "message": {
-                                "type": "string"
-                              },
-                              "data": {
-                                "type": "object",
-                                "properties": {
-                                  "skip": {
-                                    "type": "number"
-                                  },
-                                  "limit": {
-                                    "type": "number"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "skip": {
-                          "type": "number"
-                        },
-                        "limit": {
-                          "type": "number"
-                        },
-                        "totalCount": {
-                          "type": "number"
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean"
-                        },
-                        "hasNextPage": {
-                          "type": "boolean"
-                        }
-                      }
+                      "$ref": "#/components/schemas/Pagination"
                     }
                   },
                   "example": {
@@ -9115,31 +9215,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  customer: {\n    name: 'string',\n    email: 'string',\n    phone: 'string',\n    taxID: 'string',\n    address: {\n      zipcode: 'string',\n      street: 'string',\n      number: 'string',\n      neighborhood: 'string',\n      city: 'string',\n      state: 'string',\n      complement: 'string',\n      country: 'string'\n    }\n  },\n  value: 0,\n  comment: 'string',\n  dayGenerateCharge: 5,\n  frequency: 'WEEKLY',\n  type: 'PIX_RECURRING',\n  dayDue: 7,\n  correlationID: 'string',\n  pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL'}\n}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  customer: {\n    name: 'string',\n    email: 'string',\n    phone: 'string',\n    taxID: 'string',\n    address: {\n      zipcode: 'string',\n      street: 'string',\n      number: 'string',\n      neighborhood: 'string',\n      city: 'string',\n      state: 'string',\n      complement: 'string',\n      country: 'string'\n    }\n  },\n  value: 0,\n  comment: 'string',\n  dayGenerateCharge: 5,\n  frequency: 'WEEKLY',\n  type: 'PIX_RECURRING',\n  dayDue: 7,\n  correlationID: 'string',\n  additionalInfo: [{key: 'string', value: 'string'}],\n  pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL'}\n}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}'"
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'customer' => [\n        'name' => 'string',\n        'email' => 'string',\n        'phone' => 'string',\n        'taxID' => 'string',\n        'address' => [\n                'zipcode' => 'string',\n                'street' => 'string',\n                'number' => 'string',\n                'neighborhood' => 'string',\n                'city' => 'string',\n                'state' => 'string',\n                'complement' => 'string',\n                'country' => 'string'\n        ]\n    ],\n    'value' => 0,\n    'comment' => 'string',\n    'dayGenerateCharge' => 5,\n    'frequency' => 'WEEKLY',\n    'type' => 'PIX_RECURRING',\n    'dayDue' => 7,\n    'correlationID' => 'string',\n    'pixRecurringOptions' => [\n        'retryPolicy' => 'NON_PERMITED',\n        'journey' => 'PAYMENT_ON_APPROVAL'\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'customer' => [\n        'name' => 'string',\n        'email' => 'string',\n        'phone' => 'string',\n        'taxID' => 'string',\n        'address' => [\n                'zipcode' => 'string',\n                'street' => 'string',\n                'number' => 'string',\n                'neighborhood' => 'string',\n                'city' => 'string',\n                'state' => 'string',\n                'complement' => 'string',\n                'country' => 'string'\n        ]\n    ],\n    'value' => 0,\n    'comment' => 'string',\n    'dayGenerateCharge' => 5,\n    'frequency' => 'WEEKLY',\n    'type' => 'PIX_RECURRING',\n    'dayDue' => 7,\n    'correlationID' => 'string',\n    'additionalInfo' => [\n        [\n                'key' => 'string',\n                'value' => 'string'\n        ]\n    ],\n    'pixRecurringOptions' => [\n        'retryPolicy' => 'NON_PERMITED',\n        'journey' => 'PAYMENT_ON_APPROVAL'\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/subscriptions\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/subscriptions\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -12125,6 +12225,20 @@
             "type": "string",
             "description": "Your correlation ID to keep track of this subscription"
           },
+          "addtionalInfo": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "pixRecurringOptions": {
             "type": "object",
             "description": "Pix automatic options",
@@ -12259,6 +12373,20 @@
           "correlationID": {
             "type": "string",
             "description": "Your correlation ID to keep track of this subscription"
+          },
+          "additionalInfo": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "pixRecurringOptions": {
             "type": "object",

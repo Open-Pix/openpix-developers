@@ -6290,6 +6290,243 @@ paths:
 
             response = http.request(request)
             puts response.read_body
+  /api/v1/fraud-validation/{pixKey}/pix-key:
+    get:
+      tags:
+        - pixKey
+      summary: Validate fraud markers for a Pix key
+      parameters:
+        - name: pixKey
+          in: path
+          required: true
+          description: Pix key to be verified (email, phone, EVP, CPF/CNPJ etc.)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixKeyFraudValidationResponse'
+              examples:
+                ok:
+                  value:
+                    success: true
+                    data:
+                      keyStatistics:
+                        fraudMarkers:
+                          watermark: 2025-08-04T17:18:21.716Z
+                          applicationFrauds:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                          muleAccounts:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          scammerAccounts:
+                            d90: '11'
+                            m12: '10'
+                            m60: '10'
+                          otherFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          unknownFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          totalFraudTransactionAmount:
+                            d90: '723'
+                            m12: '723'
+                            m60: '723'
+                          distinctFraudReporters:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                        infractionReports:
+                          watermark: 2025-08-04T17:18:21.756Z
+                          openReports: '2'
+                          openReportsDistinctReporters: '1'
+                          rejectedReports:
+                            d90: '3'
+                            m12: '3'
+                            m60: '3'
+                      ownerStatistics:
+                        fraudMarkers:
+                          watermark: 2025-08-04T17:18:21.716Z
+                          applicationFrauds:
+                            d90: '1'
+                            m12: '5'
+                            m60: '5'
+                          muleAccounts:
+                            d90: '0'
+                            m12: '1'
+                            m60: '1'
+                          scammerAccounts:
+                            d90: '15'
+                            m12: '21'
+                            m60: '21'
+                          otherFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          unknownFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          totalFraudTransactionAmount:
+                            d90: '1023'
+                            m12: '1517'
+                            m60: '1517'
+                          distinctFraudReporters:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                        infractionReports:
+                          watermark: 2025-08-04T17:18:21.756Z
+                          openReports: '2'
+                          openReportsDistinctReporters: '1'
+                          rejectedReports:
+                            d90: '3'
+                            m12: '32'
+                            m60: '32'
+        '400':
+          description: Bad request (business rule / validation failed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingBankAccount:
+                  value:
+                    success: false
+                    error: You need to link a Bank Account to this API
+                invalidBankCode:
+                  value:
+                    success: false
+                    error: Invalid bank code
+                missingMediator:
+                  value:
+                    success: false
+                    error: Missing mediator
+                missingFee:
+                  value:
+                    success: false
+                    error: Missing fraud validation fee
+                notFound:
+                  value:
+                    success: false
+                    error: Pix key not found
+                dictError:
+                  value:
+                    success: false
+                    error: Error getting pix key fraud
+        '401':
+          description: Your IP is not in the allowed list
+        '403':
+          description: Your Authorization APP_ID must be configured to be MASTER or API
+      x-codeSamples: []
+  /api/v1/fraud-validation/{taxId}/taxId:
+    get:
+      tags:
+        - taxId
+      summary: Validate fraud markers for a Tax ID
+      parameters:
+        - name: taxId
+          in: path
+          required: true
+          description: Tax ID to be verified (CPF/CNPJ)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixKeyFraudValidationResponse'
+              examples:
+                ok:
+                  value:
+                    success: true
+                    data:
+                      ownerStatistics:
+                        fraudMarkers:
+                          watermark: 2025-08-04T17:18:21.716Z
+                          applicationFrauds:
+                            d90: '1'
+                            m12: '5'
+                            m60: '5'
+                          muleAccounts:
+                            d90: '0'
+                            m12: '1'
+                            m60: '1'
+                          scammerAccounts:
+                            d90: '15'
+                            m12: '21'
+                            m60: '21'
+                          otherFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          unknownFrauds:
+                            d90: '0'
+                            m12: '0'
+                            m60: '0'
+                          totalFraudTransactionAmount:
+                            d90: '1023'
+                            m12: '1517'
+                            m60: '1517'
+                          distinctFraudReporters:
+                            d90: '1'
+                            m12: '1'
+                            m60: '1'
+                        infractionReports:
+                          watermark: 2025-08-04T17:18:21.756Z
+                          openReports: '2'
+                          openReportsDistinctReporters: '1'
+                          rejectedReports:
+                            d90: '3'
+                            m12: '32'
+                            m60: '32'
+        '400':
+          description: Bad request (business rule / validation failed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingBankAccount:
+                  value:
+                    success: false
+                    error: You need to link a Bank Account to this API
+                invalidBankCode:
+                  value:
+                    success: false
+                    error: Invalid bank code
+                missingMediator:
+                  value:
+                    success: false
+                    error: Missing mediator
+                missingFee:
+                  value:
+                    success: false
+                    error: Missing fraud validation fee
+                notFound:
+                  value:
+                    success: false
+                    error: Pix key not found
+                dictError:
+                  value:
+                    success: false
+                    error: Error getting pix key fraud
+        '401':
+          description: Your IP is not in the allowed list
+        '403':
+          description: Your Authorization APP_ID must be configured to be MASTER or API
+      x-codeSamples: []
   /api/v1/installments/{id}:
     get:
       tags:
@@ -8262,152 +8499,6 @@ paths:
           description: Your Authorization APP_ID must be configured to be MASTER or API
         '404':
           description: Pix key not found
-      x-codeSamples: []
-  /api/v1/pix-keys/{pixKey}/fraud-validation:
-    get:
-      tags:
-        - pixKey
-      summary: Validate fraud markers for a Pix key
-      description: >
-        Charges the FRAUD_VALIDATE_FEE from the linked account and queries DICT
-        (BACEN) to obtain fraud marker statistics for the provided Pix key,
-        returning a parsed summary. Requires a linked Woovi bank account and
-        valid token.
-      operationId: getPixKeyFraudValidation
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: pixKey
-          in: path
-          required: true
-          description: Pix key to be verified (email, phone, EVP, CPF/CNPJ etc.)
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PixKeyFraudValidationResponse'
-              examples:
-                ok:
-                  value:
-                    success: true
-                    data:
-                      keyStatistics:
-                        fraudMarkers:
-                          watermark: 2025-08-04T17:18:21.716Z
-                          applicationFrauds:
-                            d90: '1'
-                            m12: '1'
-                            m60: '1'
-                          muleAccounts:
-                            d90: '0'
-                            m12: '0'
-                            m60: '0'
-                          scammerAccounts:
-                            d90: '11'
-                            m12: '10'
-                            m60: '10'
-                          otherFrauds:
-                            d90: '0'
-                            m12: '0'
-                            m60: '0'
-                          unknownFrauds:
-                            d90: '0'
-                            m12: '0'
-                            m60: '0'
-                          totalFraudTransactionAmount:
-                            d90: '723'
-                            m12: '723'
-                            m60: '723'
-                          distinctFraudReporters:
-                            d90: '1'
-                            m12: '1'
-                            m60: '1'
-                        infractionReports:
-                          watermark: 2025-08-04T17:18:21.756Z
-                          openReports: '2'
-                          openReportsDistinctReporters: '1'
-                          rejectedReports:
-                            d90: '3'
-                            m12: '3'
-                            m60: '3'
-                      ownerStatistics:
-                        fraudMarkers:
-                          watermark: 2025-08-04T17:18:21.716Z
-                          applicationFrauds:
-                            d90: '1'
-                            m12: '5'
-                            m60: '5'
-                          muleAccounts:
-                            d90: '0'
-                            m12: '1'
-                            m60: '1'
-                          scammerAccounts:
-                            d90: '15'
-                            m12: '21'
-                            m60: '21'
-                          otherFrauds:
-                            d90: '0'
-                            m12: '0'
-                            m60: '0'
-                          unknownFrauds:
-                            d90: '0'
-                            m12: '0'
-                            m60: '0'
-                          totalFraudTransactionAmount:
-                            d90: '1023'
-                            m12: '1517'
-                            m60: '1517'
-                          distinctFraudReporters:
-                            d90: '1'
-                            m12: '1'
-                            m60: '1'
-                        infractionReports:
-                          watermark: 2025-08-04T17:18:21.756Z
-                          openReports: '2'
-                          openReportsDistinctReporters: '1'
-                          rejectedReports:
-                            d90: '3'
-                            m12: '32'
-                            m60: '32'
-        '400':
-          description: Bad request (business rule / validation failed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                missingBankAccount:
-                  value:
-                    success: false
-                    error: You need to link a Bank Account to this API
-                invalidBankCode:
-                  value:
-                    success: false
-                    error: Invalid bank code
-                missingMediator:
-                  value:
-                    success: false
-                    error: Missing mediator
-                missingFee:
-                  value:
-                    success: false
-                    error: Missing fraud validation fee
-                notFound:
-                  value:
-                    success: false
-                    error: Pix key not found
-                dictError:
-                  value:
-                    success: false
-                    error: Error getting pix key fraud
-        '401':
-          description: Your IP is not in the allowed list
-        '403':
-          description: Your Authorization APP_ID must be configured to be MASTER or API
       x-codeSamples: []
   /api/v1/pix-keys:
     get:
@@ -12419,31 +12510,7 @@ paths:
                       $ref: '#/components/schemas/Subscription'
                   pageInfo:
                     type: object
-                    properties:
-                      errors:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            message:
-                              type: string
-                            data:
-                              type: object
-                              properties:
-                                skip:
-                                  type: number
-                                limit:
-                                  type: number
-                      skip:
-                        type: number
-                      limit:
-                        type: number
-                      totalCount:
-                        type: number
-                      hasPreviousPage:
-                        type: boolean
-                      hasNextPage:
-                        type: boolean
+                    $ref: '#/components/schemas/Pagination'
                 example:
                   pageInfo:
                     skip: 0
@@ -12712,6 +12779,7 @@ paths:
               type: 'PIX_RECURRING',
               dayDue: 7,
               correlationID: 'string',
+              additionalInfo: [{key: 'string', value: 'string'}],
               pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL'}
             }));
             req.end();
@@ -12721,7 +12789,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/subscriptions \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"customer":{"name":"string","email":"string","phone":"string","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"value":0,"comment":"string","dayGenerateCharge":5,"frequency":"WEEKLY","type":"PIX_RECURRING","dayDue":7,"correlationID":"string","pixRecurringOptions":{"retryPolicy":"NON_PERMITED","journey":"PAYMENT_ON_APPROVAL"}}'
+              --data '{"customer":{"name":"string","email":"string","phone":"string","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"value":0,"comment":"string","dayGenerateCharge":5,"frequency":"WEEKLY","type":"PIX_RECURRING","dayDue":7,"correlationID":"string","additionalInfo":[{"key":"string","value":"string"}],"pixRecurringOptions":{"retryPolicy":"NON_PERMITED","journey":"PAYMENT_ON_APPROVAL"}}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -12760,6 +12828,12 @@ paths:
                 'type' => 'PIX_RECURRING',
                 'dayDue' => 7,
                 'correlationID' => 'string',
+                'additionalInfo' => [
+                    [
+                            'key' => 'string',
+                            'value' => 'string'
+                    ]
+                ],
                 'pixRecurringOptions' => [
                     'retryPolicy' => 'NON_PERMITED',
                     'journey' => 'PAYMENT_ON_APPROVAL'
@@ -12790,7 +12864,7 @@ paths:
 
 
             payload =
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}"
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}"
 
 
             headers = {
@@ -12809,7 +12883,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -12818,7 +12892,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}");
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/subscriptions")
@@ -12850,7 +12924,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}"
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\"}}"
 
 
             response = http.request(request)
@@ -15578,6 +15652,15 @@ components:
         correlationID:
           type: string
           description: Your correlation ID to keep track of this subscription
+        addtionalInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
         pixRecurringOptions:
           type: object
           description: Pix automatic options
@@ -15677,6 +15760,15 @@ components:
         correlationID:
           type: string
           description: Your correlation ID to keep track of this subscription
+        additionalInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
         pixRecurringOptions:
           type: object
           description: Pix automatic options
