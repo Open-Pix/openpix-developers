@@ -31,3 +31,11 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .hidden {
   display: none !important;
 }
+
+html:not([data-theme='dark']) .redocusaurus .react-tabs__tab-panel--selected pre {
+  background-color: #1B2028 !important;
+}
+
+html[data-theme='dark'] .redocusaurus .react-tabs__tab-panel--selected pre {
+  background-color: #11171A !important;
+}
