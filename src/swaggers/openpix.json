@@ -5084,6 +5084,123 @@
         ]
       }
     },
+    "/api/v1/invoice/{invoiceId}/cancel": {
+      "post": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Cancel an invoice",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "invoiceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice canceled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "ok": {
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notConfirmed": {
+                    "value": {
+                      "error": "Cannot cancel a not confirmed invoice"
+                    }
+                  },
+                  "cancelError": {
+                    "value": {
+                      "error": "Unable to cancel invoice"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Forbidden - Missing required feature",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "missingFeature": {
+                    "value": {
+                      "error": "You need feature Invoice to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "invoiceNotFound": {
+                    "value": {
+                      "error": "Invoice not found"
+                    }
+                  },
+                  "integrationNotFound": {
+                    "value": {
+                      "error": "Integration not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": []
+      }
+    },
     "/api/v1/invoice": {
       "get": {
         "tags": [
@@ -5336,7 +5453,63 @@
                   "type": "object",
                   "properties": {
                     "invoice": {
-                      "type": "object"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "number"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "billingDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "statusRaw": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "customer": {
+                          "type": "object",
+                          "properties": {
+                            "correlationID": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "charge": {
+                          "type": "object",
+                          "properties": {
+                            "correlationID": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "number"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "paidAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "date": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -5394,7 +5567,7 @@
             "description": "Your IP is not in the allowed list"
           },
           "403": {
-            "description": "Your Authorization APP_ID must be configured to be MASTER or API",
+            "description": "Forbidden - Missing required feature",
             "content": {
               "application/json": {
                 "schema": {
@@ -5441,6 +5614,214 @@
             "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/invoice\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"description\\\":\\\"string\\\",\\\"billingDate\\\":\\\"2019-08-24T14:15:22Z\\\",\\\"charge\\\":\\\"string\\\",\\\"value\\\":0,\\\"customerId\\\":\\\"string\\\",\\\"customer\\\":{\\\"taxID\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"address\\\":{\\\"country\\\":\\\"string\\\",\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\"}}}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
+      }
+    },
+    "/api/v1/invoice/{invoiceId}/pdf": {
+      "get": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Get invoice PDF document",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "invoiceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF file",
+            "headers": {
+              "Content-Disposition": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "inline; filename=\"invoice.pdf\""
+              }
+            },
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Forbidden - Missing required feature",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "missingFeature": {
+                    "value": {
+                      "error": "You need feature Invoice to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notFound": {
+                    "value": {
+                      "error": "Invoice not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error while generating documents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "documentError": {
+                    "value": {
+                      "error": "Error while getting invoice documents"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": []
+      }
+    },
+    "/api/v1/invoice/{invoiceId}/xml": {
+      "get": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Get invoice XML document",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "invoiceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "XML file",
+            "headers": {
+              "Content-Disposition": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "inline; filename=\"invoice.xml\""
+              }
+            },
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Forbidden - Missing required feature",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "missingFeature": {
+                    "value": {
+                      "error": "You need feature Invoice to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "notFound": {
+                    "value": {
+                      "error": "Invoice not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error while generating documents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "documentError": {
+                    "value": {
+                      "error": "Error while getting invoice documents"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": []
       }
     },
     "/api/v1/partner/application": {
