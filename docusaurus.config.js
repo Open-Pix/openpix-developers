@@ -206,6 +206,14 @@ module.exports = {
             route: '/dict/',
             spec: './src/swaggers/bacen-dict.json',
           },
+          {
+            route: '/charge/',
+            spec: './src/swaggers/pixCharge.json',
+          },
+          {
+            route: '/location/',
+            spec: './src/swaggers/pixLocation.json',
+          }
         ],
       },
     ],

@@ -1,0 +1,1173 @@
+openapi: 3.0.3
+info:
+  title: Pix Charge
+  description: Pix Charge
+  version: 1.0.0
+servers:
+  - url: https://<name>.indireto.woovi-indireto.dev
+    description: Staging
+security: []
+paths:
+  /pix-charge/v1/charge/{txid}:
+    post:
+      tags:
+        - pixCharge
+      summary: Create a new Pix charge
+      description: Create a new Pix charge with the specified parameters
+      parameters:
+        - name: txid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique transaction identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PixChargeCreate'
+      responses:
+        '201':
+          description: Pix charge created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixCharge'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - txid already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: >-
+            const http = require('https');
+
+
+            const options = {
+              method: 'POST',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
+              headers: {
+                'content-type': 'application/json'
+              }
+            };
+
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+
+            req.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF',
+            expiresAt: '2019-08-24T14:15:22Z'}));
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \
+              --header 'content-type: application/json' \
+              --data '{"value":0,"key":"string","keyType":"CPF","expiresAt":"2019-08-24T14:15:22Z"}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'value' => 0,
+                'key' => 'string',
+                'keyType' => 'CPF',
+                'expiresAt' => '2019-08-24T14:15:22Z'
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            payload =
+            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+
+
+            headers = { 'content-type': "application/json" }
+
+
+            conn.request("POST",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}");
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+              .post(body)
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+    put:
+      tags:
+        - pixCharge
+      summary: Update an existing Pix charge
+      description: Update an existing Pix charge with new parameters
+      parameters:
+        - name: txid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique transaction identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PixChargeUpdate'
+      responses:
+        '200':
+          description: Pix charge updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixCharge'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Pix charge not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: >-
+            const http = require('https');
+
+
+            const options = {
+              method: 'PUT',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
+              headers: {
+                'content-type': 'application/json'
+              }
+            };
+
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+
+            req.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF',
+            expiresAt: '2019-08-24T14:15:22Z'}));
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request PUT \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \
+              --header 'content-type: application/json' \
+              --data '{"value":0,"key":"string","keyType":"CPF","expiresAt":"2019-08-24T14:15:22Z"}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "PUT",
+              CURLOPT_POSTFIELDS => json_encode([
+                'value' => 0,
+                'key' => 'string',
+                'keyType' => 'CPF',
+                'expiresAt' => '2019-08-24T14:15:22Z'
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            payload =
+            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+
+
+            headers = { 'content-type': "application/json" }
+
+
+            conn.request("PUT",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}");
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+              .put(body)
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Put.new(url)
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+    get:
+      tags:
+        - pix-charge
+      summary: Get a pix charge
+      description: Retrieve details of a specific Pix charge
+      parameters:
+        - name: txid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: pix charge txid
+          example: 6290ccfd42831958a405debc
+      responses:
+        '200':
+          description: the pix charge
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixCharge'
+                type: object
+                properties:
+                  charge:
+                    type: object
+              example:
+                account:
+                  accountId: 6290ccfd42831958a405debc
+                  isDefault: true
+                  balance:
+                    total: 129430
+                    blocked: 0
+                    available: 129430
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Pix charge not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc',
+              headers: {}
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            conn.request("GET",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc")
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc")
+              .get()
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+
+            response = http.request(request)
+
+            puts response.read_body
+    delete:
+      tags:
+        - pixCharge
+      summary: Delete a Pix charge
+      description: Delete a specific Pix charge
+      parameters:
+        - name: txid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique transaction identifier
+      responses:
+        '200':
+          description: Pix charge deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Pix charge not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'DELETE',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
+              headers: {}
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request DELETE \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "DELETE",
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            conn.request("DELETE",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+              .delete(null)
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Delete.new(url)
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /pix-charge/v1/charge/location/{locId}:
+    get:
+      tags:
+        - pixCharge
+      summary: Get Pix charges by location
+      description: Retrieve all Pix charges associated with a specific location
+      parameters:
+        - name: locId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Location identifier
+      responses:
+        '200':
+          description: Pix charges retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixChargeLocation'
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Location not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D',
+              headers: {}
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            conn.request("GET",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D")
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D")
+              .get()
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /pix-charge/v1/charge/{txid}/allow:
+    post:
+      tags:
+        - pixCharge
+      summary: Allow payment for Pix charge
+      description: Allow or disallow payment for a specific Pix charge
+      parameters:
+        - name: txid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique transaction identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allowed:
+                  type: boolean
+                  description: Whether to allow payment
+      responses:
+        '200':
+          description: Payment allowance updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowPayment'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Pix charge not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow',
+              headers: {
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({allowed: true}));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow \
+              --header 'content-type: application/json' \
+              --data '{"allowed":true}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'allowed' => null
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            payload = "{\"allowed\":true}"
+
+
+            headers = { 'content-type': "application/json" }
+
+
+            conn.request("POST",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"allowed\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"allowed\":true}");
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow")
+              .post(body)
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["content-type"] = 'application/json'
+
+            request.body = "{\"allowed\":true}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  openapi:
+    '0': '3'
+    '1': .
+    '2': '1'
+    '3': .
+    '4': '0'
+  info:
+    title: Pix Charge
+    description: Pix Charge
+    version: 1.0.0
+  servers:
+    url: https://pix-charge.woovi-pix:4445
+    description: Staging
+components:
+  schemas:
+    PixCharge:
+      type: object
+      properties:
+        txid:
+          type: string
+          description: Unique transaction identifier
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - EXPIRED
+            - PAID
+            - CANCELED
+        value:
+          type: number
+          description: Charge amount in cents
+        key:
+          type: string
+          description: PIX key for the charge
+        keyType:
+          type: string
+          enum:
+            - CPF
+            - CNPJ
+            - EMAIL
+            - PHONE
+            - EVP
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        txi:
+          type: string
+          description: txid of pix charge
+    PixChargeCreate:
+      type: object
+      required:
+        - value
+        - key
+        - keyType
+      properties:
+        value:
+          type: number
+          description: Charge amount in cents
+        key:
+          type: string
+          description: PIX key for the charge
+        keyType:
+          type: string
+          enum:
+            - CPF
+            - CNPJ
+            - EMAIL
+            - PHONE
+            - EVP
+        expiresAt:
+          type: string
+          format: date-time
+          description: Optional expiration date
+    PixChargeUpdate:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Charge amount in cents
+        key:
+          type: string
+          description: PIX key for the charge
+        keyType:
+          type: string
+          enum:
+            - CPF
+            - CNPJ
+            - EMAIL
+            - PHONE
+            - EVP
+        expiresAt:
+          type: string
+          format: date-time
+    PixChargeRec:
+      type: object
+      properties:
+        txid:
+          type: string
+          description: Transaction identifier
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - EXPIRED
+            - PAID
+            - CANCELED
+    PixChargeLocation:
+      type: object
+      properties:
+        locId:
+          type: string
+          description: Location identifier
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/PixCharge'
+    AllowPayment:
+      type: object
+      properties:
+        allowed:
+          type: boolean
+          description: Whether payment is allowed
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+tags:
+  - name: pixCharge
+    description: |
+      Endpoint to manage Pix Charges
+  - name: pix-charge
+    description: |
+      Endpoints for pix-charge

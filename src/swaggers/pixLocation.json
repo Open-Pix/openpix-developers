@@ -1,0 +1,375 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Pix Location",
+    "description": "Pix Location",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://<name>.indireto.woovi-indireto.dev/location",
+      "description": "Staging"
+    }
+  ],
+  "security": [],
+  "paths": {
+    "openapi": {
+      "0": "3",
+      "1": ".",
+      "2": "1",
+      "3": ".",
+      "4": "0"
+    },
+    "info": {
+      "title": "Pix Location",
+      "description": "Pix Location",
+      "version": "1.0.0"
+    },
+    "/qr/v2/{locType}/{pixUrlAccessToken}": {
+      "get": {
+        "tags": [
+          "pixLocation"
+        ],
+        "summary": "Get Pix location QR code information",
+        "description": "Retrieve Pix location information and generate QR code data based on the location type and access token.\nThis endpoint returns JOSE (JSON Object Signing and Encryption) formatted data for QR code generation.\n",
+        "parameters": [
+          {
+            "name": "locType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cob",
+                "cobv",
+                "rec"
+              ]
+            },
+            "description": "Type of Pix location"
+          },
+          {
+            "name": "pixUrlAccessToken",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Access token for the Pix location"
+          },
+          {
+            "name": "codMun",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Municipality code for location-specific data"
+          },
+          {
+            "name": "DPP",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Additional location parameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pix location QR code data retrieved successfully",
+            "content": {
+              "application/jose": {
+                "schema": {
+                  "type": "string",
+                  "description": "JOSE formatted data for QR code generation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pix location or charge not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url 'https:///%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"GET\", \"%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE\")\n  .get()\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/qr/v2/%7BlocType%7D/%7BpixUrlAccessToken%7D?codMun=SOME_STRING_VALUE&DPP=SOME_STRING_VALUE\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
+    "/pix-location/v1/location": {
+      "post": {
+        "tags": [
+          "pixLocation"
+        ],
+        "summary": "Create a new Pix location",
+        "description": "Create a new Pix location with the specified type. The service will generate a unique\naccess token and return the complete location information including the QR code URL.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PixLocationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pix location created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixLocationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid location type",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid type"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({type: 'cob'}));\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request POST \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location \\\n  --header 'content-type: application/json' \\\n  --data '{\"type\":\"cob\"}'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'type' => 'cob'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"type\\\":\\\"cob\\\"}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"POST\", \"%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location\"\n\n\tpayload := strings.NewReader(\"{\\\"type\\\":\\\"cob\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"type\\\":\\\"cob\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location\")\n  .post(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/location/pix-location/v1/location\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"type\\\":\\\"cob\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
+    "servers": {
+      "url": "https://<name>.indireto.woovi-indireto.dev/location",
+      "description": "Staging"
+    }
+  },
+  "components": {
+    "schemas": {
+      "PixLocation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the Pix location"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "cob",
+              "cobv",
+              "rec"
+            ],
+            "description": "Type of Pix location (cob = charge, cobv = charge with value, rec = recommendation)"
+          },
+          "location": {
+            "type": "string",
+            "description": "Full URL for the Pix location QR code"
+          },
+          "pixUrlAccessToken": {
+            "type": "string",
+            "description": "Unique access token for the Pix location URL"
+          },
+          "ispb": {
+            "type": "string",
+            "description": "ISPB (Instituto de Serviços de Pagamento Brasileiro) identifier"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      },
+      "PixLocationCreate": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cob",
+              "cobv",
+              "rec"
+            ],
+            "description": "Type of Pix location to create"
+          }
+        }
+      },
+      "PixLocationResponse": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the Pix location"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "cob",
+                  "cobv",
+                  "rec"
+                ],
+                "description": "Type of Pix location"
+              },
+              "location": {
+                "type": "string",
+                "description": "Full URL for the Pix location QR code"
+              },
+              "pixUrlAccessToken": {
+                "type": "string",
+                "description": "Unique access token for the Pix location URL"
+              }
+            }
+          }
+        }
+      },
+      "PixLocationGetParams": {
+        "type": "object",
+        "properties": {
+          "locType": {
+            "type": "string",
+            "enum": [
+              "cob",
+              "cobv",
+              "rec"
+            ],
+            "description": "Type of Pix location"
+          },
+          "pixUrlAccessToken": {
+            "type": "string",
+            "description": "Access token for the Pix location"
+          }
+        }
+      },
+      "PixLocationQueryParams": {
+        "type": "object",
+        "properties": {
+          "codMun": {
+            "type": "string",
+            "description": "Municipality code for location-specific data"
+          },
+          "DPP": {
+            "type": "string",
+            "description": "Additional location parameter"
+          }
+        }
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "OK",
+            "description": "Service status"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Current timestamp"
+          },
+          "version": {
+            "type": "string",
+            "example": "1.0.0",
+            "description": "API version"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message",
+            "example": "A cobrança em questão não foi encontrada para a location requisitada"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "pixLocation",
+      "description": "Endpoints to manage Pix Locations and QR code generation\n"
+    }
+  ]
+}
