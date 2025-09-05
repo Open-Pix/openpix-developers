@@ -4,7 +4,7 @@ info:
   description: Pix Charge
   version: 1.0.0
 servers:
-  - url: https://<name>.indireto.woovi-indireto.dev
+  - url: https://<name>.indireto.woovi-indireto.dev/charge
     description: Staging
 security: []
 paths:
@@ -62,7 +62,7 @@ paths:
               method: 'POST',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',
               headers: {
                 'content-type': 'application/json'
               }
@@ -90,7 +90,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request POST \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D \
               --header 'content-type: application/json' \
               --data '{"value":0,"key":"string","keyType":"CPF","expiresAt":"2019-08-24T14:15:22Z"}'
         - lang: Php + Curl
@@ -100,7 +100,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -144,7 +144,7 @@ paths:
 
 
             conn.request("POST",
-            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
             payload, headers)
 
 
@@ -155,7 +155,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -167,7 +167,7 @@ paths:
             "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}");
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
               .post(body)
               .addHeader("content-type", "application/json")
               .build();
@@ -181,7 +181,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -253,7 +253,7 @@ paths:
               method: 'PUT',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',
               headers: {
                 'content-type': 'application/json'
               }
@@ -281,7 +281,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request PUT \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D \
               --header 'content-type: application/json' \
               --data '{"value":0,"key":"string","keyType":"CPF","expiresAt":"2019-08-24T14:15:22Z"}'
         - lang: Php + Curl
@@ -291,7 +291,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -335,7 +335,7 @@ paths:
 
 
             conn.request("PUT",
-            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
             payload, headers)
 
 
@@ -346,7 +346,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -358,7 +358,7 @@ paths:
             "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}");
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
               .put(body)
               .addHeader("content-type", "application/json")
               .build();
@@ -372,7 +372,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -453,7 +453,7 @@ paths:
               method: 'GET',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc',
               headers: {}
             };
 
@@ -474,7 +474,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc
         - lang: Php + Curl
           source: |-
             <?php
@@ -482,7 +482,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -510,7 +510,7 @@ paths:
 
 
             conn.request("GET",
-            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc")
+            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc")
 
 
             res = conn.getresponse()
@@ -520,13 +520,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc")
               .get()
               .build();
 
@@ -539,7 +539,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -593,7 +593,7 @@ paths:
               method: 'DELETE',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',
               headers: {}
             };
 
@@ -614,7 +614,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request DELETE \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D
         - lang: Php + Curl
           source: |-
             <?php
@@ -622,7 +622,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -650,7 +650,7 @@ paths:
 
 
             conn.request("DELETE",
-            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
 
 
             res = conn.getresponse()
@@ -660,13 +660,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
               .delete(null)
               .build();
 
@@ -679,7 +679,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -734,7 +734,7 @@ paths:
               method: 'GET',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D',
               headers: {}
             };
 
@@ -755,7 +755,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D
         - lang: Php + Curl
           source: |-
             <?php
@@ -763,7 +763,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -791,7 +791,7 @@ paths:
 
 
             conn.request("GET",
-            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D")
+            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D")
 
 
             res = conn.getresponse()
@@ -801,13 +801,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D")
               .get()
               .build();
 
@@ -820,7 +820,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -838,8 +838,8 @@ paths:
     post:
       tags:
         - pixCharge
-      summary: Allow payment for Pix charge
-      description: Allow or disallow payment for a specific Pix charge
+      summary: Check if a Pix charge is allowed to be paid
+      description: Check if a Pix charge is allowed to be paid
       parameters:
         - name: txid
           in: path
@@ -891,7 +891,7 @@ paths:
               method: 'POST',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow',
               headers: {
                 'content-type': 'application/json'
               }
@@ -915,7 +915,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request POST \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow \
               --header 'content-type: application/json' \
               --data '{"allowed":true}'
         - lang: Php + Curl
@@ -925,7 +925,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -965,7 +965,7 @@ paths:
 
 
             conn.request("POST",
-            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow",
+            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow",
             payload, headers)
 
 
@@ -976,7 +976,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"allowed\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"allowed\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -988,7 +988,7 @@ paths:
             "{\"allowed\":true}");
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow")
               .post(body)
               .addHeader("content-type", "application/json")
               .build();
@@ -1002,7 +1002,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow")
 
 
             http = Net::HTTP.new(url.host, url.port)
