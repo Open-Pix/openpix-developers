@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://<name>.indireto.woovi-indireto.dev",
+      "url": "https://<name>.indireto.woovi-indireto.dev/charge",
       "description": "Staging"
     }
   ],
@@ -86,31 +86,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF', expiresAt: '2019-08-24T14:15:22Z'}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF', expiresAt: '2019-08-24T14:15:22Z'}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}'"
+            "source": "curl --request POST \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'value' => 0,\n    'key' => 'string',\n    'keyType' => 'CPF',\n    'expiresAt' => '2019-08-24T14:15:22Z'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'value' => 0,\n    'key' => 'string',\n    'keyType' => 'CPF',\n    'expiresAt' => '2019-08-24T14:15:22Z'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"POST\", \"%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"POST\", \"%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n  .post(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n  .post(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       },
@@ -186,31 +186,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'PUT',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF', expiresAt: '2019-08-24T14:15:22Z'}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'PUT',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF', expiresAt: '2019-08-24T14:15:22Z'}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request PUT \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}'"
+            "source": "curl --request PUT \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'value' => 0,\n    'key' => 'string',\n    'keyType' => 'CPF',\n    'expiresAt' => '2019-08-24T14:15:22Z'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'value' => 0,\n    'key' => 'string',\n    'keyType' => 'CPF',\n    'expiresAt' => '2019-08-24T14:15:22Z'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"PUT\", \"%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"PUT\", \"%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n  .put(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n  .put(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Put.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Put.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       },
@@ -299,31 +299,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc"
+            "source": "curl --request GET \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"GET\", \"%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"GET\", \"%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\")\n  .get()\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\")\n  .get()\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       },
@@ -379,31 +379,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request DELETE \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D"
+            "source": "curl --request DELETE \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"DELETE\", \"%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"DELETE\", \"%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n  .delete(null)\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n  .delete(null)\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Delete.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Delete.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -461,31 +461,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D',\n  headers: {}\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D"
+            "source": "curl --request GET \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"GET\", \"%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\nconn.request(\"GET\", \"%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\")\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\")\n  .get()\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\")\n  .get()\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -495,8 +495,8 @@
         "tags": [
           "pixCharge"
         ],
-        "summary": "Allow payment for Pix charge",
-        "description": "Allow or disallow payment for a specific Pix charge",
+        "summary": "Check if a Pix charge is allowed to be paid",
+        "description": "Check if a Pix charge is allowed to be paid",
         "parameters": [
           {
             "name": "txid",
@@ -569,31 +569,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({allowed: true}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: '',\n  port: null,\n  path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({allowed: true}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow \\\n  --header 'content-type: application/json' \\\n  --data '{\"allowed\":true}'"
+            "source": "curl --request POST \\\n  --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow \\\n  --header 'content-type: application/json' \\\n  --data '{\"allowed\":true}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'allowed' => null\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'allowed' => null\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"allowed\\\":true}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"POST\", \"%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"\")\n\npayload = \"{\\\"allowed\\\":true}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"POST\", \"%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"allowed\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"allowed\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"allowed\\\":true}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\")\n  .post(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"allowed\\\":true}\");\nRequest request = new Request.Builder()\n  .url(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\")\n  .post(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"allowed\\\":true}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"allowed\\\":true}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
