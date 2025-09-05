@@ -10,7 +10,7 @@ tags:
 
 ## Criando uma empresa afiliada
 
-Nós disponibilizamos o _endpoint_ `/api/openpix/v1/partner/application` para que
+Nós disponibilizamos o _endpoint_ `/api/v1/partner/company` para que
 você possa criar uma novo _pré-registro_ para a uma empresa afiliada.
 
 Você pode acessar [aqui](https://developers.openpix.com.br/api#tag/partner-(request-access)/paths/~1api~1v1~1partner~1company/post)
