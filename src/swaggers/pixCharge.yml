@@ -4,7 +4,7 @@ info:
   description: Pix Charge
   version: 1.0.0
 servers:
-  - url: https://<name>.indireto.woovi-indireto.dev/charge
+  - url: https://<name>.indireto.woovi-indireto.dev
     description: Staging
 security: []
 paths:
@@ -33,7 +33,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PixCharge'
+                type: object
+                properties:
+                  charge:
+                    $ref: '#/components/schemas/PixCharge'
         '400':
           description: Bad request - invalid parameters
           content:
@@ -54,20 +57,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       x-codeSamples:
         - lang: Node + Native
-          source: >-
+          source: |-
             const http = require('https');
-
 
             const options = {
               method: 'POST',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
               headers: {
                 'content-type': 'application/json'
               }
             };
-
 
             const req = http.request(options, function (res) {
               const chunks = [];
@@ -82,17 +83,62 @@ paths:
               });
             });
 
-
-            req.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF',
-            expiresAt: '2019-08-24T14:15:22Z'}));
-
+            req.write(JSON.stringify({
+              chargeType: 'cob',
+              calendar: {
+                dueDate: 'string',
+                expiration: 1,
+                validateAfterExpiration: 0,
+                presentation: 'string',
+                creation: 'string'
+              },
+              additionalInfo: [{name: 'string', value: 'string'}],
+              comment: 'string',
+              amount: {
+                customerCanChangeValue: true,
+                chargeValue: 0,
+                interestRules: {modality: 1, value: 0},
+                discountRules: {modality: 1, discountFixedDate: [{data: 'string', value: 0}], value: 0},
+                rebateRules: {modality: 1, value: 0},
+                fineRules: {modality: 1, value: 0},
+                withdrawal: {
+                  withdraw: {
+                    value: 0,
+                    agentMode: 'string',
+                    changeMode: 0,
+                    withdrawalServiceProvider: 'string'
+                  },
+                  change: {
+                    value: 0,
+                    agentMode: 'string',
+                    changeMode: 0,
+                    withdrawalServiceProvider: 'string'
+                  }
+                }
+              },
+              pixKey: 'string',
+              location: {id: 'string', isLinked: false},
+              ensureSameTaxID: true,
+              debtor: {name: 'string', taxID: 'string', taxIDType: 'BR:CNPJ'},
+              receiver: {
+                name: 'string',
+                taxID: 'string',
+                taxIDType: 'BR:CNPJ',
+                tradeName: 'string',
+                email: 'string',
+                street: 'string',
+                city: 'string',
+                state: 'st',
+                zipcode: 'string'
+              }
+            }));
             req.end();
         - lang: Shell + Curl
           source: |-
             curl --request POST \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \
               --header 'content-type: application/json' \
-              --data '{"value":0,"key":"string","keyType":"CPF","expiresAt":"2019-08-24T14:15:22Z"}'
+              --data '{"chargeType":"cob","calendar":{"dueDate":"string","expiration":1,"validateAfterExpiration":0,"presentation":"string","creation":"string"},"additionalInfo":[{"name":"string","value":"string"}],"comment":"string","amount":{"customerCanChangeValue":true,"chargeValue":0,"interestRules":{"modality":1,"value":0},"discountRules":{"modality":1,"discountFixedDate":[{"data":"string","value":0}],"value":0},"rebateRules":{"modality":1,"value":0},"fineRules":{"modality":1,"value":0},"withdrawal":{"withdraw":{"value":0,"agentMode":"string","changeMode":0,"withdrawalServiceProvider":"string"},"change":{"value":0,"agentMode":"string","changeMode":0,"withdrawalServiceProvider":"string"}}},"pixKey":"string","location":{"id":"string","isLinked":false},"ensureSameTaxID":true,"debtor":{"name":"string","taxID":"string","taxIDType":"BR:CNPJ"},"receiver":{"name":"string","taxID":"string","taxIDType":"BR:CNPJ","tradeName":"string","email":"string","street":"string","city":"string","state":"st","zipcode":"string"}}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -100,7 +146,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -108,10 +154,83 @@ paths:
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_POSTFIELDS => json_encode([
-                'value' => 0,
-                'key' => 'string',
-                'keyType' => 'CPF',
-                'expiresAt' => '2019-08-24T14:15:22Z'
+                'chargeType' => 'cob',
+                'calendar' => [
+                    'dueDate' => 'string',
+                    'expiration' => 1,
+                    'validateAfterExpiration' => 0,
+                    'presentation' => 'string',
+                    'creation' => 'string'
+                ],
+                'additionalInfo' => [
+                    [
+                            'name' => 'string',
+                            'value' => 'string'
+                    ]
+                ],
+                'comment' => 'string',
+                'amount' => [
+                    'customerCanChangeValue' => null,
+                    'chargeValue' => 0,
+                    'interestRules' => [
+                            'modality' => 1,
+                            'value' => 0
+                    ],
+                    'discountRules' => [
+                            'modality' => 1,
+                            'discountFixedDate' => [
+                                            [
+                                                                            'data' => 'string',
+                                                                            'value' => 0
+                                            ]
+                            ],
+                            'value' => 0
+                    ],
+                    'rebateRules' => [
+                            'modality' => 1,
+                            'value' => 0
+                    ],
+                    'fineRules' => [
+                            'modality' => 1,
+                            'value' => 0
+                    ],
+                    'withdrawal' => [
+                            'withdraw' => [
+                                            'value' => 0,
+                                            'agentMode' => 'string',
+                                            'changeMode' => 0,
+                                            'withdrawalServiceProvider' => 'string'
+                            ],
+                            'change' => [
+                                            'value' => 0,
+                                            'agentMode' => 'string',
+                                            'changeMode' => 0,
+                                            'withdrawalServiceProvider' => 'string'
+                            ]
+                    ]
+                ],
+                'pixKey' => 'string',
+                'location' => [
+                    'id' => 'string',
+                    'isLinked' => null
+                ],
+                'ensureSameTaxID' => null,
+                'debtor' => [
+                    'name' => 'string',
+                    'taxID' => 'string',
+                    'taxIDType' => 'BR:CNPJ'
+                ],
+                'receiver' => [
+                    'name' => 'string',
+                    'taxID' => 'string',
+                    'taxIDType' => 'BR:CNPJ',
+                    'tradeName' => 'string',
+                    'email' => 'string',
+                    'street' => 'string',
+                    'city' => 'string',
+                    'state' => 'st',
+                    'zipcode' => 'string'
+                ]
               ]),
               CURLOPT_HTTPHEADER => [
                 "content-type: application/json"
@@ -137,14 +256,14 @@ paths:
 
 
             payload =
-            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+            "{\"chargeType\":\"cob\",\"calendar\":{\"dueDate\":\"string\",\"expiration\":1,\"validateAfterExpiration\":0,\"presentation\":\"string\",\"creation\":\"string\"},\"additionalInfo\":[{\"name\":\"string\",\"value\":\"string\"}],\"comment\":\"string\",\"amount\":{\"customerCanChangeValue\":true,\"chargeValue\":0,\"interestRules\":{\"modality\":1,\"value\":0},\"discountRules\":{\"modality\":1,\"discountFixedDate\":[{\"data\":\"string\",\"value\":0}],\"value\":0},\"rebateRules\":{\"modality\":1,\"value\":0},\"fineRules\":{\"modality\":1,\"value\":0},\"withdrawal\":{\"withdraw\":{\"value\":0,\"agentMode\":\"string\",\"changeMode\":0,\"withdrawalServiceProvider\":\"string\"},\"change\":{\"value\":0,\"agentMode\":\"string\",\"changeMode\":0,\"withdrawalServiceProvider\":\"string\"}}},\"pixKey\":\"string\",\"location\":{\"id\":\"string\",\"isLinked\":false},\"ensureSameTaxID\":true,\"debtor\":{\"name\":\"string\",\"taxID\":\"string\",\"taxIDType\":\"BR:CNPJ\"},\"receiver\":{\"name\":\"string\",\"taxID\":\"string\",\"taxIDType\":\"BR:CNPJ\",\"tradeName\":\"string\",\"email\":\"string\",\"street\":\"string\",\"city\":\"string\",\"state\":\"st\",\"zipcode\":\"string\"}}"
 
 
             headers = { 'content-type': "application/json" }
 
 
             conn.request("POST",
-            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
             payload, headers)
 
 
@@ -155,7 +274,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"chargeType\\\":\\\"cob\\\",\\\"calendar\\\":{\\\"dueDate\\\":\\\"string\\\",\\\"expiration\\\":1,\\\"validateAfterExpiration\\\":0,\\\"presentation\\\":\\\"string\\\",\\\"creation\\\":\\\"string\\\"},\\\"additionalInfo\\\":[{\\\"name\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"comment\\\":\\\"string\\\",\\\"amount\\\":{\\\"customerCanChangeValue\\\":true,\\\"chargeValue\\\":0,\\\"interestRules\\\":{\\\"modality\\\":1,\\\"value\\\":0},\\\"discountRules\\\":{\\\"modality\\\":1,\\\"discountFixedDate\\\":[{\\\"data\\\":\\\"string\\\",\\\"value\\\":0}],\\\"value\\\":0},\\\"rebateRules\\\":{\\\"modality\\\":1,\\\"value\\\":0},\\\"fineRules\\\":{\\\"modality\\\":1,\\\"value\\\":0},\\\"withdrawal\\\":{\\\"withdraw\\\":{\\\"value\\\":0,\\\"agentMode\\\":\\\"string\\\",\\\"changeMode\\\":0,\\\"withdrawalServiceProvider\\\":\\\"string\\\"},\\\"change\\\":{\\\"value\\\":0,\\\"agentMode\\\":\\\"string\\\",\\\"changeMode\\\":0,\\\"withdrawalServiceProvider\\\":\\\"string\\\"}}},\\\"pixKey\\\":\\\"string\\\",\\\"location\\\":{\\\"id\\\":\\\"string\\\",\\\"isLinked\\\":false},\\\"ensureSameTaxID\\\":true,\\\"debtor\\\":{\\\"name\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"taxIDType\\\":\\\"BR:CNPJ\\\"},\\\"receiver\\\":{\\\"name\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"taxIDType\\\":\\\"BR:CNPJ\\\",\\\"tradeName\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"st\\\",\\\"zipcode\\\":\\\"string\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -164,10 +283,10 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}");
+            "{\"chargeType\":\"cob\",\"calendar\":{\"dueDate\":\"string\",\"expiration\":1,\"validateAfterExpiration\":0,\"presentation\":\"string\",\"creation\":\"string\"},\"additionalInfo\":[{\"name\":\"string\",\"value\":\"string\"}],\"comment\":\"string\",\"amount\":{\"customerCanChangeValue\":true,\"chargeValue\":0,\"interestRules\":{\"modality\":1,\"value\":0},\"discountRules\":{\"modality\":1,\"discountFixedDate\":[{\"data\":\"string\",\"value\":0}],\"value\":0},\"rebateRules\":{\"modality\":1,\"value\":0},\"fineRules\":{\"modality\":1,\"value\":0},\"withdrawal\":{\"withdraw\":{\"value\":0,\"agentMode\":\"string\",\"changeMode\":0,\"withdrawalServiceProvider\":\"string\"},\"change\":{\"value\":0,\"agentMode\":\"string\",\"changeMode\":0,\"withdrawalServiceProvider\":\"string\"}}},\"pixKey\":\"string\",\"location\":{\"id\":\"string\",\"isLinked\":false},\"ensureSameTaxID\":true,\"debtor\":{\"name\":\"string\",\"taxID\":\"string\",\"taxIDType\":\"BR:CNPJ\"},\"receiver\":{\"name\":\"string\",\"taxID\":\"string\",\"taxIDType\":\"BR:CNPJ\",\"tradeName\":\"string\",\"email\":\"string\",\"street\":\"string\",\"city\":\"string\",\"state\":\"st\",\"zipcode\":\"string\"}}");
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
               .post(body)
               .addHeader("content-type", "application/json")
               .build();
@@ -181,7 +300,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -194,7 +313,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+            "{\"chargeType\":\"cob\",\"calendar\":{\"dueDate\":\"string\",\"expiration\":1,\"validateAfterExpiration\":0,\"presentation\":\"string\",\"creation\":\"string\"},\"additionalInfo\":[{\"name\":\"string\",\"value\":\"string\"}],\"comment\":\"string\",\"amount\":{\"customerCanChangeValue\":true,\"chargeValue\":0,\"interestRules\":{\"modality\":1,\"value\":0},\"discountRules\":{\"modality\":1,\"discountFixedDate\":[{\"data\":\"string\",\"value\":0}],\"value\":0},\"rebateRules\":{\"modality\":1,\"value\":0},\"fineRules\":{\"modality\":1,\"value\":0},\"withdrawal\":{\"withdraw\":{\"value\":0,\"agentMode\":\"string\",\"changeMode\":0,\"withdrawalServiceProvider\":\"string\"},\"change\":{\"value\":0,\"agentMode\":\"string\",\"changeMode\":0,\"withdrawalServiceProvider\":\"string\"}}},\"pixKey\":\"string\",\"location\":{\"id\":\"string\",\"isLinked\":false},\"ensureSameTaxID\":true,\"debtor\":{\"name\":\"string\",\"taxID\":\"string\",\"taxIDType\":\"BR:CNPJ\"},\"receiver\":{\"name\":\"string\",\"taxID\":\"string\",\"taxIDType\":\"BR:CNPJ\",\"tradeName\":\"string\",\"email\":\"string\",\"street\":\"string\",\"city\":\"string\",\"state\":\"st\",\"zipcode\":\"string\"}}"
 
 
             response = http.request(request)
@@ -217,14 +336,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PixChargeUpdate'
+              type: object
+              properties:
+                chargeType:
+                  $ref: '#/components/schemas/ChargeType'
+                calendar:
+                  $ref: '#/components/schemas/Calendar'
       responses:
         '200':
           description: Pix charge updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PixCharge'
+                type: object
+                properties:
+                  charge:
+                    $ref: '#/components/schemas/PixCharge'
         '400':
           description: Bad request - invalid parameters
           content:
@@ -245,20 +372,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       x-codeSamples:
         - lang: Node + Native
-          source: >-
+          source: |-
             const http = require('https');
-
 
             const options = {
               method: 'PUT',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
               headers: {
                 'content-type': 'application/json'
               }
             };
-
 
             const req = http.request(options, function (res) {
               const chunks = [];
@@ -273,17 +398,23 @@ paths:
               });
             });
 
-
-            req.write(JSON.stringify({value: 0, key: 'string', keyType: 'CPF',
-            expiresAt: '2019-08-24T14:15:22Z'}));
-
+            req.write(JSON.stringify({
+              chargeType: 'cob',
+              calendar: {
+                dueDate: 'string',
+                expiration: 1,
+                validateAfterExpiration: 0,
+                presentation: 'string',
+                creation: 'string'
+              }
+            }));
             req.end();
         - lang: Shell + Curl
           source: |-
             curl --request PUT \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D \
               --header 'content-type: application/json' \
-              --data '{"value":0,"key":"string","keyType":"CPF","expiresAt":"2019-08-24T14:15:22Z"}'
+              --data '{"chargeType":"cob","calendar":{"dueDate":"string","expiration":1,"validateAfterExpiration":0,"presentation":"string","creation":"string"}}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -291,7 +422,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -299,10 +430,14 @@ paths:
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "PUT",
               CURLOPT_POSTFIELDS => json_encode([
-                'value' => 0,
-                'key' => 'string',
-                'keyType' => 'CPF',
-                'expiresAt' => '2019-08-24T14:15:22Z'
+                'chargeType' => 'cob',
+                'calendar' => [
+                    'dueDate' => 'string',
+                    'expiration' => 1,
+                    'validateAfterExpiration' => 0,
+                    'presentation' => 'string',
+                    'creation' => 'string'
+                ]
               ]),
               CURLOPT_HTTPHEADER => [
                 "content-type: application/json"
@@ -328,14 +463,14 @@ paths:
 
 
             payload =
-            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+            "{\"chargeType\":\"cob\",\"calendar\":{\"dueDate\":\"string\",\"expiration\":1,\"validateAfterExpiration\":0,\"presentation\":\"string\",\"creation\":\"string\"}}"
 
 
             headers = { 'content-type': "application/json" }
 
 
             conn.request("PUT",
-            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
             payload, headers)
 
 
@@ -346,7 +481,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0,\\\"key\\\":\\\"string\\\",\\\"keyType\\\":\\\"CPF\\\",\\\"expiresAt\\\":\\\"2019-08-24T14:15:22Z\\\"}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\tpayload := strings.NewReader(\"{\\\"chargeType\\\":\\\"cob\\\",\\\"calendar\\\":{\\\"dueDate\\\":\\\"string\\\",\\\"expiration\\\":1,\\\"validateAfterExpiration\\\":0,\\\"presentation\\\":\\\"string\\\",\\\"creation\\\":\\\"string\\\"}}\")\n\n\treq, _ := http.NewRequest(\"PUT\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -355,10 +490,10 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}");
+            "{\"chargeType\":\"cob\",\"calendar\":{\"dueDate\":\"string\",\"expiration\":1,\"validateAfterExpiration\":0,\"presentation\":\"string\",\"creation\":\"string\"}}");
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
               .put(body)
               .addHeader("content-type", "application/json")
               .build();
@@ -372,7 +507,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -385,7 +520,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"value\":0,\"key\":\"string\",\"keyType\":\"CPF\",\"expiresAt\":\"2019-08-24T14:15:22Z\"}"
+            "{\"chargeType\":\"cob\",\"calendar\":{\"dueDate\":\"string\",\"expiration\":1,\"validateAfterExpiration\":0,\"presentation\":\"string\",\"creation\":\"string\"}}"
 
 
             response = http.request(request)
@@ -404,16 +539,28 @@ paths:
             type: string
           description: pix charge txid
           example: 6290ccfd42831958a405debc
+        - name: DPP
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional payment date-time for calculation
+        - name: codMun
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional municipality code for business-day calculation
       responses:
         '200':
           description: the pix charge
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PixCharge'
                 type: object
                 properties:
                   charge:
+                    $ref: '#/components/schemas/PixCharge'
                     type: object
               example:
                 account:
@@ -453,7 +600,7 @@ paths:
               method: 'GET',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE',
               headers: {}
             };
 
@@ -474,7 +621,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc
+              --url 'https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE'
         - lang: Php + Curl
           source: |-
             <?php
@@ -482,7 +629,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -510,7 +657,7 @@ paths:
 
 
             conn.request("GET",
-            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc")
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE")
 
 
             res = conn.getresponse()
@@ -520,13 +667,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE")
               .get()
               .build();
 
@@ -539,7 +686,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/6290ccfd42831958a405debc")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/6290ccfd42831958a405debc?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -566,12 +713,8 @@ paths:
             type: string
           description: Unique transaction identifier
       responses:
-        '200':
-          description: Pix charge deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessResponse'
+        '204':
+          description: Pix charge deleted successfully (no content)
         '401':
           description: Unauthorized - invalid AppID
           content:
@@ -593,7 +736,7 @@ paths:
               method: 'DELETE',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D',
               headers: {}
             };
 
@@ -614,7 +757,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request DELETE \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D
         - lang: Php + Curl
           source: |-
             <?php
@@ -622,7 +765,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -650,7 +793,7 @@ paths:
 
 
             conn.request("DELETE",
-            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
 
 
             res = conn.getresponse()
@@ -660,13 +803,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
               .delete(null)
               .build();
 
@@ -679,7 +822,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -706,13 +849,28 @@ paths:
           schema:
             type: string
           description: Location identifier
+        - name: DPP
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional payment date-time for calculation
+        - name: codMun
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional municipality code for business-day calculation
       responses:
         '200':
           description: Pix charges retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PixChargeLocation'
+                type: object
+                properties:
+                  charge:
+                    $ref: '#/components/schemas/PixCharge'
         '401':
           description: Unauthorized - invalid AppID
           content:
@@ -734,7 +892,7 @@ paths:
               method: 'GET',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE',
               headers: {}
             };
 
@@ -755,7 +913,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D
+              --url 'https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE'
         - lang: Php + Curl
           source: |-
             <?php
@@ -763,7 +921,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -791,7 +949,7 @@ paths:
 
 
             conn.request("GET",
-            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D")
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE")
 
 
             res = conn.getresponse()
@@ -801,13 +959,13 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE")
               .get()
               .build();
 
@@ -820,7 +978,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/location/%7BlocId%7D")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/location/%7BlocId%7D?DPP=SOME_STRING_VALUE&codMun=SOME_STRING_VALUE")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -854,16 +1012,21 @@ paths:
             schema:
               type: object
               properties:
-                allowed:
-                  type: boolean
-                  description: Whether to allow payment
+                DPP:
+                  type: string
+                  description: Optional payment date-time for calculation
+                codMun:
+                  type: string
+                  description: Optional municipality code
+                paymentValue:
+                  type: integer
+                  description: Payment value to validate
+                taxID:
+                  type: string
+                  description: Optional payer taxID when ensureSameTaxID is enabled
       responses:
-        '200':
-          description: Payment allowance updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AllowPayment'
+        '204':
+          description: Payment allowed (no content)
         '400':
           description: Bad request - invalid parameters
           content:
@@ -884,18 +1047,20 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       x-codeSamples:
         - lang: Node + Native
-          source: |-
+          source: >-
             const http = require('https');
+
 
             const options = {
               method: 'POST',
               hostname: '',
               port: null,
-              path: '%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow',
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow',
               headers: {
                 'content-type': 'application/json'
               }
             };
+
 
             const req = http.request(options, function (res) {
               const chunks = [];
@@ -910,14 +1075,17 @@ paths:
               });
             });
 
-            req.write(JSON.stringify({allowed: true}));
+
+            req.write(JSON.stringify({DPP: 'string', codMun: 'string',
+            paymentValue: 0, taxID: 'string'}));
+
             req.end();
         - lang: Shell + Curl
           source: |-
             curl --request POST \
-              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow \
               --header 'content-type: application/json' \
-              --data '{"allowed":true}'
+              --data '{"DPP":"string","codMun":"string","paymentValue":0,"taxID":"string"}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -925,7 +1093,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow",
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -933,7 +1101,10 @@ paths:
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_POSTFIELDS => json_encode([
-                'allowed' => null
+                'DPP' => 'string',
+                'codMun' => 'string',
+                'paymentValue' => 0,
+                'taxID' => 'string'
               ]),
               CURLOPT_HTTPHEADER => [
                 "content-type: application/json"
@@ -958,14 +1129,15 @@ paths:
             conn = http.client.HTTPSConnection("")
 
 
-            payload = "{\"allowed\":true}"
+            payload =
+            "{\"DPP\":\"string\",\"codMun\":\"string\",\"paymentValue\":0,\"taxID\":\"string\"}"
 
 
             headers = { 'content-type': "application/json" }
 
 
             conn.request("POST",
-            "%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow",
             payload, headers)
 
 
@@ -976,7 +1148,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"allowed\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow\"\n\n\tpayload := strings.NewReader(\"{\\\"DPP\\\":\\\"string\\\",\\\"codMun\\\":\\\"string\\\",\\\"paymentValue\\\":0,\\\"taxID\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -985,10 +1157,10 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"allowed\":true}");
+            "{\"DPP\":\"string\",\"codMun\":\"string\",\"paymentValue\":0,\"taxID\":\"string\"}");
 
             Request request = new Request.Builder()
-              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow")
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow")
               .post(body)
               .addHeader("content-type", "application/json")
               .build();
@@ -1002,7 +1174,7 @@ paths:
 
 
             url =
-            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/charge/pix-charge/v1/charge/%7Btxid%7D/allow")
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/charge/%7Btxid%7D/allow")
 
 
             http = Net::HTTP.new(url.host, url.port)
@@ -1014,7 +1186,8 @@ paths:
 
             request["content-type"] = 'application/json'
 
-            request.body = "{\"allowed\":true}"
+            request.body =
+            "{\"DPP\":\"string\",\"codMun\":\"string\",\"paymentValue\":0,\"taxID\":\"string\"}"
 
 
             response = http.request(request)
@@ -1035,6 +1208,202 @@ paths:
     description: Staging
 components:
   schemas:
+    ChargeType:
+      type: string
+      description: Charge type
+      enum:
+        - cob
+        - cobv
+        - rec
+    InterestModality:
+      type: integer
+      description: Interest modality
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+    DiscountModality:
+      type: integer
+      description: Discount modality
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+    FineModality:
+      type: integer
+      description: Fine modality
+      enum:
+        - 1
+        - 2
+    RebateModality:
+      type: integer
+      description: Rebate modality
+      enum:
+        - 1
+        - 2
+    AdditionalInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        value:
+          type: string
+          maxLength: 200
+    DiscountFixedData:
+      type: object
+      properties:
+        data:
+          type: string
+          description: ISO date string
+        value:
+          type: integer
+    InterestRules:
+      type: object
+      nullable: true
+      properties:
+        modality:
+          $ref: '#/components/schemas/InterestModality'
+        value:
+          type: integer
+          minimum: 0
+    DiscountRules:
+      type: object
+      nullable: true
+      properties:
+        modality:
+          $ref: '#/components/schemas/DiscountModality'
+        discountFixedDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountFixedData'
+        value:
+          type: integer
+    RebateRules:
+      type: object
+      nullable: true
+      properties:
+        modality:
+          $ref: '#/components/schemas/RebateModality'
+        value:
+          type: number
+          minimum: 0
+    FineRules:
+      type: object
+      nullable: true
+      properties:
+        modality:
+          $ref: '#/components/schemas/FineModality'
+        value:
+          type: number
+          minimum: 0
+    Withdraw:
+      type: object
+      nullable: true
+      properties:
+        value:
+          type: integer
+          minimum: 0
+        agentMode:
+          type: string
+        changeMode:
+          type: integer
+        withdrawalServiceProvider:
+          type: string
+    Withdrawal:
+      type: object
+      nullable: true
+      properties:
+        withdraw:
+          $ref: '#/components/schemas/Withdraw'
+        change:
+          $ref: '#/components/schemas/Withdraw'
+    Amount:
+      type: object
+      properties:
+        customerCanChangeValue:
+          type: boolean
+        chargeValue:
+          type: integer
+        interestRules:
+          $ref: '#/components/schemas/InterestRules'
+        discountRules:
+          $ref: '#/components/schemas/DiscountRules'
+        rebateRules:
+          $ref: '#/components/schemas/RebateRules'
+        fineRules:
+          $ref: '#/components/schemas/FineRules'
+        withdrawal:
+          $ref: '#/components/schemas/Withdrawal'
+    Calendar:
+      type: object
+      properties:
+        dueDate:
+          type: string
+          description: ISO date string
+        expiration:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        validateAfterExpiration:
+          type: integer
+        presentation:
+          type: string
+        creation:
+          type: string
+          description: Only on staging to simplify testing
+    Debtor:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        taxID:
+          type: string
+        taxIDType:
+          type: string
+          enum:
+            - BR:CNPJ
+            - BR:CPF
+    Receiver:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        taxID:
+          type: string
+        taxIDType:
+          type: string
+          enum:
+            - BR:CNPJ
+            - BR:CPF
+        tradeName:
+          type: string
+        email:
+          type: string
+        street:
+          type: string
+          maxLength: 200
+        city:
+          type: string
+          maxLength: 200
+        state:
+          type: string
+          maxLength: 2
+        zipcode:
+          type: string
+          maxLength: 8
     PixCharge:
       type: object
       properties:
@@ -1076,29 +1445,41 @@ components:
           description: txid of pix charge
     PixChargeCreate:
       type: object
-      required:
-        - value
-        - key
-        - keyType
       properties:
-        value:
-          type: number
-          description: Charge amount in cents
-        key:
+        chargeType:
+          $ref: '#/components/schemas/ChargeType'
+        calendar:
+          $ref: '#/components/schemas/Calendar'
+        additionalInfo:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/AdditionalInfo'
+        comment:
           type: string
-          description: PIX key for the charge
-        keyType:
+          maxLength: 140
+        amount:
+          $ref: '#/components/schemas/Amount'
+        pixKey:
           type: string
-          enum:
-            - CPF
-            - CNPJ
-            - EMAIL
-            - PHONE
-            - EVP
-        expiresAt:
-          type: string
-          format: date-time
-          description: Optional expiration date
+          minLength: 1
+          maxLength: 255
+        location:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              minLength: 1
+            isLinked:
+              type: boolean
+              default: false
+        ensureSameTaxID:
+          type: boolean
+        debtor:
+          $ref: '#/components/schemas/Debtor'
+        receiver:
+          $ref: '#/components/schemas/Receiver'
     PixChargeUpdate:
       type: object
       properties:
