@@ -6527,6 +6527,374 @@ paths:
         '403':
           description: Your Authorization APP_ID must be configured to be MASTER or API
       x-codeSamples: []
+  /api/v1/installments/{id}/cobr:
+    post:
+      tags:
+        - CobR
+      summary: Create a new Cobr Manually
+      description: Create a new Cobr Manually.
+      parameters:
+        - name: id
+          in: path
+          description: The globalID of the installment.
+          required: true
+          schema:
+            type: string
+          example: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+      requestBody:
+        description: Data to create a new Cobr
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: number
+                  description: Valor da cobrança (Opcional)
+      responses:
+        '200':
+          description: The subscription created
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE',
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({value: 0}));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr \
+              --header 'Authorization: REPLACE_KEY_VALUE' \
+              --header 'content-type: application/json' \
+              --data '{"value":0}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'value' => 0
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload = "{\"value\":0}"
+
+
+            headers = {
+                'Authorization': "REPLACE_KEY_VALUE",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST",
+            "/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\"value\":0}");
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr")
+              .post(body)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+            request["content-type"] = 'application/json'
+
+            request.body = "{\"value\":0}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /api/v1/installments/{id}/cobr/retry:
+    post:
+      tags:
+        - CobR
+      summary: Create a new Retry Manually
+      description: Create a new Retry Manually.
+      parameters:
+        - name: id
+          in: path
+          description: The globalID of the installment.
+          required: true
+          schema:
+            type: string
+          example: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+      requestBody:
+        description: Data to create a new Cobr
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: number
+                  description: Valor da cobrança (Opcional)
+      responses:
+        '200':
+          description: The subscription created
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE',
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({value: 0}));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry \
+              --header 'Authorization: REPLACE_KEY_VALUE' \
+              --header 'content-type: application/json' \
+              --data '{"value":0}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'value' => 0
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload = "{\"value\":0}"
+
+
+            headers = {
+                'Authorization': "REPLACE_KEY_VALUE",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST",
+            "/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry\"\n\n\tpayload := strings.NewReader(\"{\\\"value\\\":0}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\"value\":0}");
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry")
+              .post(body)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/installments/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/cobr/retry")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+            request["content-type"] = 'application/json'
+
+            request.body = "{\"value\":0}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/installments/{id}:
     get:
       tags:
@@ -6951,6 +7319,7 @@ paths:
                         billingDate: 2024-10-04T16:45:51.058Z
                         status: CONFIRMED
                         statusRaw: null
+                        correlationID: INV-123
                         customer:
                           correlationID: 6f46c15a-f471-4d54-bb28-207fe2568f69
                           name: Gabriel
@@ -7119,6 +7488,8 @@ paths:
                 billingDate:
                   type: string
                   format: date-time
+                correlationID:
+                  type: string
                 charge:
                   type: string
                 value:
@@ -7166,9 +7537,11 @@ paths:
                 - required:
                     - billingDate
                     - value
+                    - correlationID
                 - required:
                     - billingDate
                     - charge
+                    - correlationID
       responses:
         '201':
           description: Invoice created successfully
@@ -7289,6 +7662,7 @@ paths:
             req.write(JSON.stringify({
               description: 'string',
               billingDate: '2019-08-24T14:15:22Z',
+              correlationID: 'string',
               charge: 'string',
               value: 0,
               customerId: 'string',
@@ -7313,7 +7687,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/invoice \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"description":"string","billingDate":"2019-08-24T14:15:22Z","charge":"string","value":0,"customerId":"string","customer":{"taxID":"string","name":"string","email":"user@example.com","phone":"string","address":{"country":"string","zipcode":"string","street":"string","number":"string","state":"string"}}}'
+              --data '{"description":"string","billingDate":"2019-08-24T14:15:22Z","correlationID":"string","charge":"string","value":0,"customerId":"string","customer":{"taxID":"string","name":"string","email":"user@example.com","phone":"string","address":{"country":"string","zipcode":"string","street":"string","number":"string","state":"string"}}}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -7331,6 +7705,7 @@ paths:
               CURLOPT_POSTFIELDS => json_encode([
                 'description' => 'string',
                 'billingDate' => '2019-08-24T14:15:22Z',
+                'correlationID' => 'string',
                 'charge' => 'string',
                 'value' => 0,
                 'customerId' => 'string',
@@ -7373,7 +7748,7 @@ paths:
 
 
             payload =
-            "{\"description\":\"string\",\"billingDate\":\"2019-08-24T14:15:22Z\",\"charge\":\"string\",\"value\":0,\"customerId\":\"string\",\"customer\":{\"taxID\":\"string\",\"name\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"address\":{\"country\":\"string\",\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"state\":\"string\"}}}"
+            "{\"description\":\"string\",\"billingDate\":\"2019-08-24T14:15:22Z\",\"correlationID\":\"string\",\"charge\":\"string\",\"value\":0,\"customerId\":\"string\",\"customer\":{\"taxID\":\"string\",\"name\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"address\":{\"country\":\"string\",\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"state\":\"string\"}}}"
 
 
             headers = {
@@ -7392,7 +7767,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/invoice\"\n\n\tpayload := strings.NewReader(\"{\\\"description\\\":\\\"string\\\",\\\"billingDate\\\":\\\"2019-08-24T14:15:22Z\\\",\\\"charge\\\":\\\"string\\\",\\\"value\\\":0,\\\"customerId\\\":\\\"string\\\",\\\"customer\\\":{\\\"taxID\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"address\\\":{\\\"country\\\":\\\"string\\\",\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\"}}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/invoice\"\n\n\tpayload := strings.NewReader(\"{\\\"description\\\":\\\"string\\\",\\\"billingDate\\\":\\\"2019-08-24T14:15:22Z\\\",\\\"correlationID\\\":\\\"string\\\",\\\"charge\\\":\\\"string\\\",\\\"value\\\":0,\\\"customerId\\\":\\\"string\\\",\\\"customer\\\":{\\\"taxID\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"address\\\":{\\\"country\\\":\\\"string\\\",\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\"}}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -7401,7 +7776,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"description\":\"string\",\"billingDate\":\"2019-08-24T14:15:22Z\",\"charge\":\"string\",\"value\":0,\"customerId\":\"string\",\"customer\":{\"taxID\":\"string\",\"name\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"address\":{\"country\":\"string\",\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"state\":\"string\"}}}");
+            "{\"description\":\"string\",\"billingDate\":\"2019-08-24T14:15:22Z\",\"correlationID\":\"string\",\"charge\":\"string\",\"value\":0,\"customerId\":\"string\",\"customer\":{\"taxID\":\"string\",\"name\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"address\":{\"country\":\"string\",\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"state\":\"string\"}}}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/invoice")
@@ -7433,7 +7808,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"description\":\"string\",\"billingDate\":\"2019-08-24T14:15:22Z\",\"charge\":\"string\",\"value\":0,\"customerId\":\"string\",\"customer\":{\"taxID\":\"string\",\"name\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"address\":{\"country\":\"string\",\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"state\":\"string\"}}}"
+            "{\"description\":\"string\",\"billingDate\":\"2019-08-24T14:15:22Z\",\"correlationID\":\"string\",\"charge\":\"string\",\"value\":0,\"customerId\":\"string\",\"customer\":{\"taxID\":\"string\",\"name\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"address\":{\"country\":\"string\",\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"state\":\"string\"}}}"
 
 
             response = http.request(request)
@@ -13785,7 +14160,7 @@ paths:
               dayDue: 7,
               correlationID: 'string',
               additionalInfo: [{key: 'string', value: 'string'}],
-              pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL', minimunValue: 0}
+              pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL', minimumValue: 0}
             }));
             req.end();
         - lang: Shell + Curl
@@ -13794,7 +14169,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/subscriptions \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"customer":{"name":"string","email":"string","phone":"string","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"value":0,"comment":"string","dayGenerateCharge":5,"frequency":"WEEKLY","type":"PIX_RECURRING","dayDue":7,"correlationID":"string","additionalInfo":[{"key":"string","value":"string"}],"pixRecurringOptions":{"retryPolicy":"NON_PERMITED","journey":"PAYMENT_ON_APPROVAL","minimunValue":0}}'
+              --data '{"customer":{"name":"string","email":"string","phone":"string","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"value":0,"comment":"string","dayGenerateCharge":5,"frequency":"WEEKLY","type":"PIX_RECURRING","dayDue":7,"correlationID":"string","additionalInfo":[{"key":"string","value":"string"}],"pixRecurringOptions":{"retryPolicy":"NON_PERMITED","journey":"PAYMENT_ON_APPROVAL","minimumValue":0}}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -13842,7 +14217,7 @@ paths:
                 'pixRecurringOptions' => [
                     'retryPolicy' => 'NON_PERMITED',
                     'journey' => 'PAYMENT_ON_APPROVAL',
-                    'minimunValue' => 0
+                    'minimumValue' => 0
                 ]
               ]),
               CURLOPT_HTTPHEADER => [
@@ -13870,7 +14245,7 @@ paths:
 
 
             payload =
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimunValue\":0}}"
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimumValue\":0}}"
 
 
             headers = {
@@ -13889,7 +14264,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimunValue\\\":0}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -13898,7 +14273,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimunValue\":0}}");
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimumValue\":0}}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/subscriptions")
@@ -13930,7 +14305,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimunValue\":0}}"
+            "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimumValue\":0}}"
 
 
             response = http.request(request)
@@ -16790,7 +17165,7 @@ components:
               enum:
                 - PAYMENT_ON_APPROVAL
                 - ONLY_RECURRENCY
-            minimunValue:
+            minimumValue:
               type: number
               description: Minimum value for each cobr
       required:
@@ -16857,13 +17232,41 @@ components:
               type: string
             value:
               type: number
-            createdAt:
-              type: string
+            tries:
+              type: array
+              items:
+                type: object
+                properties:
+                  tryStatus:
+                    type: string
+                  finalityPurpose:
+                    type: string
+                  rejectCode:
+                    type: string
+                  value:
+                    type: number
+                  requestedExecutionDate:
+                    type: string
+                    format: date-time
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
             paymentDate:
+              type: string
+            chargeDate:
+              type: string
+            expiryDate:
               type: string
             description:
               type: string
+            createdAt:
+              type: string
         paymentSubscriptionGlobalID:
+          type: string
+        correlationID:
           type: string
         globalID:
           type: string
@@ -17045,6 +17448,9 @@ tags:
   - name: subscription
     description: |
       Endpoint to manage Subscriptions
+  - name: CobR
+    description: |
+      Endpoint to manually create and retry CobR from Pix Automatic
   - name: transfer (request access)
     description: |
       Endpoint to transfer values between accounts.
