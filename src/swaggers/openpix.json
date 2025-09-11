@@ -5274,7 +5274,7 @@
         ]
       }
     },
-    "/api/v1/invoice/{invoiceId}/cancel": {
+    "/api/v1/invoice/{correlationID}/cancel": {
       "post": {
         "tags": [
           "invoice"
@@ -5283,7 +5283,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "invoiceId",
+            "name": "correlationID",
             "required": true,
             "schema": {
               "type": "string"
@@ -5812,7 +5812,7 @@
         ]
       }
     },
-    "/api/v1/invoice/{invoiceId}/pdf": {
+    "/api/v1/invoice/{correlationID}/pdf": {
       "get": {
         "tags": [
           "invoice"
@@ -5821,7 +5821,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "invoiceId",
+            "name": "correlationID",
             "required": true,
             "schema": {
               "type": "string"
@@ -5916,7 +5916,7 @@
         "x-codeSamples": []
       }
     },
-    "/api/v1/invoice/{invoiceId}/xml": {
+    "/api/v1/invoice/{correlationID}/xml": {
       "get": {
         "tags": [
           "invoice"
@@ -5925,7 +5925,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "invoiceId",
+            "name": "correlationID",
             "required": true,
             "schema": {
               "type": "string"
@@ -6700,6 +6700,49 @@
                     "transaction": {
                       "value": 100,
                       "endToEndId": "transaction-end-to-end-id",
+                      "debitParty": {
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000023280",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY DEBIT LTDA",
+                          "code": "123456789"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly holder"
+                        },
+                        "taxID": {
+                          "taxID": "1212345600198",
+                          "type": "BR:CNPJ"
+                        }
+                      },
+                      "creditParty": {
+                        "pixKey": {
+                          "pixKey": "email@email.com.br",
+                          "type": "EMAIL"
+                        },
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000012345",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY CREDIT LTDA"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly",
+                          "taxID": {
+                            "taxID": "00123456000199",
+                            "type": "BR:CNPJ"
+                          }
+                        }
+                      },
                       "time": "2023-03-20T13:14:17.000Z"
                     },
                     "destination": {
@@ -6864,7 +6907,50 @@
                     "transaction": {
                       "value": 100,
                       "endToEndId": "transaction-end-to-end-id",
-                      "time": "2023-03-20T13:14:17.000Z"
+                      "time": "2023-03-20T13:14:17.000Z",
+                      "debitParty": {
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000023280",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY DEBIT LTDA",
+                          "code": "123456789"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly holder"
+                        },
+                        "taxID": {
+                          "taxID": "1212345600198",
+                          "type": "BR:CNPJ"
+                        }
+                      },
+                      "creditParty": {
+                        "pixKey": {
+                          "pixKey": "email@email.com.br",
+                          "type": "EMAIL"
+                        },
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000012345",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY CREDIT LTDA"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly",
+                          "taxID": {
+                            "taxID": "00123456000199",
+                            "type": "BR:CNPJ"
+                          }
+                        }
+                      }
                     },
                     "destination": {
                       "name": "Dan",
@@ -12578,6 +12664,71 @@
           }
         }
       },
+      "Party": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "type": "object",
+            "properties": {
+              "branch": {
+                "type": "string",
+                "description": "account branch"
+              },
+              "account": {
+                "type": "string",
+                "description": "account number"
+              },
+              "accountType": {
+                "type": "string",
+                "description": "account type"
+              }
+            }
+          },
+          "psp": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "psp id"
+              },
+              "name": {
+                "type": "string",
+                "description": "psp name"
+              },
+              "code": {
+                "type": "string",
+                "description": "psp code"
+              }
+            }
+          },
+          "holder": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "holder name"
+              },
+              "nameFriendly": {
+                "type": "string",
+                "description": "holder name friendly"
+              }
+            }
+          },
+          "taxID": {
+            "type": "object",
+            "properties": {
+              "taxID": {
+                "type": "string",
+                "description": "taxID"
+              },
+              "type": {
+                "type": "string",
+                "description": "taxID type"
+              }
+            }
+          }
+        }
+      },
       "PaymentTransaction": {
         "type": "object",
         "properties": {
@@ -12592,6 +12743,20 @@
           "time": {
             "type": "string",
             "description": "time the transaction generated by the payment happened"
+          },
+          "providerRejectedReason": {
+            "type": "string",
+            "description": "providerRejectedReason"
+          },
+          "debitParty": {
+            "type": "object",
+            "$ref": "#/components/schemas/Party",
+            "description": "debitParty"
+          },
+          "creditParty": {
+            "type": "object",
+            "$ref": "#/components/schemas/Party",
+            "description": "creditParty"
           }
         }
       },
