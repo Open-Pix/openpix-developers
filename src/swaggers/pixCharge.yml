@@ -8,6 +8,414 @@ servers:
     description: Staging
 security: []
 paths:
+  /pix-charge/v1/emv/:
+    post:
+      tags:
+        - pixCharge
+      summary: Generate EMV QR Code for PIX
+      description: >
+        Generates an EMV QR Code string in TLV (Tag-Length-Value) format for PIX
+        payments.
+
+        This endpoint creates a standardized QR code that can be used for PIX
+        instant payments
+
+        in Brazil. The generated EMV string contains all necessary information
+        for PIX
+
+        transactions including merchant details and location URL.
+
+
+        ## Key Features:
+
+        - **Validation**: Strict validation of merchant name and city (no
+        diacritics, length limits)
+
+        - **Default Values**: Automatically applies standard PIX EMV values when
+        not provided
+
+        - **TLV Format**: Returns EMV string in proper TLV format for QR code
+        generation
+
+        - **Brazilian Standards**: Compliant with Brazilian PIX instant payment
+        standards
+
+
+        ## Validation Rules:
+
+        - `merchantName`: Required, 1-25 characters, no diacritics
+
+        - `merchantCity`: Required, 1-15 characters, no diacritics  
+
+        - `merchantAccountInformationPix.url`: Required, valid URI format
+
+
+        ## Default Values Applied:
+
+        - `payloadFormatIndicator`: "01"
+
+        - `pointOfInitiationMethod`: "12" (dynamic QR)
+
+        - `merchantCategoryCode`: "0000"
+
+        - `transactionCurrency`: "986" (Brazilian Real)
+
+        - `countryCode`: "BR"
+
+        - `additionalDataFieldTemplate.referenceLabel`: "***"
+
+
+        The endpoint will return validation errors for any field that doesn't
+        meet the requirements.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EMVRequest'
+            examples:
+              basic_example:
+                summary: Basic EMV generation
+                value:
+                  merchantName: Test Merchant
+                  merchantCity: Sao Paulo
+                  merchantAccountInformationPix:
+                    url: https://example.com/pix
+              with_additional_fields:
+                summary: EMV generation with additional fields
+                value:
+                  merchantName: Test Merchant
+                  merchantCity: Sao Paulo
+                  merchantAccountInformationPix:
+                    gui: br.gov.bcb.pix
+                    url: https://example.com/pix
+                    additionalInformation: Payment for services
+              minimal_example:
+                summary: Minimal required fields only
+                value:
+                  merchantName: Merchant
+                  merchantCity: Sao Paulo
+                  merchantAccountInformationPix:
+                    url: https://merchant.com/pix/payment
+      responses:
+        '201':
+          description: EMV QR Code generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EMVResponse'
+              examples:
+                success_response:
+                  summary: Successful EMV generation
+                  value:
+                    emv: >-
+                      00020101021226450014br.gov.bcb.pix2523https://example.com/pix5204000053039865802BR5913Test
+                      Merchant6009Sao Paulo62070503***6304E69E
+                success_with_additional_info:
+                  summary: EMV generation with additional information
+                  value:
+                    emv: >-
+                      00020101021226450014br.gov.bcb.pix2523https://example.com/pix5204000053039865802BR5913Test
+                      Merchant6009Sao Paulo62070503***6304E69E
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missing_merchant_name:
+                  summary: Missing merchant name
+                  value:
+                    error:
+                      issues:
+                        - code: invalid_type
+                          expected: string
+                          received: undefined
+                          path:
+                            - merchantName
+                          message: merchantName is required
+                      name: ZodError
+                      message: Validation error
+                missing_merchant_city:
+                  summary: Missing merchant city
+                  value:
+                    error:
+                      issues:
+                        - code: invalid_type
+                          expected: string
+                          received: undefined
+                          path:
+                            - merchantCity
+                          message: merchantCity is required
+                      name: ZodError
+                      message: Validation error
+                missing_pix_info:
+                  summary: Missing merchant account information
+                  value:
+                    error:
+                      issues:
+                        - code: invalid_type
+                          expected: object
+                          received: undefined
+                          path:
+                            - merchantAccountInformationPix
+                          message: Required
+                      name: ZodError
+                      message: Validation error
+                diacritics_in_merchant_name:
+                  summary: Diacritics in merchant name
+                  value:
+                    error:
+                      issues:
+                        - code: custom
+                          path:
+                            - merchantName
+                          message: String must not contain diacritics
+                          validation: noDiacritics
+                      name: ZodError
+                      message: Validation error
+                diacritics_in_merchant_city:
+                  summary: Diacritics in merchant city
+                  value:
+                    error:
+                      issues:
+                        - code: custom
+                          path:
+                            - merchantCity
+                          message: String must not contain diacritics
+                          validation: noDiacritics
+                      name: ZodError
+                      message: Validation error
+                merchant_name_too_long:
+                  summary: Merchant name too long
+                  value:
+                    error:
+                      issues:
+                        - code: too_big
+                          maximum: 25
+                          type: string
+                          inclusive: true
+                          path:
+                            - merchantName
+                          message: String must contain at most 25 character(s)
+                      name: ZodError
+                      message: Validation error
+                merchant_city_too_long:
+                  summary: Merchant city too long
+                  value:
+                    error:
+                      issues:
+                        - code: too_big
+                          maximum: 15
+                          type: string
+                          inclusive: true
+                          path:
+                            - merchantCity
+                          message: String must contain at most 15 character(s)
+                      name: ZodError
+                      message: Validation error
+        '401':
+          description: Unauthorized - invalid AppID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: '',
+              port: null,
+              path: '%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/',
+              headers: {
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({
+              merchantName: 'Test Merchant',
+              merchantCity: 'Sao Paulo',
+              merchantAccountInformationPix: {
+                gui: 'br.gov.bcb.pix',
+                url: 'https://example.com/pix',
+                additionalInformation: 'Payment for services',
+                fss: 'string',
+                pixKey: 'string'
+              },
+              payloadFormatIndicator: '01',
+              pointOfInitiationMethod: '12',
+              merchantCategoryCode: '0000',
+              transactionCurrency: '986',
+              countryCode: 'BR',
+              additionalDataFieldTemplate: {referenceLabel: '***'},
+              unreservedTemplates: {
+                gui: 'string',
+                url: 'http://example.com',
+                additionalInformation: 'string',
+                fss: 'string',
+                pixKey: 'string'
+              }
+            }));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/ \
+              --header 'content-type: application/json' \
+              --data '{"merchantName":"Test Merchant","merchantCity":"Sao Paulo","merchantAccountInformationPix":{"gui":"br.gov.bcb.pix","url":"https://example.com/pix","additionalInformation":"Payment for services","fss":"string","pixKey":"string"},"payloadFormatIndicator":"01","pointOfInitiationMethod":"12","merchantCategoryCode":"0000","transactionCurrency":"986","countryCode":"BR","additionalDataFieldTemplate":{"referenceLabel":"***"},"unreservedTemplates":{"gui":"string","url":"http://example.com","additionalInformation":"string","fss":"string","pixKey":"string"}}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'merchantName' => 'Test Merchant',
+                'merchantCity' => 'Sao Paulo',
+                'merchantAccountInformationPix' => [
+                    'gui' => 'br.gov.bcb.pix',
+                    'url' => 'https://example.com/pix',
+                    'additionalInformation' => 'Payment for services',
+                    'fss' => 'string',
+                    'pixKey' => 'string'
+                ],
+                'payloadFormatIndicator' => '01',
+                'pointOfInitiationMethod' => '12',
+                'merchantCategoryCode' => '0000',
+                'transactionCurrency' => '986',
+                'countryCode' => 'BR',
+                'additionalDataFieldTemplate' => [
+                    'referenceLabel' => '***'
+                ],
+                'unreservedTemplates' => [
+                    'gui' => 'string',
+                    'url' => 'http://example.com',
+                    'additionalInformation' => 'string',
+                    'fss' => 'string',
+                    'pixKey' => 'string'
+                ]
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("")
+
+
+            payload = "{\"merchantName\":\"Test
+            Merchant\",\"merchantCity\":\"Sao
+            Paulo\",\"merchantAccountInformationPix\":{\"gui\":\"br.gov.bcb.pix\",\"url\":\"https://example.com/pix\",\"additionalInformation\":\"Payment
+            for
+            services\",\"fss\":\"string\",\"pixKey\":\"string\"},\"payloadFormatIndicator\":\"01\",\"pointOfInitiationMethod\":\"12\",\"merchantCategoryCode\":\"0000\",\"transactionCurrency\":\"986\",\"countryCode\":\"BR\",\"additionalDataFieldTemplate\":{\"referenceLabel\":\"***\"},\"unreservedTemplates\":{\"gui\":\"string\",\"url\":\"http://example.com\",\"additionalInformation\":\"string\",\"fss\":\"string\",\"pixKey\":\"string\"}}"
+
+
+            headers = { 'content-type': "application/json" }
+
+
+            conn.request("POST",
+            "%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/\"\n\n\tpayload := strings.NewReader(\"{\\\"merchantName\\\":\\\"Test Merchant\\\",\\\"merchantCity\\\":\\\"Sao Paulo\\\",\\\"merchantAccountInformationPix\\\":{\\\"gui\\\":\\\"br.gov.bcb.pix\\\",\\\"url\\\":\\\"https://example.com/pix\\\",\\\"additionalInformation\\\":\\\"Payment for services\\\",\\\"fss\\\":\\\"string\\\",\\\"pixKey\\\":\\\"string\\\"},\\\"payloadFormatIndicator\\\":\\\"01\\\",\\\"pointOfInitiationMethod\\\":\\\"12\\\",\\\"merchantCategoryCode\\\":\\\"0000\\\",\\\"transactionCurrency\\\":\\\"986\\\",\\\"countryCode\\\":\\\"BR\\\",\\\"additionalDataFieldTemplate\\\":{\\\"referenceLabel\\\":\\\"***\\\"},\\\"unreservedTemplates\\\":{\\\"gui\\\":\\\"string\\\",\\\"url\\\":\\\"http://example.com\\\",\\\"additionalInformation\\\":\\\"string\\\",\\\"fss\\\":\\\"string\\\",\\\"pixKey\\\":\\\"string\\\"}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"merchantName\":\"Test Merchant\",\"merchantCity\":\"Sao
+            Paulo\",\"merchantAccountInformationPix\":{\"gui\":\"br.gov.bcb.pix\",\"url\":\"https://example.com/pix\",\"additionalInformation\":\"Payment
+            for
+            services\",\"fss\":\"string\",\"pixKey\":\"string\"},\"payloadFormatIndicator\":\"01\",\"pointOfInitiationMethod\":\"12\",\"merchantCategoryCode\":\"0000\",\"transactionCurrency\":\"986\",\"countryCode\":\"BR\",\"additionalDataFieldTemplate\":{\"referenceLabel\":\"***\"},\"unreservedTemplates\":{\"gui\":\"string\",\"url\":\"http://example.com\",\"additionalInformation\":\"string\",\"fss\":\"string\",\"pixKey\":\"string\"}}");
+
+            Request request = new Request.Builder()
+              .url("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/")
+              .post(body)
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https:///%3Cname%3E.indireto.woovi-indireto.dev/pix-charge/v1/emv/")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["content-type"] = 'application/json'
+
+            request.body = "{\"merchantName\":\"Test
+            Merchant\",\"merchantCity\":\"Sao
+            Paulo\",\"merchantAccountInformationPix\":{\"gui\":\"br.gov.bcb.pix\",\"url\":\"https://example.com/pix\",\"additionalInformation\":\"Payment
+            for
+            services\",\"fss\":\"string\",\"pixKey\":\"string\"},\"payloadFormatIndicator\":\"01\",\"pointOfInitiationMethod\":\"12\",\"merchantCategoryCode\":\"0000\",\"transactionCurrency\":\"986\",\"countryCode\":\"BR\",\"additionalDataFieldTemplate\":{\"referenceLabel\":\"***\"},\"unreservedTemplates\":{\"gui\":\"string\",\"url\":\"http://example.com\",\"additionalInformation\":\"string\",\"fss\":\"string\",\"pixKey\":\"string\"}}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /pix-charge/v1/charge/{txid}:
     post:
       tags:
@@ -1532,11 +1940,40 @@ components:
     ErrorResponse:
       type: object
       properties:
-        success:
-          type: boolean
-          example: false
         error:
-          type: string
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: Error code
+                  expected:
+                    type: string
+                    description: Expected value type
+                  received:
+                    type: string
+                    description: Received value type
+                  path:
+                    type: array
+                    items:
+                      type: string
+                    description: Path to the field that caused the error
+                  message:
+                    type: string
+                    description: Human-readable error message
+                  validation:
+                    type: string
+                    description: Validation rule that failed
+            name:
+              type: string
+              example: ZodError
+            message:
+              type: string
+              example: Validation error
     SuccessResponse:
       type: object
       properties:
@@ -1545,6 +1982,123 @@ components:
           example: true
         message:
           type: string
+    EMVRequest:
+      type: object
+      required:
+        - merchantName
+        - merchantCity
+        - merchantAccountInformationPix
+      properties:
+        merchantName:
+          type: string
+          minLength: 1
+          maxLength: 25
+          description: >
+            Name of the merchant. Must not contain diacritics (accented
+            characters).
+
+            Will be validated and rejected if longer than 25 characters or
+            contains diacritics.
+          example: Test Merchant
+        merchantCity:
+          type: string
+          minLength: 1
+          maxLength: 15
+          description: >
+            City where the merchant is located. Must not contain diacritics
+            (accented characters).
+
+            Will be validated and rejected if longer than 15 characters or
+            contains diacritics.
+          example: Sao Paulo
+        merchantAccountInformationPix:
+          type: object
+          required:
+            - url
+          properties:
+            gui:
+              type: string
+              description: Global Unique Identifier for PIX (usually 'br.gov.bcb.pix')
+              example: br.gov.bcb.pix
+            url:
+              type: string
+              format: uri
+              description: >-
+                URL for the PIX location/endpoint where payment requests are
+                processed
+              example: https://example.com/pix
+            additionalInformation:
+              type: string
+              description: Additional information for the PIX payment
+              example: Payment for services
+            fss:
+              type: string
+              description: Financial Service Station identifier
+            pixKey:
+              type: string
+              description: PIX key for direct payment
+        payloadFormatIndicator:
+          type: string
+          description: EMV QR Code payload format indicator (usually '01')
+          example: '01'
+        pointOfInitiationMethod:
+          type: string
+          description: Point of initiation method (usually '12' for dynamic QR)
+          example: '12'
+        merchantCategoryCode:
+          type: string
+          description: Merchant category code (MCC) for business classification
+          example: '0000'
+        transactionCurrency:
+          type: string
+          description: Transaction currency code (986 for Brazilian Real)
+          example: '986'
+        countryCode:
+          type: string
+          description: Country code (BR for Brazil)
+          example: BR
+        additionalDataFieldTemplate:
+          type: object
+          properties:
+            referenceLabel:
+              type: string
+              description: Reference label for the transaction
+              example: '***'
+        unreservedTemplates:
+          type: object
+          properties:
+            gui:
+              type: string
+              description: Global Unique Identifier for unreserved templates
+            url:
+              type: string
+              format: uri
+              description: URL for unreserved template
+            additionalInformation:
+              type: string
+              description: Additional information for unreserved template
+            fss:
+              type: string
+              description: Financial Service Station identifier for unreserved template
+            pixKey:
+              type: string
+              description: PIX key for unreserved template
+    EMVResponse:
+      type: object
+      properties:
+        emv:
+          type: string
+          description: >
+            Generated EMV QR Code string in TLV (Tag-Length-Value) format.
+
+            This string can be directly used to generate a QR code for PIX
+            payments.
+
+            The format follows the EMV QR Code specification for PIX instant
+            payments in Brazil.
+          example: >-
+            00020101021226450014br.gov.bcb.pix2523https://example.com/pix5204000053039865802BR5913Test
+            Merchant6009Sao Paulo62070503***6304E69E
 tags:
   - name: pixCharge
     description: |
