@@ -5959,6 +5959,13 @@ paths:
                           The endToEndId of the dispute (Is the same of the
                           endToEndId transaction related).
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - MED
+                          - DISPUTE
+                          - CHARGEBACK
+                        description: The type of the dispute
               example:
                 dispute:
                   status: ACCEPTED
@@ -5967,7 +5974,8 @@ paths:
                   phoneNumber: '+5511999999999'
                   value: 10000
                   disputeReason: Product not received
-                  endToEndId: E7d401907cacd4d7fb9290345b93deac7
+                  endToEndId: Ea9c291526ae54b4cb41d9909bdf6d792
+                  type: MED
         '400':
           description: Bad request
           content:
@@ -6135,7 +6143,16 @@ paths:
                   disputes:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Dispute'
+                      allOf:
+                        - $ref: '#/components/schemas/Dispute'
+                        - type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - MED
+                                - CHARGEBACK
+                              description: The type of the dispute
                   pageInfo:
                     type: object
                     properties:
@@ -17483,10 +17500,25 @@ components:
         * **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not
         fully paid and expired
 
+
         * **OPENPIX:TRANSACTION_RECEIVED** - New PIX transaction received
 
         * **OPENPIX:TRANSACTION_REFUND_RECEIVED** - New PIX transaction refund
         received or refunded
+
+
+        * **PIX_TRANSACTION_REFUND_RECEIVED_CONFIRMED** - Pix transaction refund
+        received confirmed
+
+        * **PIX_TRANSACTION_REFUND_SENT_CONFIRMED** - Pix transaction refund
+        sent confirmed
+
+        * **PIX_TRANSACTION_REFUND_RECEIVED_REJECTED** - Pix transaction refund
+        received rejected
+
+        * **PIX_TRANSACTION_REFUND_SENT_REJECTED** - Pix transaction refund sent
+        rejected
+
 
         * **OPENPIX:MOVEMENT_CONFIRMED** - Payment confirmed is when the pix
         transaction related to the payment gets confirmed
@@ -17495,15 +17527,76 @@ components:
         approved and a error occurs
 
         * **OPENPIX:MOVEMENT_REMOVED** - Payment was removed by a user
+
+
+        * **OPENPIX:MOVEMENT_CONFIRMED** - Movement confirmed
+
+        * **OPENPIX:MOVEMENT_FAILED** - Movement failed
+
+        * **OPENPIX:MOVEMENT_REMOVED** - Movement removed
+
+
+        * **OPENPIX:DISPUTE_CREATED** - Dispute created
+
+        * **OPENPIX:DISPUTE_ACCEPTED** - Dispute accepted
+
+        * **OPENPIX:DISPUTE_REJECTED** - Dispute rejected
+
+        * **OPENPIX:DISPUTE_CANCELED** - Dispute canceled
+
+
+        * **ACCOUNT_REGISTER_APPROVED** - Account register approved
+
+        * **ACCOUNT_REGISTER_REJECTED** - Account register rejected
+
+        * **ACCOUNT_REGISTER_PENDING** - Account register pending
+
+
+        * **PIX_AUTOMATIC_APPROVED** - Pix Automatic approved
+
+        * **PIX_AUTOMATIC_REJECTED** - Pix Automatic rejected
+
+        * **PIX_AUTOMATIC_COBR_CREATED** - Pix Automatic cobr created
+
+        * **PIX_AUTOMATIC_COBR_APPROVED** - Pix Automatic cobr approved
+
+        * **PIX_AUTOMATIC_COBR_REJECTED** - Pix Automatic cobr rejected
+
+        * **PIX_AUTOMATIC_COBR_COMPLETED** - Pix Automatic cobr completed
+
+        * **PIX_AUTOMATIC_COBR_TRY_REJECTED** - Pix Automatic cobr try rejected
+
+        * **PIX_AUTOMATIC_COBR_TRY_REQUESTED** - Pix Automatic cobr try
+        requested
       enum:
         - OPENPIX:CHARGE_CREATED
         - OPENPIX:CHARGE_COMPLETED
         - OPENPIX:CHARGE_EXPIRED
+        - OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER
         - OPENPIX:TRANSACTION_RECEIVED
         - OPENPIX:TRANSACTION_REFUND_RECEIVED
+        - PIX_TRANSACTION_REFUND_RECEIVED_CONFIRMED
+        - PIX_TRANSACTION_REFUND_SENT_CONFIRMED
+        - PIX_TRANSACTION_REFUND_RECEIVED_REJECTED
+        - PIX_TRANSACTION_REFUND_SENT_REJECTED
         - OPENPIX:MOVEMENT_CONFIRMED
         - OPENPIX:MOVEMENT_FAILED
         - OPENPIX:MOVEMENT_REMOVED
+        - OPENPIX:DISPUTE_CREATED
+        - OPENPIX:DISPUTE_ACCEPTED
+        - OPENPIX:DISPUTE_REJECTED
+        - OPENPIX:DISPUTE_CANCELED
+        - ACCOUNT_REGISTER_APPROVED
+        - ACCOUNT_REGISTER_REJECTED
+        - ACCOUNT_REGISTER_PENDING
+        - PIX_AUTOMATIC_APPROVED
+        - PIX_AUTOMATIC_REJECTED
+        - PIX_AUTOMATIC_COBR_CREATED
+        - PIX_AUTOMATIC_COBR_APPROVED
+        - PIX_AUTOMATIC_COBR_REJECTED
+        - PIX_AUTOMATIC_COBR_TRY_REJECTED
+        - PIX_AUTOMATIC_COBR_TRY_REQUESTED
+        - PIX_AUTOMATIC_COBR_COMPLETED
   securitySchemes:
     AppID:
       type: apiKey
