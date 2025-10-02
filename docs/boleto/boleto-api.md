@@ -32,15 +32,23 @@ O processo de criaçao de um boleto é bem simples. Basta utilizar o mesmo endpo
 
 ```json
 {
-  "correlationID": "9134e286-6f71-427a-bf00-241681624587",
+  "correlationID": "9134e286-6f716-427a-bf00-241681624587",
   "value": 350,
   "type": "BOLETO",
-  "comment": "good",
+  "comment": "Produto X",
   "customer": {
-    "name": "Dan",
+    "name": "John Doe",
     "taxID": "31324227036",
     "email": "email0@example.com",
-    "phone": "5511999999999"
+    "phone": "5511999999999",
+        "address": {
+            "state": "SP",
+            "city": "São Paulo",
+            "neighborhood":"TESTE",
+            "number": 1,
+            "street": "Rua a b e C",
+            "zipcode": 00000000
+        }
   },
   "additionalInfo": [
     {
@@ -65,7 +73,7 @@ A resposta deve ser algo como:
 {
 	"charge": {
 		"customer": {
-			"name": "Dan",
+			"name": "John Doe",
 			"email": "email0@example.com",
 			"phone": "+5511999999999",
 			"taxID": {
