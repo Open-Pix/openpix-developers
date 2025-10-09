@@ -1,0 +1,13 @@
+{
+  "label": "Chave Pix",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Chave Pix visão geral"
+  },
+  "customProps": {
+    "description": "Chave Pix documentação"
+  }
+}
