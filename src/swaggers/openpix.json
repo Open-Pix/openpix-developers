@@ -4136,13 +4136,493 @@
         ]
       }
     },
+    "/api/v1/decode/emv": {
+      "post": {
+        "tags": [
+          "decode"
+        ],
+        "summary": "Parse EMV (PIX) QR code and optionally resolve COB/REC locations",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "emv"
+                ],
+                "properties": {
+                  "emv": {
+                    "type": "string",
+                    "description": "Raw EMV / PIX QR payload (text)",
+                    "example": "00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Parsed EMV payload with resolved COB and/or REC location (when available)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "emv": {
+                      "type": "object",
+                      "properties": {
+                        "payloadFormatIndicator": {
+                          "type": "string"
+                        },
+                        "pointOfInitiationMethod": {
+                          "type": "string",
+                          "description": "Present when EMV indicates a dynamic QR (e.g. \"12\")"
+                        },
+                        "merchantAccountInformationPix": {
+                          "type": "object",
+                          "description": "Parsed \"26\"/\"00\"... Pix merchant account info",
+                          "properties": {
+                            "gui": {
+                              "type": "string"
+                            },
+                            "pixKey": {
+                              "type": "string",
+                              "description": "UUID or key when Pix key present"
+                            },
+                            "url": {
+                              "type": "string",
+                              "description": "URL when location points to a COB/REC resource"
+                            },
+                            "additionalInformation": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "merchantCategoryCode": {
+                          "type": "string"
+                        },
+                        "transactionCurrency": {
+                          "type": "string"
+                        },
+                        "transactionAmount": {
+                          "type": "string"
+                        },
+                        "countryCode": {
+                          "type": "string"
+                        },
+                        "merchantName": {
+                          "type": "string"
+                        },
+                        "merchantCity": {
+                          "type": "string"
+                        },
+                        "additionalDataFieldTemplate": {
+                          "type": "object",
+                          "properties": {
+                            "referenceLabel": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "unreservedTemplates": {
+                          "type": "object",
+                          "properties": {
+                            "gui": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "crc": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cobLocation": {
+                      "nullable": true,
+                      "type": "object",
+                      "description": "Resolved COB (charge) location details when the EMV points to a COB endpoint",
+                      "properties": {
+                        "isValid": {
+                          "type": "boolean"
+                        },
+                        "locationErrors": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "payload": {
+                          "type": "object",
+                          "properties": {
+                            "calendar": {
+                              "type": "object",
+                              "properties": {
+                                "presentation": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                },
+                                "expiration": {
+                                  "type": "integer"
+                                },
+                                "creation": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            },
+                            "key": {
+                              "type": "string"
+                            },
+                            "debtor": {
+                              "type": "object",
+                              "properties": {
+                                "cpf": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "additionalInfo": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "revision": {
+                              "type": "integer"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "txid": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "object",
+                              "properties": {
+                                "original": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "recLocation": {
+                      "nullable": true,
+                      "type": "object",
+                      "description": "Resolved REC (request for payment) location details when EMV points to a REC endpoint",
+                      "properties": {
+                        "isValid": {
+                          "type": "boolean"
+                        },
+                        "locationErrors": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "payload": {
+                          "type": "object",
+                          "properties": {
+                            "updates": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "calendar": {
+                              "type": "object",
+                              "properties": {
+                                "startDate": {
+                                  "type": "string",
+                                  "format": "date"
+                                },
+                                "periodicity": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "idRec": {
+                              "type": "string"
+                            },
+                            "retryPolicy": {
+                              "type": "string"
+                            },
+                            "receiver": {
+                              "type": "object",
+                              "properties": {
+                                "cnpj": {
+                                  "type": "string"
+                                },
+                                "participantIspb": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "value": {
+                              "type": "object",
+                              "properties": {
+                                "valueRec": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "link": {
+                              "type": "object",
+                              "properties": {
+                                "contract": {
+                                  "type": "string"
+                                },
+                                "debtor": {
+                                  "type": "object",
+                                  "properties": {
+                                    "cpf": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "parsedWithRecLocation": {
+                    "summary": "EMV parsed and REC location resolved",
+                    "value": {
+                      "emv": {
+                        "payloadFormatIndicator": "01",
+                        "merchantAccountInformationPix": {
+                          "gui": "br.gov.bcb.pix",
+                          "pixKey": "f4c6089a-bfde-4c00-a2d9-9eaa584b0219",
+                          "additionalInformation": "CobrancaEstatica"
+                        },
+                        "merchantCategoryCode": "0000",
+                        "transactionCurrency": "986",
+                        "transactionAmount": "546.28",
+                        "countryCode": "BR",
+                        "merchantName": "Pix",
+                        "merchantCity": "BRASILIA",
+                        "additionalDataFieldTemplate": {
+                          "referenceLabel": "84767c56c2ab4e65b6670de2a"
+                        },
+                        "unreservedTemplates": {
+                          "gui": "br.gov.bcb.pix",
+                          "url": "qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf0788691"
+                        },
+                        "crc": "4486"
+                      },
+                      "cobLocation": null,
+                      "recLocation": {
+                        "isValid": true,
+                        "locationErrors": [],
+                        "payload": {
+                          "updates": [
+                            {
+                              "date": "2025-10-24T18:42:58Z",
+                              "status": "CRIADA"
+                            }
+                          ],
+                          "calendar": {
+                            "startDate": "2025-10-24",
+                            "periodicity": "SEMANAL"
+                          },
+                          "idRec": "RN5481141720251024BnwNHejs9h9",
+                          "retryPolicy": "NAO_PERMITE",
+                          "receiver": {
+                            "cnpj": "44720743000101",
+                            "participantIspb": "54811417",
+                            "name": "Woovi Demo"
+                          },
+                          "value": {
+                            "valueRec": "0.01"
+                          },
+                          "link": {
+                            "contract": "Woovi Demo - Pix Automático",
+                            "debtor": {
+                              "cpf": "15775023706",
+                              "name": "Pedro Cliente"
+                            }
+                          }
+                        },
+                        "url": "qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf0788691"
+                      }
+                    }
+                  },
+                  "parsedWithCobLocation": {
+                    "summary": "EMV parsed and COB location resolved",
+                    "value": {
+                      "emv": {
+                        "payloadFormatIndicator": "01",
+                        "pointOfInitiationMethod": "12",
+                        "merchantAccountInformationPix": {
+                          "gui": "br.gov.bcb.pix",
+                          "url": "qr-h.woovi.digital/qr/v2/cob/fb274322-221c-43d4-b58b-fab36d87c75c"
+                        },
+                        "merchantCategoryCode": "0000",
+                        "transactionCurrency": "986",
+                        "transactionAmount": "10.00",
+                        "countryCode": "BR",
+                        "merchantName": "sibeliusip",
+                        "merchantCity": "Sao_Paulo",
+                        "additionalDataFieldTemplate": {
+                          "referenceLabel": "fb274322-221c-43d4-b58b-f"
+                        },
+                        "crc": "0C98"
+                      },
+                      "cobLocation": {
+                        "isValid": true,
+                        "locationErrors": [],
+                        "payload": {
+                          "calendar": {
+                            "presentation": "2025-02-25T13:27:54.168Z",
+                            "expiration": 86400,
+                            "creation": "2025-02-12T16:59:22.939Z"
+                          },
+                          "key": "4004901d-bd85-4769-8e52-cb4c42c506dc",
+                          "debtor": {
+                            "cpf": "62550186362",
+                            "name": "Fulano de Tal"
+                          },
+                          "additionalInfo": [
+                            {
+                              "name": "Entrega",
+                              "value": "Residencial"
+                            }
+                          ],
+                          "revision": 0,
+                          "status": "ATIVA",
+                          "txid": "d71a2ffd7a7b468eba993cef83428583",
+                          "value": {
+                            "original": "120.58"
+                          }
+                        },
+                        "url": "qr-h.woovi.digital/qr/v2/cob/fb274322-221c-43d4-b58b-fab36d87c75c"
+                      },
+                      "recLocation": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Invalid EMV payload"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error occurred"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/decode/emv',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  emv: '00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/decode/emv \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"emv\":\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\"}'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/decode/emv\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'emv' => '00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/decode/emv\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/decode/emv\"\n\n\tpayload := strings.NewReader(\"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/decode/emv\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/decode/emv\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
     "/api/v1/dispute/:id/evidence": {
       "post": {
         "tags": [
           "dispute"
         ],
         "summary": "Upload new evidence",
-        "description": "Upload evidence files for dispute/med.",
+        "description": "Upload evidence files for dispute/med. \\nOBS para obter esse o id da disputa, veja esse artigo https://developers.woovi.com/docs/disputa/how-add-new-evidence-in-dispute#1-obter-o-id-da-disputa",
         "requestBody": {
           "required": true,
           "content": {
@@ -4325,6 +4805,15 @@
                         "endToEndId": {
                           "description": "The endToEndId of the dispute (Is the same of the endToEndId transaction related).",
                           "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "MED",
+                            "DISPUTE",
+                            "CHARGEBACK"
+                          ],
+                          "description": "The type of the dispute"
                         }
                       }
                     }
@@ -4338,7 +4827,8 @@
                     "phoneNumber": "+5511999999999",
                     "value": 10000,
                     "disputeReason": "Product not received",
-                    "endToEndId": "E7d401907cacd4d7fb9290345b93deac7"
+                    "endToEndId": "Ea9c291526ae54b4cb41d9909bdf6d792",
+                    "type": "MED"
                   }
                 }
               }
@@ -4454,7 +4944,24 @@
                     "disputes": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Dispute"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Dispute"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "MED",
+                                  "CHARGEBACK"
+                                ],
+                                "description": "The type of the dispute"
+                              }
+                            }
+                          }
+                        ]
                       }
                     },
                     "pageInfo": {
@@ -5274,7 +5781,7 @@
         ]
       }
     },
-    "/api/v1/invoice/{invoiceId}/cancel": {
+    "/api/v1/invoice/{correlationID}/cancel": {
       "post": {
         "tags": [
           "invoice"
@@ -5283,7 +5790,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "invoiceId",
+            "name": "correlationID",
             "required": true,
             "schema": {
               "type": "string"
@@ -5812,7 +6319,7 @@
         ]
       }
     },
-    "/api/v1/invoice/{invoiceId}/pdf": {
+    "/api/v1/invoice/{correlationID}/pdf": {
       "get": {
         "tags": [
           "invoice"
@@ -5821,7 +6328,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "invoiceId",
+            "name": "correlationID",
             "required": true,
             "schema": {
               "type": "string"
@@ -5916,7 +6423,7 @@
         "x-codeSamples": []
       }
     },
-    "/api/v1/invoice/{invoiceId}/xml": {
+    "/api/v1/invoice/{correlationID}/xml": {
       "get": {
         "tags": [
           "invoice"
@@ -5925,7 +6432,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "invoiceId",
+            "name": "correlationID",
             "required": true,
             "schema": {
               "type": "string"
@@ -6700,6 +7207,49 @@
                     "transaction": {
                       "value": 100,
                       "endToEndId": "transaction-end-to-end-id",
+                      "debitParty": {
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000023280",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY DEBIT LTDA",
+                          "code": "123456789"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly holder"
+                        },
+                        "taxID": {
+                          "taxID": "1212345600198",
+                          "type": "BR:CNPJ"
+                        }
+                      },
+                      "creditParty": {
+                        "pixKey": {
+                          "pixKey": "email@email.com.br",
+                          "type": "EMAIL"
+                        },
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000012345",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY CREDIT LTDA"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly",
+                          "taxID": {
+                            "taxID": "00123456000199",
+                            "type": "BR:CNPJ"
+                          }
+                        }
+                      },
                       "time": "2023-03-20T13:14:17.000Z"
                     },
                     "destination": {
@@ -6864,7 +7414,50 @@
                     "transaction": {
                       "value": 100,
                       "endToEndId": "transaction-end-to-end-id",
-                      "time": "2023-03-20T13:14:17.000Z"
+                      "time": "2023-03-20T13:14:17.000Z",
+                      "debitParty": {
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000023280",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY DEBIT LTDA",
+                          "code": "123456789"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly holder"
+                        },
+                        "taxID": {
+                          "taxID": "1212345600198",
+                          "type": "BR:CNPJ"
+                        }
+                      },
+                      "creditParty": {
+                        "pixKey": {
+                          "pixKey": "email@email.com.br",
+                          "type": "EMAIL"
+                        },
+                        "account": {
+                          "branch": "0001",
+                          "account": "00000000000000012345",
+                          "accountType": "TRAN"
+                        },
+                        "psp": {
+                          "id": "123456",
+                          "name": "COMPANY CREDIT LTDA"
+                        },
+                        "holder": {
+                          "name": "name holder",
+                          "nameFriendly": "name friendly",
+                          "taxID": {
+                            "taxID": "00123456000199",
+                            "type": "BR:CNPJ"
+                          }
+                        }
+                      }
                     },
                     "destination": {
                       "name": "Dan",
@@ -7816,31 +8409,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/qrcode-static',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({name: 'string', correlationID: 'string', value: 0, comment: 'string'}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/qrcode-static',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  name: 'string',\n  correlationID: 'string',\n  value: 0,\n  comment: 'string',\n  pixKey: 'string'\n}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/qrcode-static \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\",\"correlationID\":\"string\",\"value\":0,\"comment\":\"string\"}'"
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/qrcode-static \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\",\"correlationID\":\"string\",\"value\":0,\"comment\":\"string\",\"pixKey\":\"string\"}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/qrcode-static\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'name' => 'string',\n    'correlationID' => 'string',\n    'value' => 0,\n    'comment' => 'string'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/qrcode-static\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'name' => 'string',\n    'correlationID' => 'string',\n    'value' => 0,\n    'comment' => 'string',\n    'pixKey' => 'string'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/qrcode-static\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"pixKey\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/qrcode-static\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/qrcode-static\"\n\n\tpayload := strings.NewReader(\"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/qrcode-static\"\n\n\tpayload := strings.NewReader(\"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"pixKey\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/qrcode-static\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"pixKey\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/qrcode-static\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/qrcode-static\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/qrcode-static\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"name\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"pixKey\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -10269,31 +10862,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  customer: {\n    name: 'string',\n    email: 'string',\n    phone: 'string',\n    taxID: 'string',\n    address: {\n      zipcode: 'string',\n      street: 'string',\n      number: 'string',\n      neighborhood: 'string',\n      city: 'string',\n      state: 'string',\n      complement: 'string',\n      country: 'string'\n    }\n  },\n  value: 0,\n  comment: 'string',\n  dayGenerateCharge: 5,\n  frequency: 'WEEKLY',\n  type: 'PIX_RECURRING',\n  dayDue: 7,\n  correlationID: 'string',\n  additionalInfo: [{key: 'string', value: 'string'}],\n  pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL', minimumValue: 0}\n}));\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'POST',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subscriptions',\n  headers: {\n    Authorization: 'REPLACE_KEY_VALUE',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  customer: {\n    name: 'string',\n    email: 'string',\n    phone: 'string',\n    taxID: 'string',\n    address: {\n      zipcode: 'string',\n      street: 'string',\n      number: 'string',\n      neighborhood: 'string',\n      city: 'string',\n      state: 'string',\n      complement: 'string',\n      country: 'string'\n    }\n  },\n  value: 0,\n  name: 'string',\n  comment: 'string',\n  dayGenerateCharge: 5,\n  frequency: 'WEEKLY',\n  type: 'PIX_RECURRING',\n  dayDue: 7,\n  correlationID: 'string',\n  additionalInfo: [{key: 'string', value: 'string'}],\n  pixRecurringOptions: {retryPolicy: 'NON_PERMITED', journey: 'PAYMENT_ON_APPROVAL', minimumValue: 0}\n}));\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimumValue\":0}}'"
+            "source": "curl --request POST \\\n  --url https://api.openpix.com.br/api/v1/subscriptions \\\n  --header 'Authorization: REPLACE_KEY_VALUE' \\\n  --header 'content-type: application/json' \\\n  --data '{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"name\":\"string\",\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimumValue\":0}}'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'customer' => [\n        'name' => 'string',\n        'email' => 'string',\n        'phone' => 'string',\n        'taxID' => 'string',\n        'address' => [\n                'zipcode' => 'string',\n                'street' => 'string',\n                'number' => 'string',\n                'neighborhood' => 'string',\n                'city' => 'string',\n                'state' => 'string',\n                'complement' => 'string',\n                'country' => 'string'\n        ]\n    ],\n    'value' => 0,\n    'comment' => 'string',\n    'dayGenerateCharge' => 5,\n    'frequency' => 'WEEKLY',\n    'type' => 'PIX_RECURRING',\n    'dayDue' => 7,\n    'correlationID' => 'string',\n    'additionalInfo' => [\n        [\n                'key' => 'string',\n                'value' => 'string'\n        ]\n    ],\n    'pixRecurringOptions' => [\n        'retryPolicy' => 'NON_PERMITED',\n        'journey' => 'PAYMENT_ON_APPROVAL',\n        'minimumValue' => 0\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subscriptions\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'customer' => [\n        'name' => 'string',\n        'email' => 'string',\n        'phone' => 'string',\n        'taxID' => 'string',\n        'address' => [\n                'zipcode' => 'string',\n                'street' => 'string',\n                'number' => 'string',\n                'neighborhood' => 'string',\n                'city' => 'string',\n                'state' => 'string',\n                'complement' => 'string',\n                'country' => 'string'\n        ]\n    ],\n    'value' => 0,\n    'name' => 'string',\n    'comment' => 'string',\n    'dayGenerateCharge' => 5,\n    'frequency' => 'WEEKLY',\n    'type' => 'PIX_RECURRING',\n    'dayDue' => 7,\n    'correlationID' => 'string',\n    'additionalInfo' => [\n        [\n                'key' => 'string',\n                'value' => 'string'\n        ]\n    ],\n    'pixRecurringOptions' => [\n        'retryPolicy' => 'NON_PERMITED',\n        'journey' => 'PAYMENT_ON_APPROVAL',\n        'minimumValue' => 0\n    ]\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: REPLACE_KEY_VALUE\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/subscriptions\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\npayload = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"name\\\":\\\"string\\\",\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\"\n\nheaders = {\n    'Authorization': \"REPLACE_KEY_VALUE\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/v1/subscriptions\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions\"\n\n\tpayload := strings.NewReader(\"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"name\\\":\\\"string\\\",\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"name\\\":\\\"string\\\",\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subscriptions\")\n  .post(body)\n  .addHeader(\"Authorization\", \"REPLACE_KEY_VALUE\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\"\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subscriptions\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'REPLACE_KEY_VALUE'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"value\\\":0,\\\"name\\\":\\\"string\\\",\\\"comment\\\":\\\"string\\\",\\\"dayGenerateCharge\\\":5,\\\"frequency\\\":\\\"WEEKLY\\\",\\\"type\\\":\\\"PIX_RECURRING\\\",\\\"dayDue\\\":7,\\\"correlationID\\\":\\\"string\\\",\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"pixRecurringOptions\\\":{\\\"retryPolicy\\\":\\\"NON_PERMITED\\\",\\\"journey\\\":\\\"PAYMENT_ON_APPROVAL\\\",\\\"minimumValue\\\":0}}\"\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -11576,7 +12169,7 @@
           },
           "expiresIn": {
             "type": "number",
-            "description": "Expires the charge in seconds (minimum is 15 minutes)"
+            "description": "Expires the charge in seconds (minimum is 5 minutes)"
           },
           "expiresDate": {
             "type": "string",
@@ -12578,6 +13171,71 @@
           }
         }
       },
+      "Party": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "type": "object",
+            "properties": {
+              "branch": {
+                "type": "string",
+                "description": "account branch"
+              },
+              "account": {
+                "type": "string",
+                "description": "account number"
+              },
+              "accountType": {
+                "type": "string",
+                "description": "account type"
+              }
+            }
+          },
+          "psp": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "psp id"
+              },
+              "name": {
+                "type": "string",
+                "description": "psp name"
+              },
+              "code": {
+                "type": "string",
+                "description": "psp code"
+              }
+            }
+          },
+          "holder": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "holder name"
+              },
+              "nameFriendly": {
+                "type": "string",
+                "description": "holder name friendly"
+              }
+            }
+          },
+          "taxID": {
+            "type": "object",
+            "properties": {
+              "taxID": {
+                "type": "string",
+                "description": "taxID"
+              },
+              "type": {
+                "type": "string",
+                "description": "taxID type"
+              }
+            }
+          }
+        }
+      },
       "PaymentTransaction": {
         "type": "object",
         "properties": {
@@ -12592,6 +13250,20 @@
           "time": {
             "type": "string",
             "description": "time the transaction generated by the payment happened"
+          },
+          "providerRejectedReason": {
+            "type": "string",
+            "description": "providerRejectedReason"
+          },
+          "debitParty": {
+            "type": "object",
+            "$ref": "#/components/schemas/Party",
+            "description": "debitParty"
+          },
+          "creditParty": {
+            "type": "object",
+            "$ref": "#/components/schemas/Party",
+            "description": "creditParty"
           }
         }
       },
@@ -12888,6 +13560,10 @@
           "comment": {
             "type": "string",
             "description": "Comment to be added in infoPagador"
+          },
+          "pixKey": {
+            "type": "string",
+            "description": "The pix key that this qrcode is associated with"
           }
         },
         "required": [
@@ -13241,6 +13917,10 @@
             "type": "number",
             "description": "Value in cents of the subscription"
           },
+          "name": {
+            "type": "string",
+            "description": "Name of the subscription"
+          },
           "customer": {
             "type": "object",
             "$ref": "#/components/schemas/Customer"
@@ -13278,6 +13958,10 @@
           "correlationID": {
             "type": "string",
             "description": "Your correlation ID to keep track of this subscription"
+          },
+          "paymentLinkUrl": {
+            "type": "string",
+            "description": "Payment link to this subscription"
           },
           "addtionalInfo": {
             "type": "array",
@@ -13388,6 +14072,10 @@
           "value": {
             "type": "number",
             "description": "Value in cents of this subscription"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the subscription"
           },
           "comment": {
             "type": "string",
@@ -13552,6 +14240,9 @@
               "installmentId": {
                 "type": "string"
               },
+              "endToEndId": {
+                "type": "string"
+              },
               "rejectCode": {
                 "type": "string"
               },
@@ -13713,16 +14404,36 @@
       },
       "WebhookEventEnum": {
         "type": "string",
-        "description": "Available events to register a webhook to listen to. If no one selected anyone the default event will be OPENPIX:TRANSACTION_RECEIVED.\n\n* **OPENPIX:CHARGE_CREATED** - New charge created\n* **OPENPIX:CHARGE_COMPLETED** - Charge completed is when a charge is fully paid\n* **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not fully paid and expired\n* **OPENPIX:TRANSACTION_RECEIVED** - New PIX transaction received\n* **OPENPIX:TRANSACTION_REFUND_RECEIVED** - New PIX transaction refund received or refunded\n* **OPENPIX:MOVEMENT_CONFIRMED** - Payment confirmed is when the pix transaction related to the payment gets confirmed\n* **OPENPIX:MOVEMENT_FAILED** - Payment failed is when the payment gets approved and a error occurs\n* **OPENPIX:MOVEMENT_REMOVED** - Payment was removed by a user\n",
+        "description": "Available events to register a webhook to listen to. If no one selected anyone the default event will be OPENPIX:TRANSACTION_RECEIVED.\n\n* **OPENPIX:CHARGE_CREATED** - New charge created\n* **OPENPIX:CHARGE_COMPLETED** - Charge completed is when a charge is fully paid\n* **OPENPIX:CHARGE_EXPIRED** - Charge expired is when a charge is not fully paid and expired\n\n* **OPENPIX:TRANSACTION_RECEIVED** - New PIX transaction received\n* **OPENPIX:TRANSACTION_REFUND_RECEIVED** - New PIX transaction refund received or refunded\n\n* **PIX_TRANSACTION_REFUND_RECEIVED_CONFIRMED** - Pix transaction refund received confirmed\n* **PIX_TRANSACTION_REFUND_SENT_CONFIRMED** - Pix transaction refund sent confirmed\n* **PIX_TRANSACTION_REFUND_RECEIVED_REJECTED** - Pix transaction refund received rejected\n* **PIX_TRANSACTION_REFUND_SENT_REJECTED** - Pix transaction refund sent rejected\n\n* **OPENPIX:MOVEMENT_CONFIRMED** - Payment confirmed is when the pix transaction related to the payment gets confirmed\n* **OPENPIX:MOVEMENT_FAILED** - Payment failed is when the payment gets approved and a error occurs\n* **OPENPIX:MOVEMENT_REMOVED** - Payment was removed by a user\n\n* **OPENPIX:MOVEMENT_CONFIRMED** - Movement confirmed\n* **OPENPIX:MOVEMENT_FAILED** - Movement failed\n* **OPENPIX:MOVEMENT_REMOVED** - Movement removed\n\n* **OPENPIX:DISPUTE_CREATED** - Dispute created\n* **OPENPIX:DISPUTE_ACCEPTED** - Dispute accepted\n* **OPENPIX:DISPUTE_REJECTED** - Dispute rejected\n* **OPENPIX:DISPUTE_CANCELED** - Dispute canceled\n\n* **ACCOUNT_REGISTER_APPROVED** - Account register approved\n* **ACCOUNT_REGISTER_REJECTED** - Account register rejected\n* **ACCOUNT_REGISTER_PENDING** - Account register pending\n\n* **PIX_AUTOMATIC_APPROVED** - Pix Automatic approved\n* **PIX_AUTOMATIC_REJECTED** - Pix Automatic rejected\n* **PIX_AUTOMATIC_COBR_CREATED** - Pix Automatic cobr created\n* **PIX_AUTOMATIC_COBR_APPROVED** - Pix Automatic cobr approved\n* **PIX_AUTOMATIC_COBR_REJECTED** - Pix Automatic cobr rejected\n* **PIX_AUTOMATIC_COBR_COMPLETED** - Pix Automatic cobr completed\n* **PIX_AUTOMATIC_COBR_TRY_REJECTED** - Pix Automatic cobr try rejected\n* **PIX_AUTOMATIC_COBR_TRY_REQUESTED** - Pix Automatic cobr try requested\n",
         "enum": [
           "OPENPIX:CHARGE_CREATED",
           "OPENPIX:CHARGE_COMPLETED",
           "OPENPIX:CHARGE_EXPIRED",
+          "OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER",
           "OPENPIX:TRANSACTION_RECEIVED",
           "OPENPIX:TRANSACTION_REFUND_RECEIVED",
+          "PIX_TRANSACTION_REFUND_RECEIVED_CONFIRMED",
+          "PIX_TRANSACTION_REFUND_SENT_CONFIRMED",
+          "PIX_TRANSACTION_REFUND_RECEIVED_REJECTED",
+          "PIX_TRANSACTION_REFUND_SENT_REJECTED",
           "OPENPIX:MOVEMENT_CONFIRMED",
           "OPENPIX:MOVEMENT_FAILED",
-          "OPENPIX:MOVEMENT_REMOVED"
+          "OPENPIX:MOVEMENT_REMOVED",
+          "OPENPIX:DISPUTE_CREATED",
+          "OPENPIX:DISPUTE_ACCEPTED",
+          "OPENPIX:DISPUTE_REJECTED",
+          "OPENPIX:DISPUTE_CANCELED",
+          "ACCOUNT_REGISTER_APPROVED",
+          "ACCOUNT_REGISTER_REJECTED",
+          "ACCOUNT_REGISTER_PENDING",
+          "PIX_AUTOMATIC_APPROVED",
+          "PIX_AUTOMATIC_REJECTED",
+          "PIX_AUTOMATIC_COBR_CREATED",
+          "PIX_AUTOMATIC_COBR_APPROVED",
+          "PIX_AUTOMATIC_COBR_REJECTED",
+          "PIX_AUTOMATIC_COBR_TRY_REJECTED",
+          "PIX_AUTOMATIC_COBR_TRY_REQUESTED",
+          "PIX_AUTOMATIC_COBR_COMPLETED"
         ]
       }
     },
