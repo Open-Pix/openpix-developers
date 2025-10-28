@@ -1,3 +1,5 @@
+const { spec } = require("node:test/reporters");
+
 import { themes } from 'prism-react-renderer';
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
@@ -213,6 +215,10 @@ module.exports = {
           {
             route: '/location/',
             spec: './src/swaggers/pixLocation.json',
+          },
+          {
+            route: '/indirect/',
+            spec: './src/swaggers/pixIndirect.json',
           }
         ],
       },

@@ -1,0 +1,493 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "OpenPix - Indireto",
+    "description": "Documentação infraestrutura pix indireto.",
+    "version": "1.0.0"
+  },
+  "servers": [],
+  "paths": {
+    "/api/v1/decode/emv": {
+      "post": {
+        "tags": [
+          "decode"
+        ],
+        "summary": "Parse EMV (PIX) QR code and optionally resolve COB/REC locations",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "emv"
+                ],
+                "properties": {
+                  "emv": {
+                    "type": "string",
+                    "description": "Raw EMV / PIX QR payload (text)",
+                    "example": "00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Parsed EMV payload with resolved COB and/or REC location (when available)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "emv": {
+                      "type": "object",
+                      "properties": {
+                        "payloadFormatIndicator": {
+                          "type": "string"
+                        },
+                        "pointOfInitiationMethod": {
+                          "type": "string",
+                          "description": "Present when EMV indicates a dynamic QR (e.g. \"12\")"
+                        },
+                        "merchantAccountInformationPix": {
+                          "type": "object",
+                          "description": "Parsed \"26\"/\"00\"... Pix merchant account info",
+                          "properties": {
+                            "gui": {
+                              "type": "string"
+                            },
+                            "pixKey": {
+                              "type": "string",
+                              "description": "UUID or key when Pix key present"
+                            },
+                            "url": {
+                              "type": "string",
+                              "description": "URL when location points to a COB/REC resource"
+                            },
+                            "additionalInformation": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "merchantCategoryCode": {
+                          "type": "string"
+                        },
+                        "transactionCurrency": {
+                          "type": "string"
+                        },
+                        "transactionAmount": {
+                          "type": "string"
+                        },
+                        "countryCode": {
+                          "type": "string"
+                        },
+                        "merchantName": {
+                          "type": "string"
+                        },
+                        "merchantCity": {
+                          "type": "string"
+                        },
+                        "additionalDataFieldTemplate": {
+                          "type": "object",
+                          "properties": {
+                            "referenceLabel": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "unreservedTemplates": {
+                          "type": "object",
+                          "properties": {
+                            "gui": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "crc": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "cobLocation": {
+                      "nullable": true,
+                      "type": "object",
+                      "description": "Resolved COB (charge) location details when the EMV points to a COB endpoint",
+                      "properties": {
+                        "isValid": {
+                          "type": "boolean"
+                        },
+                        "locationErrors": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "payload": {
+                          "type": "object",
+                          "properties": {
+                            "calendar": {
+                              "type": "object",
+                              "properties": {
+                                "presentation": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                },
+                                "expiration": {
+                                  "type": "integer"
+                                },
+                                "creation": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            },
+                            "key": {
+                              "type": "string"
+                            },
+                            "debtor": {
+                              "type": "object",
+                              "properties": {
+                                "cpf": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "additionalInfo": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "revision": {
+                              "type": "integer"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "txid": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "object",
+                              "properties": {
+                                "original": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "recLocation": {
+                      "nullable": true,
+                      "type": "object",
+                      "description": "Resolved REC (request for payment) location details when EMV points to a REC endpoint",
+                      "properties": {
+                        "isValid": {
+                          "type": "boolean"
+                        },
+                        "locationErrors": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "payload": {
+                          "type": "object",
+                          "properties": {
+                            "updates": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "calendar": {
+                              "type": "object",
+                              "properties": {
+                                "startDate": {
+                                  "type": "string",
+                                  "format": "date"
+                                },
+                                "periodicity": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "idRec": {
+                              "type": "string"
+                            },
+                            "retryPolicy": {
+                              "type": "string"
+                            },
+                            "receiver": {
+                              "type": "object",
+                              "properties": {
+                                "cnpj": {
+                                  "type": "string"
+                                },
+                                "participantIspb": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "value": {
+                              "type": "object",
+                              "properties": {
+                                "valueRec": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "link": {
+                              "type": "object",
+                              "properties": {
+                                "contract": {
+                                  "type": "string"
+                                },
+                                "debtor": {
+                                  "type": "object",
+                                  "properties": {
+                                    "cpf": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "parsedWithRecLocation": {
+                    "summary": "EMV parsed and REC location resolved",
+                    "value": {
+                      "emv": {
+                        "payloadFormatIndicator": "01",
+                        "merchantAccountInformationPix": {
+                          "gui": "br.gov.bcb.pix",
+                          "pixKey": "f4c6089a-bfde-4c00-a2d9-9eaa584b0219",
+                          "additionalInformation": "CobrancaEstatica"
+                        },
+                        "merchantCategoryCode": "0000",
+                        "transactionCurrency": "986",
+                        "transactionAmount": "546.28",
+                        "countryCode": "BR",
+                        "merchantName": "Pix",
+                        "merchantCity": "BRASILIA",
+                        "additionalDataFieldTemplate": {
+                          "referenceLabel": "84767c56c2ab4e65b6670de2a"
+                        },
+                        "unreservedTemplates": {
+                          "gui": "br.gov.bcb.pix",
+                          "url": "qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf0788691"
+                        },
+                        "crc": "4486"
+                      },
+                      "cobLocation": null,
+                      "recLocation": {
+                        "isValid": true,
+                        "locationErrors": [],
+                        "payload": {
+                          "updates": [
+                            {
+                              "date": "2025-10-24T18:42:58Z",
+                              "status": "CRIADA"
+                            }
+                          ],
+                          "calendar": {
+                            "startDate": "2025-10-24",
+                            "periodicity": "SEMANAL"
+                          },
+                          "idRec": "RN5481141720251024BnwNHejs9h9",
+                          "retryPolicy": "NAO_PERMITE",
+                          "receiver": {
+                            "cnpj": "44720743000101",
+                            "participantIspb": "54811417",
+                            "name": "Woovi Demo"
+                          },
+                          "value": {
+                            "valueRec": "0.01"
+                          },
+                          "link": {
+                            "contract": "Woovi Demo - Pix Automático",
+                            "debtor": {
+                              "cpf": "15775023706",
+                              "name": "Pedro Cliente"
+                            }
+                          }
+                        },
+                        "url": "qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf0788691"
+                      }
+                    }
+                  },
+                  "parsedWithCobLocation": {
+                    "summary": "EMV parsed and COB location resolved",
+                    "value": {
+                      "emv": {
+                        "payloadFormatIndicator": "01",
+                        "pointOfInitiationMethod": "12",
+                        "merchantAccountInformationPix": {
+                          "gui": "br.gov.bcb.pix",
+                          "url": "qr-h.woovi.digital/qr/v2/cob/fb274322-221c-43d4-b58b-fab36d87c75c"
+                        },
+                        "merchantCategoryCode": "0000",
+                        "transactionCurrency": "986",
+                        "transactionAmount": "10.00",
+                        "countryCode": "BR",
+                        "merchantName": "sibeliusip",
+                        "merchantCity": "Sao_Paulo",
+                        "additionalDataFieldTemplate": {
+                          "referenceLabel": "fb274322-221c-43d4-b58b-f"
+                        },
+                        "crc": "0C98"
+                      },
+                      "cobLocation": {
+                        "isValid": true,
+                        "locationErrors": [],
+                        "payload": {
+                          "calendar": {
+                            "presentation": "2025-02-25T13:27:54.168Z",
+                            "expiration": 86400,
+                            "creation": "2025-02-12T16:59:22.939Z"
+                          },
+                          "key": "4004901d-bd85-4769-8e52-cb4c42c506dc",
+                          "debtor": {
+                            "cpf": "62550186362",
+                            "name": "Fulano de Tal"
+                          },
+                          "additionalInfo": [
+                            {
+                              "name": "Entrega",
+                              "value": "Residencial"
+                            }
+                          ],
+                          "revision": 0,
+                          "status": "ATIVA",
+                          "txid": "d71a2ffd7a7b468eba993cef83428583",
+                          "value": {
+                            "original": "120.58"
+                          }
+                        },
+                        "url": "qr-h.woovi.digital/qr/v2/cob/fb274322-221c-43d4-b58b-fab36d87c75c"
+                      },
+                      "recLocation": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Invalid EMV payload"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Internal server error occurred"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: 'undefinedundefined',\n  port: null,\n  path: '/api/v1/decode/emv',\n  headers: {\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  emv: '00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request POST \\\n  --url http://undefinedundefined/api/v1/decode/emv \\\n  --header 'content-type: application/json' \\\n  --data '{\"emv\":\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\"}'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"http://undefinedundefined/api/v1/decode/emv\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n    'emv' => '00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486'\n  ]),\n  CURLOPT_HTTPHEADER => [\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"undefinedundefined\")\n\npayload = \"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\"\n\nheaders = { 'content-type': \"application/json\" }\n\nconn.request(\"POST\", \"/api/v1/decode/emv\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"http://undefinedundefined/api/v1/decode/emv\"\n\n\tpayload := strings.NewReader(\"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"http://undefinedundefined/api/v1/decode/emv\")\n  .post(body)\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"http://undefinedundefined/api/v1/decode/emv\")\n\nhttp = Net::HTTP.new(url.host, url.port)\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"emv\\\":\\\"00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229052584767c56c2ab4e65b6670de2a80950014br.gov.bcb.pix2573qr-h.sandbox.pix.bcb.gov.br/rest/api/rec/4b62d4a088fe4f51bcb4c64cf078869163044486\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}
