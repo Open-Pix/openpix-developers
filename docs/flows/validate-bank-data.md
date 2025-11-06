@@ -22,7 +22,7 @@ Após isso você irá criar um pagamento para a chave-pix que deseja saber os da
 ![sequencial](./__assets__/sequencial-validade-bank-data.png)
 
 # 1. Crie o pagamento:
-Nesta etapa você irá criar o pagamento seguindo os parâmetros de nosso endPoint: [Create Payment request](http://localhost:3000/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)
+Nesta etapa você irá criar o pagamento seguindo os parâmetros de nosso endPoint: [Create Payment request](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment/post)
 
 ```json
 curl --location 'https://api.woovi.com/api/v1/payment' \
@@ -47,7 +47,7 @@ curl --location 'https://api.woovi.com/api/v1/payment' \
 ![creat](./__assets__/create-payment.png)
 
 # 2. Confirme o pagamento:
-Nesta etapa será necessário que você aprove o pagamento que criou seguindo o endpoint: [Approve a Payment Request](http://localhost:3000/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post)
+Nesta etapa será necessário que você aprove o pagamento que criou seguindo o endpoint: [Approve a Payment Request](https://developers.openpix.com.br/api#tag/payment-(request-access)/paths/~1api~1v1~1payment~1approve/post)
 
 Após a confirmação do pagamento irá gerar um payload com os dados bancários da chave-pix que fez o pagamento
 
