@@ -1,0 +1,13 @@
+{
+  "label": "Conta",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Conta visão geral"
+  },
+  "customProps": {
+    "description": "Contas documentação"
+  }
+}
