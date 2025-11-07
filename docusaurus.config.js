@@ -1,5 +1,3 @@
-const { spec } = require("node:test/reporters");
-
 import { themes } from 'prism-react-renderer';
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;

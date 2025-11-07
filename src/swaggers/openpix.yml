@@ -333,20 +333,10 @@ paths:
     post:
       tags:
         - account
-      summary: Create a new Account
+      summary: Duplicates the Account
       description: >-
-        Creates a new bank account for the company. Requires the bank account
-        feature to be enabled.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                companyBankAccount:
-                  type: object
-                  $ref: '#/components/schemas/PayloadAccount'
+        Duplicates the account associated with the authorization appId. Requires
+        the bank account feature to be enabled.
       responses:
         '200':
           description: The created Account information
@@ -390,9 +380,8 @@ paths:
                 error: Wrong API type
       x-codeSamples:
         - lang: Node + Native
-          source: >-
+          source: |-
             const http = require('https');
-
 
             const options = {
               method: 'POST',
@@ -400,11 +389,9 @@ paths:
               port: null,
               path: '/api/v1/account',
               headers: {
-                Authorization: 'REPLACE_KEY_VALUE',
-                'content-type': 'application/json'
+                Authorization: 'REPLACE_KEY_VALUE'
               }
             };
-
 
             const req = http.request(options, function (res) {
               const chunks = [];
@@ -419,18 +406,12 @@ paths:
               });
             });
 
-
-            req.write(JSON.stringify({companyBankAccount: {accountId: 'string',
-            isDefault: true}}));
-
             req.end();
         - lang: Shell + Curl
           source: |-
             curl --request POST \
               --url https://api.openpix.com.br/api/v1/account \
-              --header 'Authorization: REPLACE_KEY_VALUE' \
-              --header 'content-type: application/json' \
-              --data '{"companyBankAccount":{"accountId":"string","isDefault":true}}'
+              --header 'Authorization: REPLACE_KEY_VALUE'
         - lang: Php + Curl
           source: |-
             <?php
@@ -445,15 +426,8 @@ paths:
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => json_encode([
-                'companyBankAccount' => [
-                    'accountId' => 'string',
-                    'isDefault' => null
-                ]
-              ]),
               CURLOPT_HTTPHEADER => [
-                "Authorization: REPLACE_KEY_VALUE",
-                "content-type: application/json"
+                "Authorization: REPLACE_KEY_VALUE"
               ],
             ]);
 
@@ -468,79 +442,46 @@ paths:
               echo $response;
             }
         - lang: Python + Python3
-          source: >-
+          source: |-
             import http.client
-
 
             conn = http.client.HTTPSConnection("api.openpix.com.br")
 
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
 
-            payload =
-            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}"
-
-
-            headers = {
-                'Authorization': "REPLACE_KEY_VALUE",
-                'content-type': "application/json"
-            }
-
-
-            conn.request("POST", "/api/v1/account", payload, headers)
-
+            conn.request("POST", "/api/v1/account", headers=headers)
 
             res = conn.getresponse()
-
             data = res.read()
-
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account\"\n\n\tpayload := strings.NewReader(\"{\\\"companyBankAccount\\\":{\\\"accountId\\\":\\\"string\\\",\\\"isDefault\\\":true}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account\"\n\n\treq, _ := http.NewRequest(\"POST\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
-          source: >-
+          source: |-
             OkHttpClient client = new OkHttpClient();
-
-
-            MediaType mediaType = MediaType.parse("application/json");
-
-            RequestBody body = RequestBody.create(mediaType,
-            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/account")
-              .post(body)
+              .post(null)
               .addHeader("Authorization", "REPLACE_KEY_VALUE")
-              .addHeader("content-type", "application/json")
               .build();
 
             Response response = client.newCall(request).execute();
         - lang: Ruby + Native
-          source: >-
+          source: |-
             require 'uri'
-
             require 'net/http'
-
 
             url = URI("https://api.openpix.com.br/api/v1/account")
 
-
             http = Net::HTTP.new(url.host, url.port)
-
             http.use_ssl = true
 
-
             request = Net::HTTP::Post.new(url)
-
             request["Authorization"] = 'REPLACE_KEY_VALUE'
 
-            request["content-type"] = 'application/json'
-
-            request.body =
-            "{\"companyBankAccount\":{\"accountId\":\"string\",\"isDefault\":true}}"
-
-
             response = http.request(request)
-
             puts response.read_body
   /api/v1/account-register/{id}:
     delete:
@@ -7385,7 +7326,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: The globalID of the installment.
+          description: The globalID of the installment or the endToEndId from transaction.
           required: true
           schema:
             type: string
@@ -7539,7 +7480,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: The globalID of the installment.
+          description: The globalID of the subscription.
           required: true
           schema:
             type: string
@@ -14856,6 +14797,159 @@ paths:
 
             request.body =
             "{\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"value\":0,\"name\":\"string\",\"comment\":\"string\",\"dayGenerateCharge\":5,\"frequency\":\"WEEKLY\",\"type\":\"PIX_RECURRING\",\"dayDue\":7,\"correlationID\":\"string\",\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"pixRecurringOptions\":{\"retryPolicy\":\"NON_PERMITED\",\"journey\":\"PAYMENT_ON_APPROVAL\",\"minimumValue\":0}}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /api/v1/subscriptions/{id}/value:
+    put:
+      tags:
+        - subscription
+      summary: >-
+        Update the value of the next installments of the subscription. It is
+        only possible if pix automatic accepts dynamic value.
+      parameters:
+        - name: id
+          in: path
+          description: The globalID or correlationID of the subscription.
+          required: true
+          schema:
+            type: string
+          example: UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=
+      responses:
+        '200':
+          description: The subscription retrieved using the given ID
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'PUT',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request PUT \
+              --url https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "PUT",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+
+            conn.request("PUT",
+            "/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value\"\n\n\treq, _ := http.NewRequest(\"PUT\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value")
+              .put(null)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/subscriptions/UGF5bWVudFN1YnNjcmlwdGlvbjo2M2UzYjJiNzczZDNkOTNiY2RkMzI5OTM=/value")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Put.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
 
 
             response = http.request(request)
