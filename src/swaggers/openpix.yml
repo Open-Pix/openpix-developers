@@ -23,6 +23,215 @@ security:
   - AppID: []
 paths:
   /api/v1/account/{accountId}:
+    delete:
+      tags:
+        - account
+      summary: Close an Account
+      description: |
+        Closes an Account.
+
+        Notes:
+        - Accounts with balance cannot be closed.
+      parameters:
+        - name: accountId
+          in: path
+          description: ID of the Account
+          required: true
+          schema:
+            type: string
+          example: 6290ccfd42831958a405debc
+      responses:
+        '200':
+          description: Account closed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Operation status
+                    example: OK
+                  accountId:
+                    type: string
+                    description: ID of the Account
+                    example: 6290ccfd42831958a405debc
+              example:
+                status: OK
+                accountId: 6290ccfd42831958a405debc
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                InvalidAccountId:
+                  value:
+                    error: Account ID is invalid
+                AlreadyClosed:
+                  value:
+                    error: Account already closed
+                AccountWithBalance:
+                  value:
+                    error: Account with balance cannot be deleted
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: This feature is not enabled for your company
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Account not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal server error
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'DELETE',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/account/6290ccfd42831958a405debc',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request DELETE \
+              --url https://api.openpix.com.br/api/v1/account/6290ccfd42831958a405debc \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/account/6290ccfd42831958a405debc",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "DELETE",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+
+            conn.request("DELETE", "/api/v1/account/6290ccfd42831958a405debc",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account/6290ccfd42831958a405debc\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/account/6290ccfd42831958a405debc")
+              .delete(null)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/account/6290ccfd42831958a405debc")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Delete.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+
+            response = http.request(request)
+
+            puts response.read_body
     get:
       tags:
         - account
@@ -9933,6 +10142,203 @@ paths:
                   error:
                     type: string
       x-codeSamples: []
+  /api/v1/pix-keys/check:
+    post:
+      tags:
+        - pixKey
+      summary: Check data from a Pix key
+      description: Get data from a Pix key if it exists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - pixKey
+              properties:
+                pixKey:
+                  type: string
+                  description: The Pix key to check
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixKeyCheck'
+        '400':
+          description: You need to link a Bank Account to this API
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Your IP is not in the allowed list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '403':
+          description: Your account does not have the permission to use this endpoint
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Pix key does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '429':
+          description: Too many requests, you had too many 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/pix-keys/check',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE',
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({pixKey: 'string'}));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/pix-keys/check \
+              --header 'Authorization: REPLACE_KEY_VALUE' \
+              --header 'content-type: application/json' \
+              --data '{"pixKey":"string"}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/pix-keys/check",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'pixKey' => 'string'
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: |-
+            import http.client
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+            payload = "{\"pixKey\":\"string\"}"
+
+            headers = {
+                'Authorization': "REPLACE_KEY_VALUE",
+                'content-type': "application/json"
+            }
+
+            conn.request("POST", "/api/v1/pix-keys/check", payload, headers)
+
+            res = conn.getresponse()
+            data = res.read()
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/pix-keys/check\"\n\n\tpayload := strings.NewReader(\"{\\\"pixKey\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"pixKey\":\"string\"}");
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/pix-keys/check")
+              .post(body)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: |-
+            require 'uri'
+            require 'net/http'
+
+            url = URI("https://api.openpix.com.br/api/v1/pix-keys/check")
+
+            http = Net::HTTP.new(url.host, url.port)
+            http.use_ssl = true
+
+            request = Net::HTTP::Post.new(url)
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+            request["content-type"] = 'application/json'
+            request.body = "{\"pixKey\":\"string\"}"
+
+            response = http.request(request)
+            puts response.read_body
   /api/v1/pix-keys/{pixKey}/default:
     post:
       tags:
@@ -10382,6 +10788,169 @@ paths:
             response = http.request(request)
             puts response.read_body
   /api/v1/qrcode-static/{id}:
+    delete:
+      tags:
+        - pixQrCode
+      summary: Delete a Pix QrCode Static
+      description: Endpoint to delete a Pix QrCode Static
+      parameters:
+        - name: id
+          in: path
+          description: QrCode ID, correlationID or identifier
+          required: true
+          schema:
+            type: string
+          examples:
+            correlationID:
+              value: fe7834b4060c488a9b0f89811be5f5cf
+      responses:
+        '200':
+          description: QrCode deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  id:
+                    type: string
+                example:
+                  status: OK
+                  id: fe7834b4060c488a9b0f89811be5f5cf
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'DELETE',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf',
+              headers: {
+                Authorization: 'REPLACE_KEY_VALUE'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request DELETE \
+              --url https://api.openpix.com.br/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf \
+              --header 'Authorization: REPLACE_KEY_VALUE'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "DELETE",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: REPLACE_KEY_VALUE"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "REPLACE_KEY_VALUE" }
+
+
+            conn.request("DELETE",
+            "/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf\"\n\n\treq, _ := http.NewRequest(\"DELETE\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf")
+              .delete(null)
+              .addHeader("Authorization", "REPLACE_KEY_VALUE")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/qrcode-static/fe7834b4060c488a9b0f89811be5f5cf")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Delete.new(url)
+
+            request["Authorization"] = 'REPLACE_KEY_VALUE'
+
+
+            response = http.request(request)
+
+            puts response.read_body
     get:
       tags:
         - pixQrCode
@@ -17253,6 +17822,16 @@ components:
           type: string
           description: Pix Transaction type
           enum:
+            - CREATED
+            - CONFIRMED
+            - REFUNDED
+            - PARTIAL_REFUND
+            - IN_PROCESSING
+            - REJECTED
+        status:
+          type: string
+          description: Pix Transaction type
+          enum:
             - PAYMENT
             - WITHDRAW
             - REFUND
@@ -17493,6 +18072,8 @@ components:
             - SEMIANNUALY
             - ANNUALLY
           description: Frequency of the subscription
+        isActive:
+          type: boolean
         status:
           type: string
           enum:
