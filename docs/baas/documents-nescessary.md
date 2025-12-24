@@ -39,3 +39,18 @@ Documentos nescessários por tipo de cnpj:
 * LTDA: SOCIAL_CONTRACT, ATA, BYLAWS
 
 
+### Descrição dos campos a serem enviados para o registro de contas.
+
+**campos:**
+| Nome                | Descrição                                                                                      |
+|---------------------|------------------------------------------------------------------------------------------------|
+| officialName        | Nome oficial e jurídico da empresa, conforme registrado nos órgãos competentes (razão social). |
+| tradeName           | Nome fantasia utilizado comercialmente pela empresa.                                           |
+| taxID               | Número do CNPJ da empresa.                                                                     |
+| businessDescription | Website oficial ou principal canal de vendas utilizado pela empresa.                           |
+| businessProduct     | Descrição dos produtos e/ou serviços oferecidos pela empresa.                                  |
+| businessLifetime    | Período de atuação da empresa no mercado.                                                      |
+| businessGoal        | Finalidade e objetivo da empresa ao se registrar e utilizar os serviços de BaaS da Woovi.      |
+| billingAddress      | Endereço comercial da empresa.                                                                 |
+| representatives     | Dados dos sócios, administradores e representantes legais da empresa, para fins de KYC/KYB.    |
+
