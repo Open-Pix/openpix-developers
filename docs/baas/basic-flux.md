@@ -67,6 +67,10 @@ Documentos nescessários por tipo de cnpj:
   "officialName": "<razão social>",
   "tradeName": "<nome fantasia>",
   "taxID": "<cnpj>",
+  "businessDescription": "<website ou canal de vendas>",
+  "businessProduct": "<servico ou produto da compania>",
+  "businessLifetime": "<tempo de mercado>",
+  "businessGoal": "<objetivo ao usar woovi>",
   "billingAddress": {
     "zipcode": "<cpf>",
     "street": "<rua>",
