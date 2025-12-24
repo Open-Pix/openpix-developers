@@ -1,5 +1,5 @@
 ---
-id: baas-account-register
+id: baas-compliance
 title: Como funciona o compliance para BAAS?
 tags: 
   - baas 
