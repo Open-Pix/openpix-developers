@@ -1319,8 +1319,10 @@ paths:
                       - name
                       - birthDate
                       - email
+                      - phone
                       - taxID
                       - address
+                      - documents
                     properties:
                       name:
                         type: string
@@ -1354,6 +1356,9 @@ paths:
                         type: string
                         description: Representative email
                         format: email
+                      phone:
+                        type: string
+                        description: Representative phone
                       type:
                         type: string
                         enum:
@@ -1412,6 +1417,7 @@ paths:
                     - number
                     - neighborhood
                     - city
+                    - state
                   properties:
                     zipcode:
                       type: string
@@ -1433,9 +1439,17 @@ paths:
                       type: string
                       description: City
                       minLength: 1
+                    state:
+                      type: string
+                      description: State
+                      minLength: 1
+                    complement:
+                      type: string
+                      description: Complement
+                      minLength: 1
                 businessDescription:
                   type: string
-                  description: Business segment/industry
+                  description: Website or Sales Portal
                 businessProduct:
                   type: string
                   description: Services the company provides
@@ -1449,7 +1463,13 @@ paths:
                 - officialName
                 - tradeName
                 - taxID
+                - documents
+                - representatives
                 - billingAddress
+                - businessDescription
+                - businessProduct
+                - businessLifetime
+                - businessGoal
             examples:
               ValidAccountRegister:
                 value:
@@ -1616,6 +1636,7 @@ paths:
                   documents: [{url: 'string', type: 'IDENTITY_FRONT'}],
                   birthDate: 'string',
                   email: 'user@example.com',
+                  phone: 'string',
                   type: 'ADMIN',
                   taxID: 'string',
                   address: {
@@ -1635,7 +1656,9 @@ paths:
                 street: 'string',
                 number: 'string',
                 neighborhood: 'string',
-                city: 'string'
+                city: 'string',
+                state: 'string',
+                complement: 'string'
               },
               businessDescription: 'string',
               businessProduct: 'string',
@@ -1649,7 +1672,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/account-register \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"officialName":"string","tradeName":"string","taxID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string"},"businessDescription":"string","businessProduct":"string","businessLifetime":"string","businessGoal":"string"}'
+              --data '{"officialName":"string","tradeName":"string","taxID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","phone":"string","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string"},"businessDescription":"string","businessProduct":"string","businessLifetime":"string","businessGoal":"string"}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -1685,6 +1708,7 @@ paths:
                             ],
                             'birthDate' => 'string',
                             'email' => 'user@example.com',
+                            'phone' => 'string',
                             'type' => 'ADMIN',
                             'taxID' => 'string',
                             'address' => [
@@ -1704,7 +1728,9 @@ paths:
                     'street' => 'string',
                     'number' => 'string',
                     'neighborhood' => 'string',
-                    'city' => 'string'
+                    'city' => 'string',
+                    'state' => 'string',
+                    'complement' => 'string'
                 ],
                 'businessDescription' => 'string',
                 'businessProduct' => 'string',
@@ -1736,7 +1762,7 @@ paths:
 
 
             payload =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
 
 
             headers = {
@@ -1755,7 +1781,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -1764,7 +1790,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}");
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/account-register")
@@ -1796,7 +1822,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
 
 
             response = http.request(request)
@@ -3604,6 +3630,7 @@ paths:
                         value: '302'
                     expiresIn: 2592000
                     expiresDate: 2021-04-01T17:28:51.882Z
+                    dueDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
                     paymentMethods:
@@ -4182,7 +4209,8 @@ paths:
                     qrCodeImage: >-
                       https://api.woovi.com/openpix/charge/brcode/image/9134e286-6f71-427a-bf00-241681624586.png
                     expiresIn: 2592000
-                    expiresDate: 2021-04-01T17:28:51.882Z
+                    expiresDate: 2021-09-01T17:28:51.882Z
+                    dueDate: 2021-04-01T17:28:51.882Z
                     createdAt: 2021-03-02T17:28:51.882Z
                     updatedAt: 2021-03-02T17:28:51.882Z
                     brCode: >-
@@ -4255,6 +4283,7 @@ paths:
               comment: 'string',
               expiresIn: 0,
               expiresDate: 'string',
+              dueDate: 'string',
               customer: {
                 name: 'string',
                 email: 'string',
@@ -4294,7 +4323,7 @@ paths:
               --url 'https://api.openpix.com.br/api/v1/charge?return_existing=true' \
               --header 'Authorization: REPLACE_KEY_VALUE' \
               --header 'content-type: application/json' \
-              --data '{"correlationID":"string","value":0,"type":"DYNAMIC","comment":"string","expiresIn":0,"expiresDate":"string","customer":{"name":"string","email":"string","phone":"string","taxID":"string","correlationID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"ensureSameTaxID":true,"daysForDueDate":0,"daysAfterDueDate":0,"interests":{"value":0},"fines":{"value":0},"discountSettings":{"modality":"FIXED_VALUE_UNTIL_SPECIFIED_DATE","discountFixedDate":[{"daysActive":0,"value":0}]},"additionalInfo":[{"key":"string","value":"string"}],"enableCashbackPercentage":true,"enableCashbackExclusivePercentage":true,"subaccount":"string","splits":[{"value":0,"pixKey":"string","splitType":"SPLIT_INTERNAL_TRANSFER"}]}'
+              --data '{"correlationID":"string","value":0,"type":"DYNAMIC","comment":"string","expiresIn":0,"expiresDate":"string","dueDate":"string","customer":{"name":"string","email":"string","phone":"string","taxID":"string","correlationID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"ensureSameTaxID":true,"daysForDueDate":0,"daysAfterDueDate":0,"interests":{"value":0},"fines":{"value":0},"discountSettings":{"modality":"FIXED_VALUE_UNTIL_SPECIFIED_DATE","discountFixedDate":[{"daysActive":0,"value":0}]},"additionalInfo":[{"key":"string","value":"string"}],"enableCashbackPercentage":true,"enableCashbackExclusivePercentage":true,"subaccount":"string","splits":[{"value":0,"pixKey":"string","splitType":"SPLIT_INTERNAL_TRANSFER"}]}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -4316,6 +4345,7 @@ paths:
                 'comment' => 'string',
                 'expiresIn' => 0,
                 'expiresDate' => 'string',
+                'dueDate' => 'string',
                 'customer' => [
                     'name' => 'string',
                     'email' => 'string',
@@ -4393,7 +4423,7 @@ paths:
 
 
             payload =
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0},\"fines\":{\"value\":0},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0},\"fines\":{\"value\":0},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
 
 
             headers = {
@@ -4413,7 +4443,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/charge?return_existing=true\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"type\\\":\\\"DYNAMIC\\\",\\\"comment\\\":\\\"string\\\",\\\"expiresIn\\\":0,\\\"expiresDate\\\":\\\"string\\\",\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"ensureSameTaxID\\\":true,\\\"daysForDueDate\\\":0,\\\"daysAfterDueDate\\\":0,\\\"interests\\\":{\\\"value\\\":0},\\\"fines\\\":{\\\"value\\\":0},\\\"discountSettings\\\":{\\\"modality\\\":\\\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\\\",\\\"discountFixedDate\\\":[{\\\"daysActive\\\":0,\\\"value\\\":0}]},\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"enableCashbackPercentage\\\":true,\\\"enableCashbackExclusivePercentage\\\":true,\\\"subaccount\\\":\\\"string\\\",\\\"splits\\\":[{\\\"value\\\":0,\\\"pixKey\\\":\\\"string\\\",\\\"splitType\\\":\\\"SPLIT_INTERNAL_TRANSFER\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/charge?return_existing=true\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"type\\\":\\\"DYNAMIC\\\",\\\"comment\\\":\\\"string\\\",\\\"expiresIn\\\":0,\\\"expiresDate\\\":\\\"string\\\",\\\"dueDate\\\":\\\"string\\\",\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"ensureSameTaxID\\\":true,\\\"daysForDueDate\\\":0,\\\"daysAfterDueDate\\\":0,\\\"interests\\\":{\\\"value\\\":0},\\\"fines\\\":{\\\"value\\\":0},\\\"discountSettings\\\":{\\\"modality\\\":\\\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\\\",\\\"discountFixedDate\\\":[{\\\"daysActive\\\":0,\\\"value\\\":0}]},\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"enableCashbackPercentage\\\":true,\\\"enableCashbackExclusivePercentage\\\":true,\\\"subaccount\\\":\\\"string\\\",\\\"splits\\\":[{\\\"value\\\":0,\\\"pixKey\\\":\\\"string\\\",\\\"splitType\\\":\\\"SPLIT_INTERNAL_TRANSFER\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"REPLACE_KEY_VALUE\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -4422,7 +4452,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0},\"fines\":{\"value\":0},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}");
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0},\"fines\":{\"value\":0},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/charge?return_existing=true")
@@ -4455,7 +4485,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0},\"fines\":{\"value\":0},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0},\"fines\":{\"value\":0},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
 
 
             response = http.request(request)
@@ -16687,6 +16717,14 @@ components:
           type: string
         expiresIn:
           type: string
+        expiresDate:
+          type: string
+          description: Expiration date of the charge in ISO 8601 format.
+        dueDate:
+          type: string
+          description: >-
+            Due date for OVERDUE, BOLETO, or subscription charges in ISO 8601
+            format.
         subscription:
           type: object
           $ref: '#/components/schemas/Subscription'
@@ -16750,6 +16788,11 @@ components:
         expiresDate:
           type: string
           description: Expiration date of the charge. Only in ISO 8601 format.
+        dueDate:
+          type: string
+          description: >-
+            Due date for OVERDUE, BOLETO, or subscription charges in ISO 8601
+            format.
         customer:
           type: object
           $ref: '#/components/schemas/CustomerPayload'
