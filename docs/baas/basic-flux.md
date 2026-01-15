@@ -94,7 +94,7 @@ Documentos nescessários por tipo de cnpj:
       "name": "<nome socio 1>",
       "birthDate": "<nacimento>",
       "email": "<email>",
-      "taxID": "<cnpj>",
+      "taxID": "<cpf/cnpj>",
       "phone": "<phone>",
       "address": {
         "zipcode": "<cep>",
@@ -103,7 +103,6 @@ Documentos nescessários por tipo de cnpj:
         "neighborhood": "<bairro>",
         "city": "<cidade>",
         "state": "<sigla estado>",
-        "taxID": "<cnpj>",
         "complement": "<complemento'>"
       },
       "documents": [
