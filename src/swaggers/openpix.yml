@@ -727,10 +727,10 @@ paths:
         - AppID:
             - ACCOUNT_REGISTER_DELETE
       parameters:
-        - name: id
+        - name: correlationID
           in: path
           required: true
-          description: Tax ID of the account register to delete
+          description: CorrelationID of the account register to delete
           schema:
             type: string
             minLength: 1
@@ -1342,6 +1342,9 @@ paths:
                   type: string
                   description: Tax ID of the company
                   minLength: 1
+                correlationID:
+                  type: string
+                  description: CorrelationID of the account register, default is uuid
                 documents:
                   type: array
                   description: Company documents
@@ -1680,6 +1683,7 @@ paths:
               officialName: 'string',
               tradeName: 'string',
               taxID: 'string',
+              correlationID: 'string',
               documents: [{url: 'string', type: 'SOCIAL_CONTRACT'}],
               representatives: [
                 {
@@ -1723,7 +1727,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/account-register \
               --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \
               --header 'content-type: application/json' \
-              --data '{"officialName":"string","tradeName":"string","taxID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","phone":"string","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string"},"businessDescription":"string","businessProduct":"string","businessLifetime":"string","businessGoal":"string"}'
+              --data '{"officialName":"string","tradeName":"string","taxID":"string","correlationID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","phone":"string","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string"},"businessDescription":"string","businessProduct":"string","businessLifetime":"string","businessGoal":"string"}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -1742,6 +1746,7 @@ paths:
                 'officialName' => 'string',
                 'tradeName' => 'string',
                 'taxID' => 'string',
+                'correlationID' => 'string',
                 'documents' => [
                     [
                             'url' => 'string',
@@ -1813,7 +1818,7 @@ paths:
 
 
             payload =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
 
 
             headers = {
@@ -1832,7 +1837,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -1841,7 +1846,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}");
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/account-register")
@@ -1873,7 +1878,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
+            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
 
 
             response = http.request(request)
