@@ -1093,8 +1093,8 @@ paths:
     get:
       tags:
         - account register
-      summary: Get account register by Tax ID
-      description: Retrieves an existing account registration by Tax ID
+      summary: Get account register by CorrelationID
+      description: Retrieves an existing account registration by CorrelationID
       x-required-scope: ACCOUNT_REGISTER_GET
       security:
         - AppID:
