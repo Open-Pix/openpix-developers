@@ -1094,7 +1094,7 @@
         "parameters": [
           {
             "name": "CorrelationID",
-            "in": "query",
+            "in": "path",
             "required": true,
             "description": "CorrelationID of the account register",
             "schema": {
@@ -1243,31 +1243,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/account-register',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/account-register \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/account-register\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/account-register\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/account-register\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/account-register\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       },
@@ -2104,7 +2104,7 @@
         },
         "responses": {
           "201": {
-            "description": "Application successfully created",
+            "description": "Application successfully created.\nThe response includes the scopes field when scopes are assigned to the application.\n",
             "content": {
               "application/json": {
                 "schema": {
@@ -2116,19 +2116,8 @@
                   }
                 },
                 "examples": {
-                  "ApplicationWithoutScopes": {
-                    "value": {
-                      "application": {
-                        "name": "Test API",
-                        "isActive": true,
-                        "type": "API",
-                        "clientId": "client_123abc",
-                        "clientSecret": "secret_456def",
-                        "appID": "app_789ghi"
-                      }
-                    }
-                  },
                   "ApplicationWithScopes": {
+                    "summary": "Application with scopes (recommended)",
                     "value": {
                       "application": {
                         "name": "Test API with Scopes",
@@ -2141,6 +2130,19 @@
                           "CHARGE_POST",
                           "CHARGE_GET"
                         ]
+                      }
+                    }
+                  },
+                  "ApplicationWithoutScopes": {
+                    "summary": "Application without scopes (legacy)",
+                    "value": {
+                      "application": {
+                        "name": "Test API",
+                        "isActive": true,
+                        "type": "API",
+                        "clientId": "client_123abc",
+                        "clientSecret": "secret_456def",
+                        "appID": "app_789ghi"
                       }
                     }
                   }
@@ -6733,19 +6735,8 @@
                 }
               },
               "examples": {
-                "ApplicationWithoutScopes": {
-                  "value": {
-                    "application": {
-                      "name": "MyAPIAccess",
-                      "type": "API"
-                    },
-                    "taxID": {
-                      "taxID": "65914571000187",
-                      "type": "BR:CNPJ"
-                    }
-                  }
-                },
                 "ApplicationWithScopes": {
+                  "summary": "Application with scopes (recommended)",
                   "value": {
                     "application": {
                       "name": "MyAPIAccessWithScopes",
@@ -6760,6 +6751,19 @@
                       "type": "BR:CNPJ"
                     }
                   }
+                },
+                "ApplicationWithoutScopes": {
+                  "summary": "Application without scopes (legacy)",
+                  "value": {
+                    "application": {
+                      "name": "MyAPIAccess",
+                      "type": "API"
+                    },
+                    "taxID": {
+                      "taxID": "65914571000187",
+                      "type": "BR:CNPJ"
+                    }
+                  }
                 }
               }
             }
@@ -6767,7 +6771,7 @@
         },
         "responses": {
           "200": {
-            "description": "Our \"idempotence output\", if you get this HTTP code, it's an application\nthat already has been registered.\n",
+            "description": "Our \"idempotence output\", if you get this HTTP code, it's an application\nthat already has been registered.\nThe response includes the scopes field when scopes are assigned to the application.\n",
             "content": {
               "application/json": {
                 "schema": {
@@ -6777,12 +6781,42 @@
                       "$ref": "#/components/schemas/PartnerApplicationPayload"
                     }
                   }
+                },
+                "examples": {
+                  "ApplicationWithScopes": {
+                    "summary": "Application with scopes (recommended)",
+                    "value": {
+                      "application": {
+                        "name": "MyAPIAccessWithScopes",
+                        "isActive": true,
+                        "type": "API",
+                        "clientId": "client_123abc",
+                        "clientSecret": "secret_456def",
+                        "scopes": [
+                          "CHARGE_POST",
+                          "CHARGE_GET"
+                        ]
+                      }
+                    }
+                  },
+                  "ApplicationWithoutScopes": {
+                    "summary": "Application without scopes (legacy)",
+                    "value": {
+                      "application": {
+                        "name": "MyAPIAccess",
+                        "isActive": true,
+                        "type": "API",
+                        "clientId": "client_123abc",
+                        "clientSecret": "secret_456def"
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "201": {
-            "description": "A new application has been registered. It'll be identified by the name that you give to it\nand by the company that has been referenced.\n",
+            "description": "A new application has been registered. It'll be identified by the name that you give to it\nand by the company that has been referenced.\nThe response includes the scopes field when scopes are assigned to the application.\n",
             "content": {
               "application/json": {
                 "schema": {
@@ -6790,6 +6824,36 @@
                   "properties": {
                     "application": {
                       "$ref": "#/components/schemas/PartnerApplicationPayload"
+                    }
+                  }
+                },
+                "examples": {
+                  "ApplicationWithScopes": {
+                    "summary": "Application with scopes (recommended)",
+                    "value": {
+                      "application": {
+                        "name": "MyAPIAccessWithScopes",
+                        "isActive": true,
+                        "type": "API",
+                        "clientId": "client_123abc",
+                        "clientSecret": "secret_456def",
+                        "scopes": [
+                          "CHARGE_POST",
+                          "CHARGE_GET"
+                        ]
+                      }
+                    }
+                  },
+                  "ApplicationWithoutScopes": {
+                    "summary": "Application without scopes (legacy)",
+                    "value": {
+                      "application": {
+                        "name": "MyAPIAccess",
+                        "isActive": true,
+                        "type": "API",
+                        "clientId": "client_123abc",
+                        "clientSecret": "secret_456def"
+                      }
                     }
                   }
                 }
@@ -8484,6 +8548,183 @@
           {
             "lang": "Ruby + Native",
             "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/pix-keys/tokens\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
+    "/api/v1/pix-keys/tokens/logs": {
+      "get": {
+        "tags": [
+          "pixKey"
+        ],
+        "summary": "Get token bucket logs",
+        "description": "Get a list of token bucket operation logs",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skip",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "companyBankAccount",
+            "description": "Filter logs by company bank account ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of token bucket logs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "logs": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TokenBucketLog"
+                      }
+                    },
+                    "pageInfo": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "data": {
+                                "type": "object",
+                                "properties": {
+                                  "skip": {
+                                    "type": "number"
+                                  },
+                                  "limit": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "skip": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "totalCount": {
+                          "type": "number"
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean"
+                        },
+                        "hasNextPage": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "pageInfo": {
+                    "skip": 0,
+                    "limit": 100,
+                    "totalCount": 50,
+                    "hasPreviousPage": false,
+                    "hasNextPage": false
+                  },
+                  "logs": [
+                    {
+                      "operation": "REMOVE",
+                      "reason": "pixKeyCheck",
+                      "tokens": 1,
+                      "tokensBefore": 100,
+                      "tokensAfter": 99,
+                      "endToEndId": "E18236120202012032010s0133872GZA",
+                      "pixKey": "31324227036",
+                      "createdAt": "2024-01-15T10:30:00.000Z",
+                      "updatedAt": "2024-01-15T10:30:00.000Z"
+                    },
+                    {
+                      "operation": "ADD",
+                      "reason": "refill",
+                      "tokens": 10,
+                      "tokensBefore": 90,
+                      "tokensAfter": 100,
+                      "createdAt": "2024-01-15T11:00:00.000Z",
+                      "updatedAt": "2024-01-15T11:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Your account does not have the permission to use this endpoint"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -10479,7 +10720,8 @@
                     "SubAccount": {
                       "name": "test-sub-account",
                       "pixKey": "c4249323-b4ca-43f2-8139-8232aab09b93",
-                      "balance": 100
+                      "balance": 100,
+                      "withdrawBlocked": false
                     }
                   }
                 }
@@ -10562,6 +10804,9 @@
                           },
                           "balance": {
                             "type": "number"
+                          },
+                          "withdrawBlocked": {
+                            "type": "boolean"
                           }
                         }
                       }
@@ -10615,7 +10860,8 @@
                     {
                       "name": "test-sub-account",
                       "pixKey": "c4249323-b4ca-43f2-8139-8232aab09b93",
-                      "balance": 100
+                      "balance": 100,
+                      "withdrawBlocked": false
                     }
                   ],
                   "pageInfo": {
@@ -11235,6 +11481,208 @@
           {
             "lang": "Ruby + Native",
             "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subaccount/transfer\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"value\\\":0,\\\"fromPixKey\\\":\\\"string\\\",\\\"fromPixKeyType\\\":\\\"CPF\\\",\\\"toPixKey\\\":\\\"string\\\",\\\"toPixKeyType\\\":\\\"CPF\\\",\\\"correlationID\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
+    "/api/v1/subaccount/{id}/statement": {
+      "get": {
+        "tags": [
+          "subaccount"
+        ],
+        "summary": "Get Sub Account statement",
+        "x-required-scope": "SUBACCOUNT_STATEMENT_GET",
+        "description": "Returns the ledger entries (statement) for a specific subaccount.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pix key registered to the subaccount",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "subaccount@test.com"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of entries to skip for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of entries to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 20
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Start date for filtering entries (ISO 8601 format)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "End date for filtering entries (ISO 8601 format)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2023-12-31T23:59:59.999Z"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub Account statement retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "507f1f77bcf86cd799439011"
+                      },
+                      "time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-12-01T10:30:00.000Z"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "Payment received from customer"
+                      },
+                      "balance": {
+                        "type": "number",
+                        "example": 1500
+                      },
+                      "value": {
+                        "type": "number",
+                        "example": 100
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "CREDIT",
+                          "DEBIT"
+                        ],
+                        "example": "CREDIT"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingAuthorization": {
+                    "value": {
+                      "error": "Invalid Authorization header"
+                    }
+                  },
+                  "CompanyNotFound": {
+                    "value": {
+                      "error": "Company not found"
+                    }
+                  },
+                  "SubAccountNotFound": {
+                    "value": {
+                      "error": "Subaccount not found: subaccount@test.com"
+                    }
+                  },
+                  "LedgerAccountNotFound": {
+                    "value": {
+                      "error": "Subaccount ledger account not found"
+                    }
+                  },
+                  "ErrorGettingStatement": {
+                    "value": {
+                      "error": "Error getting subaccount statement"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden action",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "This feature is not enabled for your company"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20&start=2023-01-01T00%3A00%3A00.000Z&end=2023-12-31T23%3A59%3A59.999Z\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -14592,6 +15040,44 @@
           }
         }
       },
+      "TokenBucketLog": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "ADD",
+              "REMOVE"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "tokens": {
+            "type": "number"
+          },
+          "tokensBefore": {
+            "type": "number"
+          },
+          "tokensAfter": {
+            "type": "number"
+          },
+          "endToEndId": {
+            "type": "string"
+          },
+          "pixKey": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "PixQrCode": {
         "type": "object",
         "properties": {
@@ -14866,6 +15352,10 @@
           "balance": {
             "type": "number",
             "description": "Number in cents that represent the balance of the sub account"
+          },
+          "withdrawBlocked": {
+            "type": "boolean",
+            "description": "Whether withdrawals are blocked for this sub account due to an invalid or restricted pix key"
           }
         }
       },
