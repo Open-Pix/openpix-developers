@@ -1101,7 +1101,7 @@ paths:
             - ACCOUNT_REGISTER_GET
       parameters:
         - name: CorrelationID
-          in: query
+          in: path
           required: true
           description: CorrelationID of the account register
           schema:
@@ -1201,7 +1201,7 @@ paths:
               method: 'GET',
               hostname: 'api.openpix.com.br',
               port: null,
-              path: '/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac',
+              path: '/api/v1/account-register',
               headers: {
                 Authorization: 'Bearer REPLACE_BEARER_TOKEN'
               }
@@ -1224,7 +1224,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url 'https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac' \
+              --url https://api.openpix.com.br/api/v1/account-register \
               --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'
         - lang: Php + Curl
           source: |-
@@ -1233,7 +1233,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac",
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/account-register",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -1256,63 +1256,46 @@ paths:
               echo $response;
             }
         - lang: Python + Python3
-          source: >-
+          source: |-
             import http.client
-
 
             conn = http.client.HTTPSConnection("api.openpix.com.br")
 
-
             headers = { 'Authorization': "Bearer REPLACE_BEARER_TOKEN" }
 
-
-            conn.request("GET",
-            "/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac",
-            headers=headers)
-
+            conn.request("GET", "/api/v1/account-register", headers=headers)
 
             res = conn.getresponse()
-
             data = res.read()
-
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac")
+              .url("https://api.openpix.com.br/api/v1/account-register")
               .get()
               .addHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN")
               .build();
 
             Response response = client.newCall(request).execute();
         - lang: Ruby + Native
-          source: >-
+          source: |-
             require 'uri'
-
             require 'net/http'
 
-
-            url =
-            URI("https://api.openpix.com.br/api/v1/account-register?CorrelationID=6fe18d8e-5009-4f57-8f1d-5b084b6b83ac")
-
+            url = URI("https://api.openpix.com.br/api/v1/account-register")
 
             http = Net::HTTP.new(url.host, url.port)
-
             http.use_ssl = true
 
-
             request = Net::HTTP::Get.new(url)
-
             request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
 
-
             response = http.request(request)
-
             puts response.read_body
     post:
       tags:
@@ -2316,7 +2299,11 @@ paths:
                       - CHARGE_GET
       responses:
         '201':
-          description: Application successfully created
+          description: >
+            Application successfully created.
+
+            The response includes the scopes field when scopes are assigned to
+            the application.
           content:
             application/json:
               schema:
@@ -2325,16 +2312,8 @@ paths:
                   application:
                     $ref: '#/components/schemas/Application'
               examples:
-                ApplicationWithoutScopes:
-                  value:
-                    application:
-                      name: Test API
-                      isActive: true
-                      type: API
-                      clientId: client_123abc
-                      clientSecret: secret_456def
-                      appID: app_789ghi
                 ApplicationWithScopes:
+                  summary: Application with scopes (recommended)
                   value:
                     application:
                       name: Test API with Scopes
@@ -2346,6 +2325,16 @@ paths:
                       scopes:
                         - CHARGE_POST
                         - CHARGE_GET
+                ApplicationWithoutScopes:
+                  summary: Application without scopes (legacy)
+                  value:
+                    application:
+                      name: Test API
+                      isActive: true
+                      type: API
+                      clientId: client_123abc
+                      clientSecret: secret_456def
+                      appID: app_789ghi
         '400':
           description: Validation error or other client error
           content:
@@ -8603,15 +8592,8 @@ paths:
                     - taxID
                     - type
             examples:
-              ApplicationWithoutScopes:
-                value:
-                  application:
-                    name: MyAPIAccess
-                    type: API
-                  taxID:
-                    taxID: '65914571000187'
-                    type: BR:CNPJ
               ApplicationWithScopes:
+                summary: Application with scopes (recommended)
                 value:
                   application:
                     name: MyAPIAccessWithScopes
@@ -8622,6 +8604,15 @@ paths:
                   taxID:
                     taxID: '65914571000187'
                     type: BR:CNPJ
+              ApplicationWithoutScopes:
+                summary: Application without scopes (legacy)
+                value:
+                  application:
+                    name: MyAPIAccess
+                    type: API
+                  taxID:
+                    taxID: '65914571000187'
+                    type: BR:CNPJ
       responses:
         '200':
           description: >
@@ -8629,6 +8620,9 @@ paths:
             application
 
             that already has been registered.
+
+            The response includes the scopes field when scopes are assigned to
+            the application.
           content:
             application/json:
               schema:
@@ -8636,12 +8630,37 @@ paths:
                 properties:
                   application:
                     $ref: '#/components/schemas/PartnerApplicationPayload'
+              examples:
+                ApplicationWithScopes:
+                  summary: Application with scopes (recommended)
+                  value:
+                    application:
+                      name: MyAPIAccessWithScopes
+                      isActive: true
+                      type: API
+                      clientId: client_123abc
+                      clientSecret: secret_456def
+                      scopes:
+                        - CHARGE_POST
+                        - CHARGE_GET
+                ApplicationWithoutScopes:
+                  summary: Application without scopes (legacy)
+                  value:
+                    application:
+                      name: MyAPIAccess
+                      isActive: true
+                      type: API
+                      clientId: client_123abc
+                      clientSecret: secret_456def
         '201':
           description: >
             A new application has been registered. It'll be identified by the
             name that you give to it
 
             and by the company that has been referenced.
+
+            The response includes the scopes field when scopes are assigned to
+            the application.
           content:
             application/json:
               schema:
@@ -8649,6 +8668,28 @@ paths:
                 properties:
                   application:
                     $ref: '#/components/schemas/PartnerApplicationPayload'
+              examples:
+                ApplicationWithScopes:
+                  summary: Application with scopes (recommended)
+                  value:
+                    application:
+                      name: MyAPIAccessWithScopes
+                      isActive: true
+                      type: API
+                      clientId: client_123abc
+                      clientSecret: secret_456def
+                      scopes:
+                        - CHARGE_POST
+                        - CHARGE_GET
+                ApplicationWithoutScopes:
+                  summary: Application without scopes (legacy)
+                  value:
+                    application:
+                      name: MyAPIAccess
+                      isActive: true
+                      type: API
+                      clientId: client_123abc
+                      clientSecret: secret_456def
         '400':
           description: An error message
           content:
@@ -11086,6 +11127,224 @@ paths:
             request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
 
             response = http.request(request)
+            puts response.read_body
+  /api/v1/pix-keys/tokens/logs:
+    get:
+      tags:
+        - pixKey
+      summary: Get token bucket logs
+      description: Get a list of token bucket operation logs
+      parameters:
+        - in: query
+          name: skip
+          schema:
+            type: number
+        - in: query
+          name: limit
+          schema:
+            type: number
+        - in: query
+          name: companyBankAccount
+          description: Filter logs by company bank account ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of token bucket logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TokenBucketLog'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      totalCount:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
+              example:
+                pageInfo:
+                  skip: 0
+                  limit: 100
+                  totalCount: 50
+                  hasPreviousPage: false
+                  hasNextPage: false
+                logs:
+                  - operation: REMOVE
+                    reason: pixKeyCheck
+                    tokens: 1
+                    tokensBefore: 100
+                    tokensAfter: 99
+                    endToEndId: E18236120202012032010s0133872GZA
+                    pixKey: '31324227036'
+                    createdAt: 2024-01-15T10:30:00.000Z
+                    updatedAt: 2024-01-15T10:30:00.000Z
+                  - operation: ADD
+                    reason: refill
+                    tokens: 10
+                    tokensBefore: 90
+                    tokensAfter: 100
+                    createdAt: 2024-01-15T11:00:00.000Z
+                    updatedAt: 2024-01-15T11:00:00.000Z
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Your account does not have the permission to use this endpoint
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE',
+              headers: {
+                Authorization: 'Bearer REPLACE_BEARER_TOKEN'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url 'https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE' \
+              --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer REPLACE_BEARER_TOKEN"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "Bearer REPLACE_BEARER_TOKEN" }
+
+
+            conn.request("GET",
+            "/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE")
+              .get()
+              .addHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/pix-keys/tokens/logs?skip=SOME_NUMBER_VALUE&limit=SOME_NUMBER_VALUE&companyBankAccount=SOME_STRING_VALUE")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+            request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
+
+
+            response = http.request(request)
+
             puts response.read_body
   /api/v1/qrcode-static/{id}:
     delete:
@@ -13785,6 +14044,7 @@ paths:
                     name: test-sub-account
                     pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
                     balance: 100
+                    withdrawBlocked: false
         '400':
           description: An error message
           content:
@@ -13941,6 +14201,8 @@ paths:
                           type: string
                         balance:
                           type: number
+                        withdrawBlocked:
+                          type: boolean
                   pageInfo:
                     type: object
                     properties:
@@ -13973,6 +14235,7 @@ paths:
                   - name: test-sub-account
                     pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
                     balance: 100
+                    withdrawBlocked: false
                 pageInfo:
                   skip: 0
                   limit: 10
@@ -14951,6 +15214,243 @@ paths:
 
             request.body =
             "{\"value\":0,\"fromPixKey\":\"string\",\"fromPixKeyType\":\"CPF\",\"toPixKey\":\"string\",\"toPixKeyType\":\"CPF\",\"correlationID\":\"string\"}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /api/v1/subaccount/{id}/statement:
+    get:
+      tags:
+        - subaccount
+      summary: Get Sub Account statement
+      x-required-scope: SUBACCOUNT_STATEMENT_GET
+      description: Returns the ledger entries (statement) for a specific subaccount.
+      parameters:
+        - name: id
+          in: path
+          description: Pix key registered to the subaccount
+          required: true
+          schema:
+            type: string
+          example: subaccount@test.com
+        - name: skip
+          in: query
+          description: Number of entries to skip for pagination
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+          example: 0
+        - name: limit
+          in: query
+          description: Maximum number of entries to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          example: 20
+        - name: start
+          in: query
+          description: Start date for filtering entries (ISO 8601 format)
+          required: false
+          schema:
+            type: string
+            format: date-time
+          example: 2023-01-01T00:00:00.000Z
+        - name: end
+          in: query
+          description: End date for filtering entries (ISO 8601 format)
+          required: false
+          schema:
+            type: string
+            format: date-time
+          example: 2023-12-31T23:59:59.999Z
+      responses:
+        '200':
+          description: Sub Account statement retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 507f1f77bcf86cd799439011
+                    time:
+                      type: string
+                      format: date-time
+                      example: 2023-12-01T10:30:00.000Z
+                    description:
+                      type: string
+                      example: Payment received from customer
+                    balance:
+                      type: number
+                      example: 1500
+                    value:
+                      type: number
+                      example: 100
+                    type:
+                      type: string
+                      enum:
+                        - CREDIT
+                        - DEBIT
+                      example: CREDIT
+        '400':
+          description: An error message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                MissingAuthorization:
+                  value:
+                    error: Invalid Authorization header
+                CompanyNotFound:
+                  value:
+                    error: Company not found
+                SubAccountNotFound:
+                  value:
+                    error: 'Subaccount not found: subaccount@test.com'
+                LedgerAccountNotFound:
+                  value:
+                    error: Subaccount ledger account not found
+                ErrorGettingStatement:
+                  value:
+                    error: Error getting subaccount statement
+        '403':
+          description: Forbidden action
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: This feature is not enabled for your company
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'GET',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20',
+              headers: {
+                Authorization: 'Bearer REPLACE_BEARER_TOKEN'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request GET \
+              --url 'https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20' \
+              --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer REPLACE_BEARER_TOKEN"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            headers = { 'Authorization': "Bearer REPLACE_BEARER_TOKEN" }
+
+
+            conn.request("GET",
+            "/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20",
+            headers=headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20")
+              .get()
+              .addHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/subaccount/subaccount@test.com/statement?skip=0&limit=20")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Get.new(url)
+
+            request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
 
 
             response = http.request(request)
@@ -18576,6 +19076,32 @@ components:
           type: boolean
         data:
           $ref: '#/components/schemas/PixKeyFraudValidationData'
+    TokenBucketLog:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum:
+            - ADD
+            - REMOVE
+        reason:
+          type: string
+        tokens:
+          type: number
+        tokensBefore:
+          type: number
+        tokensAfter:
+          type: number
+        endToEndId:
+          type: string
+        pixKey:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     PixQrCode:
       type: object
       properties:
@@ -18769,6 +19295,11 @@ components:
         balance:
           type: number
           description: Number in cents that represent the balance of the sub account
+        withdrawBlocked:
+          type: boolean
+          description: >-
+            Whether withdrawals are blocked for this sub account due to an
+            invalid or restricted pix key
     transaction:
       type: object
       properties:
