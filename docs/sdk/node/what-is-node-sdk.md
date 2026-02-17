@@ -22,4 +22,4 @@ Utilizando o nosso paginador integrado, é fácil criar paginações para listag
 
 O SDK é mantido oficialmente pela OpenPix e distribuído pelo [Npm](https://www.npmjs.com/).
 
-O código está num [repositório do GitHub](https://github.com/criskell/woovi-nodejs-sdk).
+O código está num [repositório do GitHub](https://github.com/woovibr/woovi-nodejs-sdk).
