@@ -242,7 +242,9 @@
                     "balance": {
                       "total": 129430,
                       "blocked": 0,
-                      "available": 129430
+                      "available": 129430,
+                      "blockedBySecurity": 0,
+                      "blockedByWithdrawSafety": 0
                     },
                     "taxId": "12345678901",
                     "officialName": "Company Name LLC",
@@ -3277,9 +3279,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -3293,7 +3292,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 10,
-                      "totalCount": 20,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     },
@@ -4242,9 +4240,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -4258,7 +4253,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 10,
-                      "totalCount": 20,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     },
@@ -5487,9 +5481,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -5503,7 +5494,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 10,
-                      "totalCount": 20,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     },
@@ -7112,9 +7102,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -7678,9 +7665,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -7695,7 +7679,6 @@
                   "pageInfo": {
                     "skip": 0,
                     "limit": 10,
-                    "totalCount": 20,
                     "hasPreviousPage": false,
                     "hasNextPage": true
                   },
@@ -7829,7 +7812,7 @@
             ]
           }
         ],
-        "description": "Endpoint to request a payment",
+        "description": "Endpoint to request a payment. Supports three payment types: Pix Key (`PIX_KEY`), QR Code (`QR_CODE`), and Manual (`MANUAL`).\n\nFor QR Code payments, the system decodes the BR Code string and extracts the destination and value automatically. After creating, use `POST /api/v1/payment/approve` with the correlationID to execute.\n",
         "requestBody": {
           "description": "Data to create a payment request",
           "required": true,
@@ -7841,8 +7824,9 @@
               },
               "examples": {
                 "pixKey": {
-                  "summary": "Pix Key",
+                  "summary": "Pay via Pix Key",
                   "value": {
+                    "type": "PIX_KEY",
                     "value": 100,
                     "destinationAlias": "c4249323-b4ca-43f2-8139-8232aab09b93",
                     "destinationAliasType": "RANDOM",
@@ -7857,21 +7841,32 @@
                   }
                 },
                 "qrCode": {
-                  "summary": "QR Code",
+                  "summary": "Pay a QR Code (BR Code)",
                   "value": {
-                    "qrCode": "000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009SaoPaulo62360532867ba5173c734202ac659721306b38c963044BCA",
+                    "type": "QR_CODE",
+                    "correlationID": "payment-qrcode-1",
+                    "qrCode": "00020101021226850014BR.GOV.BCB.PIX2563qrcode.example.com/pix/v2/abc12345-defg-6789-hijk-lmnopqrstuvw52040000530398654041.005802BR5925LOJA EXEMPLO LTDA6009SAO PAULO6229052512345678901234567890163049A2F",
                     "comment": "payment comment",
-                    "correlationID": "payment1",
-                    "pixKeyEndToEndId": "E1234567890",
                     "metadata": {
                       "qrCodeSource": "store-terminal",
                       "storeId": "store-789"
                     }
                   }
                 },
-                "manual": {
-                  "summary": "Manual Payment",
+                "qrCodeWithValue": {
+                  "summary": "Pay a QR Code with custom value (for QR Codes without fixed value)",
                   "value": {
+                    "type": "QR_CODE",
+                    "correlationID": "payment-qrcode-2",
+                    "qrCode": "00020101021226850014BR.GOV.BCB.PIX2563qrcode.example.com/pix/v2/abc12345-defg-6789-hijk-lmnopqrstuvw52040000530398654041.005802BR5925LOJA EXEMPLO LTDA6009SAO PAULO6229052512345678901234567890163049A2F",
+                    "value": 3000,
+                    "comment": "payment with custom value"
+                  }
+                },
+                "manual": {
+                  "summary": "Pay via manual bank details",
+                  "value": {
+                    "type": "MANUAL",
                     "value": 100,
                     "pixKeyEndToEndId": "E1234567890",
                     "correlationID": "manual-payment-26",
@@ -7917,9 +7912,10 @@
                 },
                 "examples": {
                   "pixKey": {
-                    "summary": "Pix Key",
+                    "summary": "Pix Key response",
                     "value": {
                       "payment": {
+                        "type": "PIX_KEY",
                         "value": 100,
                         "status": "CREATED",
                         "destinationAlias": "c4249323-b4ca-43f2-8139-8232aab09b93",
@@ -7930,28 +7926,33 @@
                     }
                   },
                   "qrCode": {
-                    "summary": "QR Code",
+                    "summary": "QR Code response",
                     "value": {
                       "payment": {
-                        "value": 100,
+                        "type": "QR_CODE",
+                        "value": 3000,
                         "status": "CREATED",
-                        "destinationAlias": "c4249323-b4ca-43f2-8139-8232aab09b93",
-                        "destinationAliasType": "RANDOM",
-                        "qrCode": "000201010212261060014br.gov.bcb.pix2584https://api.woovi.com/openpix/testing?transactionID=867ba5173c734202ac659721306b38c952040000530398654040.015802BR5909LOCALHOST6009Sao Paulo62360532867ba5173c734202ac659721306b38c963044BCA",
+                        "qrCode": "00020101021226850014BR.GOV.BCB.PIX2563qrcode.example.com/pix/v2/abc12345-defg-6789-hijk-lmnopqrstuvw52040000530398654041.005802BR5925LOJA EXEMPLO LTDA6009SAO PAULO6229052512345678901234567890163049A2F",
                         "comment": "payment comment",
-                        "correlationID": "payment1"
+                        "correlationID": "payment-qrcode-1"
+                      },
+                      "destination": {
+                        "name": "LOJA EXEMPLO LTDA",
+                        "taxID": "11222333000181",
+                        "bank": "Banco Exemplo S.A."
                       }
                     }
                   },
                   "manual": {
-                    "summary": "Manual Payment",
+                    "summary": "Manual Payment response",
                     "value": {
                       "payment": {
+                        "type": "MANUAL",
                         "value": 100,
                         "status": "CREATED",
                         "correlationID": "manual-payment-1",
                         "holder": {
-                          "name": "teste",
+                          "name": "Hodlis 3",
                           "taxID": {
                             "type": "BR:CNPJ",
                             "taxID": "20244827000158"
@@ -8628,9 +8629,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -8645,7 +8643,6 @@
                   "pageInfo": {
                     "skip": 0,
                     "limit": 100,
-                    "totalCount": 50,
                     "hasPreviousPage": false,
                     "hasNextPage": false
                   },
@@ -8983,9 +8980,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -8999,7 +8993,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 10,
-                      "totalCount": 20,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     },
@@ -9367,6 +9360,34 @@
             "type": "string"
           },
           "example": "Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA"
+        },
+        {
+          "in": "query",
+          "name": "hasWebhook",
+          "description": "Filter transactions by webhook delivery status. Use true to get only transactions that had a successful webhook delivery (HTTP 200), or false to get transactions without successful webhook delivery.",
+          "schema": {
+            "type": "boolean"
+          },
+          "example": true
+        },
+        {
+          "in": "query",
+          "name": "type",
+          "description": "Filter transactions by type",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "PAYMENT",
+              "WITHDRAW",
+              "REFUND",
+              "FEE",
+              "INTERNAL_TRANSFER",
+              "BALANCE_BLOCK",
+              "BALANCE_UNBLOCK",
+              "REVERSAL"
+            ]
+          },
+          "example": "REFUND"
         }
       ],
       "get": {
@@ -9430,9 +9451,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -9447,7 +9465,6 @@
                   "pageInfo": {
                     "skip": 0,
                     "limit": 10,
-                    "totalCount": 20,
                     "hasPreviousPage": false,
                     "hasNextPage": true
                   },
@@ -9490,7 +9507,16 @@
                     "value": 100,
                     "time": "2021-03-03T12:33:00.536Z",
                     "transactionID": "transactionID",
-                    "endToEndId": "E18236120202012032010s0133872GZA"
+                    "endToEndId": "E18236120202012032010s0133872GZA",
+                    "webhookSent": [
+                      {
+                        "OPENPIX:TRANSACTION_RECEIVED": {
+                          "status": 200,
+                          "time": "2021-03-03T12:33:00.546Z"
+                        },
+                        "isRetry": false
+                      }
+                    ]
                   }
                 }
               }
@@ -9515,31 +9541,31 @@
         "x-codeSamples": [
           {
             "lang": "Node + Native",
-            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
             "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+            "source": "curl --request GET \\\n  --url 'https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
           },
           {
             "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
           },
           {
             "lang": "Python + Python3",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
             "lang": "Go + Native",
-            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
           },
           {
             "lang": "Java + Okhttp",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
           },
           {
             "lang": "Ruby + Native",
-            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/transaction?start=2020-01-01T00%3A00%3A00Z&end=2020-12-01T17%3A00%3A00Z&charge=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&pixQrCode=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&withdrawal=Q2hhcmdlOjYwM2U3NDlhNDI1NjAyYmJiZjRlN2JlZA&hasWebhook=true&type=REFUND\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
       }
@@ -9710,9 +9736,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -9726,7 +9749,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 10,
-                      "totalCount": 20,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     },
@@ -10842,9 +10864,6 @@
                         "limit": {
                           "type": "number"
                         },
-                        "totalCount": {
-                          "type": "number"
-                        },
                         "hasPreviousPage": {
                           "type": "boolean"
                         },
@@ -10867,7 +10886,6 @@
                   "pageInfo": {
                     "skip": 0,
                     "limit": 10,
-                    "totalCount": 20,
                     "hasPreviousPage": false,
                     "hasNextPage": true
                   }
@@ -11587,6 +11605,21 @@
                           "DEBIT"
                         ],
                         "example": "CREDIT"
+                      },
+                      "operationType": {
+                        "type": "string",
+                        "nullable": true,
+                        "enum": [
+                          "CREDIT",
+                          "DEBIT",
+                          "TRANSFER_CREDIT",
+                          "TRANSFER_DEBIT",
+                          "WITHDRAWAL",
+                          "WITHDRAWAL_REVERSAL",
+                          "WITHDRAWAL_FEE",
+                          "WITHDRAWAL_FEE_REVERSAL"
+                        ],
+                        "description": "| operationType           | Descrição                                         |\n|-------------------------|---------------------------------------------------|\n| CREDIT                  | Valor recebido                                    |\n| DEBIT                   | Valor enviado                                     |\n| TRANSFER_CREDIT         | Crédito de transferência interna entre subcontas  |\n| TRANSFER_DEBIT          | Débito de transferência interna entre subcontas   |\n| WITHDRAWAL              | Saque iniciado a partir da subconta               |\n| WITHDRAWAL_REVERSAL     | Estorno de um saque processado anteriormente      |\n| WITHDRAWAL_FEE          | Taxa cobrada por uma operação de saque            |\n| WITHDRAWAL_FEE_REVERSAL | Estorno da taxa de saque                          |\n"
                       }
                     }
                   }
@@ -11918,7 +11951,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 10,
-                      "totalCount": 20,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     }
@@ -12489,7 +12521,6 @@
                     "pageInfo": {
                       "skip": 0,
                       "limit": 100,
-                      "totalCount": 2,
                       "hasPreviousPage": false,
                       "hasNextPage": true
                     },
@@ -13245,11 +13276,19 @@
               },
               "blocked": {
                 "type": "number",
-                "description": "Blocked amount in cents"
+                "description": "Total blocked amount in cents (security + withdraw safety)"
               },
               "available": {
                 "type": "number",
                 "description": "Available amount in cents"
+              },
+              "blockedBySecurity": {
+                "type": "number",
+                "description": "Amount blocked due to security restrictions (e.g., PIX_OUT blocking)"
+              },
+              "blockedByWithdrawSafety": {
+                "type": "number",
+                "description": "Amount blocked as minimum balance reserve (withdraw safety value)"
               }
             }
           },
@@ -14504,7 +14543,7 @@
               },
               "correlationID": {
                 "type": "string",
-                "description": "an unique identifier for your payment"
+                "description": "a unique identifier for your payment"
               },
               "pixKeyEndToEndId": {
                 "type": "string",
@@ -14512,7 +14551,7 @@
               },
               "comment": {
                 "type": "string",
-                "description": "the comment that will be send alongisde your payment"
+                "description": "the comment that will be sent alongside your payment"
               },
               "metadata": {
                 "type": "object",
@@ -14539,19 +14578,23 @@
               },
               "qrCode": {
                 "type": "string",
-                "description": "the QR Code to be paid"
+                "description": "the BR Code (Pix QR Code) string to be paid. The system will decode it and extract the destination and value automatically"
+              },
+              "value": {
+                "type": "number",
+                "description": "optional value in cents. Use this to override the value extracted from the QR Code, or to set a value for QR Codes without a fixed amount"
               },
               "correlationID": {
                 "type": "string",
-                "description": "an unique identifier for your payment"
+                "description": "a unique identifier for your payment"
               },
-              "pixKeyEndToEndId": {
+              "sourceAccountId": {
                 "type": "string",
-                "description": "the end to end id of the pix key used for track pix key consultations"
+                "description": "optional source account ID to use for the payment"
               },
               "comment": {
                 "type": "string",
-                "description": "the comment that will be send alongisde your payment"
+                "description": "the comment that will be sent alongside your payment"
               },
               "metadata": {
                 "type": "object",
@@ -14585,7 +14628,7 @@
               },
               "correlationID": {
                 "type": "string",
-                "description": "an unique identifier for your payment"
+                "description": "a unique identifier for your payment"
               },
               "pixKeyEndToEndId": {
                 "type": "string",
@@ -14697,7 +14740,7 @@
           },
           "comment": {
             "type": "string",
-            "description": "the comment that will be send alongisde your payment"
+            "description": "the comment that will be sent alongside your payment"
           },
           "status": {
             "type": "string",
@@ -15213,6 +15256,48 @@
           "pixQrCode": {
             "type": "object",
             "$ref": "#/components/schemas/PixQrCode"
+          },
+          "webhookSent": {
+            "type": "array",
+            "description": "List of webhook delivery attempts for this transaction, sorted by most recent first. Each item contains the event name as key with status and time, plus an isRetry flag.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "isRetry": {
+                  "type": "boolean",
+                  "description": "Whether this webhook delivery was a retry"
+                }
+              },
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "number",
+                    "description": "HTTP response status code of the webhook delivery attempt"
+                  },
+                  "time": {
+                    "type": "string",
+                    "description": "Timestamp of the webhook delivery attempt"
+                  }
+                }
+              }
+            },
+            "example": [
+              {
+                "OPENPIX:TRANSACTION_RECEIVED": {
+                  "status": 200,
+                  "time": "2025-01-01T00:00:00.000Z"
+                },
+                "isRetry": false
+              },
+              {
+                "OPENPIX:TRANSACTION_RECEIVED": {
+                  "status": 404,
+                  "time": "2025-01-02T00:00:00.000Z"
+                },
+                "isRetry": true
+              }
+            ]
           }
         }
       },
@@ -15679,11 +15764,20 @@
             "description": "Comment to be show in QR Code"
           },
           "dayGenerateCharge": {
-            "type": "number",
-            "description": "Day of the month that the charges will be generated. Maximum of 31.",
-            "minimum": 1,
-            "maximum": 31,
-            "default": 5
+            "oneOf": [
+              {
+                "type": "number",
+                "description": "Day of the month that the charges will be generated. Maximum of 31.",
+                "minimum": 1,
+                "maximum": 31,
+                "default": 5
+              },
+              {
+                "type": "string",
+                "format": "date-time",
+                "description": "Full UTC date for the first charge generation (e.g. \"2026-02-22T00:00:00.000Z\"). The day of the month will be extracted for recurring charges."
+              }
+            ]
           },
           "frequency": {
             "type": "string",
@@ -15792,9 +15886,6 @@
             "type": "number"
           },
           "limit": {
-            "type": "number"
-          },
-          "totalCount": {
             "type": "number"
           },
           "hasPreviousPage": {
@@ -16170,7 +16261,7 @@
     },
     {
       "name": "payment (request access)",
-      "description": "Endpoint to init a payment using a Pix Key.\n"
+      "description": "Endpoints to create and manage Pix payment requests. Supports three payment types:\n\n**1. Pix Key (`PIX_KEY`)** - Pay directly to a Pix key (CPF, CNPJ, email, phone, or random key).\n\n**2. QR Code (`QR_CODE`)** - Pay a Pix QR Code (BR Code). Send the raw QR Code string and the system will decode it, extract the destination and value automatically.\n\n**3. Manual (`MANUAL`)** - Pay by providing the destination bank account details directly (holder, account, branch, PSP).\n\n### QR Code Payment Flow\n\nTo pay a QR Code, follow these steps:\n\n1. **Create the payment** - Call `POST /api/v1/payment` with `type: \"QR_CODE\"` and the `qrCode` field containing the BR Code string. The value is automatically extracted from the QR Code. You can optionally provide a `value` field to override it (for QR Codes without a fixed value).\n2. **Review the response** - The response includes the decoded payment details (destination, value, status `CREATED`).\n3. **Approve the payment** - Call `POST /api/v1/payment/approve` with the `correlationID` to execute the payment.\n4. **Check the status** - Call `GET /api/v1/payment/{id}` with the correlationID to verify the payment status and get transaction details.\n"
     },
     {
       "name": "pixKey",
