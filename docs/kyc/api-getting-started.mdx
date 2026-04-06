@@ -7,57 +7,76 @@ tags:
   - onboarding
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+Este documento irá ajudá-lo a começar a utilizar a API de KYC Onboarding.
 
-## Autenticação
+## Criando uma nova chave de API
 
-A API de KYC Onboarding utiliza autenticação via **credenciais de aplicação** (clientId e clientSecret).
+O primeiro passo para começar a integrar com a API é criar uma nova chave de API.
 
-As credenciais devem ser enviadas no header `Authorization` codificadas em **Base64** no formato `clientId:clientSecret`.
+### Passo 1 - Criar um novo aplicativo
 
-### Requisitos
+Vá para `Api/Plugins` na barra lateral e clique em `Nova API/Plugin`.
 
-- A empresa (company) deve possuir a feature **BAAS** habilitada
-- A aplicação deve possuir o scope **`KYC_ONBOARDING.KYC_ONBOARDING_POST`**
+:::caution
+Caso você não esteja visualizando o sidebar API/Plugins é necessário ter a permissão correta, veja com o admin da sua empresa.
+:::
 
-### Como gerar o header de autenticação
+### Passo 2 - Nome da integração
 
-1. Concatene o `clientId` e `clientSecret` separados por `:` (dois pontos)
-2. Codifique o resultado em Base64
+Dentro da tela de criação, coloque um nome para a integração e selecione `API` para integrações backend.
 
-<Tabs>
-  <TabItem value="shell" label="Shell" default>
+### Passo 3 - Criando a chave
 
-```sh
-echo -n "Client_Id_xxxx:Client_Secret_xxxx" | base64
+Clique em `Salvar` para criar a nova chave de API.
+
+### Passo 4 - Fator de autenticação
+
+Para que a API possa ser utilizada, é necessário colocar um fator duplo de autenticação para garantir maior segurança na geração de chaves.
+
+### Passo 5 - Copiando o AppID
+
+Após criar a nova chave, copie o **AppID** para utilizar em suas integrações.
+
+## Como utilizar a API
+
+Todas as `requests` e `responses` da API usam o formato JSON.
+
+Para que a requisição seja válida, é necessário enviar o `AppID` no header `Authorization` da requisição.
+
+Não utilize o prefixo `Bearer`. Envie o valor bruto do `AppID` no header.
+
+```json
+{
+  "Authorization": "<AppID>"
+}
 ```
 
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```js
-const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
-```
-
-  </TabItem>
-</Tabs>
-
-### Exemplo de requisição autenticada
+Exemplo:
 
 ```sh
 curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
   -H "Content-Type: application/json" \
-  -H "Authorization: <Base64_credentials>" \
+  -H "Authorization: SEU_APPID_AQUI" \
   -d '{"taxID": "51.238.607/0002-26"}'
 ```
 
-### Erros de autenticação
+### Requisitos
 
-| Status | Descrição |
-|--------|-----------|
-| `401` | Credenciais inválidas, aplicação inativa ou scope insuficiente |
-| `403` | A empresa não possui a feature BAAS habilitada |
+- A empresa deve possuir a feature **BAAS** habilitada
+- A aplicação deve possuir o scope **`KYC_ONBOARDING.KYC_ONBOARDING_POST`**
+
+## Restrições de API
+
+- Todas as requisições devem ser criptografadas usando `https`
+- As chaves de API são extremamente poderosas e devem ser armazenadas com cuidado extra
+- Não compartilhe chaves com terceiros
+- Não reutilize chaves entre ambientes
+- Apenas gere chaves quando for necessário
+- Desative chaves não utilizadas
+
+## Erros de autenticação
+
+Pode ocorrer de você receber uma resposta com o HTTP Status `401`, que está relacionado a um AppID inválido.
 
 ```json
 {
@@ -65,11 +84,15 @@ curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
 }
 ```
 
+Caso a empresa não possua a feature BAAS habilitada, você receberá o HTTP Status `403`:
+
 ```json
 {
   "error": "Company does not have BaaS feature enabled"
 }
 ```
+
+Caso seja inválido, é recomendado gerar um novo AppID da sua aplicação e adicionar novamente em seu sistema.
 
 ## URL Base
 
