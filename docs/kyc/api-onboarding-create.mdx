@@ -18,7 +18,7 @@ Este endpoint cria um registro de conta (AccountRegister) e retorna um link de o
 
 ### Obrigatórios
 
-- **`taxID`**: CNPJ da empresa do merchant. Aceita formato com ou sem máscara (ex: `51.238.607/0002-26` ou `51238607000226`). Validado como CNPJ.
+- **`taxID`**: CNPJ da empresa do merchant. Aceita formato com ou sem máscara (ex: `XX.XXX.XXX/0001-XX` ou `XXXXXXXXXXXXXX`). Validado como CNPJ.
 
 ### Opcionais
 
@@ -32,11 +32,11 @@ O body da sua requisição será semelhante a este exemplo:
 
 ```json
 {
-  "taxID": "51.238.607/0002-26",
+  "taxID": "XX.XXX.XXX/0001-XX",
   "correlationID": "my-unique-id",
   "representatives": [
-    { "taxID": "421.426.758-32" },
-    { "taxID": "481.290.248-70" }
+    { "taxID": "XXX.XXX.XXX-XX" },
+    { "taxID": "XXX.XXX.XXX-XX" }
   ]
 }
 ```
@@ -50,25 +50,18 @@ Retornaremos a seguinte resposta de exemplo:
   "linkOnboarding": "https://kyc.woovi.com/onboarding/QWNjb3VudFJlZ2lzdGVyOjY5...",
   "accountRegister": {
     "status": "PENDING",
-    "officialName": "PIZZARIA DI POMODORO LIMITADA",
-    "tradeName": "PIZZARIA DI POMODORO",
+    "officialName": "RAZAO_SOCIAL_DA_EMPRESA",
+    "tradeName": "NOME_FANTASIA_DA_EMPRESA",
     "taxID": {
-      "taxID": "51238607000226",
+      "taxID": "XXXXXXXXXXXXXX",
       "type": "BR:CNPJ"
     },
     "correlationID": "my-unique-id",
     "representatives": [
       {
-        "name": "CLEVER ALLAN MARTINIANO DA SILVA",
+        "name": "NOME_DO_SOCIO",
         "taxID": {
-          "taxID": "42142675832",
-          "type": "BR:CPF"
-        }
-      },
-      {
-        "name": "VITOR RODRIGUES DELLA DEA",
-        "taxID": {
-          "taxID": "48129024870",
+          "taxID": "XXXXXXXXXXX",
           "type": "BR:CPF"
         }
       }
@@ -78,7 +71,7 @@ Retornaremos a seguinte resposta de exemplo:
 ```
 
 :::info
-Os campos `officialName`, `tradeName` e `representatives[].name` são preenchidos automaticamente pelo enriquecimento de dados (BigData/Receita Federal) quando disponíveis.
+Os campos `officialName`, `tradeName` e `representatives[].name` são preenchidos automaticamente pelo enriquecimento de dados quando disponíveis.
 :::
 
 ## Idempotência
@@ -90,13 +83,13 @@ A API é idempotente pelo campo `correlationID`. Se você enviar a mesma `correl
 curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
   -H "Content-Type: application/json" \
   -H "Authorization: SEU_APPID_AQUI" \
-  -d '{"taxID": "51.238.607/0002-26", "correlationID": "order-123"}'
+  -d '{"taxID": "XX.XXX.XXX/0001-XX", "correlationID": "order-123"}'
 
 # Segunda chamada com mesmo correlationID → 200 OK (mesmo link)
 curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
   -H "Content-Type: application/json" \
   -H "Authorization: SEU_APPID_AQUI" \
-  -d '{"taxID": "51.238.607/0002-26", "correlationID": "order-123"}'
+  -d '{"taxID": "XX.XXX.XXX/0001-XX", "correlationID": "order-123"}'
 ```
 
 ## Códigos de resposta
@@ -148,10 +141,10 @@ curl 'https://api.woovi.com/api/v1/kyc/onboarding' -X POST \
     -H "Content-Type: application/json" \
     -H "Authorization: SEU_APPID_AQUI" \
     --data-binary '{
-      "taxID": "51.238.607/0002-26",
+      "taxID": "XX.XXX.XXX/0001-XX",
       "correlationID": "my-unique-id",
       "representatives": [
-        { "taxID": "421.426.758-32" }
+        { "taxID": "XXX.XXX.XXX-XX" }
       ]
     }'
 ```
@@ -169,10 +162,10 @@ const response = await fetch('https://api.woovi.com/api/v1/kyc/onboarding', {
     'Authorization': appId,
   },
   body: JSON.stringify({
-    taxID: '51.238.607/0002-26',
+    taxID: 'XX.XXX.XXX/0001-XX',
     correlationID: 'my-unique-id',
     representatives: [
-      { taxID: '421.426.758-32' },
+      { taxID: 'XXX.XXX.XXX-XX' },
     ],
   }),
 });
