@@ -1,0 +1,196 @@
+---
+id: kyc-api-onboarding-create
+title: Como criar um onboarding KYC via API?
+tags:
+  - api
+  - kyc
+  - onboarding
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para iniciar o processo de KYC (Know Your Customer) de um merchant, você utiliza o _endpoint_ `POST /api/v1/kyc/onboarding`.
+
+Este endpoint cria um registro de conta (AccountRegister) e retorna um link de onboarding que deve ser enviado ao merchant para que ele preencha seus dados cadastrais.
+
+## Campos
+
+### Obrigatórios
+
+- **`taxID`**: CNPJ da empresa do merchant. Aceita formato com ou sem máscara (ex: `51.238.607/0002-26` ou `51238607000226`). Validado como CNPJ.
+
+### Opcionais
+
+- **`correlationID`**: Identificador único para idempotência. Se não informado, o CNPJ será usado como correlationID. Se a mesma `correlationID` for enviada novamente, a API retorna o link existente (200) ao invés de criar um novo.
+- **`representatives`**: Array de sócios/representantes da empresa. Cada representante deve conter:
+  - **`taxID`**: CPF do representante. Validado como CPF. Aceita formato com ou sem máscara.
+
+## Exemplo
+
+O body da sua requisição será semelhante a este exemplo:
+
+```json
+{
+  "taxID": "51.238.607/0002-26",
+  "correlationID": "my-unique-id",
+  "representatives": [
+    { "taxID": "421.426.758-32" },
+    { "taxID": "481.290.248-70" }
+  ]
+}
+```
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `201` e no `body` da resposta, retornaremos o link de onboarding e os dados do registro de conta.
+
+Retornaremos a seguinte resposta de exemplo:
+
+```json
+{
+  "linkOnboarding": "https://kyc.woovi.com/onboarding/QWNjb3VudFJlZ2lzdGVyOjY5...",
+  "accountRegister": {
+    "status": "PENDING",
+    "officialName": "PIZZARIA DI POMODORO LIMITADA",
+    "tradeName": "PIZZARIA DI POMODORO",
+    "taxID": {
+      "taxID": "51238607000226",
+      "type": "BR:CNPJ"
+    },
+    "correlationID": "my-unique-id",
+    "representatives": [
+      {
+        "name": "CLEVER ALLAN MARTINIANO DA SILVA",
+        "taxID": {
+          "taxID": "42142675832",
+          "type": "BR:CPF"
+        }
+      },
+      {
+        "name": "VITOR RODRIGUES DELLA DEA",
+        "taxID": {
+          "taxID": "48129024870",
+          "type": "BR:CPF"
+        }
+      }
+    ]
+  }
+}
+```
+
+:::info
+Os campos `officialName`, `tradeName` e `representatives[].name` são preenchidos automaticamente pelo enriquecimento de dados (BigData/Receita Federal) quando disponíveis.
+:::
+
+## Idempotência
+
+A API é idempotente pelo campo `correlationID`. Se você enviar a mesma `correlationID` para a mesma empresa, a API retornará **200 OK** com o link de onboarding existente, sem criar um novo registro.
+
+```sh
+# Primeira chamada → 201 Created
+curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
+  -H "Content-Type: application/json" \
+  -H "Authorization: SEU_APPID_AQUI" \
+  -d '{"taxID": "51.238.607/0002-26", "correlationID": "order-123"}'
+
+# Segunda chamada com mesmo correlationID → 200 OK (mesmo link)
+curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
+  -H "Content-Type: application/json" \
+  -H "Authorization: SEU_APPID_AQUI" \
+  -d '{"taxID": "51.238.607/0002-26", "correlationID": "order-123"}'
+```
+
+## Códigos de resposta
+
+| Status | Descrição |
+|--------|-----------|
+| `200` | Onboarding já existe para este `correlationID` (idempotente) |
+| `201` | Onboarding criado com sucesso |
+| `400` | Input inválido (taxID ausente ou CNPJ inválido) |
+| `401` | Credenciais inválidas |
+| `403` | Empresa sem feature BAAS |
+| `405` | Método HTTP não permitido (use POST) |
+| `409` | Já existe um onboarding para este CNPJ com outro correlationID |
+
+### Exemplos de erro
+
+```json
+{
+  "error": "Invalid input: taxID is required"
+}
+```
+
+```json
+{
+  "error": "Invalid CNPJ"
+}
+```
+
+```json
+{
+  "error": "An onboarding already exists for this taxID"
+}
+```
+
+```json
+{
+  "error": "Method Not Allowed. Use POST to create an onboarding."
+}
+```
+
+## Exemplos em código
+
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+
+```sh
+curl 'https://api.woovi.com/api/v1/kyc/onboarding' -X POST \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: SEU_APPID_AQUI" \
+    --data-binary '{
+      "taxID": "51.238.607/0002-26",
+      "correlationID": "my-unique-id",
+      "representatives": [
+        { "taxID": "421.426.758-32" }
+      ]
+    }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch">
+
+```js
+const appId = 'SEU_APPID_AQUI';
+
+const response = await fetch('https://api.woovi.com/api/v1/kyc/onboarding', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': appId,
+  },
+  body: JSON.stringify({
+    taxID: '51.238.607/0002-26',
+    correlationID: 'my-unique-id',
+    representatives: [
+      { taxID: '421.426.758-32' },
+    ],
+  }),
+});
+
+const data = await response.json();
+
+console.log(data.linkOnboarding);
+// https://kyc.woovi.com/onboarding/QWNjb3VudFJlZ2lzdGVyOjY5...
+```
+
+  </TabItem>
+</Tabs>
+
+## Fluxo completo
+
+1. **Chamada da API** → Cria o onboarding e retorna o `linkOnboarding`
+2. **Envie o link ao merchant** → O merchant acessa o formulário e preenche os dados
+3. **Merchant preenche o cadastro** → Dados da empresa, endereço, contrato social, documentos dos sócios
+4. **Merchant submete** → O status muda para `IN_REVIEW`
+5. **Análise** → A equipe analisa os documentos (pode levar até 72h)
+6. **Aprovação/Rejeição** → O status muda para `APPROVED` ou `REJECTED`
