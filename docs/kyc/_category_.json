@@ -1,0 +1,12 @@
+{
+  "label": "API KYC Onboarding",
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "API KYC Onboarding"
+  },
+  "customProps": {
+    "description": "Documentação da API de KYC Onboarding para BaaS"
+  }
+}

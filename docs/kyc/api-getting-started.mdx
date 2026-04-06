@@ -1,0 +1,79 @@
+---
+id: kyc-api-getting-started
+title: Primeiros passos com a API de KYC Onboarding
+tags:
+  - api
+  - kyc
+  - onboarding
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Autenticação
+
+A API de KYC Onboarding utiliza autenticação via **credenciais de aplicação** (clientId e clientSecret).
+
+As credenciais devem ser enviadas no header `Authorization` codificadas em **Base64** no formato `clientId:clientSecret`.
+
+### Requisitos
+
+- A empresa (company) deve possuir a feature **BAAS** habilitada
+- A aplicação deve possuir o scope **`KYC_ONBOARDING.KYC_ONBOARDING_POST`**
+
+### Como gerar o header de autenticação
+
+1. Concatene o `clientId` e `clientSecret` separados por `:` (dois pontos)
+2. Codifique o resultado em Base64
+
+<Tabs>
+  <TabItem value="shell" label="Shell" default>
+
+```sh
+echo -n "Client_Id_xxxx:Client_Secret_xxxx" | base64
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```js
+const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+```
+
+  </TabItem>
+</Tabs>
+
+### Exemplo de requisição autenticada
+
+```sh
+curl -X POST https://api.woovi.com/api/v1/kyc/onboarding \
+  -H "Content-Type: application/json" \
+  -H "Authorization: <Base64_credentials>" \
+  -d '{"taxID": "51.238.607/0002-26"}'
+```
+
+### Erros de autenticação
+
+| Status | Descrição |
+|--------|-----------|
+| `401` | Credenciais inválidas, aplicação inativa ou scope insuficiente |
+| `403` | A empresa não possui a feature BAAS habilitada |
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+```json
+{
+  "error": "Company does not have BaaS feature enabled"
+}
+```
+
+## URL Base
+
+| Ambiente | URL |
+|----------|-----|
+| Produção | `https://api.woovi.com/api/v1/kyc/onboarding` |
+| Staging | `https://api.woovi.dev/api/v1/kyc/onboarding` |
