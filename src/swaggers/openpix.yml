@@ -420,6 +420,25 @@ paths:
       security:
         - AppID:
             - ACCOUNT_GET_LIST
+      parameters:
+        - in: query
+          name: email
+          description: You can use the email to filter accounts
+          schema:
+            type: string
+          example: email0@example.com
+        - in: query
+          name: skip
+          description: Number of items to skip for pagination
+          schema:
+            type: number
+          example: 0
+        - in: query
+          name: limit
+          description: Maximum number of items to return
+          schema:
+            type: number
+          example: 10
       responses:
         '200':
           description: A list of Accounts
@@ -432,7 +451,37 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/CompanyBankAccount'
+                  pageInfo:
+                    type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            message:
+                              type: string
+                            data:
+                              type: object
+                              properties:
+                                skip:
+                                  type: number
+                                limit:
+                                  type: number
+                      skip:
+                        type: number
+                      limit:
+                        type: number
+                      hasPreviousPage:
+                        type: boolean
+                      hasNextPage:
+                        type: boolean
               example:
+                pageInfo:
+                  skip: 0
+                  limit: 10
+                  hasPreviousPage: false
+                  hasNextPage: true
                 accounts:
                   - accountId: 6290ccfd42831958a405debc
                     isDefault: true
@@ -464,7 +513,7 @@ paths:
               method: 'GET',
               hostname: 'api.openpix.com.br',
               port: null,
-              path: '/api/v1/account/',
+              path: '/api/v1/account/?email=email0%40example.com&skip=0&limit=10',
               headers: {
                 Authorization: 'Bearer REPLACE_BEARER_TOKEN'
               }
@@ -487,7 +536,7 @@ paths:
         - lang: Shell + Curl
           source: |-
             curl --request GET \
-              --url https://api.openpix.com.br/api/v1/account/ \
+              --url 'https://api.openpix.com.br/api/v1/account/?email=email0%40example.com&skip=0&limit=10' \
               --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'
         - lang: Php + Curl
           source: |-
@@ -496,7 +545,7 @@ paths:
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/account/",
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/account/?email=email0%40example.com&skip=0&limit=10",
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
@@ -519,46 +568,63 @@ paths:
               echo $response;
             }
         - lang: Python + Python3
-          source: |-
+          source: >-
             import http.client
+
 
             conn = http.client.HTTPSConnection("api.openpix.com.br")
 
+
             headers = { 'Authorization': "Bearer REPLACE_BEARER_TOKEN" }
 
-            conn.request("GET", "/api/v1/account/", headers=headers)
+
+            conn.request("GET",
+            "/api/v1/account/?email=email0%40example.com&skip=0&limit=10",
+            headers=headers)
+
 
             res = conn.getresponse()
+
             data = res.read()
+
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account/\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account/?email=email0%40example.com&skip=0&limit=10\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: |-
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/account/")
+              .url("https://api.openpix.com.br/api/v1/account/?email=email0%40example.com&skip=0&limit=10")
               .get()
               .addHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN")
               .build();
 
             Response response = client.newCall(request).execute();
         - lang: Ruby + Native
-          source: |-
+          source: >-
             require 'uri'
+
             require 'net/http'
 
-            url = URI("https://api.openpix.com.br/api/v1/account/")
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/account/?email=email0%40example.com&skip=0&limit=10")
+
 
             http = Net::HTTP.new(url.host, url.port)
+
             http.use_ssl = true
 
+
             request = Net::HTTP::Get.new(url)
+
             request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
 
+
             response = http.request(request)
+
             puts response.read_body
   /api/v1/account:
     post:
@@ -800,297 +866,6 @@ paths:
               example:
                 error: Internal server error
       x-codeSamples: []
-    patch:
-      tags:
-        - account register
-      summary: Update an existing account registration
-      description: >-
-        Updates documents and representatives for an existing account
-        registration in PENDING status
-      x-required-scope: ACCOUNT_REGISTER_PATCH
-      security:
-        - AppID:
-            - ACCOUNT_REGISTER_PATCH
-      parameters:
-        - name: correlationID
-          in: path
-          required: true
-          description: CorrelationID of the account register
-          schema:
-            type: string
-            example: 6fe18d8e-5009-4f57-8f1d-5b084b6b83ac
-            minLength: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                documents:
-                  type: array
-                  description: Company documents to update
-                  items:
-                    type: object
-                    required:
-                      - url
-                    properties:
-                      url:
-                        type: string
-                        description: Document URL
-                        minLength: 1
-                      type:
-                        type: string
-                        enum:
-                          - SOCIAL_CONTRACT
-                          - ATA
-                          - BYLAWS
-                representatives:
-                  type: array
-                  description: Company representatives to update
-                  items:
-                    type: object
-                    required:
-                      - name
-                      - birthDate
-                      - email
-                      - taxID
-                      - address
-                    properties:
-                      name:
-                        type: string
-                        description: Representative name
-                        minLength: 1
-                      documents:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - url
-                            - type
-                          properties:
-                            url:
-                              type: string
-                              description: Document URL
-                              minLength: 1
-                            type:
-                              type: string
-                              enum:
-                                - IDENTITY_FRONT
-                                - IDENTITY_BACK
-                                - CNH_FRONT
-                                - CNH_BACK
-                                - PICTURE
-                      birthDate:
-                        type: string
-                        description: Representative birth date
-                        minLength: 1
-                      email:
-                        type: string
-                        description: Representative email
-                        format: email
-                      type:
-                        type: string
-                        enum:
-                          - ADMIN
-                      taxID:
-                        type: string
-                        description: Representative tax ID
-                        minLength: 1
-                      address:
-                        type: object
-                        required:
-                          - zipcode
-                          - street
-                          - number
-                          - neighborhood
-                          - city
-                          - state
-                          - taxID
-                        properties:
-                          zipcode:
-                            type: string
-                            description: Address zip code
-                            minLength: 1
-                          street:
-                            type: string
-                            description: Street name
-                            minLength: 1
-                          number:
-                            type: string
-                            description: Street number
-                            minLength: 1
-                          neighborhood:
-                            type: string
-                            description: Neighborhood
-                            minLength: 1
-                          city:
-                            type: string
-                            description: City
-                            minLength: 1
-                          state:
-                            type: string
-                            description: State
-                            minLength: 1
-                          complement:
-                            type: string
-                            description: Address complement
-                          taxID:
-                            type: string
-                            description: Tax ID
-                            minLength: 1
-                businessDescription:
-                  type: string
-                  description: Business segment/industry
-                businessProduct:
-                  type: string
-                  description: Services the company provides
-                businessLifetime:
-                  type: string
-                  description: How long the company has been operating in the market
-                businessGoal:
-                  type: string
-                  description: Objective when using Woovi
-            examples:
-              ValidAccountRegisterPatch:
-                value:
-                  documents:
-                    - url: https://example.com/social-contract.pdf
-                      type: SOCIAL_CONTRACT
-                  businessDescription: Updated Technology and Financial Services
-                  businessProduct: Updated digital payment solutions and banking services
-                  businessLifetime: 5 years
-                  businessGoal: Updated goal to expand digital payment capabilities
-                  representatives:
-                    - name: Jane Smith
-                      birthDate: 1985-05-15T00:00:00.000Z
-                      email: jane@example.com
-                      taxID: '98765432100'
-                      type: ADMIN
-                      documents:
-                        - url: https://example.com/identity-front.jpg
-                          type: IDENTITY_FRONT
-                        - url: https://example.com/identity-back.jpg
-                          type: IDENTITY_BACK
-                      address:
-                        zipcode: '87654321'
-                        street: Updated Street
-                        number: '456'
-                        neighborhood: Updated Neighborhood
-                        city: Updated City
-                        state: SP
-                        taxID: '98765432100'
-      responses:
-        '200':
-          description: Account register successfully updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  officialName:
-                    type: string
-                    example: Company Official Name
-                  tradeName:
-                    type: string
-                    example: Company Trade Name
-                  taxID:
-                    type: object
-                    properties:
-                      taxID:
-                        type: string
-                        example: '12345678901234'
-                  status:
-                    type: string
-                    example: PENDING
-                  requestedDocuments:
-                    type: array
-                    items:
-                      type: string
-                  correlationID:
-                    type: string
-                    example: 6fe18d8e-5009-4f57-8f1d-5b084b6b83ac
-                  missingDocumentsDescription:
-                    type: string
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    oneOf:
-                      - type: string
-                      - type: array
-                        items:
-                          type: object
-                          properties:
-                            code:
-                              type: string
-                            message:
-                              type: string
-                            path:
-                              type: array
-                              items:
-                                type: string
-              examples:
-                MissingAuthorization:
-                  value:
-                    error: Invalid Authorization header
-                AccountRegisterIDRequired:
-                  value:
-                    error: Account register ID is required
-                CannotUpdateStatus:
-                  value:
-                    error: Cannot update account register in current status
-                ProtectedFields:
-                  value:
-                    error: >-
-                      Cannot update fields: officialName, tradeName, taxID,
-                      billingAddress
-                ValidationError:
-                  value:
-                    error:
-                      - code: invalid_type
-                        expected: string
-                        received: undefined
-                        message: Representative name is required
-                        path:
-                          - representatives
-                          - 0
-                          - name
-        '404':
-          description: Account register not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              examples:
-                CompanyNotFound:
-                  value:
-                    error: Company not found
-                AccountRegisterNotFound:
-                  value:
-                    error: Account register not found
-                UpdateFailed:
-                  value:
-                    error: Failed to update account register
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              example:
-                error: Internal server error
-      x-codeSamples: []
   /api/v1/account-register:
     get:
       tags:
@@ -1298,576 +1073,6 @@ paths:
             request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
 
             response = http.request(request)
-            puts response.read_body
-    post:
-      tags:
-        - account register
-      summary: Register a new account
-      description: Creates a new account registration with the provided details
-      x-required-scope: ACCOUNT_REGISTER_POST
-      security:
-        - AppID:
-            - ACCOUNT_REGISTER_POST
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                officialName:
-                  type: string
-                  description: Official name of the company
-                  minLength: 1
-                tradeName:
-                  type: string
-                  description: Trade name of the company
-                  minLength: 1
-                taxID:
-                  type: string
-                  description: Tax ID of the company
-                  minLength: 1
-                correlationID:
-                  type: string
-                  description: CorrelationID of the account register, default is uuid
-                documents:
-                  type: array
-                  description: Company documents
-                  items:
-                    type: object
-                    properties:
-                      url:
-                        type: string
-                        description: Document URL
-                        minLength: 1
-                      type:
-                        type: string
-                        enum:
-                          - SOCIAL_CONTRACT
-                          - ATA
-                          - BYLAWS
-                representatives:
-                  type: array
-                  description: Company representatives (sócio)
-                  items:
-                    type: object
-                    required:
-                      - name
-                      - birthDate
-                      - email
-                      - phone
-                      - taxID
-                      - address
-                      - documents
-                    properties:
-                      name:
-                        type: string
-                        description: Representative name
-                        minLength: 1
-                      documents:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                            - url
-                            - type
-                          properties:
-                            url:
-                              type: string
-                              description: Document URL
-                              minLength: 1
-                            type:
-                              type: string
-                              enum:
-                                - IDENTITY_FRONT
-                                - IDENTITY_BACK
-                                - CNH_FRONT
-                                - CNH_BACK
-                                - PICTURE
-                      birthDate:
-                        type: string
-                        description: Representative birth date
-                        minLength: 1
-                      email:
-                        type: string
-                        description: Representative email
-                        format: email
-                      phone:
-                        type: string
-                        description: Representative phone
-                      type:
-                        type: string
-                        enum:
-                          - ADMIN
-                      taxID:
-                        type: string
-                        description: Representative tax ID
-                        minLength: 1
-                      address:
-                        type: object
-                        required:
-                          - zipcode
-                          - street
-                          - number
-                          - neighborhood
-                          - city
-                          - state
-                          - taxID
-                        properties:
-                          zipcode:
-                            type: string
-                            description: Address zip code
-                            minLength: 1
-                          street:
-                            type: string
-                            description: Street name
-                            minLength: 1
-                          number:
-                            type: string
-                            description: Street number
-                            minLength: 1
-                          neighborhood:
-                            type: string
-                            description: Neighborhood
-                            minLength: 1
-                          city:
-                            type: string
-                            description: City
-                            minLength: 1
-                          state:
-                            type: string
-                            description: State
-                            minLength: 1
-                          complement:
-                            type: string
-                            description: Address complement
-                          taxID:
-                            type: string
-                            description: Tax ID
-                            minLength: 1
-                billingAddress:
-                  type: object
-                  required:
-                    - zipcode
-                    - street
-                    - number
-                    - neighborhood
-                    - city
-                    - state
-                  properties:
-                    zipcode:
-                      type: string
-                      description: Billing address zip code
-                      minLength: 1
-                    street:
-                      type: string
-                      description: Street name
-                      minLength: 1
-                    number:
-                      type: string
-                      description: Street number
-                      minLength: 1
-                    neighborhood:
-                      type: string
-                      description: Neighborhood
-                      minLength: 1
-                    city:
-                      type: string
-                      description: City
-                      minLength: 1
-                    state:
-                      type: string
-                      description: State
-                      minLength: 1
-                    complement:
-                      type: string
-                      description: Complement
-                      minLength: 1
-                businessDescription:
-                  type: string
-                  description: Website or Sales Portal
-                businessProduct:
-                  type: string
-                  description: Services the company provides
-                businessLifetime:
-                  type: string
-                  description: How long the company has been operating in the market
-                businessGoal:
-                  type: string
-                  description: Objective when using Woovi
-              required:
-                - officialName
-                - tradeName
-                - taxID
-                - documents
-                - representatives
-                - billingAddress
-                - businessDescription
-                - businessProduct
-                - businessLifetime
-                - businessGoal
-            examples:
-              ValidAccountRegister:
-                value:
-                  officialName: Company Official Name
-                  tradeName: Company Trade Name
-                  taxID: '12345678901234'
-                  billingAddress:
-                    zipcode: '12345678'
-                    street: Test Street
-                    number: '123'
-                    neighborhood: Test Neighborhood
-                    city: Test City
-                  businessDescription: Technology and Financial Services
-                  businessProduct: Digital payment solutions and banking services
-                  businessLifetime: 3 years
-                  businessGoal: >-
-                    To expand digital payment capabilities and improve customer
-                    experience
-                  representatives:
-                    - name: John Doe
-                      birthDate: 1990-01-01T00:00:00.000Z
-                      email: john@example.com
-                      taxID: '12345678901'
-                      type: ADMIN
-                      address:
-                        zipcode: '12345678'
-                        street: Test Street
-                        number: '123'
-                        neighborhood: Test Neighborhood
-                        city: Test City
-                        state: ST
-                        taxID:
-                          taxID: '12345678901'
-                          type: BR_CPF
-      responses:
-        '200':
-          description: Account successfully registered
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  officialName:
-                    type: string
-                    example: Company Official Name
-                  tradeName:
-                    type: string
-                    example: Company Trade Name
-                  taxID:
-                    type: object
-                    properties:
-                      taxID:
-                        type: string
-                        example: '12345678901234'
-                  status:
-                    type: string
-                    example: PENDING
-                  requestedDocuments:
-                    type: array
-                    items:
-                      type: string
-                  correlationID:
-                    type: string
-                    example: 6fe18d8e-5009-4f57-8f1d-5b084b6b83ac
-                  missingDocumentsDescription:
-                    type: string
-        '400':
-          description: An error message
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    oneOf:
-                      - type: string
-                      - type: array
-                        items:
-                          type: object
-                          properties:
-                            code:
-                              type: string
-                            message:
-                              type: string
-                            path:
-                              type: array
-                              items:
-                                type: string
-              examples:
-                MissingAuthorization:
-                  value:
-                    error: Invalid Authorization header
-                CompanyNotFound:
-                  value:
-                    error: Company not found
-                ValidationError:
-                  value:
-                    error:
-                      - code: too_small
-                        minimum: 1
-                        type: string
-                        inclusive: true
-                        message: Official name is required
-                        path:
-                          - officialName
-        '403':
-          description: Forbidden action
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              example:
-                error: >-
-                  This feature is not enabled for your company. Contact us to
-                  active.
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              example:
-                error: Internal server error
-      x-codeSamples:
-        - lang: Node + Native
-          source: |-
-            const http = require('https');
-
-            const options = {
-              method: 'POST',
-              hostname: 'api.openpix.com.br',
-              port: null,
-              path: '/api/v1/account-register',
-              headers: {
-                Authorization: 'Bearer REPLACE_BEARER_TOKEN',
-                'content-type': 'application/json'
-              }
-            };
-
-            const req = http.request(options, function (res) {
-              const chunks = [];
-
-              res.on('data', function (chunk) {
-                chunks.push(chunk);
-              });
-
-              res.on('end', function () {
-                const body = Buffer.concat(chunks);
-                console.log(body.toString());
-              });
-            });
-
-            req.write(JSON.stringify({
-              officialName: 'string',
-              tradeName: 'string',
-              taxID: 'string',
-              correlationID: 'string',
-              documents: [{url: 'string', type: 'SOCIAL_CONTRACT'}],
-              representatives: [
-                {
-                  name: 'string',
-                  documents: [{url: 'string', type: 'IDENTITY_FRONT'}],
-                  birthDate: 'string',
-                  email: 'user@example.com',
-                  phone: 'string',
-                  type: 'ADMIN',
-                  taxID: 'string',
-                  address: {
-                    zipcode: 'string',
-                    street: 'string',
-                    number: 'string',
-                    neighborhood: 'string',
-                    city: 'string',
-                    state: 'string',
-                    complement: 'string',
-                    taxID: 'string'
-                  }
-                }
-              ],
-              billingAddress: {
-                zipcode: 'string',
-                street: 'string',
-                number: 'string',
-                neighborhood: 'string',
-                city: 'string',
-                state: 'string',
-                complement: 'string'
-              },
-              businessDescription: 'string',
-              businessProduct: 'string',
-              businessLifetime: 'string',
-              businessGoal: 'string'
-            }));
-            req.end();
-        - lang: Shell + Curl
-          source: |-
-            curl --request POST \
-              --url https://api.openpix.com.br/api/v1/account-register \
-              --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \
-              --header 'content-type: application/json' \
-              --data '{"officialName":"string","tradeName":"string","taxID":"string","correlationID":"string","documents":[{"url":"string","type":"SOCIAL_CONTRACT"}],"representatives":[{"name":"string","documents":[{"url":"string","type":"IDENTITY_FRONT"}],"birthDate":"string","email":"user@example.com","phone":"string","type":"ADMIN","taxID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","taxID":"string"}}],"billingAddress":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string"},"businessDescription":"string","businessProduct":"string","businessLifetime":"string","businessGoal":"string"}'
-        - lang: Php + Curl
-          source: |-
-            <?php
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-              CURLOPT_URL => "https://api.openpix.com.br/api/v1/account-register",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => json_encode([
-                'officialName' => 'string',
-                'tradeName' => 'string',
-                'taxID' => 'string',
-                'correlationID' => 'string',
-                'documents' => [
-                    [
-                            'url' => 'string',
-                            'type' => 'SOCIAL_CONTRACT'
-                    ]
-                ],
-                'representatives' => [
-                    [
-                            'name' => 'string',
-                            'documents' => [
-                                            [
-                                                                            'url' => 'string',
-                                                                            'type' => 'IDENTITY_FRONT'
-                                            ]
-                            ],
-                            'birthDate' => 'string',
-                            'email' => 'user@example.com',
-                            'phone' => 'string',
-                            'type' => 'ADMIN',
-                            'taxID' => 'string',
-                            'address' => [
-                                            'zipcode' => 'string',
-                                            'street' => 'string',
-                                            'number' => 'string',
-                                            'neighborhood' => 'string',
-                                            'city' => 'string',
-                                            'state' => 'string',
-                                            'complement' => 'string',
-                                            'taxID' => 'string'
-                            ]
-                    ]
-                ],
-                'billingAddress' => [
-                    'zipcode' => 'string',
-                    'street' => 'string',
-                    'number' => 'string',
-                    'neighborhood' => 'string',
-                    'city' => 'string',
-                    'state' => 'string',
-                    'complement' => 'string'
-                ],
-                'businessDescription' => 'string',
-                'businessProduct' => 'string',
-                'businessLifetime' => 'string',
-                'businessGoal' => 'string'
-              ]),
-              CURLOPT_HTTPHEADER => [
-                "Authorization: Bearer REPLACE_BEARER_TOKEN",
-                "content-type: application/json"
-              ],
-            ]);
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-
-            if ($err) {
-              echo "cURL Error #:" . $err;
-            } else {
-              echo $response;
-            }
-        - lang: Python + Python3
-          source: >-
-            import http.client
-
-
-            conn = http.client.HTTPSConnection("api.openpix.com.br")
-
-
-            payload =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
-
-
-            headers = {
-                'Authorization': "Bearer REPLACE_BEARER_TOKEN",
-                'content-type': "application/json"
-            }
-
-
-            conn.request("POST", "/api/v1/account-register", payload, headers)
-
-
-            res = conn.getresponse()
-
-            data = res.read()
-
-
-            print(data.decode("utf-8"))
-        - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/account-register\"\n\n\tpayload := strings.NewReader(\"{\\\"officialName\\\":\\\"string\\\",\\\"tradeName\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"SOCIAL_CONTRACT\\\"}],\\\"representatives\\\":[{\\\"name\\\":\\\"string\\\",\\\"documents\\\":[{\\\"url\\\":\\\"string\\\",\\\"type\\\":\\\"IDENTITY_FRONT\\\"}],\\\"birthDate\\\":\\\"string\\\",\\\"email\\\":\\\"user@example.com\\\",\\\"phone\\\":\\\"string\\\",\\\"type\\\":\\\"ADMIN\\\",\\\"taxID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\"}}],\\\"billingAddress\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\"},\\\"businessDescription\\\":\\\"string\\\",\\\"businessProduct\\\":\\\"string\\\",\\\"businessLifetime\\\":\\\"string\\\",\\\"businessGoal\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
-        - lang: Java + Okhttp
-          source: >-
-            OkHttpClient client = new OkHttpClient();
-
-
-            MediaType mediaType = MediaType.parse("application/json");
-
-            RequestBody body = RequestBody.create(mediaType,
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}");
-
-            Request request = new Request.Builder()
-              .url("https://api.openpix.com.br/api/v1/account-register")
-              .post(body)
-              .addHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN")
-              .addHeader("content-type", "application/json")
-              .build();
-
-            Response response = client.newCall(request).execute();
-        - lang: Ruby + Native
-          source: >-
-            require 'uri'
-
-            require 'net/http'
-
-
-            url = URI("https://api.openpix.com.br/api/v1/account-register")
-
-
-            http = Net::HTTP.new(url.host, url.port)
-
-            http.use_ssl = true
-
-
-            request = Net::HTTP::Post.new(url)
-
-            request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
-
-            request["content-type"] = 'application/json'
-
-            request.body =
-            "{\"officialName\":\"string\",\"tradeName\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"SOCIAL_CONTRACT\"}],\"representatives\":[{\"name\":\"string\",\"documents\":[{\"url\":\"string\",\"type\":\"IDENTITY_FRONT\"}],\"birthDate\":\"string\",\"email\":\"user@example.com\",\"phone\":\"string\",\"type\":\"ADMIN\",\"taxID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"taxID\":\"string\"}}],\"billingAddress\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\"},\"businessDescription\":\"string\",\"businessProduct\":\"string\",\"businessLifetime\":\"string\",\"businessGoal\":\"string\"}"
-
-
-            response = http.request(request)
-
             puts response.read_body
   /api/v1/account/{accountId}/withdraw:
     post:
@@ -4243,6 +3448,26 @@ paths:
                       value: '18476'
                     - key: Order
                       value: '302'
+              Charge with Discount (fixed-date modality):
+                value:
+                  type: OVERDUE
+                  correlationID: 9134e286-6f71-427a-bf00-241681624587
+                  value: 1600
+                  comment: good
+                  daysForDueDate: 10
+                  daysAfterDueDate: 5
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                  discountSettings:
+                    modality: FIXED_VALUE_UNTIL_SPECIFIED_DATE
+                    discountFixedDate:
+                      - daysActive: 5
+                        value: 100
+                      - daysActive: 8
+                        value: 50
               Charge with Split Internal Transfer:
                 value:
                   correlationID: 9134e286-6f71-427a-bf00-241681624587
@@ -4437,7 +3662,8 @@ paths:
               fines: {value: 0, type: 'FIXED'},
               discountSettings: {
                 modality: 'FIXED_VALUE_UNTIL_SPECIFIED_DATE',
-                discountFixedDate: [{daysActive: 0, value: 0}]
+                discountFixedDate: [{daysActive: 0, value: 0}],
+                value: 0
               },
               additionalInfo: [{key: 'string', value: 'string'}],
               enableCashbackPercentage: true,
@@ -4452,7 +3678,7 @@ paths:
               --url 'https://api.openpix.com.br/api/v1/charge?return_existing=true' \
               --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \
               --header 'content-type: application/json' \
-              --data '{"correlationID":"string","value":0,"type":"DYNAMIC","comment":"string","expiresIn":0,"expiresDate":"string","dueDate":"string","customer":{"name":"string","email":"string","phone":"string","taxID":"string","correlationID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"ensureSameTaxID":true,"fixedLocation":true,"paymentLinkID":"string","daysForDueDate":0,"daysAfterDueDate":0,"interests":{"value":0,"type":"FIXED"},"fines":{"value":0,"type":"FIXED"},"discountSettings":{"modality":"FIXED_VALUE_UNTIL_SPECIFIED_DATE","discountFixedDate":[{"daysActive":0,"value":0}]},"additionalInfo":[{"key":"string","value":"string"}],"enableCashbackPercentage":true,"enableCashbackExclusivePercentage":true,"subaccount":"string","splits":[{"value":0,"pixKey":"string","splitType":"SPLIT_INTERNAL_TRANSFER"}]}'
+              --data '{"correlationID":"string","value":0,"type":"DYNAMIC","comment":"string","expiresIn":0,"expiresDate":"string","dueDate":"string","customer":{"name":"string","email":"string","phone":"string","taxID":"string","correlationID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"ensureSameTaxID":true,"fixedLocation":true,"paymentLinkID":"string","daysForDueDate":0,"daysAfterDueDate":0,"interests":{"value":0,"type":"FIXED"},"fines":{"value":0,"type":"FIXED"},"discountSettings":{"modality":"FIXED_VALUE_UNTIL_SPECIFIED_DATE","discountFixedDate":[{"daysActive":0,"value":0}],"value":0},"additionalInfo":[{"key":"string","value":"string"}],"enableCashbackPercentage":true,"enableCashbackExclusivePercentage":true,"subaccount":"string","splits":[{"value":0,"pixKey":"string","splitType":"SPLIT_INTERNAL_TRANSFER"}]}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -4512,7 +3738,8 @@ paths:
                                             'daysActive' => 0,
                                             'value' => 0
                             ]
-                    ]
+                    ],
+                    'value' => 0
                 ],
                 'additionalInfo' => [
                     [
@@ -4556,7 +3783,7 @@ paths:
 
 
             payload =
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}],\"value\":0},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
 
 
             headers = {
@@ -4576,7 +3803,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/charge?return_existing=true\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"type\\\":\\\"DYNAMIC\\\",\\\"comment\\\":\\\"string\\\",\\\"expiresIn\\\":0,\\\"expiresDate\\\":\\\"string\\\",\\\"dueDate\\\":\\\"string\\\",\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"ensureSameTaxID\\\":true,\\\"fixedLocation\\\":true,\\\"paymentLinkID\\\":\\\"string\\\",\\\"daysForDueDate\\\":0,\\\"daysAfterDueDate\\\":0,\\\"interests\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"fines\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"discountSettings\\\":{\\\"modality\\\":\\\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\\\",\\\"discountFixedDate\\\":[{\\\"daysActive\\\":0,\\\"value\\\":0}]},\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"enableCashbackPercentage\\\":true,\\\"enableCashbackExclusivePercentage\\\":true,\\\"subaccount\\\":\\\"string\\\",\\\"splits\\\":[{\\\"value\\\":0,\\\"pixKey\\\":\\\"string\\\",\\\"splitType\\\":\\\"SPLIT_INTERNAL_TRANSFER\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/charge?return_existing=true\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"type\\\":\\\"DYNAMIC\\\",\\\"comment\\\":\\\"string\\\",\\\"expiresIn\\\":0,\\\"expiresDate\\\":\\\"string\\\",\\\"dueDate\\\":\\\"string\\\",\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"ensureSameTaxID\\\":true,\\\"fixedLocation\\\":true,\\\"paymentLinkID\\\":\\\"string\\\",\\\"daysForDueDate\\\":0,\\\"daysAfterDueDate\\\":0,\\\"interests\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"fines\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"discountSettings\\\":{\\\"modality\\\":\\\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\\\",\\\"discountFixedDate\\\":[{\\\"daysActive\\\":0,\\\"value\\\":0}],\\\"value\\\":0},\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"enableCashbackPercentage\\\":true,\\\"enableCashbackExclusivePercentage\\\":true,\\\"subaccount\\\":\\\"string\\\",\\\"splits\\\":[{\\\"value\\\":0,\\\"pixKey\\\":\\\"string\\\",\\\"splitType\\\":\\\"SPLIT_INTERNAL_TRANSFER\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -4585,7 +3812,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}");
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}],\"value\":0},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/charge?return_existing=true")
@@ -4618,7 +3845,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}]},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}],\"value\":0},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
 
 
             response = http.request(request)
@@ -8536,6 +7763,333 @@ paths:
                   value:
                     error: Error while getting invoice documents
       x-codeSamples: []
+  /api/v1/kyc/onboarding:
+    post:
+      tags:
+        - kyc
+      summary: Create a KYC onboarding
+      description: >
+        Creates a new KYC onboarding for a merchant. Returns a link that should
+        be sent
+
+        to the merchant so they can fill in their registration data.
+
+
+        The API is idempotent by `correlationID`. If the same `correlationID` is
+        sent again
+
+        for the same company, the API returns the existing onboarding link (200
+        OK) instead
+
+        of creating a new one.
+
+
+        The fields `officialName`, `tradeName` and `representatives[].name` are
+        automatically
+
+        populated via data enrichment when available. You do not need to send
+        them in the request.
+
+
+        If `redirectUrl` is provided, the merchant is automatically redirected
+        to that URL
+
+        5 seconds after completing the onboarding flow (terminal states:
+        submitted, approved,
+
+        or rejected). The `redirectUrl` is bound to the onboarding link at
+        creation time and
+
+        cannot be changed later — subsequent idempotent calls will return the
+        original value.
+      security:
+        - AppID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KycOnboardingRequest'
+            examples:
+              MinimalRequest:
+                summary: Minimal request with only taxID
+                value:
+                  taxID: XX.XXX.XXX/0001-XX
+              WithCorrelationID:
+                summary: Request with correlationID for idempotency
+                value:
+                  taxID: XX.XXX.XXX/0001-XX
+                  correlationID: my-unique-id
+              WithRedirectUrl:
+                summary: Request with redirectUrl for post-onboarding redirect
+                value:
+                  taxID: XX.XXX.XXX/0001-XX
+                  correlationID: my-unique-id
+                  redirectUrl: https://partner.example.com/kyc-done
+              WithRepresentatives:
+                summary: Full request with representatives
+                value:
+                  taxID: XX.XXX.XXX/0001-XX
+                  correlationID: my-unique-id
+                  representatives:
+                    - taxID: XXX.XXX.XXX-XX
+                    - taxID: XXX.XXX.XXX-XX
+      responses:
+        '200':
+          description: Onboarding already exists for this correlationID (idempotent)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  linkOnboarding:
+                    type: string
+                    example: >-
+                      https://kyc.woovi.com/onboarding/QWNjb3VudFJlZ2lzdGVyOjY5...
+                  redirectUrl:
+                    type: string
+                    nullable: true
+                    description: >-
+                      URL para redirecionamento pos-onboarding (echo do valor
+                      enviado na criacao do link).
+                    example: https://partner.example.com/kyc-done
+                  accountRegister:
+                    $ref: '#/components/schemas/KycOnboardingAccountRegister'
+        '201':
+          description: Onboarding created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  linkOnboarding:
+                    type: string
+                    example: >-
+                      https://kyc.woovi.com/onboarding/QWNjb3VudFJlZ2lzdGVyOjY5...
+                  redirectUrl:
+                    type: string
+                    nullable: true
+                    description: >-
+                      URL para redirecionamento pos-onboarding (echo do valor
+                      enviado).
+                    example: https://partner.example.com/kyc-done
+                  accountRegister:
+                    $ref: '#/components/schemas/KycOnboardingAccountRegister'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                MissingTaxID:
+                  value:
+                    error: 'Invalid input: taxID: Required'
+                InvalidCNPJ:
+                  value:
+                    error: Invalid CNPJ
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Invalid Authorization header
+        '403':
+          description: >-
+            Company does not have required features enabled (BAAS and
+            KYC_ONBOARDING_LINK)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                MissingBaaS:
+                  value:
+                    error: Company does not have BaaS feature enabled
+                MissingKycOnboardingLink:
+                  value:
+                    error: Company does not have KYC Onboarding Link feature enabled
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal server error
+      x-codeSamples:
+        - lang: Node + Native
+          source: |-
+            const http = require('https');
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/kyc/onboarding',
+              headers: {
+                Authorization: 'Bearer REPLACE_BEARER_TOKEN',
+                'content-type': 'application/json'
+              }
+            };
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+            req.write(JSON.stringify({
+              taxID: 'string',
+              correlationID: 'string',
+              redirectUrl: 'https://partner.example.com/kyc-done',
+              representatives: [{taxID: 'string', name: 'string'}]
+            }));
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/kyc/onboarding \
+              --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \
+              --header 'content-type: application/json' \
+              --data '{"taxID":"string","correlationID":"string","redirectUrl":"https://partner.example.com/kyc-done","representatives":[{"taxID":"string","name":"string"}]}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/kyc/onboarding",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'taxID' => 'string',
+                'correlationID' => 'string',
+                'redirectUrl' => 'https://partner.example.com/kyc-done',
+                'representatives' => [
+                    [
+                            'taxID' => 'string',
+                            'name' => 'string'
+                    ]
+                ]
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer REPLACE_BEARER_TOKEN",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload =
+            "{\"taxID\":\"string\",\"correlationID\":\"string\",\"redirectUrl\":\"https://partner.example.com/kyc-done\",\"representatives\":[{\"taxID\":\"string\",\"name\":\"string\"}]}"
+
+
+            headers = {
+                'Authorization': "Bearer REPLACE_BEARER_TOKEN",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST", "/api/v1/kyc/onboarding", payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/kyc/onboarding\"\n\n\tpayload := strings.NewReader(\"{\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"redirectUrl\\\":\\\"https://partner.example.com/kyc-done\\\",\\\"representatives\\\":[{\\\"taxID\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"taxID\":\"string\",\"correlationID\":\"string\",\"redirectUrl\":\"https://partner.example.com/kyc-done\",\"representatives\":[{\"taxID\":\"string\",\"name\":\"string\"}]}");
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/kyc/onboarding")
+              .post(body)
+              .addHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url = URI("https://api.openpix.com.br/api/v1/kyc/onboarding")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = 'Bearer REPLACE_BEARER_TOKEN'
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"taxID\":\"string\",\"correlationID\":\"string\",\"redirectUrl\":\"https://partner.example.com/kyc-done\",\"representatives\":[{\"taxID\":\"string\",\"name\":\"string\"}]}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/partner/application:
     post:
       tags:
@@ -10103,8 +9657,13 @@ paths:
 
 
         For QR Code payments, the system decodes the BR Code string and extracts
-        the destination and value automatically. After creating, use `POST
-        /api/v1/payment/approve` with the correlationID to execute.
+        the destination and value automatically.
+
+
+        Set `autoApprove: true` to create and immediately approve the payment in
+        a single call, returning the enriched response with transaction and
+        destination data. Without this flag, the payment is created in `CREATED`
+        status and can be approved later via `POST /api/v1/payment/approve`.
       requestBody:
         description: Data to create a payment request
         required: true
@@ -10112,7 +9671,15 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: '#/components/schemas/PaymentCreatePayload'
+              allOf:
+                - $ref: '#/components/schemas/PaymentCreatePayload'
+                - type: object
+                  properties:
+                    autoApprove:
+                      type: boolean
+                      description: >-
+                        When true, creates and approves the payment in a single
+                        call returning the enriched response. Defaults to false.
             examples:
               pixKey:
                 summary: Pay via Pix Key
@@ -10128,6 +9695,15 @@ paths:
                     orderId: order-123
                     userId: user-456
                     source: mobile-app
+              pixKeyAutoApprove:
+                summary: Pay via Pix Key with auto-approval
+                value:
+                  value: 100
+                  destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                  destinationAliasType: RANDOM
+                  comment: payment comment
+                  correlationID: payment-auto-approve
+                  autoApprove: true
               qrCode:
                 summary: Pay a QR Code (BR Code)
                 value:
@@ -10179,7 +9755,10 @@ paths:
                     priority: high
       responses:
         '200':
-          description: Payment destination account information
+          description: >-
+            Payment created. When autoApprove is true, the payment is
+            immediately approved and the response includes transaction and
+            destination data.
           content:
             application/json:
               schema:
@@ -10187,6 +9766,12 @@ paths:
                 properties:
                   payment:
                     $ref: '#/components/schemas/Payment'
+                  transaction:
+                    type: object
+                    $ref: '#/components/schemas/PaymentTransaction'
+                  destination:
+                    type: object
+                    $ref: '#/components/schemas/PaymentDestination'
               examples:
                 pixKey:
                   summary: Pix Key response
@@ -10236,6 +9821,27 @@ paths:
                       psp:
                         id: '54811417'
                         name: WOOVI INSTITUICAO DE PAGAMENTO
+                autoApproved:
+                  summary: Auto-approved payment response (autoApprove true)
+                  value:
+                    payment:
+                      value: 100
+                      status: APPROVED
+                      destinationAlias: c4249323-b4ca-43f2-8139-8232aab09b93
+                      destinationAliasType: RANDOM
+                      comment: payment comment
+                      correlationID: payment1
+                    transaction:
+                      value: 100
+                      endToEndId: transaction-end-to-end-id
+                      time: 2023-03-20T13:14:17.000Z
+                    destination:
+                      name: Dan
+                      taxID: '31324227036'
+                      pixKey: c4249323-b4ca-43f2-8139-8232aab09b93
+                      bank: A Bank
+                      branch: '1'
+                      account: '123456'
         '400':
           description: An error message
           content:
@@ -10282,7 +9888,8 @@ paths:
               correlationID: 'string',
               pixKeyEndToEndId: 'string',
               comment: 'string',
-              metadata: {}
+              metadata: {},
+              autoApprove: true
             }));
             req.end();
         - lang: Shell + Curl
@@ -10291,7 +9898,7 @@ paths:
               --url https://api.openpix.com.br/api/v1/payment \
               --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \
               --header 'content-type: application/json' \
-              --data '{"type":"PIX_KEY","value":0,"destinationAlias":"string","destinationAliasType":"CPF","correlationID":"string","pixKeyEndToEndId":"string","comment":"string","metadata":{}}'
+              --data '{"type":"PIX_KEY","value":0,"destinationAlias":"string","destinationAliasType":"CPF","correlationID":"string","pixKeyEndToEndId":"string","comment":"string","metadata":{},"autoApprove":true}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -10316,7 +9923,8 @@ paths:
                 'comment' => 'string',
                 'metadata' => [
                     
-                ]
+                ],
+                'autoApprove' => null
               ]),
               CURLOPT_HTTPHEADER => [
                 "Authorization: Bearer REPLACE_BEARER_TOKEN",
@@ -10343,7 +9951,7 @@ paths:
 
 
             payload =
-            "{\"type\":\"PIX_KEY\",\"value\":0,\"destinationAlias\":\"string\",\"destinationAliasType\":\"CPF\",\"correlationID\":\"string\",\"pixKeyEndToEndId\":\"string\",\"comment\":\"string\",\"metadata\":{}}"
+            "{\"type\":\"PIX_KEY\",\"value\":0,\"destinationAlias\":\"string\",\"destinationAliasType\":\"CPF\",\"correlationID\":\"string\",\"pixKeyEndToEndId\":\"string\",\"comment\":\"string\",\"metadata\":{},\"autoApprove\":true}"
 
 
             headers = {
@@ -10362,7 +9970,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/payment\"\n\n\tpayload := strings.NewReader(\"{\\\"type\\\":\\\"PIX_KEY\\\",\\\"value\\\":0,\\\"destinationAlias\\\":\\\"string\\\",\\\"destinationAliasType\\\":\\\"CPF\\\",\\\"correlationID\\\":\\\"string\\\",\\\"pixKeyEndToEndId\\\":\\\"string\\\",\\\"comment\\\":\\\"string\\\",\\\"metadata\\\":{}}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/payment\"\n\n\tpayload := strings.NewReader(\"{\\\"type\\\":\\\"PIX_KEY\\\",\\\"value\\\":0,\\\"destinationAlias\\\":\\\"string\\\",\\\"destinationAliasType\\\":\\\"CPF\\\",\\\"correlationID\\\":\\\"string\\\",\\\"pixKeyEndToEndId\\\":\\\"string\\\",\\\"comment\\\":\\\"string\\\",\\\"metadata\\\":{},\\\"autoApprove\\\":true}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -10371,7 +9979,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"type\":\"PIX_KEY\",\"value\":0,\"destinationAlias\":\"string\",\"destinationAliasType\":\"CPF\",\"correlationID\":\"string\",\"pixKeyEndToEndId\":\"string\",\"comment\":\"string\",\"metadata\":{}}");
+            "{\"type\":\"PIX_KEY\",\"value\":0,\"destinationAlias\":\"string\",\"destinationAliasType\":\"CPF\",\"correlationID\":\"string\",\"pixKeyEndToEndId\":\"string\",\"comment\":\"string\",\"metadata\":{},\"autoApprove\":true}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/payment")
@@ -10403,7 +10011,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"type\":\"PIX_KEY\",\"value\":0,\"destinationAlias\":\"string\",\"destinationAliasType\":\"CPF\",\"correlationID\":\"string\",\"pixKeyEndToEndId\":\"string\",\"comment\":\"string\",\"metadata\":{}}"
+            "{\"type\":\"PIX_KEY\",\"value\":0,\"destinationAlias\":\"string\",\"destinationAliasType\":\"CPF\",\"correlationID\":\"string\",\"pixKeyEndToEndId\":\"string\",\"comment\":\"string\",\"metadata\":{},\"autoApprove\":true}"
 
 
             response = http.request(request)
@@ -10438,6 +10046,8 @@ paths:
                 properties:
                   error:
                     type: string
+                  errorCode:
+                    type: string
         '401':
           description: Your IP is not in the allowed list
           content:
@@ -10446,6 +10056,8 @@ paths:
                 type: object
                 properties:
                   error:
+                    type: string
+                  errorCode:
                     type: string
         '403':
           description: Your account does not have the permission to use this endpoint
@@ -10456,6 +10068,8 @@ paths:
                 properties:
                   error:
                     type: string
+                  errorCode:
+                    type: string
         '404':
           description: Pix key does not exist
           content:
@@ -10465,6 +10079,8 @@ paths:
                 properties:
                   error:
                     type: string
+                  errorCode:
+                    type: string
         '429':
           description: Too many requests, you had too many 404
           content:
@@ -10473,6 +10089,8 @@ paths:
                 type: object
                 properties:
                   error:
+                    type: string
+                  errorCode:
                     type: string
       x-codeSamples: []
   /api/v1/pix-keys/check:
@@ -10673,7 +10291,7 @@ paths:
             response = http.request(request)
             puts response.read_body
   /api/v1/pix-keys/{pixKey}/default:
-    post:
+    put:
       tags:
         - pixKey
       summary: Set a pix key as default
@@ -18123,6 +17741,7 @@ components:
           enum:
             - DYNAMIC
             - OVERDUE
+            - BOLETO
           description: >-
             Charge type is used to determine whether a charge will have a
             deadline, fines and interests
@@ -18202,9 +17821,16 @@ components:
                 - PERCENTAGE
               description: Type of fine calculation to be applied
         discountSettings:
-          description: >-
+          description: >
             Discount settings for the charge. This property is only considered
-            for charges of type OVERDUE
+            for charges of type OVERDUE.
+
+            The shape of the object depends on `modality`:
+              - For `FIXED_VALUE_UNTIL_SPECIFIED_DATE` and `PERCENTAGE_UNTIL_SPECIFIED_DATE`, provide `discountFixedDate` (array of items with `daysActive` and `value`).
+              - For the four advance-day modalities (`VALUE_PER_RUNNING_DAY_ADVANCE`, `VALUE_PER_BUSINESS_DAY_ADVANCE`, `PERCENTAGE_PER_RUNNING_DAY_ADVANCE`, `PERCENTAGE_PER_BUSINESS_DAY_ADVANCE`), provide a single `value`.
+            Note: advance-day modalities are accepted by the API contract but
+            are not yet routed to the pix-charge service and currently respond
+            with HTTP 501.
           type: object
           properties:
             modality:
@@ -18212,9 +17838,16 @@ components:
               enum:
                 - FIXED_VALUE_UNTIL_SPECIFIED_DATE
                 - PERCENTAGE_UNTIL_SPECIFIED_DATE
+                - VALUE_PER_RUNNING_DAY_ADVANCE
+                - VALUE_PER_BUSINESS_DAY_ADVANCE
+                - PERCENTAGE_PER_RUNNING_DAY_ADVANCE
+                - PERCENTAGE_PER_BUSINESS_DAY_ADVANCE
               description: Modality of discount to be applied
             discountFixedDate:
-              description: Absolute discounts applied to charge.
+              description: >-
+                Absolute discounts applied to charge. Required when `modality`
+                is `FIXED_VALUE_UNTIL_SPECIFIED_DATE` or
+                `PERCENTAGE_UNTIL_SPECIFIED_DATE`.
               type: array
               items:
                 type: object
@@ -18224,7 +17857,20 @@ components:
                     description: Days active for the discount
                   value:
                     type: number
-                    description: Value in cents of the discount
+                    description: |
+                      Discount value. Units depend on modality:
+                        - `FIXED_VALUE_UNTIL_SPECIFIED_DATE`: cents.
+                        - `PERCENTAGE_UNTIL_SPECIFIED_DATE`: basis points (e.g. 100 = 1.00%).
+            value:
+              type: number
+              description: >
+                Discount value. Required when `modality` is one of the
+                advance-day modalities.
+
+                Units depend on modality:
+                  - `VALUE_PER_RUNNING_DAY_ADVANCE`: cents per running day.
+                  - `VALUE_PER_BUSINESS_DAY_ADVANCE`: cents per business day.
+                  - `PERCENTAGE_PER_RUNNING_DAY_ADVANCE`, `PERCENTAGE_PER_BUSINESS_DAY_ADVANCE`: basis points (e.g. 100 = 1.00%).
         additionalInfo:
           type: array
           description: Additional info of the charge
@@ -18594,6 +18240,86 @@ components:
         - disputeReason
         - endToEndId
     End: *ref_1
+    KycOnboardingRepresentative:
+      type: object
+      properties:
+        taxID:
+          type: string
+          description: CPF do representante (com ou sem mascara)
+        name:
+          type: string
+          description: Nome do representante
+      required:
+        - taxID
+    KycOnboardingRequest:
+      type: object
+      properties:
+        taxID:
+          type: string
+          description: CNPJ da empresa do merchant (com ou sem mascara)
+        correlationID:
+          type: string
+          description: >-
+            Identificador unico para idempotencia. Se nao informado, o CNPJ sera
+            usado.
+        redirectUrl:
+          type: string
+          format: uri
+          description: >
+            URL para onde o merchant sera redirecionado apos concluir o
+            onboarding.
+
+            Quando informado, a pagina final do fluxo KYC redireciona
+            automaticamente apos 5 segundos.
+          example: https://partner.example.com/kyc-done
+        representatives:
+          type: array
+          description: Socios/representantes da empresa
+          items:
+            $ref: '#/components/schemas/KycOnboardingRepresentative'
+      required:
+        - taxID
+    KycOnboardingAccountRegister:
+      type: object
+      properties:
+        status:
+          type: string
+          example: PENDING
+        officialName:
+          type: string
+          example: RAZAO_SOCIAL_DA_EMPRESA
+        tradeName:
+          type: string
+          example: NOME_FANTASIA_DA_EMPRESA
+        taxID:
+          type: object
+          properties:
+            taxID:
+              type: string
+              example: XXXXXXXXXXXXXX
+            type:
+              type: string
+              example: BR:CNPJ
+        correlationID:
+          type: string
+          example: my-unique-id
+        representatives:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: NOME_DO_SOCIO
+              taxID:
+                type: object
+                properties:
+                  taxID:
+                    type: string
+                    example: XXXXXXXXXXX
+                  type:
+                    type: string
+                    example: BR:CPF
     ApplicationEnumTypePayload:
       type: string
       description: >-
@@ -20114,6 +19840,8 @@ tags:
   - name: dispute
     description: |
       Endpoint to manage Dispute
+  - name: kyc
+    description: Endpoints for KYC onboarding
   - name: partner (request access)
     description: |
       Partners integrate affiliated companies.<br/>
