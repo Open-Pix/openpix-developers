@@ -3468,6 +3468,47 @@ paths:
                         value: 100
                       - daysActive: 8
                         value: 50
+              Charge with Discount (percentage fixed-date modality):
+                value:
+                  type: OVERDUE
+                  correlationID: 9134e286-6f71-427a-bf00-241681624588
+                  value: 10000
+                  comment: 5% off if paid in 5 days, 2% off if paid in 10 days
+                  daysForDueDate: 30
+                  daysAfterDueDate: 15
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                  discountSettings:
+                    modality: PERCENTAGE_UNTIL_SPECIFIED_DATE
+                    discountFixedDate:
+                      - daysActive: 5
+                        value: 500
+                      - daysActive: 10
+                        value: 200
+              Charge with Discount (advance-day modality):
+                value:
+                  type: OVERDUE
+                  correlationID: 9134e286-6f71-427a-bf00-241681624589
+                  value: 10000
+                  comment: 0.10% off per running day until due
+                  daysForDueDate: 10
+                  daysAfterDueDate: 5
+                  customer:
+                    name: Dan
+                    taxID: '31324227036'
+                    email: email0@example.com
+                    phone: '5511999999999'
+                  discountSettings:
+                    modality: PERCENTAGE_PER_RUNNING_DAY_ADVANCE
+                    value: 10
+                  interests:
+                    value: 100
+                  fines:
+                    value: 200
+                    type: PERCENTAGE
               Charge with Split Internal Transfer:
                 value:
                   correlationID: 9134e286-6f71-427a-bf00-241681624587
@@ -3662,8 +3703,8 @@ paths:
               fines: {value: 0, type: 'FIXED'},
               discountSettings: {
                 modality: 'FIXED_VALUE_UNTIL_SPECIFIED_DATE',
-                discountFixedDate: [{daysActive: 0, value: 0}],
-                value: 0
+                discountFixedDate: [{daysActive: 1, value: 0}],
+                value: 1
               },
               additionalInfo: [{key: 'string', value: 'string'}],
               enableCashbackPercentage: true,
@@ -3678,7 +3719,7 @@ paths:
               --url 'https://api.openpix.com.br/api/v1/charge?return_existing=true' \
               --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \
               --header 'content-type: application/json' \
-              --data '{"correlationID":"string","value":0,"type":"DYNAMIC","comment":"string","expiresIn":0,"expiresDate":"string","dueDate":"string","customer":{"name":"string","email":"string","phone":"string","taxID":"string","correlationID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"ensureSameTaxID":true,"fixedLocation":true,"paymentLinkID":"string","daysForDueDate":0,"daysAfterDueDate":0,"interests":{"value":0,"type":"FIXED"},"fines":{"value":0,"type":"FIXED"},"discountSettings":{"modality":"FIXED_VALUE_UNTIL_SPECIFIED_DATE","discountFixedDate":[{"daysActive":0,"value":0}],"value":0},"additionalInfo":[{"key":"string","value":"string"}],"enableCashbackPercentage":true,"enableCashbackExclusivePercentage":true,"subaccount":"string","splits":[{"value":0,"pixKey":"string","splitType":"SPLIT_INTERNAL_TRANSFER"}]}'
+              --data '{"correlationID":"string","value":0,"type":"DYNAMIC","comment":"string","expiresIn":0,"expiresDate":"string","dueDate":"string","customer":{"name":"string","email":"string","phone":"string","taxID":"string","correlationID":"string","address":{"zipcode":"string","street":"string","number":"string","neighborhood":"string","city":"string","state":"string","complement":"string","country":"string"}},"ensureSameTaxID":true,"fixedLocation":true,"paymentLinkID":"string","daysForDueDate":0,"daysAfterDueDate":0,"interests":{"value":0,"type":"FIXED"},"fines":{"value":0,"type":"FIXED"},"discountSettings":{"modality":"FIXED_VALUE_UNTIL_SPECIFIED_DATE","discountFixedDate":[{"daysActive":1,"value":0}],"value":1},"additionalInfo":[{"key":"string","value":"string"}],"enableCashbackPercentage":true,"enableCashbackExclusivePercentage":true,"subaccount":"string","splits":[{"value":0,"pixKey":"string","splitType":"SPLIT_INTERNAL_TRANSFER"}]}'
         - lang: Php + Curl
           source: |-
             <?php
@@ -3735,11 +3776,11 @@ paths:
                     'modality' => 'FIXED_VALUE_UNTIL_SPECIFIED_DATE',
                     'discountFixedDate' => [
                             [
-                                            'daysActive' => 0,
+                                            'daysActive' => 1,
                                             'value' => 0
                             ]
                     ],
-                    'value' => 0
+                    'value' => 1
                 ],
                 'additionalInfo' => [
                     [
@@ -3783,7 +3824,7 @@ paths:
 
 
             payload =
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}],\"value\":0},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":1,\"value\":0}],\"value\":1},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
 
 
             headers = {
@@ -3803,7 +3844,7 @@ paths:
 
             print(data.decode("utf-8"))
         - lang: Go + Native
-          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/charge?return_existing=true\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"type\\\":\\\"DYNAMIC\\\",\\\"comment\\\":\\\"string\\\",\\\"expiresIn\\\":0,\\\"expiresDate\\\":\\\"string\\\",\\\"dueDate\\\":\\\"string\\\",\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"ensureSameTaxID\\\":true,\\\"fixedLocation\\\":true,\\\"paymentLinkID\\\":\\\"string\\\",\\\"daysForDueDate\\\":0,\\\"daysAfterDueDate\\\":0,\\\"interests\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"fines\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"discountSettings\\\":{\\\"modality\\\":\\\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\\\",\\\"discountFixedDate\\\":[{\\\"daysActive\\\":0,\\\"value\\\":0}],\\\"value\\\":0},\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"enableCashbackPercentage\\\":true,\\\"enableCashbackExclusivePercentage\\\":true,\\\"subaccount\\\":\\\"string\\\",\\\"splits\\\":[{\\\"value\\\":0,\\\"pixKey\\\":\\\"string\\\",\\\"splitType\\\":\\\"SPLIT_INTERNAL_TRANSFER\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/charge?return_existing=true\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"value\\\":0,\\\"type\\\":\\\"DYNAMIC\\\",\\\"comment\\\":\\\"string\\\",\\\"expiresIn\\\":0,\\\"expiresDate\\\":\\\"string\\\",\\\"dueDate\\\":\\\"string\\\",\\\"customer\\\":{\\\"name\\\":\\\"string\\\",\\\"email\\\":\\\"string\\\",\\\"phone\\\":\\\"string\\\",\\\"taxID\\\":\\\"string\\\",\\\"correlationID\\\":\\\"string\\\",\\\"address\\\":{\\\"zipcode\\\":\\\"string\\\",\\\"street\\\":\\\"string\\\",\\\"number\\\":\\\"string\\\",\\\"neighborhood\\\":\\\"string\\\",\\\"city\\\":\\\"string\\\",\\\"state\\\":\\\"string\\\",\\\"complement\\\":\\\"string\\\",\\\"country\\\":\\\"string\\\"}},\\\"ensureSameTaxID\\\":true,\\\"fixedLocation\\\":true,\\\"paymentLinkID\\\":\\\"string\\\",\\\"daysForDueDate\\\":0,\\\"daysAfterDueDate\\\":0,\\\"interests\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"fines\\\":{\\\"value\\\":0,\\\"type\\\":\\\"FIXED\\\"},\\\"discountSettings\\\":{\\\"modality\\\":\\\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\\\",\\\"discountFixedDate\\\":[{\\\"daysActive\\\":1,\\\"value\\\":0}],\\\"value\\\":1},\\\"additionalInfo\\\":[{\\\"key\\\":\\\"string\\\",\\\"value\\\":\\\"string\\\"}],\\\"enableCashbackPercentage\\\":true,\\\"enableCashbackExclusivePercentage\\\":true,\\\"subaccount\\\":\\\"string\\\",\\\"splits\\\":[{\\\"value\\\":0,\\\"pixKey\\\":\\\"string\\\",\\\"splitType\\\":\\\"SPLIT_INTERNAL_TRANSFER\\\"}]}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
         - lang: Java + Okhttp
           source: >-
             OkHttpClient client = new OkHttpClient();
@@ -3812,7 +3853,7 @@ paths:
             MediaType mediaType = MediaType.parse("application/json");
 
             RequestBody body = RequestBody.create(mediaType,
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}],\"value\":0},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}");
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":1,\"value\":0}],\"value\":1},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}");
 
             Request request = new Request.Builder()
               .url("https://api.openpix.com.br/api/v1/charge?return_existing=true")
@@ -3845,7 +3886,7 @@ paths:
             request["content-type"] = 'application/json'
 
             request.body =
-            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":0,\"value\":0}],\"value\":0},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
+            "{\"correlationID\":\"string\",\"value\":0,\"type\":\"DYNAMIC\",\"comment\":\"string\",\"expiresIn\":0,\"expiresDate\":\"string\",\"dueDate\":\"string\",\"customer\":{\"name\":\"string\",\"email\":\"string\",\"phone\":\"string\",\"taxID\":\"string\",\"correlationID\":\"string\",\"address\":{\"zipcode\":\"string\",\"street\":\"string\",\"number\":\"string\",\"neighborhood\":\"string\",\"city\":\"string\",\"state\":\"string\",\"complement\":\"string\",\"country\":\"string\"}},\"ensureSameTaxID\":true,\"fixedLocation\":true,\"paymentLinkID\":\"string\",\"daysForDueDate\":0,\"daysAfterDueDate\":0,\"interests\":{\"value\":0,\"type\":\"FIXED\"},\"fines\":{\"value\":0,\"type\":\"FIXED\"},\"discountSettings\":{\"modality\":\"FIXED_VALUE_UNTIL_SPECIFIED_DATE\",\"discountFixedDate\":[{\"daysActive\":1,\"value\":0}],\"value\":1},\"additionalInfo\":[{\"key\":\"string\",\"value\":\"string\"}],\"enableCashbackPercentage\":true,\"enableCashbackExclusivePercentage\":true,\"subaccount\":\"string\",\"splits\":[{\"value\":0,\"pixKey\":\"string\",\"splitType\":\"SPLIT_INTERNAL_TRANSFER\"}]}"
 
 
             response = http.request(request)
@@ -17825,12 +17866,29 @@ components:
             Discount settings for the charge. This property is only considered
             for charges of type OVERDUE.
 
-            The shape of the object depends on `modality`:
-              - For `FIXED_VALUE_UNTIL_SPECIFIED_DATE` and `PERCENTAGE_UNTIL_SPECIFIED_DATE`, provide `discountFixedDate` (array of items with `daysActive` and `value`).
+
+            **How it interacts with `fines` and `interests`.** Discount only
+            applies to payments **before** the due date (controlled by
+            `daysForDueDate`). On or after the due date the discount is gone,
+            and `fines` (applied once) and `interests` (accruing per day) start
+            adding **on top of** `value`. Use the [day-by-day
+            simulator](https://github.com/entria/woovi/blob/main/packages/openpix/scripts/api/charge/simulateChargeDiscount.ts)
+            to preview the totals a payer sees on each day of the charge
+            lifecycle.
+
+
+            **Modality enum** follows the BACEN COBV (Cobrança com Vencimento)
+            spec — see
+            [bacen.github.io/pix-api](https://bacen.github.io/pix-api/) for the
+            upstream reference.
+
+
+            **Shape of the object depends on `modality`:**
+              - For `FIXED_VALUE_UNTIL_SPECIFIED_DATE` and `PERCENTAGE_UNTIL_SPECIFIED_DATE`, provide `discountFixedDate` (array of items with `daysActive` and `value`). When multiple entries match the current day (i.e. their `daysActive` window has not yet expired), the entry with the **largest** discount wins.
               - For the four advance-day modalities (`VALUE_PER_RUNNING_DAY_ADVANCE`, `VALUE_PER_BUSINESS_DAY_ADVANCE`, `PERCENTAGE_PER_RUNNING_DAY_ADVANCE`, `PERCENTAGE_PER_BUSINESS_DAY_ADVANCE`), provide a single `value`.
-            Note: advance-day modalities are accepted by the API contract but
-            are not yet routed to the pix-charge service and currently respond
-            with HTTP 501.
+
+            **Rounding.** Computed discount and interest amounts are rounded to
+            the nearest cent.
           type: object
           properties:
             modality:
@@ -17847,25 +17905,44 @@ components:
               description: >-
                 Absolute discounts applied to charge. Required when `modality`
                 is `FIXED_VALUE_UNTIL_SPECIFIED_DATE` or
-                `PERCENTAGE_UNTIL_SPECIFIED_DATE`.
+                `PERCENTAGE_UNTIL_SPECIFIED_DATE`. Must contain at least one
+                entry.
               type: array
+              minItems: 1
               items:
                 type: object
                 properties:
                   daysActive:
-                    type: number
-                    description: Days active for the discount
+                    type: integer
+                    minimum: 1
+                    description: >
+                      Offset in days from charge creation. The discount is valid
+                      for payments up to and including this many days after the
+                      charge was created. On persistence, the server normalizes
+                      this offset into an absolute calendar date (`data`, format
+                      `YYYY-MM-DD`) — that is the field returned by the GET
+                      endpoint.
                   value:
                     type: number
                     description: |
                       Discount value. Units depend on modality:
                         - `FIXED_VALUE_UNTIL_SPECIFIED_DATE`: cents.
                         - `PERCENTAGE_UNTIL_SPECIFIED_DATE`: basis points (e.g. 100 = 1.00%).
+                  data:
+                    type: string
+                    format: date
+                    readOnly: true
+                    description: >
+                      Server-computed absolute date (`YYYY-MM-DD`) corresponding
+                      to `daysActive` at charge-creation time. Read-only —
+                      populated automatically and returned on GET; do not send
+                      on POST.
             value:
               type: number
+              minimum: 1
               description: >
                 Discount value. Required when `modality` is one of the
-                advance-day modalities.
+                advance-day modalities. Must be `>= 1`.
 
                 Units depend on modality:
                   - `VALUE_PER_RUNNING_DAY_ADVANCE`: cents per running day.
