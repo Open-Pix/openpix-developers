@@ -6144,6 +6144,211 @@
         ]
       }
     },
+    "/api/v1/limits/{accountId}": {
+      "get": {
+        "tags": [
+          "account limits"
+        ],
+        "summary": "Get account limits",
+        "description": "Retrieves the most recent account limits configured for a given bank account.\nOnly the public-safe fields are returned; internal-only fields are stripped from the response.\n",
+        "x-required-scope": "ACCOUNT_LIMITS_GET",
+        "security": [
+          {
+            "AppID": [
+              "ACCOUNT_LIMITS_GET"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Bank account identifier (ObjectId) for which limits should be returned",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "accountId": {
+                "value": "65f1c2e9a1b2c3d4e5f60718"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account limits returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "limits": {
+                      "$ref": "#/components/schemas/AccountLimit"
+                    }
+                  },
+                  "example": {
+                    "limits": {
+                      "pixDayLimit": 4000000,
+                      "pixNightLimit": 100000,
+                      "pixOutSameHolderDayLimit": 4000000,
+                      "pixOutDifferentHolderDayLimit": 4000000,
+                      "pixOutSameHolderNightLimit": 100000,
+                      "pixOutDifferentHolderNightLimit": 100000,
+                      "pixInSameHolderDayLimit": 100000000,
+                      "pixInDifferentHolderDayLimit": 100000000,
+                      "pixInSameHolderNightLimit": 100000000,
+                      "pixInDifferentHolderNightLimit": 100000000,
+                      "dayStartAt": "06:00",
+                      "nightStartAt": "20:00",
+                      "boletoEmissionLimit": 200,
+                      "boletoMaximumValueLimit": 1000000
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid account identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Account ID is invalid"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": null,
+                  "errors": [
+                    {
+                      "message": "Invalid appID"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Application is missing the required scope or the company does not have the public limits API enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "MissingScope": {
+                    "value": {
+                      "error": "Application does not have required scope: ACCOUNT_LIMITS_GET"
+                    }
+                  },
+                  "FeatureDisabled": {
+                    "value": {
+                      "error": "API not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account does not belong to the requesting company or has no limit configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "AccountNotFound": {
+                    "value": {
+                      "error": "Account not found"
+                    }
+                  },
+                  "NoLimits": {
+                    "value": {
+                      "error": "No limits configured for this account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Node + Native",
+            "source": "const http = require('https');\n\nconst options = {\n  method: 'GET',\n  hostname: 'api.openpix.com.br',\n  port: null,\n  path: '/api/v1/limits/65f1c2e9a1b2c3d4e5f60718',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://api.openpix.com.br/api/v1/limits/65f1c2e9a1b2c3d4e5f60718 \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.openpix.com.br/api/v1/limits/65f1c2e9a1b2c3d4e5f60718\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.openpix.com.br\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v1/limits/65f1c2e9a1b2c3d4e5f60718\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Go + Native",
+            "source": "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/limits/65f1c2e9a1b2c3d4e5f60718\"\n\n\treq, _ := http.NewRequest(\"GET\", url, nil)\n\n\treq.Header.Add(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+          },
+          {
+            "lang": "Java + Okhttp",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.openpix.com.br/api/v1/limits/65f1c2e9a1b2c3d4e5f60718\")\n  .get()\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/limits/65f1c2e9a1b2c3d4e5f60718\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
+      }
+    },
     "/api/v1/partner/application": {
       "post": {
         "tags": [
@@ -14008,6 +14213,69 @@
           }
         }
       },
+      "AccountLimit": {
+        "type": "object",
+        "properties": {
+          "pixDayLimit": {
+            "type": "number",
+            "description": "Pix day total limit in cents"
+          },
+          "pixNightLimit": {
+            "type": "number",
+            "description": "Pix night total limit in cents"
+          },
+          "pixOutSameHolderDayLimit": {
+            "type": "number",
+            "description": "Pix outbound day limit for transfers between same-holder accounts (cents)"
+          },
+          "pixOutDifferentHolderDayLimit": {
+            "type": "number",
+            "description": "Pix outbound day limit for transfers between different-holder accounts (cents)"
+          },
+          "pixOutSameHolderNightLimit": {
+            "type": "number",
+            "description": "Pix outbound night limit for transfers between same-holder accounts (cents)"
+          },
+          "pixOutDifferentHolderNightLimit": {
+            "type": "number",
+            "description": "Pix outbound night limit for transfers between different-holder accounts (cents)"
+          },
+          "pixInSameHolderDayLimit": {
+            "type": "number",
+            "description": "Pix inbound day limit for transfers between same-holder accounts (cents)"
+          },
+          "pixInDifferentHolderDayLimit": {
+            "type": "number",
+            "description": "Pix inbound day limit for transfers between different-holder accounts (cents)"
+          },
+          "pixInSameHolderNightLimit": {
+            "type": "number",
+            "description": "Pix inbound night limit for transfers between same-holder accounts (cents)"
+          },
+          "pixInDifferentHolderNightLimit": {
+            "type": "number",
+            "description": "Pix inbound night limit for transfers between different-holder accounts (cents)"
+          },
+          "dayStartAt": {
+            "type": "string",
+            "description": "Start time of the day window (HH:mm)",
+            "example": "06:00"
+          },
+          "nightStartAt": {
+            "type": "string",
+            "description": "Start time of the night window (HH:mm)",
+            "example": "20:00"
+          },
+          "boletoEmissionLimit": {
+            "type": "number",
+            "description": "Maximum number of boletos that can be emitted per day"
+          },
+          "boletoMaximumValueLimit": {
+            "type": "number",
+            "description": "Maximum value (in cents) allowed per boleto emission"
+          }
+        }
+      },
       "ApplicationEnumTypePayload": {
         "type": "string",
         "description": "Type of the application that you want to register. Each of this has some kind of permissions.",
@@ -15928,6 +16196,10 @@
     {
       "name": "kyc",
       "description": "Endpoints for KYC onboarding"
+    },
+    {
+      "name": "account limits",
+      "description": "Endpoints to query account limits for a given bank account.\n"
     },
     {
       "name": "partner (request access)",
