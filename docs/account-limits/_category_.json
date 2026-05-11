@@ -1,0 +1,12 @@
+{
+  "label": "API Account Limits",
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "API Account Limits"
+  },
+  "customProps": {
+    "description": "Documentação da API pública de Account Limits para BaaS"
+  }
+}

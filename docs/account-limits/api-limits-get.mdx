@@ -1,0 +1,163 @@
+---
+id: account-limits-api-limits-get
+title: Como consultar os limites de uma conta via API?
+tags:
+  - api
+  - account-limits
+  - baas
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Para consultar os limites configurados em uma conta bancária do merchant, utilize o _endpoint_ `GET /api/v1/limits/{accountId}`.
+
+O endpoint retorna o conjunto mais recente de limites configurados para a conta, contendo apenas os campos públicos — campos internos são filtrados antes da resposta.
+
+:::info
+Antes de usar este endpoint, garanta que sua empresa tenha a feature **`ACCOUNT_LIMITS_PUBLIC_API`** habilitada e que sua aplicação possua o scope **`ACCOUNT_LIMITS_GET`**. Veja [Primeiros passos com a API de Account Limits](./api-getting-started.mdx) para detalhes.
+:::
+
+:::tip Referência completa
+Para o schema, parâmetros e exemplos interativos, veja a [API Reference](https://developers.woovi.com/api#tag/account-limits/GET/api/v1/limits/{accountId}).
+:::
+
+## Parâmetros
+
+### Path
+
+- **`accountId`** _(obrigatório)_: Identificador (`ObjectId`) da conta bancária da empresa para a qual os limites serão retornados.
+
+## Exemplo de resposta
+
+Após efetuar a requisição, se tudo ocorreu bem, o _status code_ da requisição será `200` e o `body` da resposta retornará o objeto `limits` com os campos públicos:
+
+```json
+{
+  "limits": {
+    "pixDayLimit": 4000000,
+    "pixNightLimit": 100000,
+    "pixOutSameHolderDayLimit": 4000000,
+    "pixOutDifferentHolderDayLimit": 4000000,
+    "pixOutSameHolderNightLimit": 100000,
+    "pixOutDifferentHolderNightLimit": 100000,
+    "pixInSameHolderDayLimit": 100000000,
+    "pixInDifferentHolderDayLimit": 100000000,
+    "pixInSameHolderNightLimit": 100000000,
+    "pixInDifferentHolderNightLimit": 100000000,
+    "dayStartAt": "06:00",
+    "nightStartAt": "20:00",
+    "boletoEmissionLimit": 200,
+    "boletoMaximumValueLimit": 1000000
+  }
+}
+```
+
+:::info
+Todos os valores monetários são expressos em **centavos**. Os horários `dayStartAt`/`nightStartAt` estão no formato `HH:mm`.
+:::
+
+## Campos da resposta
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| `pixDayLimit` | number | Limite total diário Pix (centavos) |
+| `pixNightLimit` | number | Limite total noturno Pix (centavos) |
+| `pixOutSameHolderDayLimit` | number | Limite diário Pix saída mesmo titular (centavos) |
+| `pixOutDifferentHolderDayLimit` | number | Limite diário Pix saída titulares distintos (centavos) |
+| `pixOutSameHolderNightLimit` | number | Limite noturno Pix saída mesmo titular (centavos) |
+| `pixOutDifferentHolderNightLimit` | number | Limite noturno Pix saída titulares distintos (centavos) |
+| `pixInSameHolderDayLimit` | number | Limite diário Pix entrada mesmo titular (centavos) |
+| `pixInDifferentHolderDayLimit` | number | Limite diário Pix entrada titulares distintos (centavos) |
+| `pixInSameHolderNightLimit` | number | Limite noturno Pix entrada mesmo titular (centavos) |
+| `pixInDifferentHolderNightLimit` | number | Limite noturno Pix entrada titulares distintos (centavos) |
+| `dayStartAt` | string | Início da janela diurna (`HH:mm`) |
+| `nightStartAt` | string | Início da janela noturna (`HH:mm`) |
+| `boletoEmissionLimit` | number | Máximo de boletos emitidos por dia |
+| `boletoMaximumValueLimit` | number | Valor máximo por boleto emitido (centavos) |
+
+## Códigos de resposta
+
+| Status | Descrição |
+|--------|-----------|
+| `200` | Limites retornados com sucesso |
+| `400` | `accountId` não é um `ObjectId` válido |
+| `401` | Credenciais ausentes, malformadas ou inválidas |
+| `403` | Aplicação sem o scope `ACCOUNT_LIMITS_GET` ou empresa sem a feature `ACCOUNT_LIMITS_PUBLIC_API` |
+| `404` | Conta não pertence à empresa autenticada, ou nenhum limite configurado para a conta |
+
+### Exemplos de erro
+
+```json
+{
+  "error": "Account ID is invalid"
+}
+```
+
+```json
+{
+  "data": null,
+  "errors": [{ "message": "Invalid appID" }]
+}
+```
+
+```json
+{
+  "error": "Application does not have required scope: ACCOUNT_LIMITS_GET"
+}
+```
+
+```json
+{
+  "error": "API not allowed"
+}
+```
+
+```json
+{
+  "error": "Account not found"
+}
+```
+
+```json
+{
+  "error": "No limits configured for this account"
+}
+```
+
+## Exemplos em código
+
+<Tabs>
+  <TabItem value="shell-curl" label="Shell + cURL" default>
+
+```sh
+curl 'https://api.woovi.com/api/v1/limits/SEU_ACCOUNT_ID' -X GET \
+    -H "Accept: application/json" \
+    -u "SEU_CLIENT_ID:SEU_CLIENT_SECRET"
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript + Fetch">
+
+```js
+const clientId = 'SEU_CLIENT_ID';
+const clientSecret = 'SEU_CLIENT_SECRET';
+const accountId = 'SEU_ACCOUNT_ID';
+
+const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+
+const response = await fetch(`https://api.woovi.com/api/v1/limits/${accountId}`, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Basic ${credentials}`,
+  },
+});
+
+const data = await response.json();
+
+console.log(data.limits.pixDayLimit);
+// 4000000
+```
+
+  </TabItem>
+</Tabs>

@@ -1,0 +1,111 @@
+---
+id: account-limits-api-getting-started
+title: Primeiros passos com a API de Account Limits
+tags:
+  - api
+  - account-limits
+  - baas
+---
+
+Este documento irá ajudá-lo a começar a utilizar a API pública de Account Limits.
+
+## Criando uma nova chave de API
+
+O primeiro passo para começar a integrar com a API é criar uma nova chave de API.
+
+### Passo 1 - Criar um novo aplicativo
+
+Vá para `Api/Plugins` na barra lateral e clique em `Nova API/Plugin`.
+
+:::caution
+Caso você não esteja visualizando o sidebar API/Plugins é necessário ter a permissão correta, veja com o admin da sua empresa.
+:::
+
+### Passo 2 - Nome da integração
+
+Dentro da tela de criação, coloque um nome para a integração e selecione `API` para integrações backend.
+
+### Passo 3 - Criando a chave
+
+Clique em `Salvar` para criar a nova chave de API.
+
+### Passo 4 - Fator de autenticação
+
+Para que a API possa ser utilizada, é necessário colocar um fator duplo de autenticação para garantir maior segurança na geração de chaves.
+
+### Passo 5 - Copiando as credenciais
+
+Após criar a nova chave, copie o **clientId** e o **clientSecret** para utilizar em suas integrações.
+
+## Como utilizar a API
+
+Todas as `requests` e `responses` da API usam o formato JSON.
+
+A autenticação é feita via **HTTP Basic Auth** usando o `clientId` como usuário e o `clientSecret` como senha. Codifique a combinação `clientId:clientSecret` em base64 e envie no header `Authorization`.
+
+```json
+{
+  "Authorization": "Basic <base64(clientId:clientSecret)>"
+}
+```
+
+Exemplo:
+
+```sh
+curl -X GET https://api.woovi.com/api/v1/limits/SEU_ACCOUNT_ID \
+  -H "Content-Type: application/json" \
+  -u "SEU_CLIENT_ID:SEU_CLIENT_SECRET"
+```
+
+### Requisitos
+
+- A empresa deve possuir a feature **ACCOUNT_LIMITS_PUBLIC_API** habilitada
+- A aplicação deve possuir o scope **`ACCOUNT_LIMITS_GET`**
+
+## Restrições de API
+
+- Todas as requisições devem ser criptografadas usando `https`
+- As credenciais de API são extremamente poderosas e devem ser armazenadas com cuidado extra
+- Não compartilhe `clientId`/`clientSecret` com terceiros
+- Não reutilize chaves entre ambientes
+- Apenas gere chaves quando for necessário
+- Desative chaves não utilizadas
+
+## Erros de autenticação
+
+Pode ocorrer de você receber uma resposta com o HTTP Status `401`, indicando credenciais ausentes, inválidas ou em formato incorreto. O envelope segue o padrão público da Woovi:
+
+```json
+{
+  "data": null,
+  "errors": [{ "message": "Invalid appID" }]
+}
+```
+
+Caso sua aplicação não tenha o scope necessário, você receberá HTTP Status `403`:
+
+```json
+{
+  "error": "Application does not have required scope: ACCOUNT_LIMITS_GET"
+}
+```
+
+Caso a empresa não tenha a feature `ACCOUNT_LIMITS_PUBLIC_API` habilitada, você receberá HTTP Status `403`:
+
+```json
+{
+  "error": "API not allowed"
+}
+```
+
+Caso as credenciais sejam inválidas, é recomendado gerar um novo par de `clientId`/`clientSecret` da sua aplicação e adicionar novamente em seu sistema.
+
+## URL Base
+
+| Ambiente | URL |
+|----------|-----|
+| Produção | `https://api.woovi.com/api/v1/limits` |
+
+:::tip Referência completa
+Para o schema, parâmetros e exemplos interativos do endpoint, veja a [API Reference](https://developers.woovi.com/api#tag/account-limits/GET/api/v1/limits/{accountId}).
+:::
