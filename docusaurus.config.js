@@ -85,6 +85,10 @@ module.exports = {
             from: '/docs/getting-started',
             to: '/docs/intro/getting-started',
           },
+          {
+            from: '/docs/pix-automatic/pix-automatic-in-sandbox',
+            to: '/docs/test-environment/pix-automatic-in-sandbox',
+          },
         ],
       },
     ],

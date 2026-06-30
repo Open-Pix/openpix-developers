@@ -1,6 +1,5 @@
 ---
 id: pix-automatic-in-sandbox
-sidebar_position: 19
 title: Pix Automatico em sandbox
 tags:
   - pix-automatic
