@@ -5177,7 +5177,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The invoice `correlationID` or the invoice `id` returned by the API. Both are accepted."
           }
         ],
         "responses": {
@@ -5544,6 +5545,10 @@
                         "id": {
                           "type": "string"
                         },
+                        "correlationID": {
+                          "type": "string",
+                          "description": "Your unique identifier for this invoice."
+                        },
                         "value": {
                           "type": "number"
                         },
@@ -5715,7 +5720,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The invoice `correlationID` or the invoice `id` returned by the API. Both are accepted."
           }
         ],
         "responses": {
@@ -5819,7 +5825,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The invoice `correlationID` or the invoice `id` returned by the API. Both are accepted."
           }
         ],
         "responses": {
@@ -12993,6 +13000,370 @@
             "source": "require 'uri'\nrequire 'net/http'\n\nurl = URI(\"https://api.openpix.com.br/api/v1/webhook/ips\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
+      }
+    },
+    "/api/v1/invoice/integration": {
+      "get": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Get the invoice integration",
+        "description": "Returns the invoice integration for the scope of the appId used. Use it to confirm the integration reached the CONFIGURED status, which happens asynchronously after the test invoice is issued.",
+        "responses": {
+          "200": {
+            "description": "Invoice integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integration": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "CONFIGURING",
+                            "VALIDATING",
+                            "CONFIGURED"
+                          ]
+                        },
+                        "isActive": {
+                          "type": "boolean"
+                        },
+                        "companyBankAccount": {
+                          "type": "string",
+                          "nullable": true,
+                          "description": "Sub-account the integration belongs to. Null for a company-level integration."
+                        },
+                        "metadata": {
+                          "type": "object",
+                          "properties": {
+                            "nfeio": {
+                              "type": "object",
+                              "properties": {
+                                "nfeioCompanyId": {
+                                  "type": "string"
+                                },
+                                "cityServiceCode": {
+                                  "type": "string"
+                                },
+                                "nbs": {
+                                  "type": "string"
+                                },
+                                "isPortalNacional": {
+                                  "type": "boolean"
+                                },
+                                "municipalSubscription": {
+                                  "type": "string"
+                                },
+                                "rpsNumber": {
+                                  "type": "number"
+                                },
+                                "specialTax": {
+                                  "type": "string"
+                                },
+                                "taxRegime": {
+                                  "type": "string"
+                                },
+                                "federalTaxDetermination": {
+                                  "type": "string"
+                                },
+                                "municipalTaxDetermination": {
+                                  "type": "string"
+                                },
+                                "legalNature": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Missing permission or invoice feature not enabled"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Create or update the invoice integration",
+        "description": "Creates or updates the invoice integration for the scope of the appId used. The scope comes from the token: a sub-account appId configures that sub-account, while a default/company-level appId configures the company. Every field is optional.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cityServiceCode": {
+                    "type": "string",
+                    "description": "Municipal service code. Valid values are defined by the invoice provider."
+                  },
+                  "municipalSubscription": {
+                    "type": "string",
+                    "description": "Municipal taxpayer registration (inscricao municipal)."
+                  },
+                  "rpsNumber": {
+                    "type": "number",
+                    "description": "Next RPS number to use."
+                  },
+                  "specialTax": {
+                    "type": "string",
+                    "description": "Special tax regime. Valid values are defined by the invoice provider."
+                  },
+                  "taxRegime": {
+                    "type": "string",
+                    "description": "Tax regime. Valid values are defined by the invoice provider."
+                  },
+                  "federalTaxDetermination": {
+                    "type": "string"
+                  },
+                  "municipalTaxDetermination": {
+                    "type": "string"
+                  },
+                  "isPortalNacional": {
+                    "type": "boolean"
+                  },
+                  "isActive": {
+                    "type": "boolean",
+                    "description": "Whether invoice issuing is active for this integration."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Invoice integration created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integration": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "CONFIGURING",
+                            "VALIDATING",
+                            "CONFIGURED"
+                          ]
+                        },
+                        "isActive": {
+                          "type": "boolean"
+                        },
+                        "companyBankAccount": {
+                          "type": "string",
+                          "nullable": true,
+                          "description": "Sub-account the integration belongs to. Null for a company-level integration."
+                        },
+                        "metadata": {
+                          "type": "object",
+                          "properties": {
+                            "nfeio": {
+                              "type": "object",
+                              "properties": {
+                                "nfeioCompanyId": {
+                                  "type": "string"
+                                },
+                                "cityServiceCode": {
+                                  "type": "string"
+                                },
+                                "nbs": {
+                                  "type": "string"
+                                },
+                                "isPortalNacional": {
+                                  "type": "boolean"
+                                },
+                                "municipalSubscription": {
+                                  "type": "string"
+                                },
+                                "rpsNumber": {
+                                  "type": "number"
+                                },
+                                "specialTax": {
+                                  "type": "string"
+                                },
+                                "taxRegime": {
+                                  "type": "string"
+                                },
+                                "federalTaxDetermination": {
+                                  "type": "string"
+                                },
+                                "municipalTaxDetermination": {
+                                  "type": "string"
+                                },
+                                "legalNature": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Missing permission or invoice feature not enabled"
+          }
+        }
+      }
+    },
+    "/api/v1/invoice/integration/certificate": {
+      "post": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Upload the A1 digital certificate of the invoice integration",
+        "description": "Uploads the A1 (PKCS#12) digital certificate used to sign invoices. Credentials are never returned by the API.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "pcks12",
+                  "passphrase"
+                ],
+                "properties": {
+                  "pcks12": {
+                    "type": "string",
+                    "format": "byte",
+                    "description": "A1 certificate encoded in base64."
+                  },
+                  "passphrase": {
+                    "type": "string",
+                    "description": "Certificate passphrase."
+                  },
+                  "test": {
+                    "type": "boolean",
+                    "description": "Validate the certificate without persisting it."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Certificate accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integration": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Missing permission or invoice feature not enabled"
+          }
+        }
+      }
+    },
+    "/api/v1/invoice/integration/test": {
+      "post": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "Issue a test invoice to finish the integration setup",
+        "description": "Issues a test invoice. This is the step that completes the setup: the integration only reaches the CONFIGURED status after the provider webhook for this test invoice is received, so poll GET /api/v1/invoice/integration afterwards. Takes no request body.",
+        "responses": {
+          "200": {
+            "description": "Test invoice issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "invoice": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "integration": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Your IP is not in the allowed list"
+          },
+          "403": {
+            "description": "Missing permission or invoice feature not enabled"
+          }
+        }
       }
     }
   },

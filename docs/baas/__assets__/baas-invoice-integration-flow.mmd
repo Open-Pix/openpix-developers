@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant P as Parceiro BaaS
+    participant W as API OpenPix
+    participant N as Provedor de nota fiscal
+
+    P->>W: POST /api/v1/invoice/integration
+    W->>N: Cadastra a empresa da sub-conta
+    W-->>P: 201 integration.status = CONFIGURING
+
+    P->>W: POST /api/v1/invoice/integration/certificate
+    W->>N: Envia o certificado A1
+    W-->>P: 200 integration.status
+
+    P->>W: POST /api/v1/invoice/integration/test
+    W->>N: Emite a nota fiscal de teste
+    W-->>P: 200 invoice.id + integration.id
+    N-->>W: Webhook confirmando a nota de teste
+    W->>W: integration.status = CONFIGURED e isActive = true
+
+    P->>W: GET /api/v1/invoice/integration
+    W-->>P: 200 integration.status = CONFIGURED

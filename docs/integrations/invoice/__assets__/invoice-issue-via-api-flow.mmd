@@ -1,0 +1,5 @@
+graph TD
+  A[POST /api/v1/invoice] --> B[Nota criada com status PENDING]
+  B --> C[Processamento da emissão: PROCESSING]
+  C --> D[Nota autorizada pela prefeitura: CONFIRMED]
+  D --> E[GET .../pdf e GET .../xml]
