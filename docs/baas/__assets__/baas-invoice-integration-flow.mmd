@@ -4,7 +4,7 @@ sequenceDiagram
     participant N as Provedor de nota fiscal
 
     P->>W: POST /api/v1/invoice/integration
-    W->>N: Cadastra a empresa da sub-conta
+    W->>N: Cadastra a empresa da conta
     W-->>P: 201 integration.status = CONFIGURING
 
     P->>W: POST /api/v1/invoice/integration/certificate

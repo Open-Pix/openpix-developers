@@ -63,7 +63,7 @@ Existem duas formas de emitir:
 
 :::info
 
-O `correlationID` é único por conta: cada conta (incluindo subcontas com CNPJ próprio) tem o seu próprio espaço de identificadores, então o mesmo `correlationID` pode existir em contas diferentes.
+O `correlationID` é único por conta: cada conta tem o seu próprio espaço de identificadores, então o mesmo `correlationID` pode existir em contas diferentes.
 
 :::
 

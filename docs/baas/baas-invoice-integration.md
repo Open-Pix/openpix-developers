@@ -1,6 +1,6 @@
 ---
 id: baas-invoice-integration
-title: Configurando a emissão de nota fiscal de uma sub-conta BaaS via API
+title: Configurando a emissão de nota fiscal via API
 tags:
   - baas
   - api
@@ -8,11 +8,13 @@ tags:
   - integration
 ---
 
-Este documento irá ajudá-lo a configurar, via API, a emissão de nota fiscal eletrônica de serviço (NFS-e) de uma sub-conta BaaS, do cadastro da integração até a emissão da nota de teste que valida tudo.
+Este documento irá ajudá-lo a configurar, via API, a emissão de nota fiscal eletrônica de serviço (NFS-e) de uma conta, do cadastro da integração até a emissão da nota de teste que valida tudo.
 
 :::info
 
-Antes de começar, você precisa do **appId da sub-conta BaaS**. Todos os endpoints deste documento operam sobre a conta que está no token, sem nenhum parâmetro de conta no corpo da requisição. Para gerar o appId de uma conta BaaS a partir da sua API mestre, siga o documento [Controlando as contas no modo BAAS](/docs/baas/baas-api-master).
+Todos os endpoints deste documento operam sobre a **conta que está no token**, sem nenhum parâmetro de conta no corpo da requisição. O fluxo é o mesmo para qualquer conta.
+
+A única diferença no modo BaaS é **como você obtém o appId**: em vez de criar a API pela plataforma, você gera o appId da conta a partir da sua API mestre. Veja [Controlando as contas no modo BAAS](/docs/baas/baas-api-master).
 
 :::
 
@@ -21,7 +23,7 @@ Antes de começar, você precisa do **appId da sub-conta BaaS**. Todos os endpoi
 Esta documentação espera que:
 
 - a feature de nota fiscal esteja habilitada para a sua empresa (disponível apenas por solicitação via chat);
-- a sub-conta BaaS já esteja com o cadastro **aprovado** — a identidade fiscal da nota é a da própria sub-conta;
+- a conta já esteja com o cadastro **aprovado** — a identidade fiscal da nota é a da própria conta;
 - você tenha em mãos o certificado digital **A1** (arquivo `.pfx`/`.p12`) e a senha dele.
 
 :::
@@ -35,24 +37,24 @@ Authorization: <appId>
 Content-Type: application/json
 ```
 
-O **escopo é definido pelo próprio token**: ao usar o appId da sub-conta BaaS, a integração criada, o certificado enviado e a nota de teste emitida pertencem àquela sub-conta.
+O **escopo é definido pelo próprio token**: a integração criada, o certificado enviado e a nota de teste emitida pertencem à conta do appId utilizado.
 
 ## Fluxo da configuração
 
 A integração só fica pronta para emitir notas reais quando o provedor de nota fiscal **confirma a nota de teste por webhook**. É por isso que a emissão de teste é o último passo: ela é o que fecha a configuração.
 
-![Fluxo de requests da integração de nota fiscal de uma sub-conta BaaS](./__assets__/baas-invoice-integration-flow.png)
+![Fluxo de requests da integração de nota fiscal via API](./__assets__/baas-invoice-integration-flow.png)
 
 <!-- Diagrama gerado a partir de ./__assets__/baas-invoice-integration-flow.mmd (mermaid).
      Para atualizar: edite o .mmd e re-renderize a imagem. -->
 
 ## 1. Criando a integração
 
-O primeiro passo cria a integração de nota fiscal da sub-conta e grava as informações fiscais dela. Essas informações garantem a conformidade tributária e podem ser obtidas com o auxílio do contador do titular da sub-conta.
+O primeiro passo cria a integração de nota fiscal da conta e grava as informações fiscais dela. Essas informações garantem a conformidade tributária e podem ser obtidas com o auxílio do contador do titular da conta.
 
 `POST /api/v1/invoice/integration`
 
-Todos os campos do corpo são opcionais — envie os que se aplicam ao município e ao regime tributário da sub-conta:
+Todos os campos do corpo são opcionais — envie os que se aplicam ao município e ao regime tributário da conta:
 
 | Campo                       | Tipo      | Descrição                                                               |
 | --------------------------- | --------- | ----------------------------------------------------------------------- |
@@ -106,13 +108,13 @@ Resposta `201`:
 
 :::info
 
-O campo `companyBankAccount` na resposta confirma a qual sub-conta a integração ficou vinculada. O status `CONFIGURING` indica que a integração existe, mas ainda não está apta a emitir notas.
+O campo `companyBankAccount` na resposta confirma a qual conta a integração ficou vinculada. O status `CONFIGURING` indica que a integração existe, mas ainda não está apta a emitir notas.
 
 :::
 
 ## 2. Enviando o certificado digital A1
 
-Com a integração criada, envie o certificado A1 da sub-conta. O arquivo `.pfx`/`.p12` deve ser convertido para **base64** e enviado no corpo em JSON.
+Com a integração criada, envie o certificado A1 da conta. O arquivo `.pfx`/`.p12` deve ser convertido para **base64** e enviado no corpo em JSON.
 
 `POST /api/v1/invoice/integration/certificate`
 
@@ -160,7 +162,7 @@ Este é o passo que fecha a configuração. A emissão de teste leva a integraç
 
 `POST /api/v1/invoice/integration/test`
 
-Não há corpo a ser enviado: a sub-conta e a integração são resolvidas pelo token.
+Não há corpo a ser enviado: a conta e a integração são resolvidas pelo token.
 
 ```bash
 curl 'https://api.openpix.com.br/api/v1/invoice/integration/test' -X POST \
@@ -185,7 +187,7 @@ Guarde o `invoice.id`: é o identificador da nota de teste gerada, que você pod
 
 ## 4. Confirmando que a integração está configurada
 
-A confirmação da nota de teste chega por webhook do provedor, então o status muda de forma assíncrona. Consulte a integração da sub-conta para acompanhar:
+A confirmação da nota de teste chega por webhook do provedor, então o status muda de forma assíncrona. Consulte a integração da conta para acompanhar:
 
 `GET /api/v1/invoice/integration`
 
@@ -221,10 +223,10 @@ Resposta `200` com a configuração concluída:
 
 :::info
 
-Com `status: "CONFIGURED"` e `isActive: true`, a sub-conta BaaS está pronta para emitir notas fiscais. Vale validar o documento da nota de teste com o contador do titular da sub-conta antes de começar a emitir notas reais.
+Com `status: "CONFIGURED"` e `isActive: true`, a conta está pronta para emitir notas fiscais. Vale validar o documento da nota de teste com o contador do titular da conta antes de começar a emitir notas reais.
 
 :::
 
 ## Próximos passos
 
-Agora que a integração da sub-conta está configurada, o próximo passo é emitir notas fiscais de verdade pela API. Continue em [Como emitir nota fiscal via API](/docs/integrations/invoice/invoice-how-to-issue-via-api).
+Agora que a integração da conta está configurada, o próximo passo é emitir notas fiscais de verdade pela API. Continue em [Como emitir nota fiscal via API](/docs/integrations/invoice/invoice-how-to-issue-via-api).
