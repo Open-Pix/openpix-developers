@@ -229,4 +229,8 @@ Com `status: "CONFIGURED"` e `isActive: true`, a conta está pronta para emitir 
 
 ## Próximos passos
 
-Agora que a integração da conta está configurada, o próximo passo é emitir notas fiscais de verdade pela API. Continue em [Como emitir nota fiscal via API](/docs/integrations/invoice/invoice-how-to-issue-via-api).
+Agora que a integração da conta está configurada, o próximo passo é emitir notas fiscais de verdade pela API:
+
+- [Criar Nota Fiscal de serviço via API](/docs/invoice/how-to-issue-invoice-by-api)
+- [Baixar PDF e XML da nota via API](/docs/invoice/how-to-get-invoice-files-by-api)
+- [Cancelar uma nota emitida via API](/docs/invoice/how-to-cancel-issued-invoice-by-api)
