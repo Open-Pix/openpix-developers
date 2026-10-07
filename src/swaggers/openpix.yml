@@ -10441,6 +10441,497 @@ paths:
             response = http.request(request)
 
             puts response.read_body
+  /api/v1/kyc/representatives/phone-code:
+    post:
+      tags:
+        - kyc
+      summary: Send the WhatsApp phone code to a ceremony admin
+      description: >
+        Sends a 6-digit code on WhatsApp to the phone stored on the
+
+        representative, the one sent in `phone` to
+
+        `POST /api/v1/kyc/representatives` or on the onboarding. Confirming it
+
+        through `POST /api/v1/kyc/representatives/phone-code/verify` proves the
+
+        admin holds that number.
+
+
+        Required only when the company that owns the register has the feature
+
+        `KYC_REPRESENTATIVE_PHONE_OTP`, and only for the administrators the Pix
+
+        authentication also requires (the target administrators, when the
+
+        register has any). Until each of them confirms, the submit answers `409`
+
+        with `MISSING_REPRESENTATIVE_PHONE_VERIFICATION`. Changing the phone
+
+        after the confirmation asks for a new one.
+
+
+        A code lives 10 minutes. Calling this again while it is live sends the
+
+        same code again instead of a new one. Between two calls there is a
+
+        30-second cooldown; each admin gets 3 codes an hour, each register 10,
+
+        and one number 6 a day. Every refusal of that kind is a `200` with an
+
+        `outcome`, not an error:
+
+
+        | outcome | Meaning |
+
+        |---|---|
+
+        | `CODE_SENT` | The code went out on WhatsApp: a new one, or the live one
+        again |
+
+        | `ALREADY_SENT` | Nothing new was spent: the code went out less than 30
+        seconds ago, or a code WhatsApp did not take was delivered again |
+
+        | `ALREADY_VERIFIED` | The current phone is already confirmed |
+
+        | `SAME_AS_ACCOUNT_USER` | The phone is the one the account user already
+        confirmed; nothing to do |
+
+        | `COOLDOWN` | Wait 30 seconds since the last code |
+
+        | `SEND_LIMIT_REACHED` | No codes left for now |
+
+        | `BLOCKED` | 3 wrong codes; no new code for 24 hours after the last one |
+
+        | `TRY_AGAIN` | A concurrent call won, or the send limiter is unavailable;
+        call again |
+      security:
+        - AppID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KycRepresentativePhoneCodeSendRequest'
+            example:
+              correlationID: merchant-4417
+              representativeId: 6650e0f1a2b3c4d5e6f70809
+      responses:
+        '200':
+          description: The outcome of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycRepresentativePhoneCodeSendResponse'
+        '400':
+          description: |
+            Validation failure, or `code` is `REPRESENTATIVE_NOT_FOUND`,
+            `REPRESENTATIVE_NOT_IN_SCOPE` (not an administrator this register
+            asks to confirm), `PHONE_INVALID` (not a Brazilian mobile number) or
+            `PHONE_PLACEHOLDER` (a filler number such as (99) 99999-9999).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycApiError'
+        '401':
+          description: Invalid appID
+        '403':
+          description: |
+            The company lacks BAAS, the application lacks the
+            `KYC_REPRESENTATIVES_POST` scope, or `code` is
+            `FEATURE_NOT_ENABLED`: the company of the register lacks
+            `KYC_REPRESENTATIVE_PHONE_OTP`.
+        '404':
+          description: No account register matches this correlationID on this company
+        '409':
+          description: The register left PENDING (`REGISTER_CLOSED`)
+        '502':
+          description: |
+            WhatsApp did not take the code (`DELIVERY_FAILED`). Calling again
+            after 30 seconds resends the same code, at most twice for one code.
+      x-codeSamples:
+        - lang: Node + Native
+          source: >-
+            const http = require('https');
+
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/kyc/representatives/phone-code',
+              headers: {
+                Authorization: '{APP_ID}',
+                'content-type': 'application/json'
+              }
+            };
+
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+
+            req.write(JSON.stringify({correlationID: 'string', representativeId:
+            'string'}));
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/kyc/representatives/phone-code \
+              --header 'Authorization: {APP_ID}' \
+              --header 'content-type: application/json' \
+              --data '{"correlationID":"string","representativeId":"string"}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/kyc/representatives/phone-code",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'correlationID' => 'string',
+                'representativeId' => 'string'
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: {APP_ID}",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload =
+            "{\"correlationID\":\"string\",\"representativeId\":\"string\"}"
+
+
+            headers = {
+                'Authorization': "{APP_ID}",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST", "/api/v1/kyc/representatives/phone-code",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/kyc/representatives/phone-code\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"representativeId\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"{APP_ID}\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"correlationID\":\"string\",\"representativeId\":\"string\"}");
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/kyc/representatives/phone-code")
+              .post(body)
+              .addHeader("Authorization", "{APP_ID}")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/kyc/representatives/phone-code")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = '{APP_ID}'
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"correlationID\":\"string\",\"representativeId\":\"string\"}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
+  /api/v1/kyc/representatives/phone-code/verify:
+    post:
+      tags:
+        - kyc
+      summary: Confirm the WhatsApp phone code a ceremony admin received
+      description: >
+        Checks the code the administrator typed. A wrong code counts against the
+
+        administrator: the third wrong code blocks new codes and checks for 24
+
+        hours after it, and the right code clears the count. Like the send,
+
+        every answer about the code is a `200` with an `outcome`:
+
+
+        | outcome | Meaning |
+
+        |---|---|
+
+        | `VERIFIED` | The phone is confirmed |
+
+        | `ALREADY_VERIFIED` | It was already confirmed |
+
+        | `SAME_AS_ACCOUNT_USER` | Nothing to confirm: the account user already
+        confirmed this phone |
+
+        | `WRONG_CODE` | The code does not match |
+
+        | `CODE_EXPIRED` | The code is older than 10 minutes; send a new one |
+
+        | `NO_ACTIVE_CODE` | No code was sent to the current phone |
+
+        | `BLOCKED` | 3 wrong codes; try again 24 hours after the last one |
+
+        | `TRY_AGAIN` | A concurrent call won; call again |
+      security:
+        - AppID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KycRepresentativePhoneCodeVerifyRequest'
+            example:
+              correlationID: merchant-4417
+              representativeId: 6650e0f1a2b3c4d5e6f70809
+              code: '123456'
+      responses:
+        '200':
+          description: The outcome of the check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycRepresentativePhoneCodeVerifyResponse'
+        '400':
+          description: |
+            Validation failure, or `code` is `INVALID_CODE_FORMAT` (not 6
+            digits; no attempt is spent), `REPRESENTATIVE_NOT_FOUND` or
+            `REPRESENTATIVE_NOT_IN_SCOPE`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycApiError'
+        '401':
+          description: Invalid appID
+        '403':
+          description: |
+            The company lacks BAAS, the application lacks the
+            `KYC_REPRESENTATIVES_POST` scope, or `code` is
+            `FEATURE_NOT_ENABLED`.
+        '404':
+          description: No account register matches this correlationID on this company
+        '409':
+          description: The register left PENDING (`REGISTER_CLOSED`)
+      x-codeSamples:
+        - lang: Node + Native
+          source: >-
+            const http = require('https');
+
+
+            const options = {
+              method: 'POST',
+              hostname: 'api.openpix.com.br',
+              port: null,
+              path: '/api/v1/kyc/representatives/phone-code/verify',
+              headers: {
+                Authorization: '{APP_ID}',
+                'content-type': 'application/json'
+              }
+            };
+
+
+            const req = http.request(options, function (res) {
+              const chunks = [];
+
+              res.on('data', function (chunk) {
+                chunks.push(chunk);
+              });
+
+              res.on('end', function () {
+                const body = Buffer.concat(chunks);
+                console.log(body.toString());
+              });
+            });
+
+
+            req.write(JSON.stringify({correlationID: 'string', representativeId:
+            'string', code: 'string'}));
+
+            req.end();
+        - lang: Shell + Curl
+          source: |-
+            curl --request POST \
+              --url https://api.openpix.com.br/api/v1/kyc/representatives/phone-code/verify \
+              --header 'Authorization: {APP_ID}' \
+              --header 'content-type: application/json' \
+              --data '{"correlationID":"string","representativeId":"string","code":"string"}'
+        - lang: Php + Curl
+          source: |-
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.openpix.com.br/api/v1/kyc/representatives/phone-code/verify",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => json_encode([
+                'correlationID' => 'string',
+                'representativeId' => 'string',
+                'code' => 'string'
+              ]),
+              CURLOPT_HTTPHEADER => [
+                "Authorization: {APP_ID}",
+                "content-type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: Python + Python3
+          source: >-
+            import http.client
+
+
+            conn = http.client.HTTPSConnection("api.openpix.com.br")
+
+
+            payload =
+            "{\"correlationID\":\"string\",\"representativeId\":\"string\",\"code\":\"string\"}"
+
+
+            headers = {
+                'Authorization': "{APP_ID}",
+                'content-type': "application/json"
+            }
+
+
+            conn.request("POST", "/api/v1/kyc/representatives/phone-code/verify",
+            payload, headers)
+
+
+            res = conn.getresponse()
+
+            data = res.read()
+
+
+            print(data.decode("utf-8"))
+        - lang: Go + Native
+          source: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\n\turl := \"https://api.openpix.com.br/api/v1/kyc/representatives/phone-code/verify\"\n\n\tpayload := strings.NewReader(\"{\\\"correlationID\\\":\\\"string\\\",\\\"representativeId\\\":\\\"string\\\",\\\"code\\\":\\\"string\\\"}\")\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\n\treq.Header.Add(\"Authorization\", \"{APP_ID}\")\n\treq.Header.Add(\"content-type\", \"application/json\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(res)\n\tfmt.Println(string(body))\n\n}"
+        - lang: Java + Okhttp
+          source: >-
+            OkHttpClient client = new OkHttpClient();
+
+
+            MediaType mediaType = MediaType.parse("application/json");
+
+            RequestBody body = RequestBody.create(mediaType,
+            "{\"correlationID\":\"string\",\"representativeId\":\"string\",\"code\":\"string\"}");
+
+            Request request = new Request.Builder()
+              .url("https://api.openpix.com.br/api/v1/kyc/representatives/phone-code/verify")
+              .post(body)
+              .addHeader("Authorization", "{APP_ID}")
+              .addHeader("content-type", "application/json")
+              .build();
+
+            Response response = client.newCall(request).execute();
+        - lang: Ruby + Native
+          source: >-
+            require 'uri'
+
+            require 'net/http'
+
+
+            url =
+            URI("https://api.openpix.com.br/api/v1/kyc/representatives/phone-code/verify")
+
+
+            http = Net::HTTP.new(url.host, url.port)
+
+            http.use_ssl = true
+
+
+            request = Net::HTTP::Post.new(url)
+
+            request["Authorization"] = '{APP_ID}'
+
+            request["content-type"] = 'application/json'
+
+            request.body =
+            "{\"correlationID\":\"string\",\"representativeId\":\"string\",\"code\":\"string\"}"
+
+
+            response = http.request(request)
+
+            puts response.read_body
   /api/v1/limits/{accountId}:
     get:
       tags:
@@ -22677,6 +23168,75 @@ components:
                   type:
                     type: string
                     example: BR:CPF
+    KycRepresentativePhoneCodeSendRequest:
+      type: object
+      properties:
+        correlationID:
+          type: string
+          description: |
+            The `correlationID` sent to `POST /api/v1/kyc/onboarding`, or the
+            register's CNPJ.
+        representativeId:
+          type: string
+          description: The representative `id` from `GET /api/v1/kyc/representatives`.
+      required:
+        - correlationID
+        - representativeId
+    KycRepresentativePhoneCodeSendResponse:
+      type: object
+      properties:
+        outcome:
+          type: string
+          enum:
+            - CODE_SENT
+            - ALREADY_SENT
+            - ALREADY_VERIFIED
+            - SAME_AS_ACCOUNT_USER
+            - COOLDOWN
+            - SEND_LIMIT_REACHED
+            - BLOCKED
+            - TRY_AGAIN
+    KycApiError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Message already localized for the merchant.
+        code:
+          type: string
+          description: Stable reason, safe to branch on.
+    KycRepresentativePhoneCodeVerifyRequest:
+      type: object
+      properties:
+        correlationID:
+          type: string
+          description: |
+            The `correlationID` sent to `POST /api/v1/kyc/onboarding`, or the
+            register's CNPJ.
+        representativeId:
+          type: string
+          description: The representative `id` from `GET /api/v1/kyc/representatives`.
+        code:
+          type: string
+          description: The 6 digits the administrator received on WhatsApp.
+      required:
+        - correlationID
+        - representativeId
+        - code
+    KycRepresentativePhoneCodeVerifyResponse:
+      type: object
+      properties:
+        outcome:
+          type: string
+          enum:
+            - VERIFIED
+            - ALREADY_VERIFIED
+            - SAME_AS_ACCOUNT_USER
+            - WRONG_CODE
+            - CODE_EXPIRED
+            - NO_ACTIVE_CODE
+            - BLOCKED
+            - TRY_AGAIN
     AccountLimit:
       type: object
       properties:

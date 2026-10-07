@@ -1,0 +1,224 @@
+---
+id: kyc-api-representative-phone-code
+title: Como confirmar o celular de um sócio administrador via API?
+tags:
+  - api
+  - kyc
+  - onboarding
+  - whatsapp
+  - representatives
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Quando a sua empresa conduz o onboarding inteiro pela API, você precisa provar que cada sócio administrador tem acesso ao celular cadastrado. A OpenPix envia um código de 6 dígitos pelo WhatsApp para esse número. O sócio informa o código para você, e você o confirma na API.
+
+São dois _endpoints_:
+
+- `POST /api/v1/kyc/representatives/phone-code` envia o código.
+- `POST /api/v1/kyc/representatives/phone-code/verify` confirma o código.
+
+O formulário hospedado da OpenPix faz a mesma confirmação na tela do sócio. Use estes _endpoints_ só quando o sócio não passa pelo formulário.
+
+:::tip Referência completa
+Para o schema, parâmetros e exemplos interativos, veja a [API Reference](https://developers.openpix.com.br/api#tag/kyc/paths/~1api~1v1~1kyc~1representatives~1phone-code/post).
+:::
+
+## Quando a confirmação é exigida
+
+A confirmação só vale quando a empresa dona do registro tem a feature **`KYC_REPRESENTATIVE_PHONE_OTP`**. Sem ela, o submit não pede nada e os dois _endpoints_ respondem `403` com `code` `FEATURE_NOT_ENABLED`, depois das checagens do registro e do sócio (um registro inexistente ainda responde `404` e um sócio inexistente, `400`).
+
+Com a feature ativa:
+
+- Só os sócios `ADMIN` ativos precisam confirmar. Se o registro tem administradores marcados como alvo (`target: true`), só eles precisam.
+- O código vai para o `phone` do sócio, o mesmo enviado em `POST /api/v1/kyc/representatives` ou no onboarding. Ele precisa ser um celular brasileiro com DDD e 9 dígitos.
+- A confirmação fica presa ao número. Se você trocar o `phone` depois, o sócio precisa confirmar de novo.
+- Se o celular do sócio é o mesmo que um usuário da conta já confirmou, não há código a enviar. A API responde `SAME_AS_ACCOUNT_USER`. Esse atalho não existe em registros BaaS: neles todo administrador confirma pelo WhatsApp.
+- Empresas internacionais (`KYC_INTERNACIONAL`) e o ambiente de sandbox não pedem a confirmação. Nelas os _endpoints_ também respondem `403` `FEATURE_NOT_ENABLED`.
+
+## Autenticação
+
+Envie o `AppID` no header `Authorization`, como nos outros _endpoints_ de KYC. Veja [Primeiros passos com a API de KYC Onboarding](./api-getting-started.mdx).
+
+### Requisitos
+
+- A empresa deve possuir a feature **BAAS** (ou **PARTNER**).
+- A aplicação deve possuir o scope **`KYC_REPRESENTATIVES_POST`**, o mesmo usado para cadastrar sócios.
+- O registro precisa estar `PENDING`.
+
+## Enviar o código
+
+`POST /api/v1/kyc/representatives/phone-code`
+
+### Campos
+
+- **`correlationID`** (obrigatório): o `correlationID` enviado em `POST /api/v1/kyc/onboarding`, ou o CNPJ do registro.
+- **`representativeId`** (obrigatório): o `id` do sócio, retornado por `GET /api/v1/kyc/representatives`.
+
+```json
+{
+  "correlationID": "merchant-4417",
+  "representativeId": "6650e0f1a2b3c4d5e6f70809"
+}
+```
+
+### Resposta
+
+Toda resposta sobre o envio é um `200` com um `outcome`. Os limites também respondem `200`, não erro.
+
+```json
+{
+  "outcome": "CODE_SENT"
+}
+```
+
+| `outcome` | Significado |
+|-----------|-------------|
+| `CODE_SENT` | O código foi enviado pelo WhatsApp. Pode ser um código novo ou o código ainda válido, enviado de novo. |
+| `ALREADY_SENT` | Nada novo foi gasto. O código saiu há menos de 30 segundos, ou um código que o WhatsApp não aceitou foi reenviado. |
+| `ALREADY_VERIFIED` | O celular atual já está confirmado. |
+| `SAME_AS_ACCOUNT_USER` | Um usuário da conta já confirmou este celular. Não há nada a fazer. |
+| `COOLDOWN` | Aguarde 30 segundos desde o último código. |
+| `SEND_LIMIT_REACHED` | Não há mais envios disponíveis agora. Veja [Limites](#limites). |
+| `BLOCKED` | O sócio errou o código 3 vezes. Nenhum código novo por 24 horas a partir do último erro. |
+| `TRY_AGAIN` | Uma chamada concorrente venceu, ou o limitador de envios está indisponível. Chame de novo. |
+
+## Confirmar o código
+
+`POST /api/v1/kyc/representatives/phone-code/verify`
+
+### Campos
+
+- **`correlationID`** (obrigatório): o mesmo do envio.
+- **`representativeId`** (obrigatório): o mesmo do envio.
+- **`code`** (obrigatório): os 6 dígitos que o sócio recebeu no WhatsApp.
+
+```json
+{
+  "correlationID": "merchant-4417",
+  "representativeId": "6650e0f1a2b3c4d5e6f70809",
+  "code": "123456"
+}
+```
+
+### Resposta
+
+Toda resposta sobre o código é um `200` com um `outcome`, inclusive o código errado.
+
+```json
+{
+  "outcome": "VERIFIED"
+}
+```
+
+| `outcome` | Significado |
+|-----------|-------------|
+| `VERIFIED` | O celular foi confirmado. |
+| `ALREADY_VERIFIED` | O celular já estava confirmado. |
+| `SAME_AS_ACCOUNT_USER` | Não há nada a confirmar. Um usuário da conta já confirmou este celular. |
+| `WRONG_CODE` | O código não confere. Conta como uma tentativa errada. |
+| `CODE_EXPIRED` | O código tem mais de 10 minutos. Envie um novo. |
+| `NO_ACTIVE_CODE` | Nenhum código foi enviado para o celular atual. |
+| `BLOCKED` | O sócio errou o código 3 vezes. Tente de novo 24 horas após o último erro. |
+| `TRY_AGAIN` | Uma chamada concorrente venceu. Chame de novo. |
+
+Um `code` que não tem exatamente 6 dígitos responde `400` com `INVALID_CODE_FORMAT` e não gasta tentativa.
+
+## Limites
+
+| Regra | Valor |
+|-------|-------|
+| Validade do código | 10 minutos |
+| Intervalo entre dois envios | 30 segundos |
+| Envios por sócio | 3 por hora |
+| Envios por registro | 10 por hora, somando todos os sócios |
+| Envios por número de celular | 6 por dia, somando todos os registros |
+| Códigos errados | 3 erros bloqueiam envio e confirmação por 24 horas após o último erro |
+
+Enquanto o código está válido, um novo envio manda **o mesmo código** de novo, sem gerar outro. Esse reenvio conta nos limites de envio. O código certo zera a contagem de erros.
+
+Se o WhatsApp não aceitar o código, o envio responde `502` com `DELIVERY_FAILED`. Chamar de novo depois de 30 segundos reenvia o mesmo código sem gastar envio, no máximo 2 vezes por código.
+
+## Efeito no submit
+
+Enquanto algum administrador exigido não confirmar o celular, `POST /api/v1/kyc/onboarding/submit` responde `409`:
+
+```json
+{
+  "error": "O sócio ***.456.789-** não confirmou o celular no WhatsApp.",
+  "code": "MISSING_REPRESENTATIVE_PHONE_VERIFICATION"
+}
+```
+
+Envie e confirme o código desse sócio e chame o submit de novo.
+
+## Códigos de resposta
+
+| Status | Descrição |
+|--------|-----------|
+| `200` | Resposta com `outcome` (tabelas acima) |
+| `400` | Body inválido, ou `code` `REPRESENTATIVE_NOT_FOUND`, `REPRESENTATIVE_NOT_IN_SCOPE` (o sócio não precisa confirmar), `PHONE_INVALID` (não é um celular brasileiro, só no envio), `PHONE_PLACEHOLDER` (número de preenchimento, como (99) 99999-9999, só no envio) ou `INVALID_CODE_FORMAT` (só na confirmação) |
+| `401` | AppID inválido |
+| `403` | Empresa sem BAAS, aplicação sem o scope `KYC_REPRESENTATIVES_POST`, ou `code` `FEATURE_NOT_ENABLED` (empresa sem `KYC_REPRESENTATIVE_PHONE_OTP`, internacional ou sandbox) |
+| `404` | Nenhum registro com este `correlationID` nesta empresa |
+| `409` | `code` `REGISTER_CLOSED`: o registro não está mais `PENDING` |
+| `502` | `code` `DELIVERY_FAILED`: o WhatsApp não aceitou o código (só no envio) |
+
+Os erros com `code` trazem também `error`, uma mensagem em português. Decida pelo `code`, não pela mensagem.
+
+```json
+{
+  "error": "Este sócio não precisa confirmar o celular",
+  "code": "REPRESENTATIVE_NOT_IN_SCOPE"
+}
+```
+
+Quando falta um campo no body, o `400` traz em `error` a lista de problemas de validação (cada item com `code`, `path` e `message`) e não tem `code` no nível de cima.
+
+## Exemplos em código
+
+<Tabs>
+  <TabItem value="send" label="Enviar o código" default>
+
+```sh
+curl 'https://api.openpix.com.br/api/v1/kyc/representatives/phone-code' -X POST \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: SEU_APPID_AQUI" \
+    --data-binary '{
+      "correlationID": "merchant-4417",
+      "representativeId": "6650e0f1a2b3c4d5e6f70809"
+    }'
+```
+
+  </TabItem>
+  <TabItem value="verify" label="Confirmar o código">
+
+```sh
+curl 'https://api.openpix.com.br/api/v1/kyc/representatives/phone-code/verify' -X POST \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: SEU_APPID_AQUI" \
+    --data-binary '{
+      "correlationID": "merchant-4417",
+      "representativeId": "6650e0f1a2b3c4d5e6f70809",
+      "code": "123456"
+    }'
+```
+
+  </TabItem>
+</Tabs>
+
+## Fluxo completo
+
+1. Cadastre o sócio `ADMIN` com o `phone` dele em `POST /api/v1/kyc/representatives` (ou no onboarding).
+2. Busque o `id` do sócio em `GET /api/v1/kyc/representatives`.
+3. Chame o envio. Com `CODE_SENT`, peça ao sócio o código que chegou no WhatsApp.
+4. Chame a confirmação com o código. Com `VERIFIED`, o sócio está confirmado.
+5. Repita para cada administrador exigido e chame `POST /api/v1/kyc/onboarding/submit`.
+
+## Veja também
+
+- [Primeiros passos com a API de KYC Onboarding](./api-getting-started.mdx)
+- [Como criar um onboarding KYC via API?](./api-onboarding-create.mdx)
