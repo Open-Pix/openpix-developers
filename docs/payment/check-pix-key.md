@@ -5,6 +5,18 @@ tags:
   - api
 ---
 
+:::warning Uso exclusivo para iniciar um pagamento
+Este endpoint serve apenas para identificar o destinatário de um Pix antes de o pagador confirmar o pagamento, conforme o art. 75 do Regulamento do Pix. Toda consulta deve ser seguida da criação do pagamento usando o `pixKeyEndToEndId` retornado.
+
+Não use este endpoint para:
+
+- consultar ou enriquecer dados cadastrais de pessoas ou empresas;
+- validar contas ou identidade em cadastro, onboarding, análise de crédito ou KYC;
+- verificar chaves ou montar bases de dados sem a intenção de realizar um pagamento.
+
+Consultas sem pagamento posterior são monitoradas e podem levar à suspensão e ao encerramento da conta.
+:::
+
 Este documento irá ajudá-lo a validar chave pix.
 
 - O novo endpoint  de verificação de chave de pix retornará os dados sobre uma chave de pix:
