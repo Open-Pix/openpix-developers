@@ -67,7 +67,7 @@ O corpo dessa requisição será
 ```json
 {
   "event": "magento1-configure",
-  "appID": "Q2xpZW50X0lkX2UwY2YyMTI2LWU0MGEtNDY4Yi05YmU2LTQ2ODg0ZTkzMTEwMDpDbGllbnRfU2VjcmV0XzQ1VUJYaU5VM2E1SGEvNnZTOGtCeEgzR1pRL0dOSmc0bTQ5ZGkyZ1g0bHc9",
+  "appID": "<appID>",
   "date": "2023-07-12T13:58:05.996Z"
 }
 ```
@@ -84,7 +84,7 @@ curl -X 'POST' \
  -H 'user-agent: node-fetch' \
  -H 'content-type: application/json' \
  -H 'x-webhook-signature: IJ33ocEdFz8GM/I2n8tOK8WAyHlDBFIDZ0zVijrrGm/VL8K3AiFrIwNSbxSk0ZRX2hD5FTwmFOaToJd/4YD75j8rhl8alIRx+CjtJ4kJK5svpdTwia5fV2bTNp0MQV6VXnZM5cj26H7it3CCVq5dhtbcMcyBLfY96iQ6CvT9CKs=' \
- -d $'{"event":"woocommerce-configure","appID":"Q2xpZW50X0lkX2UwY2YyMTI2LWU0MGEtNDY4Yi05YmU2LTQ2ODg0ZTkzMTEwMDpDbGllbnRfU2VjcmV0XzQ1VUJYaU5VM2E1SGEvNnZTOGtCeEgzR1pRL0dOSmc0bTQ5ZGkyZ1g0bHc9","date":"2023-07-12T13:58:05.996Z"}'
+ -d $'{"event":"woocommerce-configure","appID":"<appID>","date":"2023-07-12T13:58:05.996Z"}'
  ```
 
 ### 5. Salvar o appID
