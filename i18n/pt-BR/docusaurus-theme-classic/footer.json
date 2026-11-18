@@ -8,7 +8,7 @@
       "description": "The label of footer link with label=OpenPix linking to https://openpix.com.br"
     },
     "copyright": {
-      "message": "Copyright © Woovi / OpenPix",
+      "message": "Copyright © Woovi",
       "description": "The footer copyright"
     }
   }
