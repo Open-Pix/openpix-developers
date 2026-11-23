@@ -16,14 +16,14 @@ Não use este endpoint para:
 - validar contas ou identidade em cadastro, onboarding, análise de crédito ou KYC;
 - verificar chaves ou montar bases de dados sem a intenção de realizar um pagamento.
 
-Consultas sem pagamento posterior são monitoradas e bloqueadas automaticamente em todas as contas (veja [Limite de consultas](#limite-de-consultas)). O uso indevido pode levar ao encerramento da conta.
+Consultas sem pagamento posterior são monitoradas e bloqueadas automaticamente em todas as contas (veja [Limitação de Taxa](#limitação-de-taxa)). O uso indevido pode levar ao encerramento da conta.
 :::
 
 Este documento explica como identificar o destinatário de um Pix antes de confirmar o pagamento.
 
-A chave Pix funciona como um domínio DNS: aponta para uma conta transacional mantida em um participante do Pix. O vínculo fica registrado no DICT, operado pelo Banco Central.
+A chave Pix é um identificador (CPF/CNPJ, e-mail, celular ou chave aleatória) vinculado a uma conta transacional mantida em um participante do Pix. Esse vínculo fica registrado no DICT, o diretório de chaves operado pelo Banco Central. O Pix é pago para essa conta, e não para a chave.
 
-Este endpoint consulta esse vínculo no DICT e devolve os dados do destinatário, para que o pagador confira antes de confirmar o pagamento.
+A consulta busca no DICT o titular e a instituição dessa conta, para que o pagador confira o destinatário antes de confirmar o Pix.
 
 ![diagram sequencial checagem de chave pix](./__assets__/sequenceDiagrama_checagem_de_chave_pix.png)
 
@@ -35,7 +35,7 @@ curl -X GET "https://api.woovi.com/api/v1/pix-keys/{pix-key}/check" \
   -H "Authorization: {APP_ID}"
 ```
 
-Você pode acessar [aqui](/api#tag/pixkey-check-request-access/GET/api/v1/pix-keys/{pixKey}/check) a documentação referente a esse _endpoint_.
+Você pode acessar [aqui](https://developers.woovi.com/api#tag/pixkey-check-request-access/GET/api/v1/pix-keys/{pixKey}/check) a documentação referente a esse _endpoint_.
 
 - Usando POST com a chave no corpo (útil quando a chave contém caracteres que ficam ruins no path, como e-mails):
 ```bash
@@ -47,20 +47,20 @@ curl -X POST "https://api.woovi.com/api/v1/pix-keys/check" \
   }'
 ```
 
-Você pode acessar [aqui](/api#tag/pixkey-check-request-access/POST/api/v1/pix-keys/check) a documentação referente a esse _endpoint_.
+Você pode acessar [aqui](https://developers.woovi.com/api#tag/pixkey-check-request-access/POST/api/v1/pix-keys/check) a documentação referente a esse _endpoint_.
 
 ## Formato da chave
 
 Envie a chave no formato do seu tipo. Telefone sempre no formato internacional, com `+55` e o DDD (`+5511912345684`): um número só com dígitos que seja um CPF válido é consultado como CPF, mesmo que também seja um celular. Veja [Formato da chave Pix](https://developers.woovi.com/docs/payment/pix-key-format).
 
-## Limite de consultas
+## Limitação de Taxa
 
 A Woovi controla quantas consultas ao DICT cada conta pode fazer. São dois controles:
 
-- **Consultas a chaves inexistentes.** Depois de alguns `404`, a consulta passa a responder `429` até o limitador ser reabastecido. Veja [Token Bucket](https://developers.woovi.com/docs/payment/pix-key-token-bucket).
-- **Consultas sem pagamento.** Vale para todas as contas: 10 consultas sem o pagamento correspondente disparam o bloqueio automático.
-  - Nas contas do modo BaaS, a consulta de chave fica bloqueada por 24 horas e responde `429`. Veja [Consultas de chave Pix sem pagamento](https://developers.woovi.com/docs/baas/consultas-chave-pix-sem-pagamento).
-  - Nas demais contas, o acesso ao endpoint é retirado e a consulta passa a responder `403 PIX_KEY_CHECK_NOT_ALLOWED`. Para voltar a consultar, é preciso solicitar a liberação novamente.
+- As consultas ao DICT têm um limite, que pesa as consultas a chaves inexistentes: após alguns `404`, você receberá um `429` e precisará aguardar a reposição do limite. Veja [Token Bucket](https://developers.woovi.com/docs/payment/pix-key-token-bucket).
+- Toda conta pode fazer no máximo 10 consultas sem o pagamento correspondente. Ao atingir esse limite:
+  - nas contas do modo BaaS, a consulta de chave fica bloqueada por 24 horas, com `429`. Veja [Consultas de chave Pix sem pagamento](https://developers.woovi.com/docs/baas/consultas-chave-pix-sem-pagamento);
+  - nas demais contas, o acesso ao endpoint é retirado e as consultas passam a responder `403 PIX_KEY_CHECK_NOT_ALLOWED`.
 
 ### O que é retornado ?
 
@@ -97,9 +97,9 @@ A Woovi controla quantas consultas ao DICT cada conta pode fazer. São dois cont
 - `404 PIX_KEY_INFO_NOT_FOUND` — chave válida mas não cadastrada no DICT
 - `400` para chave de risco — `Pix key related to an account suspected of fraud`
 - `400` para DICT indisponível — `Error verifying pix key`
-- `429` — limite de consultas ao DICT atingido (veja [Limite de consultas](#limite-de-consultas))
+- `429 TOO_MANY_REQUESTS` — limite de consultas ao DICT atingido (veja a seção "Limitação de Taxa" acima)
 - `429` com `Muitas consultas de chave Pix sem pagamento. Tente novamente amanhã.` — a conta BaaS atingiu 10 consultas sem pagamento e a consulta de chave fica bloqueada por 24 horas (veja [Consultas de chave Pix sem pagamento](https://developers.woovi.com/docs/baas/consultas-chave-pix-sem-pagamento))
-- `403 PIX_KEY_CHECK_NOT_ALLOWED` — sua conta não tem a feature liberada, ou ela foi retirada depois de 10 consultas sem pagamento (contas fora do modo BaaS)
+- `403 PIX_KEY_CHECK_NOT_ALLOWED` — sua conta não tem a feature liberada, ou o acesso foi retirado depois de 10 consultas sem pagamento
 
 Na rota `GET` os erros voltam com `error` + `errorCode`. Na rota `POST` apenas `error` é retornado.
 

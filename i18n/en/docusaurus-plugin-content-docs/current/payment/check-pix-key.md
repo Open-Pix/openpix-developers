@@ -21,9 +21,9 @@ Checks without a subsequent payment are monitored and automatically blocked on e
 
 This document explains how to identify the recipient of a Pix before confirming the payment.
 
-A Pix key works like a DNS domain: it points to a transactional account held at a Pix participant. The link is registered in the DICT, operated by the Central Bank of Brazil.
+A Pix key is an identifier (CPF/CNPJ, email, phone number or random key) linked to a transactional account held at a Pix participant. That link is registered in the DICT, the key directory operated by the Central Bank of Brazil. The Pix is paid to that account, not to the key.
 
-This endpoint looks up that link in the DICT and returns the recipient's data, so the payer can review it before confirming the payment.
+The check looks up the holder and the institution of that account in the DICT, so the payer can review the recipient before confirming the Pix.
 
 ![Pix key check sequence diagram](./__assets__/sequenceDiagrama_checagem_de_chave_pix.png)
 
